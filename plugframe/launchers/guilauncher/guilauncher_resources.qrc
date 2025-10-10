@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/Elekdom-Noir-Logo.png</file>
+    </qresource>
+</RCC>

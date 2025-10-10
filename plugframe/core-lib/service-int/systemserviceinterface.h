@@ -1,0 +1,62 @@
+// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// 
+// This file is part of PlugFrame.
+// 
+// PlugFrame is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PlugFrame is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
+//
+
+
+#ifndef SYSTEMSERVICEINTERFACE_H
+#define SYSTEMSERVICEINTERFACE_H
+
+#include <QString>
+#include "serviceinterface.h"
+#include "pfcore-lib_forward.h"
+#include "bundle/bundlelistener.h"
+
+namespace elekdom
+{
+namespace plugframe
+{
+namespace framework
+{
+namespace service
+{
+
+class SystemServiceInterface : public core::plugin::ServiceInterface
+{
+public:
+    static QString serviceName() {return QStringLiteral("SystemServiceInterface");}
+
+public:
+    ~SystemServiceInterface()  override{}
+
+public:
+    virtual QString applicationName() = 0;
+    virtual bool registerListener(core::bundle::BundleListener* observer) = 0;
+    virtual bool unregisterListener(core::bundle::BundleListener* observer)  = 0;
+    virtual core::plugin::BundleList bundleList() = 0;
+    virtual int runningLevel() = 0;
+    virtual void quit() = 0;
+};
+
+}//namespace service
+}//namespace framework
+}//namespace plugframe
+}//namespace elekdom
+
+#define PfSystemService_iid "elekdom.plugframe.framework.service.SystemServiceInterface"
+Q_DECLARE_INTERFACE(elekdom::plugframe::framework::service::SystemServiceInterface, PfSystemService_iid)
+
+#endif // SYSTEMSERVICEINTERFACE_H

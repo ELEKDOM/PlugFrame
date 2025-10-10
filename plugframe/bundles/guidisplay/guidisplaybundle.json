@@ -1,0 +1,8 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "Display",
+    "startlevel-beging" : "1",
+    "service-provided" : "GuiBuilderServiceInterface,1.0.0",
+    "service-provided2" : "DisplayServiceInterface,1.0.0"
+}

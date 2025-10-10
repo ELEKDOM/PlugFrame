@@ -1,0 +1,66 @@
+/* Default ELEKDOM stylesheet */
+/******************************/
+
+/* Do not use this file directly for deployment. */
+/* Create a directory containing all the configuration files for a given deployment */
+
+
+/* Elekdom's blue for background */
+#MainWindow {
+    background-color: white;
+    color: black;
+    margin: 1px;
+}
+
+/* Main stackedWidget */
+#stackedWidget {
+    background-color: #2575B9;
+    margin: 1px;
+}
+
+/* push button setting */
+QPushButton {
+    background-color: #2575B9;
+    color : white;
+    border-width: 0px;
+    border-radius: 5;
+    border-style: outset;
+    padding: 3px;
+    min-width: 9ex;
+    min-height: 2.5ex;
+}
+
+QPushButton:pressed {
+    background-color: white;
+    color: #2575B9;
+    border-style: inset;
+    border-width: 1px;
+    border-color: #2575B9;
+}
+
+/*-----------*/
+/* Logs View */
+/*-----------*/
+
+/* Logs text area */
+#logsText {
+    border-style: none;
+    color : black;
+}
+
+/* Logs button area */
+#logsFooter{
+    background-color: white;
+    border-style: none;
+}
+
+/*--------------*/
+/* Console View */
+/*--------------*/
+
+/* Console button area */
+#consoleFooter{
+    background-color: white;
+    border-style: none;
+}
+

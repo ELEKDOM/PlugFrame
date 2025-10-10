@@ -1,0 +1,9 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "Console",
+    "startlevel-beging" : "2",
+    "service-required" : "SystemServiceInterface,1.0.0",
+    "service-required2" : "DisplayServiceInterface,1.0.0"
+}
+

@@ -1,0 +1,149 @@
+// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// 
+// This file is part of PlugFrame.
+// 
+// PlugFrame is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PlugFrame is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
+//
+
+
+#include "logger/pflog.h"
+#include "bundle/bundlebuilder.h"
+#include "bundle/bundle.h"
+#include "bundle/bundleheaders.h"
+#include "factory/bundlefactory.h"
+
+using namespace elekdom::plugframe::core::bundle;
+
+BundleBuilder::BundleBuilder(Bundle4BuilderInterface& myBundle) :
+    m_bundleItf{myBundle}
+{
+}
+
+BundleBuilder::~BundleBuilder()
+{
+}
+
+/**
+ * @brief smf::core::bundle::BundleBuilder::build
+ * @param myBundle
+ */
+void BundleBuilder::build()
+{
+    plugframe::core::bundle::BundleFactory& factory {getFactory()};
+
+    // Bundle's internal structure building
+    //-------------------------------------
+
+    // Build the bundle's headers
+    //---------------------------
+    BundleHeaders *headers{factory.createHeaders(getBundle().logChannel())};
+    setHeaders(headers);
+
+    // Populate the headers from the manifest file
+    loadManifestHeaders();
+
+    // Build bundle's emitter and listener
+    setEmitter(factory.createBundleEmitter(getBundle()));
+    setListener(factory.createBundleListener(getBundle()));
+
+    // Default listener connections
+    defaultListening();
+
+    // Build the exported services
+    buildExportedServices(headers->getProvidedServices());
+
+    // Build internal bundle structure
+    //-------------------------------
+    specificBuild();
+}
+
+Bundle &BundleBuilder::getBundle()
+{
+    return m_bundleItf.getBundle();
+}
+
+BundleImplementation *BundleBuilder::getImplementation()
+{
+    return m_bundleItf.getImplementation();
+}
+
+const QString &BundleBuilder::getLogBundleName()
+{
+    return m_bundleItf.getLogBundleName();
+}
+
+BundleFactory &BundleBuilder::getFactory()
+{
+    return m_bundleItf.getFactory();
+}
+
+void BundleBuilder::setHeaders(BundleHeaders *bundleHeaders)
+{
+    m_bundleItf.setHeaders(bundleHeaders);
+}
+
+void BundleBuilder::loadManifestHeaders()
+{
+    m_bundleItf.loadManifestHeaders();
+}
+
+void BundleBuilder::setEmitter(BundleEmitter *emitter)
+{
+    m_bundleItf.setEmitter(emitter);
+}
+
+void BundleBuilder::setListener(BundleListener *listener)
+{
+    m_bundleItf.setListener(listener);
+}
+
+void BundleBuilder::addExportedService(service::QspServiceImplementationInterface newService)
+{
+    m_bundleItf.addExportedService(newService);
+}
+
+void BundleBuilder::defaultListening()
+{
+    m_bundleItf.defaultListening();
+}
+
+void BundleBuilder::specificBuild()
+{
+    // No op by default !
+}
+
+void BundleBuilder::buildExportedServices(const QList<QString>& providedServices)
+{
+    plugframe::core::bundle::BundleFactory& factory {getFactory()};
+    core::service::QspServiceImplementationInterface servImpl;
+    int nbServices{providedServices.size()};
+
+    for (int i=0;i<nbServices;i++)
+    {
+        const QString& name_version{providedServices.at(i)};
+        QString serviceName,serviceVersion;
+
+        BundleHeaders::splitNameVersionFromServiceDeclar(name_version,serviceName,serviceVersion);
+
+        servImpl.reset(factory.createServiceImplementation(getImplementation(),serviceName,serviceVersion));
+        if (servImpl.isNull())
+        {
+            pfErr(getLogBundleName()) << QObject::tr("service %1 version %2 non créé").arg(serviceName,serviceVersion);
+        }
+        else
+        {
+            addExportedService(servImpl);  // Add internal implementation
+        }
+    }
+}

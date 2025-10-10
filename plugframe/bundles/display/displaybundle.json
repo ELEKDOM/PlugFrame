@@ -1,0 +1,7 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "Display",
+    "startlevel-beging" : "1",
+    "service-provided" : "DisplayServiceInterface,1.0.0"
+}

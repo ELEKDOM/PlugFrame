@@ -1,0 +1,8 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "Framework",
+    "startlevel-beging" : "5",
+    "service-provided" : "SystemServiceRegistryInterface,1.0.0",
+    "service-provided2" : "SystemServiceInterface,1.0.0"
+}

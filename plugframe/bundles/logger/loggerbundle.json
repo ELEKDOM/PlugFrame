@@ -1,0 +1,8 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "Logger",
+    "startlevel-beging" : "3",
+    "bundle-config-file-name" : "log.ini",
+    "service-required" : "DisplayServiceInterface,1.0.0"
+}

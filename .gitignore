@@ -1,0 +1,51 @@
+# Build directories
+build/
+bin/
+lib/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Qt
+*.autosave
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qmlproject.user
+
+# Logs / Runtime
+*.log
+*.tmp
+*.swp
+*.bak
+*.dSYM/
+*.DS_Store
+
+# Archives / Backups
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Visual Studio Code
+.vscode/
+
+# QtCreator
+*.creator.user*
+*.creator*
+
+# Backup files
+*~
+\#*\#
+
+# Compilation intermediates
+*.o
+*.obj
+*.so
+*.dll
+*.a
+*.lib
+*.exe
+*.out
+
