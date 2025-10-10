@@ -49,3 +49,11 @@ Makefile
 *.exe
 *.out
 
+# PlugFrame Applications are sub repositories
+applications/oplink
+
+# Python cache
+__pycache__
+
+# Divers
+._cp_meta_inf_unix
