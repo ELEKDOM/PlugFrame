@@ -60,13 +60,11 @@ PlugFrame is designed to be developed using **QtCreator**, leveraging its **shad
 3. Enable **"Shadow build"**
 4. Choose a build directory outside the source tree (e.g., `../build-PlugFrame`)
 5. Add a **"Custom Step"**
-6. Select the script `install_oplink.py`
+6. Select the script `install_plugframe.py`
 7. Check the `PYTHONPATH` value
 8. Click **Build**
 
 > This is the recommended method for all development work.
-
----
 
 ### Optional: Command-line Build (for compilation only)
 
@@ -74,20 +72,27 @@ You may also compile PlugFrame from the terminal using `qmake`:
 
 ```bash
 # Clone the repository
-git clone https://github.com/elekdom/ELEKDOM-PlugFrame.git
-cd ELEKDOM-PlugFrame
+git clone https://github.com/elekdom/PlugFrame.git
+cd PlugFrame
 
 # Create and move to a build directory (shadow build style)
 mkdir ../build-PlugFrame
 cd ../build-PlugFrame
 
 # Run qmake and make
-qmake ../ELEKDOM-PlugFrame/PlugFrame.pro
+qmake ../PlugFrame/PlugFrame.pro
 make -j$(nproc)
 ```
 
 > This approach is suitable for compiling the project, but **not recommended for active development**.
 
+### Using the `install_plugframe` script
+Once the PlugFrame build is complete, you can obtain a binary package by invoking this script.
+Warning: 
+- Python must be installed
+- The script references two variables: `build_dir` and `conf_dir`.
+- These two variables are to be defined in a file named `projects_dirs.py`
+- Add the path to the file `projects_dirs.py` in PYTHONPATH
 ---
 
 ## Preview
