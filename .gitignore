@@ -50,7 +50,7 @@ Makefile
 *.out
 
 # PlugFrame Applications are sub repositories
-applications/oplink
+applications/OpLink
 
 # Python cache
 __pycache__
