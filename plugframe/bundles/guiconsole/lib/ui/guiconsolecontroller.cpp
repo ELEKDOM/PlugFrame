@@ -76,7 +76,7 @@ void GuiConsoleController::displayBundlesList(BundleInterface::BundleState state
 {
     core::plugin::BundleList list{bundlesList(state)};
     core::plugin::BundleList_Iterator it;
-    int firstColSize{padding(list)};
+    qsizetype firstColSize{padding(list)};
     QString spaces;
 
     spaces.fill(' ', firstColSize - 6);
@@ -85,7 +85,7 @@ void GuiConsoleController::displayBundlesList(BundleInterface::BundleState state
     for (it = list.begin(); it != list.end(); ++it)
     {
         BundleInterface* bItf{*it};
-        int namewidth{(bItf->getName()).size()};
+        qsizetype namewidth{(bItf->getName()).size()};
 
         spaces.fill(' ', firstColSize - namewidth);
         QString msg{QString("%1%2%3").arg(bItf->getName(), spaces, QString::number(bItf->getStartLevel()))};
@@ -111,14 +111,14 @@ BundleList GuiConsoleController::bundlesList(BundleInterface::BundleState state)
     return ret;
 }
 
-int GuiConsoleController::padding(BundleList &listToDisplay)
+qsizetype GuiConsoleController::padding(BundleList &listToDisplay)
 {
     BundleList_Iterator it;
-    int maxWidthSize{6};
+    qsizetype maxWidthSize{6};
 
     for (it = listToDisplay.begin(); it != listToDisplay.end(); ++it)
     {
-        int curS{((*it)->getName()).size()};
+        qsizetype curS{((*it)->getName()).size()};
         if (curS > maxWidthSize)
         {
             maxWidthSize = curS;

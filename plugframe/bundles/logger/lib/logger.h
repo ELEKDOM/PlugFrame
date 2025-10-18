@@ -23,6 +23,7 @@
 #include <QMutex>
 #include <QHash>
 #include <QtGlobal>
+#include <QRegularExpression>
 #include "logger_forward.h"
 #include "bundle/bundleimplementation.h"
 #include "service-int/displayserviceinterface.h"
@@ -35,6 +36,8 @@ namespace logger
 {
 namespace bundle
 {
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 class Logger : public core::bundle::BundleImplementation
 {
@@ -66,6 +69,8 @@ private:
 private:
     QHash<QString, QspLogFilter>                          m_channelFilter;
     plugframe::display::service::DisplayServiceInterface *m_display;
+    QRegularExpression                                    m_re;
+    QRegularExpressionMatch                               m_match;
 };
 
 } //namespace bundle

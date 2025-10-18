@@ -16,22 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QObject>
-#include "logger/pflog.h"
-#include "terminal.h"
 #include "cmd/helpcmdprocessor.h"
 #include "console.h"
 
-using namespace elekdom::plugframe::console::cmd;
-
 HelpCmdProcessor::HelpCmdProcessor(const QString& logChannel,
-                                         console::bundle::Console& console,
-                                         cmd::QspCmdProcessor firstProc):
+                                   Console& console,
+                                   QspCmdProcessor firstProc):
     CmdProcessor{logChannel,
-                    console,
-                    "?",
-                    QObject::tr("Affiche la liste des commandes de la console") },
+                 console,
+                 "?",
+                 QObject::tr("Affiche la liste des commandes de la console") },
     m_firstProc{firstProc}
 {
 

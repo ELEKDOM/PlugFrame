@@ -91,7 +91,7 @@ using BundleList = QList<BundleInterface*>;
 using BundleList_Iterator = BundleList::iterator;
 } //namespace plugframe
 
-#define PfBundle_iid "elekdom.smf.core.plugin"
+#define PfBundle_iid "plugframe.core.plugin"
 Q_DECLARE_INTERFACE(plugframe::BundleInterface, PfBundle_iid)
 
 #endif // BUNDLE_INTERFACE

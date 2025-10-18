@@ -16,19 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include "logger/pflog.h"
 #include "cmd/cmdprocessor.h"
 #include "terminal.h"
 #include "console.h"
 
-using namespace elekdom::plugframe;
-
-console::cmd::CmdProcessor::CmdProcessor(const QString& logChannel,
-                                         console::bundle::Console& console,
-                                         QString cmdName,
-                                         QString description):
-    core::logger::Loggable{logChannel},
+CmdProcessor::CmdProcessor(const QString& logChannel,
+                           Console& console,
+                           QString cmdName,
+                           QString description):
+    plugframe::Loggable{logChannel},
     m_console{console},
     m_cmdName{cmdName},
     m_description{description}
@@ -36,17 +32,17 @@ console::cmd::CmdProcessor::CmdProcessor(const QString& logChannel,
 
 }
 
-console::cmd::CmdProcessor::~CmdProcessor()
+CmdProcessor::~CmdProcessor()
 {
 
 }
 
-void console::cmd::CmdProcessor::next(QspCmdProcessor procCmd)
+void CmdProcessor::next(QspCmdProcessor procCmd)
 {
     m_nextProcessor = procCmd;
 }
 
-bool console::cmd::CmdProcessor::execCmd(const RawCmd &cmd)
+bool CmdProcessor::execCmd(const RawCmd &cmd)
 {
     bool ret{false};
     if (cmd[0] == m_cmdName)
@@ -60,7 +56,7 @@ bool console::cmd::CmdProcessor::execCmd(const RawCmd &cmd)
     return ret;
 }
 
-void console::cmd::CmdProcessor::printCmdDescription()
+void CmdProcessor::printCmdDescription()
 {
     printDescription();
     if (false == m_nextProcessor.isNull())
@@ -69,12 +65,12 @@ void console::cmd::CmdProcessor::printCmdDescription()
     }
 }
 
-console::bundle::Console& console::cmd::CmdProcessor::console()
+Console& CmdProcessor::console()
 {
     return m_console;
 }
 
-void console::cmd::CmdProcessor::printDescription()
+void CmdProcessor::printDescription()
 {
     console().printDescription(m_cmdName, m_description);
 }

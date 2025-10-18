@@ -21,7 +21,6 @@
 #include "display.h"
 #include "displayfactory.h"
 #include "service-int/displayserviceinterface.h"
-#include "bundle/bundlecontext.h"
 
 using namespace elekdom::plugframe;
 using namespace elekdom::plugframe::display;

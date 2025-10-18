@@ -16,15 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "consolelistener.h"
 #include "console.h"
 #include "event/frameworkevent/frameworkstartedevent.h"
 
-using namespace elekdom::plugframe::console;
-using namespace elekdom::plugframe;
-
-ConsoleListener::ConsoleListener(core::bundle::Bundle& bundle, QObject *parent):
+ConsoleListener::ConsoleListener(plugframe::Bundle& bundle, QObject *parent):
     BundleListener{bundle, parent}
 {
 
@@ -35,21 +31,21 @@ ConsoleListener::~ConsoleListener()
 
 }
 
-void ConsoleListener::onEvent(core::event::QspEvent ev)
+void ConsoleListener::onEvent(plugframe::QspEvent ev)
 {
-    core::event::Event* event{ev.data()};
+    plugframe::Event* event{ev.data()};
     QString evtTypeId {ev->getTypeId()};
 
-    if (evtTypeId == core::event::FrameworkStartedEvent::s_typeId)
+    if (evtTypeId == plugframe::FrameworkStartedEvent::s_typeId)
     {
-        onFrameworkStartedEvent(dynamic_cast<core::event::FrameworkStartedEvent*>(event));
+        onFrameworkStartedEvent(dynamic_cast<plugframe::FrameworkStartedEvent*>(event));
     }
 }
 
-void ConsoleListener::onFrameworkStartedEvent(core::event::FrameworkStartedEvent *evt)
+void ConsoleListener::onFrameworkStartedEvent(plugframe::FrameworkStartedEvent *evt)
 {
     Q_UNUSED(evt)
-    bundle::Console& console{dynamic_cast<bundle::Console&>(getBundle())};
+    Console& console{dynamic_cast<Console&>(getBundle())};
 
     console.startTerminal();
 }

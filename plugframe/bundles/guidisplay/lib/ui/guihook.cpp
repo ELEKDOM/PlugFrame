@@ -22,7 +22,6 @@
 #include "guihook.h"
 #include "guidisplay.h"
 #include "ui/gui.h"
-#include "gui/guipagecontroller.h"
 
 using namespace elekdom::plugframe::guidisplay;
 
@@ -104,5 +103,6 @@ void GuiHook::onGuiCloseEvt()
     if (ret == QMessageBox::Yes)
     {
         m_bundle.closeApp();
+        m_mainWindow->close();
     }
 }

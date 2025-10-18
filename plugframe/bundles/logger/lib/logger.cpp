@@ -18,11 +18,10 @@
 
 
 #include <QSettings>
-#include "logger.h"
 #include "logfilter.h"
-#include "logdevice.h"
 #include "loggerfactory.h"
 #include "bundle/bundlecontext.h"
+#include "logger.h"
 
 using namespace elekdom::plugframe::core::bundle;
 using namespace elekdom::plugframe::logger::bundle;
@@ -40,7 +39,8 @@ void logger::bundle::myMessageOutput(QtMsgType type, const QMessageLogContext &c
 }
 
 Logger::Logger():
-    core::bundle::BundleImplementation{"Logger"}
+    core::bundle::BundleImplementation{"Logger"},
+    m_re{"^\\{(\\d)\\}\\[(\\w*)\\]"} // raw message > {level}[channel]msg
 {
 
 }
@@ -54,21 +54,18 @@ void Logger::log(QtMsgType type, const QMessageLogContext &context, const QStrin
 {
     QMutexLocker mtxLck(&m_mutex);
     Q_UNUSED(context)
-
     QString message{msg};
-    QRegExp rx{"^\\{(\\d)\\}\\[(\\w*)\\]"}; // raw message > {level}[channel]msg
-    int index{rx.indexIn(message)};
-    QStringList list{rx.capturedTexts()};
 
-    if (index >= 0)
+    m_match = m_re.match(message);
+    if (m_match.hasMatch())
     {
-        QString channelName{list[2]};
+        QString channelName{m_match.captured(2)};
         QspLogFilter filter{m_channelFilter.value(channelName)};
         if (false == filter.isNull())
         {
-            uint level{list[1].toUInt()};
+            uint level{m_match.captured(1).toUInt()};
 
-            message = message.remove(list[0]);
+            message = message.remove(m_match.captured(0)); // message without header
             filter->log(type,level,message);
         } //if (false == filter.isNull())
     } //if (index >= 0)

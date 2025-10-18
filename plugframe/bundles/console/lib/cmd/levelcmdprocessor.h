@@ -16,35 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LEVELCMDPROCESSOR_H
 #define LEVELCMDPROCESSOR_H
 
 #include "cmd/cmdprocessor.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace cmd
-{
-
 class LevelCmdProcessor : public CmdProcessor
 {
 public:
     LevelCmdProcessor(const QString& logChannel,
-                         console::bundle::Console& console);
+                      Console& console);
     virtual ~LevelCmdProcessor();
 
 protected:
     virtual bool exec(const RawCmd& cmd);
 };
-
-} //namespace cmd
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // LEVELCMDPROCESSOR_H

@@ -59,7 +59,7 @@ private slots:
 private:
     void displayBundlesList(core::plugin::BundleInterface::BundleState state);
     core::plugin::BundleList bundlesList(core::plugin::BundleInterface::BundleState state);
-    int padding(core::plugin::BundleList& listToDisplay);
+    qsizetype padding(core::plugin::BundleList& listToDisplay);
 
 private:
     framework::service::SystemServiceInterface *m_systemServiceItf;

@@ -16,21 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QObject>
-#include "logger/pflog.h"
-#include "terminal.h"
 #include "cmd/quitcmdprocessor.h"
 #include "console.h"
 
-using namespace elekdom::plugframe::console::cmd;
-
 QuitCmdProcessor::QuitCmdProcessor(const QString& logChannel,
-                                         console::bundle::Console& console):
+                                   Console& console):
     CmdProcessor{logChannel,
-                    console,
-                    "quit",
-                    QObject::tr("Quitte l'application après confirmation")}
+                 console,
+                 "quit",
+                 QObject::tr("Quitte l'application après confirmation")}
 {
 
 }

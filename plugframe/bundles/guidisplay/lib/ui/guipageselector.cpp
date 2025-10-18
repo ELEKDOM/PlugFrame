@@ -16,7 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
+#include <QWidget>
 #include "guipageselector.h"
 
 using namespace elekdom::plugframe::guidisplay;

@@ -16,8 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include <iostream>
 #include "guiconsole.h"
 #include "guiconsolefactory.h"
 #include "ui/guiconsolecontroller.h"

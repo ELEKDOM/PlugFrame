@@ -18,7 +18,6 @@
 
 
 #include "logdisplay.h"
-#include "logger.h"
 
 using namespace elekdom::plugframe::logger::bundle;
 

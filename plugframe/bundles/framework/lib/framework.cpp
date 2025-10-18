@@ -23,11 +23,9 @@
 #include "frameworkstarter.h"
 #include "frameworkstarterlistener.h"
 #include "bundle/bundleheaders.h"
-#include "bundle/bundlecontext.h"
 #include "logger/pflog.h"
 #include "launcher/bundlesstore.h"
 #include "launcher/launchingproperties.h"
-#include "event/event.h"
 #include "service-int/systemserviceinterface.h"
 #include "serviceregistry.h"
 

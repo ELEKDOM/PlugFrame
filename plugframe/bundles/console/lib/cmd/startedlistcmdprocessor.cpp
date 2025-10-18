@@ -16,24 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QObject>
-#include "logger/pflog.h"
-#include "terminal.h"
 #include "cmd/startedlistcmdprocessor.h"
 #include "plugin/bundleinterface.h"
 #include "console.h"
-#include "pfcore-lib_forward.h"
-
-using namespace elekdom::plugframe::console::cmd;
-using namespace elekdom::plugframe::core;
 
 StartedListCmdProcessor::StartedListCmdProcessor(const QString& logChannel,
-                                                       console::bundle::Console& console):
+                                                 Console& console):
     CmdProcessor{logChannel,
-                    console,
-                    "started",
-                    QObject::tr("Affiche la liste des bundles démarrés avec leur start level")}
+                 console,
+                 "started",
+                 QObject::tr("Affiche la liste des bundles démarrés avec leur start level")}
 {
 
 }
@@ -46,14 +39,14 @@ StartedListCmdProcessor::~StartedListCmdProcessor()
 bool StartedListCmdProcessor::exec(const RawCmd &cmd)
 {
     Q_UNUSED(cmd)
-    core::plugin::BundleList list{console().startedBundleList()};
-    core::plugin::BundleList_Iterator it;
-    int maxWidthSize{0};
+    plugframe::BundleList list{console().startedBundleList()};
+    plugframe::BundleList_Iterator it;
+    qsizetype maxWidthSize{0};
     QString padding;
 
     for (it = list.begin(); it != list.end(); ++it)
     {
-        int curS{((*it)->getName()).size()};
+        qsizetype curS{((*it)->getName()).size()};
         if (curS > maxWidthSize)
         {
             maxWidthSize = curS;
@@ -66,8 +59,8 @@ bool StartedListCmdProcessor::exec(const RawCmd &cmd)
 
     for (it = list.begin(); it != list.end(); ++it)
     {
-        core::plugin::BundleInterface* bItf{*it};
-        int namewidth{(bItf->getName()).size()};
+        plugframe::BundleInterface* bItf{*it};
+        qsizetype namewidth{(bItf->getName()).size()};
 
         padding.fill(' ', maxWidthSize - namewidth);
         QString msg{QString("%1%2%3\n").arg(bItf->getName(), padding, QString::number(bItf->getStartLevel()))};

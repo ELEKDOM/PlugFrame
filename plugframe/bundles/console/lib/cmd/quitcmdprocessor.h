@@ -16,35 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef QUITCMDPROCESSOR_H
 #define QUITCMDPROCESSOR_H
 
 #include "cmd/cmdprocessor.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace cmd
-{
-
 class QuitCmdProcessor : public CmdProcessor
 {
 public:
     QuitCmdProcessor(const QString& logChannel,
-                        console::bundle::Console& console);
+                     Console& console);
     virtual ~QuitCmdProcessor();
 
 protected:
     virtual bool exec(const RawCmd& cmd);
 };
-
-} //namespace cmd
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // QUITCMDPROCESSOR_H

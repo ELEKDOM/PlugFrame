@@ -20,7 +20,7 @@
 #ifndef LOGFILTER_H
 #define LOGFILTER_H
 
-#include "logger_forward.h"
+#include "logdevice.h"
 
 namespace elekdom
 {
@@ -50,12 +50,12 @@ private:
     bool testFlags(uint flags, uint level);
 
 private:
-    QString      m_name;
-    QString      m_timestampFormat;
-    uint         m_dFlags;
-    uint         m_wFlags;
-    uint         m_iFlags;
-    QspLogDevice m_firstOutput;
+    QString                   m_name;
+    QString                   m_timestampFormat;
+    uint                      m_dFlags;
+    uint                      m_wFlags;
+    uint                      m_iFlags;
+    QSharedPointer<LogDevice> m_firstOutput;
 };
 
 } //namespace bundle

@@ -16,8 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include <iostream>
 #include "console.h"
 #include "consolefactory.h"
 #include "terminal.h"
@@ -26,15 +24,11 @@
 #include "logger/pflog.h"
 #include "bundle/bundlecontext.h"
 #include "worker/workerargs.h"
-#include "worker/workerouts.h"
 #include "service-int/systemserviceinterface.h"
 #include "service-int/displayserviceinterface.h"
 
-using namespace elekdom::plugframe::console;
-using namespace elekdom::plugframe;
-
-bundle::Console::Console(int descriptionTab):
-    core::bundle::BundleImplementation{"Console"},
+Console::Console(int descriptionTab):
+    plugframe::BundleImplementation{"Console"},
     m_exit{new ConsoleExit{*this}},
     m_terminal{nullptr},
     m_systemServiceItf{nullptr},
@@ -44,33 +38,33 @@ bundle::Console::Console(int descriptionTab):
     m_exit->connectWorker(this);
 }
 
-bundle::Console::~Console()
+Console::~Console()
 {
 
 }
 
-void bundle::Console::startTerminal()
+void Console::startTerminal()
 {
-    core::worker::QspWorkerArgs args; // no args!
+    plugframe::QspWorkerArgs args; // no args!
 
     startWork(args);
 }
 
-int bundle::Console::runningLevel()
+int Console::runningLevel()
 {
     return m_systemServiceItf->runningLevel();
 }
 
-core::plugin::BundleList bundle::Console::loadedBundleList()
+plugframe::BundleList Console::loadedBundleList()
 {
-    core::plugin::BundleList ret;
-    core::plugin::BundleList bundleL{m_systemServiceItf->bundleList()};
-    core::plugin::BundleList_Iterator it;
+    plugframe::BundleList ret;
+    plugframe::BundleList bundleL{m_systemServiceItf->bundleList()};
+    plugframe::BundleList_Iterator it;
 
     for (it = bundleL.begin(); it != bundleL.end(); ++it)
     {
         pfDebug4(getLogBundleName()) << tr("%1 state %2").arg((*it)->getName(), (*it)->stateStr());
-        if ((*it)->getState() == core::plugin::BundleInterface::BundleState::Initialized)
+        if ((*it)->getState() == plugframe::BundleInterface::BundleState::Initialized)
         {
             ret.append(*it);
         }
@@ -79,15 +73,15 @@ core::plugin::BundleList bundle::Console::loadedBundleList()
     return ret;
 }
 
-core::plugin::BundleList bundle::Console::startedBundleList()
+plugframe::BundleList Console::startedBundleList()
 {
-    core::plugin::BundleList ret;
-    core::plugin::BundleList bundleL{m_systemServiceItf->bundleList()};
-    core::plugin::BundleList_Iterator it;
+    plugframe::BundleList ret;
+    plugframe::BundleList bundleL{m_systemServiceItf->bundleList()};
+    plugframe::BundleList_Iterator it;
 
     for (it = bundleL.begin(); it != bundleL.end(); ++it)
     {
-        if ((*it)->getState() == core::plugin::BundleInterface::BundleState::Started)
+        if ((*it)->getState() == plugframe::BundleInterface::BundleState::Started)
         {
             ret.append(*it);
         }
@@ -96,7 +90,7 @@ core::plugin::BundleList bundle::Console::startedBundleList()
     return ret;
 }
 
-void bundle::Console::quit()
+void Console::quit()
 {
     if (m_terminal)
     {
@@ -104,12 +98,12 @@ void bundle::Console::quit()
     }
 }
 
-void bundle::Console::quitApp()
+void Console::quitApp()
 {
     m_systemServiceItf->quit();
 }
 
-void bundle::Console::print(const QString &msg)
+void Console::print(const QString &msg)
 {
     if (m_display)
     {
@@ -117,10 +111,10 @@ void bundle::Console::print(const QString &msg)
     }
 }
 
-void bundle::Console::printDescription(const QString &cmd, const QString &usage)
+void Console::printDescription(const QString &cmd, const QString &usage)
 {
-    int     cmdwidth{cmd.size()};
-    QString padding;
+    qsizetype cmdwidth{cmd.size()};
+    QString   padding;
 
     padding.fill(' ', m_descriptionTab - cmdwidth);
     QString msg{QString("%1%2%3\n").arg(cmd, padding, usage)};
@@ -128,23 +122,23 @@ void bundle::Console::printDescription(const QString &cmd, const QString &usage)
     print(msg);
 }
 
-core::bundle::BundleFactory *bundle::Console::createFactory()
+plugframe::BundleFactory *Console::createFactory()
 {
-    return new factory::ConsoleFactory;
+    return new ConsoleFactory;
 }
 
-void bundle::Console::_start(core::bundle::QspBundleContext bundleContext)
+void Console::_start(plugframe::QspBundleContext bundleContext)
 {
-    core::bundle::BundleImplementation::_start(bundleContext);
+    plugframe::BundleImplementation::_start(bundleContext);
 
-    m_systemServiceItf = bundleContext->getService<framework::service::SystemServiceInterface>(framework::service::SystemServiceInterface::serviceName());
-    m_display = bundleContext->getService<display::service::DisplayServiceInterface>(display::service::DisplayServiceInterface::serviceName());
+    m_systemServiceItf = bundleContext->getService<plugframe::SystemServiceInterface>(plugframe::SystemServiceInterface::serviceName());
+    m_display = bundleContext->getService<plugframe::DisplayServiceInterface>(plugframe::DisplayServiceInterface::serviceName());
 
     // Register the listener to wait for framework started evt
     m_systemServiceItf->registerListener(getListener().get());
 }
 
-core::worker::WorkerThread *bundle::Console::createWorkerThread(core::worker::QspWorkerArgs args)
+plugframe::WorkerThread *Console::createWorkerThread(plugframe::QspWorkerArgs args)
 {
     QString appName{m_systemServiceItf->applicationName()};
 
@@ -154,10 +148,10 @@ core::worker::WorkerThread *bundle::Console::createWorkerThread(core::worker::Qs
     return m_terminal;
 }
 
-void bundle::Console::buildCommandProcessorSet()
+void Console::buildCommandProcessorSet()
 {
-    factory::ConsoleFactory&      factory{dynamic_cast<factory::ConsoleFactory&>(getFactory())};
-    cmd::QspCmdProcessor cmdProcessor, first;
+    ConsoleFactory& factory{dynamic_cast<ConsoleFactory&>(getFactory())};
+    QspCmdProcessor cmdProcessor, first;
 
     // started command processor
     //-----------------------
@@ -185,9 +179,9 @@ void bundle::Console::buildCommandProcessorSet()
     m_terminal->addCmdProcessor(first);
 }
 
-void bundle::Console::addCmdProcessor(cmd::QspCmdProcessor cmdProcessor)
+void Console::addCmdProcessor(QspCmdProcessor cmdProcessor)
 {
     m_terminal->addCmdProcessor(cmdProcessor);
 }
 
-PF_qtServiceInterface_DEF(bundle::Console)
+PF_qtServiceInterface_DEF(Console)

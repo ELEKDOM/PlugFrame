@@ -16,25 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "consoleexit.h"
 #include "console.h"
-#include "worker/workerouts.h"
 
-using namespace elekdom::plugframe::console;
-
-bundle::ConsoleExit::ConsoleExit(Console& console):
+ConsoleExit::ConsoleExit(Console& console):
     m_console{console}
 {
 
 }
 
-bundle::ConsoleExit::~ConsoleExit()
+ConsoleExit::~ConsoleExit()
 {
 
 }
 
-void bundle::ConsoleExit::onWorkFinished(elekdom::plugframe::core::worker::QspWorkerOuts outs)
+void ConsoleExit::onWorkFinished(plugframe::QspWorkerOuts outs)
 {
     Q_UNUSED(outs)
     m_console.quitApp();

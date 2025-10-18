@@ -22,13 +22,7 @@
 
 #include <QSharedPointer>
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
+namespace elekdom::plugframe::logger::bundle
 {
     class Logger;
     class LogFilter;
@@ -39,8 +33,5 @@ namespace bundle
     using QspLogFilter = QSharedPointer<LogFilter>;
     using QspLogDevice = QSharedPointer<LogDevice>;
 
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
+} //namespace elekdom::plugframe::logger::bundle
 #endif // LOGGER_FORWARD_H

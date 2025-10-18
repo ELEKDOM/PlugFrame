@@ -16,35 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef STARTEDLISTCMDPROCESSOR_H
 #define STARTEDLISTCMDPROCESSOR_H
 
 #include "cmd/cmdprocessor.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace cmd
-{
-
 class StartedListCmdProcessor : public CmdProcessor
 {
 public:
     StartedListCmdProcessor(const QString& logChannel,
-                               console::bundle::Console& console);
+                            Console& console);
     virtual ~StartedListCmdProcessor();
 
 protected:
     virtual bool exec(const RawCmd& cmd);
 };
-
-} //namespace cmd
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
 
 #endif // STARTEDLISTCMDPROCESSOR_H
