@@ -16,25 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlecontext.h"
-#include "bundle.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-BundleContext::BundleContext(framework::service::SystemServiceRegistryInterface *registryService):
+plugframe::BundleContext::BundleContext(plugframe::SystemServiceRegistryInterface *registryService):
     m_registryService{registryService}
-
 {
 
 }
 
-BundleContext::~BundleContext()
+plugframe::BundleContext::~BundleContext()
 {
 
 }
 
-bool BundleContext::registerService(const QString &serviceInterfaceName, plugin::ServiceInterface* service)
+bool plugframe::BundleContext::registerService(const QString &serviceInterfaceName,
+                                               plugframe::ServiceInterface* service)
 {
     bool ret{m_registryService->registerService(serviceInterfaceName,service)};
     return ret;

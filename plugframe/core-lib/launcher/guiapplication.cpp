@@ -16,32 +16,29 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QApplication>
 #include <QFile>
 #include "guiapplication.h"
 #include "launcher/launchingproperties.h"
 
-using namespace elekdom::plugframe::core::launcher;
-
-GuiApplication::GuiApplication()
+plugframe::GuiApplication::GuiApplication()
 {
 
 }
 
-GuiApplication::~GuiApplication()
+plugframe::GuiApplication::~GuiApplication()
 {
 
 }
 
-void GuiApplication::createApp(int& argc, char *argv[])
+void plugframe::GuiApplication::createApp(int& argc, char *argv[])
 {
     m_spApp.reset(new QApplication(argc, argv));
 }
 
-void GuiApplication::setStyleSheet()
+void plugframe::GuiApplication::setStyleSheet()
 {
-    const QspLaunchingProperties& properties{launchingProperties()};
+    const plugframe::QspLaunchingProperties& properties{launchingProperties()};
 
     if (!properties.isNull() && properties->hasStyleSheet())
     {

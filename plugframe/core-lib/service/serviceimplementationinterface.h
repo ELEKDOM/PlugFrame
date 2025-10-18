@@ -21,18 +21,11 @@
 #define SERVICEIMPLEMENTATIONINTERFACE_H
 
 #include <QHash>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace service
-{
-
 class PFCORELIB_EXPORT ServiceImplementationInterface
 {
 public:
@@ -43,11 +36,9 @@ public:
     virtual QString serviceName() = 0;
 };
 
-using ServiceImplementationInterfaceHash = QHash<QString, QspServiceImplementationInterface>;
-using ServiceImplementationInterfaceHashConstIt = QHash<QString, QspServiceImplementationInterface>::const_iterator;
+using QspServiceImplementationInterface = QSharedPointer<ServiceImplementationInterface>;
+using ServiceImplementationInterfaceHash = QHash<QString, plugframe::QspServiceImplementationInterface>;
+using ServiceImplementationInterfaceHashConstIt = QHash<QString, plugframe::QspServiceImplementationInterface>::const_iterator;
 
-} //namespace service
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 #endif // SERVICEIMPLEMENTATIONINTERFACE_H

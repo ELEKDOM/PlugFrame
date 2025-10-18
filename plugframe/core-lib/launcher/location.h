@@ -16,23 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOCATION_H
 #define LOCATION_H
 
 #include <QString>
 #include <QDir>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace launcher
-{
-
 class PFCORELIB_EXPORT Location
 {
 private:
@@ -49,10 +42,6 @@ public:
 private:
     QString m_applicationDirPath;
 };
-
-} //namespace launcher
-} //namespace core
+using QspLocation = QSharedPointer<Location>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // LOCATION_H

@@ -16,32 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SERVICE_EVENT_H
 #define SERVICE_EVENT_H
 
 #include "pfcore-lib_export.h"
 #include "event/event.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT ServiceEvent : public Event
 {
 public:
     ServiceEvent(const QString& typeId);
     ~ServiceEvent() override;
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
+} //namespace plugframe
 
 #endif // SERVICE_EVENT_H

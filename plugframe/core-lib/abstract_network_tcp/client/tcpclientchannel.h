@@ -16,36 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENTCHANNEL_H
 #define TCPCLIENTCHANNEL_H
 
 #include "abstract_network_tcp/common/tcpchannel.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace bundle
-{
-
-class TcpClientChannel : public TcpChannel
+class PFCORELIB_EXPORT TcpClientChannel : public TcpChannel
 {
 public:
     TcpClientChannel(QTcpSocket *socket,TcpChannelDeserializer *deserializer,QObject *parent = nullptr);
     ~TcpClientChannel() override;
 };
-
-}//namespace bundle
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENTCHANNEL_H

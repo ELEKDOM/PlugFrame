@@ -1,12 +1,12 @@
-QT += gui widgets xml network
+QT += core gui widgets xml network
 
 TEMPLATE = lib
 DEFINES += PFCORE_LIBRARY
 
-CONFIG += c++11
+CONFIG += c++17
 
 PF_LIB_VERSION = $$cat(pfcore-lib.ver)
-TARGET = plugframe-core-qt5-$${PF_LIB_VERSION}
+TARGET = plugframe-core-q6-$${PF_LIB_VERSION}
 
 SOURCES += \
         abstract_network_tcp/client/plugin/tcpclientplugin.cpp \
@@ -52,7 +52,7 @@ SOURCES += \
         event/frameworkevent/stopbundleevent.cpp \
         event/loopevent.cpp \
         event/serviceevent/serviceevent.cpp \
-        event/systemevent/smfsystemquitevent.cpp\
+        event/systemevent/systemquitevent.cpp\
         event/systemevent/systemevent.cpp \
         factory/bundlefactory.cpp \
         factory/corefactory.cpp \
@@ -81,7 +81,7 @@ SOURCES += \
         worker/workersignal.cpp \
         worker/workerthread.cpp \
         worker/workerwatcher.cpp \
-        xmldom/document.cpp
+        xmldom/xmldocument.cpp
 
 HEADERS += \
         abstract_network_tcp/client/plugin/tcpclientplugin.h \
@@ -130,7 +130,7 @@ HEADERS += \
         event/loopevent.h \
         event/serviceevent/serviceevent.h \
         event/systemevent/systemevent.h \
-        event/systemevent/smfsystemquitevent.h\
+        event/systemevent/systemquitevent.h\
         factory/bundlefactory.h \
         factory/corefactory.h \
         factory/defaultbundlefactory.h \
@@ -176,8 +176,8 @@ HEADERS += \
         worker/workersignal.h \
         worker/workerthread.h \
         worker/workerwatcher.h \
-        xmldom/browserhook.h \
-        xmldom/document.h
+        xmldom/xmlbrowserhook.h \
+        xmldom/xmldocument.h
 
 OTHER_FILES += \
     pfcore-lib.ver \

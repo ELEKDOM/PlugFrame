@@ -16,20 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "location.h"
 
-using namespace elekdom::plugframe::core::launcher;
+const QString plugframe::Location::BUNDLES_SUBDIR = "bundles";
+const QString plugframe::Location::FRAMEWORK_SUBDIR = "framework";
 
-const QString Location::BUNDLES_SUBDIR = "bundles";
-const QString Location::FRAMEWORK_SUBDIR = "framework";
-
-Location::Location(const QString & applicationDirPath):
+plugframe::Location::Location(const QString & applicationDirPath):
     m_applicationDirPath(applicationDirPath)
 {
 }
 
-bool Location::cdFrameworkBundleDir(QDir& dir)
+bool plugframe::Location::cdFrameworkBundleDir(QDir& dir)
 {
     bool ret;
 
@@ -42,7 +39,7 @@ bool Location::cdFrameworkBundleDir(QDir& dir)
     return ret;
 }
 
-bool Location::cdBundlesDir(QDir& dir)
+bool plugframe::Location::cdBundlesDir(QDir& dir)
 {
     bool ret(false);
 
@@ -63,7 +60,7 @@ bool Location::cdBundlesDir(QDir& dir)
     return ret;
 }
 
-bool Location::isBundleSubDir(const QString& subdirName)
+bool plugframe::Location::isBundleSubDir(const QString& subdirName)
 {
     return FRAMEWORK_SUBDIR != subdirName;
 }

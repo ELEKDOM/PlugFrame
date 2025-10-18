@@ -16,13 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "weeklyscheduler.h"
 #include "dailyscheduler.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-WeeklyScheduler::WeeklyScheduler(const QString &name, const DigitalSuite& assignedWeeks):
+plugframe::WeeklyScheduler::WeeklyScheduler(const QString &name, const DigitalSuite& assignedWeeks):
     m_name{name},
     m_assignedWeeks{assignedWeeks},
     m_sequenceOfDay{8} // 0 is never used !
@@ -33,8 +30,8 @@ WeeklyScheduler::WeeklyScheduler(const QString &name, const DigitalSuite& assign
     }
 }
 
-void WeeklyScheduler::assignDailySequence(QspDailyScheduler dailyScheduler,
-                                          const DigitalSuite& assignedDays)
+void plugframe::WeeklyScheduler::assignDailySequence(QspDailyScheduler dailyScheduler,
+                                                     const DigitalSuite& assignedDays)
 {
     for (int i = 0; i < assignedDays.size(); i++)
     {
@@ -42,9 +39,9 @@ void WeeklyScheduler::assignDailySequence(QspDailyScheduler dailyScheduler,
     }
 }
 
-DailyScheduler *WeeklyScheduler::dailySched(int dayOfWeek)
+plugframe::DailyScheduler *plugframe::WeeklyScheduler::dailySched(int dayOfWeek)
 {
-    DailyScheduler *ret{nullptr};
+    plugframe::DailyScheduler *ret{nullptr};
 
     if (dayOfWeek > 0 && dayOfWeek < 8)
     {

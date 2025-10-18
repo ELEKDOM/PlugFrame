@@ -16,22 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "consoleapplication.h"
 
-using namespace elekdom::plugframe::core::launcher;
-
-ConsoleApplication::ConsoleApplication()
+plugframe::ConsoleApplication::ConsoleApplication()
 {
 
 }
 
-ConsoleApplication::~ConsoleApplication()
+plugframe::ConsoleApplication::~ConsoleApplication()
 {
 
 }
 
-void ConsoleApplication::createApp(int& argc, char *argv[])
+void plugframe::ConsoleApplication::createApp(int& argc, char *argv[])
 {
     m_spApp.reset(new QCoreApplication(argc, argv));
 }

@@ -16,21 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DEFAULTBUNDLEFACTORY_H
 #define DEFAULTBUNDLEFACTORY_H
 
 #include "bundlefactory.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT DefaultBundleFactory : public BundleFactory
 {
 public:
@@ -38,11 +30,7 @@ public:
     ~DefaultBundleFactory() override;
 
 protected:
-    PF_createServiceImplementation_DECL};
-
-} //namespace bundle
-} //namespace core
+    PF_createServiceImplementation_DECL
+};
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // DEFAULTBUNDLEFACTORY_H

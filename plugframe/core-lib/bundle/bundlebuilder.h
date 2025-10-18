@@ -22,16 +22,10 @@
 
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
+#include "service/serviceimplementationinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleBuilder
 {
 private:
@@ -48,22 +42,17 @@ protected:
     Bundle& getBundle();
     BundleImplementation *getImplementation();
     const QString& getLogBundleName();
-    plugframe::core::bundle::BundleFactory& getFactory();
+    BundleFactory& getFactory();
     void setHeaders(BundleHeaders* bundleHeaders);
     void loadManifestHeaders();
     void setEmitter(BundleEmitter *emitter);
     void setListener(BundleListener *listener);
     void defaultListening();
-    void addExportedService(service::QspServiceImplementationInterface newService);
+    void addExportedService(QspServiceImplementationInterface newService);
     virtual void specificBuild();
 
 private:
     void buildExportedServices(const QList<QString>& providedServices);
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLE_BUILDER_H

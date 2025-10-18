@@ -16,23 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLESSTORE_H
 #define BUNDLESSTORE_H
 
 #include <QString>
+#include <QSharedPointer>
+#include "location.h"
+#include "plugin/bundleinterface.h"
 #include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace launcher
-{
-
 /**
  * @brief The BundlesStore class
  */
@@ -42,16 +36,12 @@ public:
     BundlesStore(QspLocation location);
 
 public:
-    plugframe::framework::plugin::FrameworkInterface* loadFrameworkPlugin(QString caller);
-    void loadPlugins(QString caller, plugin::BundleList& bundleList);
+    FrameworkInterface* loadFrameworkPlugin(QString caller);
+    void loadPlugins(QString caller,BundleList& bundleList);
 
 private:
     QspLocation m_location;
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundlesStore = QSharedPointer<BundlesStore>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLESSTORE_H

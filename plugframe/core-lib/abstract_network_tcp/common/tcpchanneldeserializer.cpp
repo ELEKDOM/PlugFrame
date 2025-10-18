@@ -16,14 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpchanneldeserializer.h"
 
-using namespace elekdom::plugframe::core::tcp;
+plugframe::TcpChannelDeserializer::TcpChannelDeserializer() {}
 
-TcpChannelDeserializer::TcpChannelDeserializer() {}
-
-TcpChannelDeserializer::~TcpChannelDeserializer()
+plugframe::TcpChannelDeserializer::~TcpChannelDeserializer()
 {
 
 }

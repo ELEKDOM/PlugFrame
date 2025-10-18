@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIPAGECONTROLLER_H
 #define GUIPAGECONTROLLER_H
 
@@ -24,18 +23,12 @@
 #include <QString>
 #include <QStringList>
 #include <QAction>
+#include <QSharedPointer>
+#include "guipageview.h"
 #include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace gui
-{
-
 class PFCORELIB_EXPORT GuiPageController : public QObject
 {
     Q_OBJECT
@@ -74,8 +67,8 @@ protected:
 
 signals:
     void showPage(int idx);
-    void updatePageIdx(GuiPageController* ctrl);
-    void curCtrl(GuiPageController* ctrl);
+    void updatePageIdx(plugframe::GuiPageController* ctrl);
+    void curCtrl(plugframe::GuiPageController* ctrl);
     void statusMessage(QString msg);
     void clearStatusMessage();
 
@@ -91,9 +84,6 @@ private:
     QStringList     m_menusNames; // To manage controller selection into menubar. m_menusNames[0] is the main menu name. If not empty, m_menusNames[1] is the controller selection name if not empty
     QString         m_statusMsg;
 };
-
-}//namespace gui
-}//namespace core
+using QspGuiPageController = QSharedPointer<GuiPageController>;
 }//namespace plugframe
-}//namespace elekdom
 #endif // GUIPAGECONTROLLER_H

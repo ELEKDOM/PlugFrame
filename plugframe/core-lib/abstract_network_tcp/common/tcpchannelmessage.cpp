@@ -16,16 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpchannelmessage.h"
 
-using namespace elekdom::plugframe::core::tcp;
-
-TcpChannelMessage::TcpChannelMessage(quint16 msgType):
+plugframe::TcpChannelMessage::TcpChannelMessage(quint16 msgType):
     m_msgType{msgType}
 {}
 
-TcpChannelMessage::~TcpChannelMessage()
+plugframe::TcpChannelMessage::~TcpChannelMessage()
 {
 
 }

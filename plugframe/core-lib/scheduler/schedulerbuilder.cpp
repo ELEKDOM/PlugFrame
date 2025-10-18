@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "schedulerbuilder.h"
 #include "schedulerelement.h"
 #include "scheduler.h"
@@ -25,19 +24,17 @@
 #include "weeklyscheduler.h"
 #include "digitalsuite.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-SchedulerBuilder::SchedulerBuilder(const QString& logChannel):
+plugframe::SchedulerBuilder::SchedulerBuilder(const QString& logChannel):
     Loggable{logChannel},
     m_newlyScheduler{nullptr}
 {}
 
-SchedulerBuilder::~SchedulerBuilder()
+plugframe::SchedulerBuilder::~SchedulerBuilder()
 {
 
 }
 
-bool SchedulerBuilder::schedulerDeclarationBegin(const QString &schedulerId)
+bool plugframe::SchedulerBuilder::schedulerDeclarationBegin(const QString &schedulerId)
 {
     bool ret{true};
 
@@ -46,28 +43,28 @@ bool SchedulerBuilder::schedulerDeclarationBegin(const QString &schedulerId)
     return ret;
 }
 
-bool SchedulerBuilder::schedulerDeclarationEnd()
+bool plugframe::SchedulerBuilder::schedulerDeclarationEnd()
 {
     bool ret{true};
 
     return ret;
 }
 
-bool SchedulerBuilder::dailySchedulersDeclarationBegin()
+bool plugframe::SchedulerBuilder::dailySchedulersDeclarationBegin()
 {
     bool ret{true};
 
     return ret;
 }
 
-bool SchedulerBuilder::dailySchedulersDeclarationEnd()
+bool plugframe::SchedulerBuilder::dailySchedulersDeclarationEnd()
 {
     bool ret{true};
 
     return ret;
 }
 
-bool SchedulerBuilder::dailySchedulerDeclarationBegin(const QString &dailySchedulerId)
+bool plugframe::SchedulerBuilder::dailySchedulerDeclarationBegin(const QString &dailySchedulerId)
 {
     bool ret{true};
 
@@ -77,7 +74,7 @@ bool SchedulerBuilder::dailySchedulerDeclarationBegin(const QString &dailySchedu
     return ret;
 }
 
-bool SchedulerBuilder::dailySchedulerDeclarationEnd()
+bool plugframe::SchedulerBuilder::dailySchedulerDeclarationEnd()
 {
     bool ret{true};
 
@@ -86,7 +83,7 @@ bool SchedulerBuilder::dailySchedulerDeclarationEnd()
     return ret;
 }
 
-bool SchedulerBuilder::dailySchedulerEventDeclaration(const QTime &timeEvt, const QString &evt)
+bool plugframe::SchedulerBuilder::dailySchedulerEventDeclaration(const QTime &timeEvt, const QString &evt)
 {
     bool ret{true};
     ScheduledEvent *tmp{createScheduledEvent(timeEvt,evt)};
@@ -100,21 +97,21 @@ bool SchedulerBuilder::dailySchedulerEventDeclaration(const QTime &timeEvt, cons
     return ret;
 }
 
-bool SchedulerBuilder::weeklySchedulersDeclarationBegin()
+bool plugframe::SchedulerBuilder::weeklySchedulersDeclarationBegin()
 {
     bool ret{true};
 
     return ret;
 }
 
-bool SchedulerBuilder::weeklySchedulersDeclarationEnd()
+bool plugframe::SchedulerBuilder::weeklySchedulersDeclarationEnd()
 {
     bool ret{true};
 
     return ret;
 }
 
-bool SchedulerBuilder::weeklySchedulerDeclarationBegin(const QString &weeklySchedulerId, const DigitalSuite &assignedWeeks)
+bool plugframe::SchedulerBuilder::weeklySchedulerDeclarationBegin(const QString &weeklySchedulerId, const DigitalSuite &assignedWeeks)
 {
     bool ret{true};
 
@@ -124,7 +121,7 @@ bool SchedulerBuilder::weeklySchedulerDeclarationBegin(const QString &weeklySche
     return ret;
 }
 
-bool SchedulerBuilder::weeklySchedulerDeclarationEnd()
+bool plugframe::SchedulerBuilder::weeklySchedulerDeclarationEnd()
 {
     bool ret{true};
 
@@ -133,7 +130,7 @@ bool SchedulerBuilder::weeklySchedulerDeclarationEnd()
     return ret;
 }
 
-bool SchedulerBuilder::weeklySchedulerDailySequenceDeclaration(const QString &dailySchedulerId, const DigitalSuite &assignedDays)
+bool plugframe::SchedulerBuilder::weeklySchedulerDailySequenceDeclaration(const QString &dailySchedulerId, const DigitalSuite &assignedDays)
 {
     bool ret{false};
     QspDailyScheduler dailyScheduler(m_newlyScheduler->dailyScheduler(dailySchedulerId));
@@ -147,22 +144,22 @@ bool SchedulerBuilder::weeklySchedulerDailySequenceDeclaration(const QString &da
     return ret;
 }
 
-Scheduler *SchedulerBuilder::createScheduler(const QString& schedulerId)
+plugframe::Scheduler *plugframe::SchedulerBuilder::createScheduler(const QString& schedulerId)
 {
     return new Scheduler{logChannel(),schedulerId};
 }
 
-DailyScheduler *SchedulerBuilder::createDailyScheduler(const QString &name)
+plugframe::DailyScheduler *plugframe::SchedulerBuilder::createDailyScheduler(const QString &name)
 {
     return new DailyScheduler{name};
 }
 
-ScheduledEvent *SchedulerBuilder::createScheduledEvent(const QTime& timeEvt,const QString& evt)
+plugframe::ScheduledEvent *plugframe::SchedulerBuilder::createScheduledEvent(const QTime& timeEvt,const QString& evt)
 {
     return new ScheduledEvent{timeEvt, evt};
 }
 
-WeeklyScheduler *SchedulerBuilder::createWeeklyScheduler(const QString &name, const DigitalSuite& assignedWeeks)
+plugframe::WeeklyScheduler *plugframe::SchedulerBuilder::createWeeklyScheduler(const QString &name, const DigitalSuite& assignedWeeks)
 {
     return new WeeklyScheduler{name, assignedWeeks};
 }

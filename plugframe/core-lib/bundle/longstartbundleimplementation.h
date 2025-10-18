@@ -16,21 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LONGSTARTBUNDLEIMPLEMENTATION_H
 #define LONGSTARTBUNDLEIMPLEMENTATION_H
 
 #include "bundleimplementation.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT LongStartBundleImplementation : public BundleImplementation
 {
 public:
@@ -44,10 +36,6 @@ protected:
     void start(QspBundleContext bundleContext) override;
     void defaultListening() override;
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // LONGSTARTBUNDLEIMPLEMENTATION_H

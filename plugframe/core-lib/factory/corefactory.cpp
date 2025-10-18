@@ -16,32 +16,27 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "corefactory.h"
 #include "launcher/launchingproperties.h"
-#include "launcher/launcher.h"
 #include "launcher/location.h"
 #include "launcher/bundlesstore.h"
 
-using namespace elekdom::plugframe::core;
-using namespace elekdom::plugframe::core::launcher;
-
-CoreFactory::~CoreFactory()
+plugframe::CoreFactory::~CoreFactory()
 {
 }
 
-QspLaunchingProperties CoreFactory::createLaunchingProperties(const QString& fileName)
+plugframe::QspLaunchingProperties plugframe::CoreFactory::createLaunchingProperties(const QString& fileName)
 {
-    return launcher::QspLaunchingProperties(new LaunchingProperties(fileName));
+    return plugframe::QspLaunchingProperties(new plugframe::LaunchingProperties(fileName));
 }
 
-QspLocation CoreFactory::createLocation(const QString & applicationDirPath)
+plugframe::QspLocation plugframe::CoreFactory::createLocation(const QString & applicationDirPath)
 {
-    return launcher::QspLocation(new Location(applicationDirPath));
+    return plugframe::QspLocation(new plugframe::Location(applicationDirPath));
 }
 
-QspBundlesStore CoreFactory::createBundlesStore(QspLocation location)
+plugframe::QspBundlesStore plugframe::CoreFactory::createBundlesStore(QspLocation location)
 {
-    return QspBundlesStore(new BundlesStore(location));
+    return plugframe::QspBundlesStore(new plugframe::BundlesStore(location));
 }
 

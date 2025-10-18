@@ -16,18 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientchannel.h"
 
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-TcpClientChannel::TcpClientChannel(QTcpSocket *socket,TcpChannelDeserializer *deserializer,QObject *parent):
-    TcpChannel(socket,deserializer,parent)
+plugframe::TcpClientChannel::TcpClientChannel(QTcpSocket *socket,
+                                              plugframe::TcpChannelDeserializer *deserializer,
+                                              QObject *parent):
+    plugframe::TcpChannel(socket,deserializer,parent)
 {
 
 }
 
-TcpClientChannel::~TcpClientChannel()
+plugframe::TcpClientChannel::~TcpClientChannel()
 {
     delete m_socket;
 }

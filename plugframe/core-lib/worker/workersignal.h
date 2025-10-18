@@ -16,23 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKERSIGNAL_H
 #define WORKERSIGNAL_H
 
 #include <QObject>
+#include "workerouts.h"
 #include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class  PFCORELIB_EXPORT WorkerSignal : public QObject
 {
     Q_OBJECT
@@ -42,12 +34,7 @@ public:
     ~WorkerSignal() override;
 
 signals:
-    void workFinished(QspWorkerOuts outs);
+    void workFinished(plugframe::QspWorkerOuts outs);
 };
-
-}//namespace worker
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WORKERSIGNAL_H

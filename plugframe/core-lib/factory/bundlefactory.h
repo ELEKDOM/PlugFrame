@@ -20,19 +20,17 @@
 #ifndef FACTORY_BUNDLE_H
 #define FACTORY_BUNDLE_H
 
+#include <QSharedPointer>
+#include "plugin/bundleinterface.h"
+#include "event/bundleevent/bundlestartingevent.h"
+#include "event/bundleevent/bundlestartedevent.h"
+#include "event/bundleevent/bundlestoppingevent.h"
+#include "event/bundleevent/bundlestoppedevent.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
-#include "plugin/bundleinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleFactory
 {
 public:
@@ -44,21 +42,18 @@ public:
     virtual BundleHeaders *createHeaders(const QString& logChannel);
     virtual BundleEmitter *createBundleEmitter(Bundle& myBundle);
     virtual BundleListener *createBundleListener(Bundle& myBundle);
-    virtual service::ServiceImplementationInterface *createServiceImplementation(BundleImplementation *implementation,
-                                                                                 const QString& serviceName,
-                                                                                 const QString& serviceVersion)=0;
-    virtual event::BundleStartingEvent *createBundleStartingEvent(core::plugin::BundleInterface *bundleItf);
-    virtual event::BundleStartedEvent *createBundleStartedEvent(core::plugin::BundleInterface *bundleItf);
-    virtual event::BundleStoppingEvent *createBundleStoppingEvent(core::plugin::BundleInterface *bundleItf);
-    virtual event::BundleStoppedEvent *createBundleStoppedEvent(core::plugin::BundleInterface *bundleItf);
+    virtual ServiceImplementationInterface *createServiceImplementation(BundleImplementation *implementation,
+                                                                        const QString& serviceName,
+                                                                        const QString& serviceVersion)=0;
+    virtual BundleStartingEvent *createBundleStartingEvent(BundleInterface *bundleItf);
+    virtual BundleStartedEvent *createBundleStartedEvent(BundleInterface *bundleItf);
+    virtual BundleStoppingEvent *createBundleStoppingEvent(BundleInterface *bundleItf);
+    virtual BundleStoppedEvent *createBundleStoppedEvent(BundleInterface *bundleItf);
  };
-
-} //namespace bundle
-} //namespace core
+using QspBundleFactory = QSharedPointer<BundleFactory>;
 } //namespace plugframe
-} //namespace elekdom
 
-#define PF_createServiceImplementation_DECL elekdom::plugframe::core::service::ServiceImplementationInterface *createServiceImplementation(elekdom::plugframe::core::bundle::BundleImplementation*,const QString&,const QString&)override;
-#define PF_createServiceImplementation_DEF(TYPE) elekdom::plugframe::core::service::ServiceImplementationInterface *TYPE::createServiceImplementation(elekdom::plugframe::core::bundle::BundleImplementation*,const QString&,const QString&){return nullptr;}
+#define PF_createServiceImplementation_DECL plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation*,const QString&,const QString&)override;
+#define PF_createServiceImplementation_DEF(TYPE) plugframe::ServiceImplementationInterface *TYPE::createServiceImplementation(plugframe::BundleImplementation*,const QString&,const QString&){return nullptr;}
 
 #endif // FACTORY_BUNDLE_H

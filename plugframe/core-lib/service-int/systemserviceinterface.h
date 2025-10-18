@@ -16,25 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SYSTEMSERVICEINTERFACE_H
 #define SYSTEMSERVICEINTERFACE_H
 
 #include <QString>
 #include "serviceinterface.h"
-#include "pfcore-lib_forward.h"
 #include "bundle/bundlelistener.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace framework
-{
-namespace service
-{
-
-class SystemServiceInterface : public core::plugin::ServiceInterface
+class SystemServiceInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("SystemServiceInterface");}
@@ -44,19 +35,15 @@ public:
 
 public:
     virtual QString applicationName() = 0;
-    virtual bool registerListener(core::bundle::BundleListener* observer) = 0;
-    virtual bool unregisterListener(core::bundle::BundleListener* observer)  = 0;
-    virtual core::plugin::BundleList bundleList() = 0;
+    virtual bool registerListener(BundleListener* observer) = 0;
+    virtual bool unregisterListener(BundleListener* observer)  = 0;
+    virtual BundleList bundleList() = 0;
     virtual int runningLevel() = 0;
     virtual void quit() = 0;
 };
-
-}//namespace service
-}//namespace framework
 }//namespace plugframe
-}//namespace elekdom
 
 #define PfSystemService_iid "elekdom.plugframe.framework.service.SystemServiceInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::framework::service::SystemServiceInterface, PfSystemService_iid)
+Q_DECLARE_INTERFACE(plugframe::SystemServiceInterface, PfSystemService_iid)
 
 #endif // SYSTEMSERVICEINTERFACE_H

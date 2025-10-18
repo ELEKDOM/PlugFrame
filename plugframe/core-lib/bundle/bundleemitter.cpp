@@ -16,29 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logger/pflog.h"
 #include "bundleemitter.h"
 #include "bundlelistener.h"
 #include "bundle.h"
 #include "factory/bundlefactory.h"
-#include "event/bundleevent/bundlestartingevent.h"
-#include "event/bundleevent/bundlestartedevent.h"
-#include "event/bundleevent/bundlestoppingevent.h"
-#include "event/bundleevent/bundlestoppedevent.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-BundleEmitter::BundleEmitter(Bundle& bundle, QObject *parent):
-    BundleObject{bundle, parent}
+plugframe::BundleEmitter::BundleEmitter(plugframe::Bundle& bundle, QObject *parent):
+    plugframe::BundleObject{bundle, parent}
 {
 }
 
-BundleEmitter::~BundleEmitter()
+plugframe::BundleEmitter::~BundleEmitter()
 {
 }
 
-bool BundleEmitter::registerListener(BundleListener *observer)
+bool plugframe::BundleEmitter::registerListener(plugframe::BundleListener *observer)
 {
     QMutexLocker locker(&m_mutex);
     bool ret {true};
@@ -50,7 +43,7 @@ bool BundleEmitter::registerListener(BundleListener *observer)
 
     if (ret)
     {
-        bool valid = connect(this, SIGNAL(pfEvent(plugframe::core::event::QspEvent)),observer,SLOT(onEvent(plugframe::core::event::QspEvent)),Qt::QueuedConnection);
+        bool valid = connect(this, SIGNAL(pfEvent(plugframe::QspEvent)),observer,SLOT(onEvent(plugframe::QspEvent)),Qt::QueuedConnection);
         if (!valid)
         {
             pfWarning8(getLogBundleName()) << tr("Echec de connexion entre Emitter et Listener !");
@@ -61,7 +54,7 @@ bool BundleEmitter::registerListener(BundleListener *observer)
     return ret;
 }
 
-bool BundleEmitter::unregisterListener(BundleListener *observer)
+bool plugframe::BundleEmitter::unregisterListener(plugframe::BundleListener *observer)
 {
     //pfDebug3(getLogBundleName()) << "->SmfObject::unregisterListener observer" << observer;
 
@@ -70,7 +63,7 @@ bool BundleEmitter::unregisterListener(BundleListener *observer)
     bool ret {m_listenersRegister.removeOne(observer)};
     if (ret)
     {
-        ret = disconnect(this, SIGNAL(pfEvent(plugframe::core::event::QspEvent)),observer,SLOT(onEvent(plugframe::core::event::QspEvent)));
+        ret = disconnect(this, SIGNAL(pfEvent(plugframe::QspEvent)),observer,SLOT(onEvent(plugframe::QspEvent)));
         pfDebug4(getLogBundleName()) << "-- SmfObject::unregisterListener disconnect processed";
     }
 
@@ -78,13 +71,13 @@ bool BundleEmitter::unregisterListener(BundleListener *observer)
     return ret;
 }
 
-void BundleEmitter::postBundleStartingEvt()
+void plugframe::BundleEmitter::postBundleStartingEvt()
 {
     //pfDebug3(getLogBundleName()) << "->BundleEmitter::postBundleStartingEvt";
 
     // Create the event
     BundleFactory& myFactory = getFactory();
-    event::QspEvent evt{myFactory.createBundleStartingEvent(getBundleItf())};
+    plugframe::QspEvent evt{myFactory.createBundleStartingEvent(getBundleItf())};
 
     // Post the event
     emit pfEvent(evt);
@@ -92,12 +85,12 @@ void BundleEmitter::postBundleStartingEvt()
     //pfDebug3(getLogBundleName()) << "<-BundleEmitter::postBundleStartingEvt";
 }
 
-void BundleEmitter::postBundleStartedEvt()
+void plugframe::BundleEmitter::postBundleStartedEvt()
 {
     //pfDebug3(getLogBundleName()) << "->BundleEmitter::postBundleStartedEvt";
 
     // Create the event
-    event::QspEvent evt{getFactory().createBundleStartedEvent(getBundleItf())};
+    plugframe::QspEvent evt{getFactory().createBundleStartedEvent(getBundleItf())};
 
     // Post the event
     emit pfEvent(evt);
@@ -105,12 +98,12 @@ void BundleEmitter::postBundleStartedEvt()
     //pfDebug3(getLogBundleName()) << "<-BundleEmitter::postBundleStartedEvt";
 }
 
-void BundleEmitter::postBundleStoppingEvt()
+void plugframe::BundleEmitter::postBundleStoppingEvt()
 {
     //pfDebug3(getLogBundleName()) << "->BundleEmitter::postBundleStoppingEvt";
 
     // Create the event
-    event::QspEvent evt{getFactory().createBundleStoppingEvent(getBundleItf())};
+    plugframe::QspEvent evt{getFactory().createBundleStoppingEvent(getBundleItf())};
 
     // Post the event
     emit pfEvent(evt);
@@ -118,12 +111,12 @@ void BundleEmitter::postBundleStoppingEvt()
     //pfDebug3(getLogBundleName()) << "<-BundleEmitter::postBundleStoppingEvt";
 }
 
-void BundleEmitter::postBundleStoppedEvt()
+void plugframe::BundleEmitter::postBundleStoppedEvt()
 {
     //pfDebug3(getLogBundleName()) << "->BundleEmitter::postBundleStoppedEvt";
 
     // Create the event
-    event::QspEvent evt{getFactory().createBundleStoppedEvent(getBundleItf())};
+    plugframe::QspEvent evt{getFactory().createBundleStoppedEvent(getBundleItf())};
 
     // Post the event
     emit pfEvent(evt);

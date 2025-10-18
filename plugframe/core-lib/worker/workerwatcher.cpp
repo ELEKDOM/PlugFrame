@@ -16,27 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "workerwatcher.h"
-#include "workerouts.h"
 #include "workersignal.h"
 
-using namespace elekdom::plugframe::core::worker;
-
-WorkerWatcher::WorkerWatcher(QObject *parent) : QObject(parent)
+plugframe::WorkerWatcher::WorkerWatcher(QObject *parent) : QObject(parent)
 {
-    qRegisterMetaType<QspWorkerOuts>("QspWorkerOuts");
+    qRegisterMetaType<plugframe::QspWorkerOuts>("QspWorkerOuts");
 }
 
-WorkerWatcher::~WorkerWatcher()
+plugframe::WorkerWatcher::~WorkerWatcher()
 {
 
 }
 
-void WorkerWatcher::connectWorker(WorkerSignal *workerSign)
+void plugframe::WorkerWatcher::connectWorker(WorkerSignal *workerSign)
 {
     QObject::connect(workerSign, SIGNAL(workFinished(QspWorkerOuts)),
                      this, SLOT(onWorkFinished(QspWorkerOuts)),
-                     //static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection));
                      Qt::QueuedConnection);
 }

@@ -16,23 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRONTENDCONTROLSERVICEINTERFACE_H
 #define FRONTENDCONTROLSERVICEINTERFACE_H
 
 #include "service-int/serviceinterface.h"
 #include "service-int/frontendclientside.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace frontend
-{
-namespace service
-{
-
-class FrontendControlServiceInterface : public core::plugin::ServiceInterface
+class FrontendControlServiceInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("FrontendControlServiceInterface");}
@@ -41,16 +33,13 @@ public:
     virtual ~FrontendControlServiceInterface() {}
 
 public: // service interface definition = 0
-    virtual void connectToHost(FrontendClientSide *clientSide,QString serverIpv4,quint16 serverPort) = 0;
+    virtual void connectToHost(plugframe::FrontendClientSide *clientSide,QString serverIpv4,quint16 serverPort) = 0;
     virtual void closeConnection() = 0;
-    virtual void sendMessageToServer(core::tcp::TcpChannelMessage& msg) = 0;
+    virtual void sendMessageToServer(plugframe::TcpChannelMessage& msg) = 0;
 };
-}//namespace service
-}//namespace frontend
 }//namespace plugframe
-}//namespace elekdom
 
-#define PfFrontendControlService_iid "elekdom.plugframe.frontend.service.FrontendControlServiceInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::frontend::service::FrontendControlServiceInterface,PfFrontendControlService_iid)
+#define PfFrontendControlService_iid "plugframe.FrontendControlServiceInterface"
+Q_DECLARE_INTERFACE(plugframe::FrontendControlServiceInterface,PfFrontendControlService_iid)
 
 #endif // FRONTENDCONTROLSERVICEINTERFACE_H

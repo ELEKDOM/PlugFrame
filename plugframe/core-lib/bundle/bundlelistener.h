@@ -16,24 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLELISTENER_H
 #define BUNDLELISTENER_H
 
 #include <QObject>
+#include <QSharedPointer>
+#include "bundleobject.h"
+#include "event/event.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
-#include "bundleobject.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleListener : public BundleObject
 {
     Q_OBJECT
@@ -43,12 +37,8 @@ public:
     ~BundleListener() override;
 
 public slots:
-    virtual void onEvent(plugframe::core::event::QspEvent ev);
+    virtual void onEvent(plugframe::QspEvent ev);
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundleListener = QSharedPointer<BundleListener>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLELISTENER_H

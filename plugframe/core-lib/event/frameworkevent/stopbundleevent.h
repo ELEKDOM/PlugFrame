@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef STOPBUNDLEEVENT_H
 #define STOPBUNDLEEVENT_H
 
@@ -24,35 +23,22 @@
 #include "frameworkevent.h"
 #include "plugin/bundleinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT StopBundleEvent : public FrameworkEvent
 {
-private:
-    plugin::BundleInterface *m_bundleToStop;
-
 public:
     static const QString s_typeId;
 
 public:
-    StopBundleEvent(plugin::BundleInterface *toStop);
+    StopBundleEvent(BundleInterface *toStop);
     ~StopBundleEvent() override;
 
 public:
-    plugin::BundleInterface *getBundleToStop();
+    BundleInterface *getBundleToStop();
 
+private:
+    BundleInterface *m_bundleToStop;
 };
-
-} //namespace event
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // STOPBUNDLEEVENT_H

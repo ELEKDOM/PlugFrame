@@ -16,28 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENTCHANNELMANAGER_H
 #define TCPCLIENTCHANNELMANAGER_H
 
 #include <QHostAddress>
 #include <QTimer>
 #include "abstract_network_tcp/common/tcpchannelmanager.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace bundle
-{
-
-class TcpClientChannelManager : public TcpChannelManager
+class PFCORELIB_EXPORT TcpClientChannelManager : public TcpChannelManager
 {
     Q_OBJECT
 
@@ -67,11 +56,5 @@ private:
     quint16      m_serverPort;
     bool         m_connectedToHost;
 };
-
-}//namespace bundle
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENTCHANNELMANAGER_H

@@ -16,22 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCHANNELMESSAGE_H
 #define TCPCHANNELMESSAGE_H
 
 #include <QtGlobal>
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-
-class TcpChannelMessage
+class PFCORELIB_EXPORT TcpChannelMessage
 {
 public:
     TcpChannelMessage(quint16 msgType);
@@ -43,9 +36,5 @@ public:
 private:
     quint16 m_msgType;
 };
-
-} //namespace tcp
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 #endif // TCPCHANNELMESSAGE_H

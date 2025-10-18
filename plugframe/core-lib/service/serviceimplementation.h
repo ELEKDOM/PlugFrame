@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SERVICEIMPLEMENTATION_H
 #define SERVICEIMPLEMENTATION_H
 
@@ -25,33 +24,22 @@
 #include "pfcore-lib_forward.h"
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace service
-{
-
 class PFCORELIB_EXPORT ServiceImplementation : public ServiceImplementationInterface
 {
 private:
-    bundle::BundleImplementation *m_implementation;
+    BundleImplementation *m_implementation;
 
 protected:
     QMutex m_mtx;
 
 public:
-    ServiceImplementation(bundle::BundleImplementation *implementation);
+    ServiceImplementation(BundleImplementation *implementation);
     ~ServiceImplementation() override;
 
 protected:
-    bundle::BundleImplementation *implementation() {return m_implementation;}
+    BundleImplementation *implementation() {return m_implementation;}
 };
-
-} //namespace service
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 #endif // SERVICEIMPLEMENTATION_H

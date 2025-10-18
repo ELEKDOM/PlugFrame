@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCHANNEL_H
 #define TCPCHANNEL_H
 
@@ -24,17 +23,11 @@
 #include <QTcpSocket>
 #include <QDataStream>
 #include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-
-class TcpChannel : public QObject
+class PFCORELIB_EXPORT TcpChannel : public QObject
 {
     Q_OBJECT
 
@@ -51,22 +44,17 @@ public slots:
     void onReadyRead();
 
 signals:
-    void newMessage(TcpChannelMessage *input);
+    void newMessage(plugframe::TcpChannelMessage *input);
 
 private:
     bool readMessage();
 
 protected:
     QTcpSocket             *m_socket;
-private:
 
+private:
     TcpChannelDeserializer *m_deserializer;
     QDataStream             m_inputStream;
 };
-
-} //namespace tcp
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // TCPCHANNEL_H

@@ -16,38 +16,36 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "workerthread.h"
 #include "workerouts.h"
-#include "workerargs.h"
 #include "workersignal.h"
 
-using namespace elekdom::plugframe::core::worker;
-
-WorkerThread::WorkerThread(WorkerSignal *wSignal, const QspWorkerArgs &args, QObject *parent):
+plugframe::WorkerThread::WorkerThread(WorkerSignal *wSignal,
+                                      const plugframe::QspWorkerArgs &args,
+                                      QObject *parent):
     QThread{parent},
+    m_ret{false},
     m_wSignal{wSignal},
-    m_args{args},
-    m_ret{false}
+    m_args{args}
 {
 
 }
 
-WorkerThread::~WorkerThread()
+plugframe::WorkerThread::~WorkerThread()
 {
 
 }
 
-void WorkerThread::run()
+void plugframe::WorkerThread::run()
 {
     m_ret = execWork(m_args);
 
     // notify the watcher !
-    QspWorkerOuts outs{getWorkerOuts()};
+    plugframe::QspWorkerOuts outs{getWorkerOuts()};
     emit m_wSignal->workFinished(outs);
 }
 
-WorkerOuts *WorkerThread::getWorkerOuts()
+plugframe::WorkerOuts *plugframe::WorkerThread::getWorkerOuts()
 {
-    return new WorkerOuts(m_ret);
+    return new plugframe::WorkerOuts(m_ret);
 }

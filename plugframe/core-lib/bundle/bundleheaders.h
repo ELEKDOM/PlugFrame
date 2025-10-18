@@ -16,25 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLE_HEADERS_H
 #define BUNDLE_HEADERS_H
 
 #include <QMultiHash>
 #include <QString>
+#include <QSharedPointer>
 #include "logger/loggable.h"
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
-class PFCORELIB_EXPORT BundleHeaders : private QMultiHash<QString, QString>, public plugframe::core::logger::Loggable
+class PFCORELIB_EXPORT BundleHeaders : private QMultiHash<QString, QString>,
+                                       public plugframe::Loggable
 {
 private:
     static const QString BUNDLE_MANIFEST_VERSION;  // Declared in the bundle's meta data but not used
@@ -65,10 +59,7 @@ public:
     QList<QString> getProvidedServices();
     QList<QString> getRequiredServices();
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundleHeaders = QSharedPointer<BundleHeaders>;
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // BUNDLE_HEADERS_H

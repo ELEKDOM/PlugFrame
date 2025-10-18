@@ -16,21 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKEROUTS_H
 #define WORKEROUTS_H
 
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class PFCORELIB_EXPORT WorkerOuts
 {
 public:
@@ -42,10 +35,6 @@ public:
     WorkerOuts(const WorkerOuts& c);
     virtual ~WorkerOuts();
 };
-
-}//namespace worker
-}//namespace core
+using QspWorkerOuts = QSharedPointer<WorkerOuts>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WORKEROUTS_H

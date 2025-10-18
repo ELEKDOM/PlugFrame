@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERCONNMANAGER_H
 #define TCPSERVERCONNMANAGER_H
 
@@ -24,22 +23,12 @@
 #include <QHostAddress>
 #include <QTcpServer>
 #include <QList>
-#include "pfcore-lib_forward.h"
+#include "tcpserverchannelmanager.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace bundle
-{
-
-class TcpServerConnManager : public QObject
+class PFCORELIB_EXPORT TcpServerConnManager : public QObject
 {
     Q_OBJECT
 
@@ -63,11 +52,5 @@ private:
     QTcpServer                       *m_tcpServer;
     QList<QspTcpServerChannelManager> m_channelManagers;
 };
-
-}//namespace bundle
-}//namespace server
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVERCONNMANAGER_H

@@ -16,13 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "digitalsuite.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-
-DigitalSuite::DigitalSuite(const QString &strSuite)
+plugframe::DigitalSuite::DigitalSuite(const QString &strSuite)
 {
     QStringList list = strSuite.split(',', Qt::SkipEmptyParts);
     for (int i = 0; i < list.size(); i++)
@@ -44,7 +40,7 @@ DigitalSuite::DigitalSuite(const QString &strSuite)
     }
 }
 
-bool DigitalSuite::isValid(int minValue, int maxValue)
+bool plugframe::DigitalSuite::isValid(int minValue, int maxValue)
 {
     bool ret{true};
     int lastVal{0};

@@ -16,42 +16,38 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundleimplementation.h"
 #include "bundle/bundlecontext.h"
 #include "service-int/serviceinterface.h"
 #include "logger/pflog.h"
 
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::core;
-
-BundleImplementation::BundleImplementation(QString logBundleName):
+plugframe::BundleImplementation::BundleImplementation(QString logBundleName):
     Bundle{logBundleName}
 {
 
 }
 
-BundleImplementation::~BundleImplementation()
+plugframe::BundleImplementation::~BundleImplementation()
 {
 
 }
 
-BundleImplementation *BundleImplementation::getImplementation()
+plugframe::BundleImplementation *plugframe::BundleImplementation::getImplementation()
 {
     return this;
 }
 
-service::QspServiceImplementationInterface BundleImplementation::getServiceImplementation(const QString& serviceName)
+plugframe::QspServiceImplementationInterface plugframe::BundleImplementation::getServiceImplementation(const QString& serviceName)
 {
     return m_exportedServices.value(serviceName);
 }
 
-void BundleImplementation::addExportedService(service::QspServiceImplementationInterface newService)
+void plugframe::BundleImplementation::addExportedService(plugframe::QspServiceImplementationInterface newService)
 {
     m_exportedServices.insert(newService->serviceName(), newService);
 }
 
-service::QspServiceImplementationInterface BundleImplementation::getService(const QString &serviceName)
+plugframe::QspServiceImplementationInterface plugframe::BundleImplementation::getService(const QString &serviceName)
 {
     return m_exportedServices.value(serviceName);
 }
@@ -63,14 +59,14 @@ service::QspServiceImplementationInterface BundleImplementation::getService(cons
 /// It's the plugin which implements the service(s) interface(s) to register.
 /// Apply qobject_cast to plugin to get a service interface (see qtServiceInterface impl).
 ///
-void BundleImplementation::registerExportedServices()
+void plugframe::BundleImplementation::registerExportedServices()
 {
-    service::ServiceImplementationInterfaceHashConstIt i = m_exportedServices.constBegin();
+    plugframe::ServiceImplementationInterfaceHashConstIt i = m_exportedServices.constBegin();
 
     while (i != m_exportedServices.constEnd())
     {
         QString serviceName{i.key()};
-        plugin::ServiceInterface *qservice{qtServiceInterface(serviceName)};
+        plugframe::ServiceInterface *qservice{qtServiceInterface(serviceName)};
         if (qservice)
         {
             registerService(serviceName,qservice);
@@ -83,19 +79,19 @@ void BundleImplementation::registerExportedServices()
     }
 }
 
-void BundleImplementation::_start(QspBundleContext bundleContext)
+void plugframe::BundleImplementation::_start(QspBundleContext bundleContext)
 {
     m_bundleContext = bundleContext;
     registerExportedServices();
 }
 
-void BundleImplementation::_stop()
+void plugframe::BundleImplementation::_stop()
 {
 
 }
 
-bool BundleImplementation::registerService(const QString &serviceInterfaceName,
-                                           plugin::ServiceInterface *service)
+bool plugframe::BundleImplementation::registerService(const QString &serviceInterfaceName,
+                                                      plugframe::ServiceInterface *service)
 {
     bool ret{bundleContext()->registerService(serviceInterfaceName,service)};
     return ret;

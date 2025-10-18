@@ -25,15 +25,8 @@
 #include "pfcore-lib_forward.h"
 #include "service/serviceimplementationinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT Bundle4BuilderInterface
 {
 public:
@@ -41,7 +34,7 @@ public:
 
 public:
     virtual Bundle& getBundle() = 0;
-    virtual bundle::BundleImplementation *getImplementation() = 0;   
+    virtual BundleImplementation *getImplementation() = 0;
     virtual const QString& getLogBundleName() = 0;
     virtual BundleFactory& getFactory() = 0;
     virtual void setHeaders(BundleHeaders* bundleHeaders) = 0;
@@ -49,12 +42,8 @@ public:
     virtual void setEmitter(BundleEmitter *emitter) = 0;
     virtual void setListener(BundleListener *listener) = 0;
     virtual void defaultListening() = 0;
-    virtual void addExportedService(service::QspServiceImplementationInterface newService) = 0;
+    virtual void addExportedService(QspServiceImplementationInterface newService) = 0;
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // BUNDLE4BUILDERINTERFACE_H

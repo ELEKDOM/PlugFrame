@@ -16,23 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIPAGEVIEW_H
 #define GUIPAGEVIEW_H
 
 #include <QWidget>
 #include <QString>
+#include <QList>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace gui
-{
-
 class PFCORELIB_EXPORT GuiPageView : public QWidget
 {
     Q_OBJECT
@@ -54,10 +47,6 @@ private:
     QString m_toolActionName; // To manage action insertion into toolbar if not empty
     int     m_stackedIndex; // Index into the central widget
 };
-
-}//namespace gui
-}//namespace core
+using GuiPageViewList = QList<GuiPageView*>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // GUIPAGEVIEW_H

@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SYSTEMEVENT_H
 #define SYSTEMEVENT_H
 
 #include "pfcore-lib_export.h"
 #include "event/event.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT SystemEvent : public Event
 {
 public:
@@ -39,10 +31,5 @@ public:
     ~SystemEvent() override;
 
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
-
+} //namespace plugframe
 #endif // SYSTEMEVENT_H

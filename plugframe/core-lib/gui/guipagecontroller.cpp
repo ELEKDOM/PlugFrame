@@ -16,15 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guipagecontroller.h"
 #include "guipageview.h"
 
-using namespace elekdom::plugframe::core::gui;
-
-GuiPageController::GuiPageController(const QString& ctrlName,
-                                     QStringList menusNames,
-                                     QObject *parent)
+plugframe::GuiPageController::GuiPageController(const QString& ctrlName,
+                                                QStringList menusNames,
+                                                QObject *parent)
     : QObject{parent}
     , m_ctrlName{ctrlName}
     , m_curView{nullptr}
@@ -32,12 +29,12 @@ GuiPageController::GuiPageController(const QString& ctrlName,
     , m_menusNames{menusNames}
 {}
 
-GuiPageController::~GuiPageController()
+plugframe::GuiPageController::~GuiPageController()
 {
 
 }
 
-void GuiPageController::updateViewsIdx()
+void plugframe::GuiPageController::updateViewsIdx()
 {
     emit updatePageIdx(this);
 }
@@ -46,7 +43,7 @@ void GuiPageController::updateViewsIdx()
 /// \brief GuiPageController::currentCtrl
 /// controller selected by the bundle !
 ///
-void GuiPageController::currentCtrl()
+void plugframe::GuiPageController::currentCtrl()
 {
     notifyCurCtrl();
 }
@@ -56,43 +53,43 @@ void GuiPageController::currentCtrl()
 /// controller activated by the ui !
 /// \param checked
 ///
-void GuiPageController::onTriggeredActionMenu(bool checked)
+void plugframe::GuiPageController::onTriggeredActionMenu(bool checked)
 {
     Q_UNUSED(checked)
 
     notifyCurCtrl();
 }
 
-void GuiPageController::addView(GuiPageView *view)
+void plugframe::GuiPageController::addView(plugframe::GuiPageView *view)
 {
     m_viewList.append(view);
     m_curView = view;
 }
 
-void GuiPageController::onCurrent()
+void plugframe::GuiPageController::onCurrent()
 {
 }
 
-void GuiPageController::statusMsg(QString msg)
+void plugframe::GuiPageController::statusMsg(QString msg)
 {
     m_statusMsg = msg;
     emit statusMessage(m_statusMsg);
 }
 
-void GuiPageController::clearStatusMsg()
+void plugframe::GuiPageController::clearStatusMsg()
 {
     m_statusMsg = "";
     emit clearStatusMessage();
 }
 
-void GuiPageController::clear()
+void plugframe::GuiPageController::clear()
 {
     deleteAllViews();
     clearStatusMsg();
     m_curView = nullptr;
 }
 
-void GuiPageController::notifyCurCtrl()
+void plugframe::GuiPageController::notifyCurCtrl()
 {
     emit curCtrl(this);
     if (m_curView)
@@ -107,7 +104,7 @@ void GuiPageController::notifyCurCtrl()
     onCurrent();
 }
 
-void GuiPageController::deleteAllViews()
+void plugframe::GuiPageController::deleteAllViews()
 {
     /*
     for (int i = 0; i < m_viewList.size(); i++)

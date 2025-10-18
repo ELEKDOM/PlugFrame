@@ -16,29 +16,26 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "workerouts.h"
 
-
-using namespace elekdom::plugframe::core::worker;
-
-WorkerOuts::WorkerOuts()
+plugframe::WorkerOuts::WorkerOuts()
 {
 
 }
 
-WorkerOuts::WorkerOuts(bool ret) : m_ret{ret}
+plugframe::WorkerOuts::WorkerOuts(bool ret) :
+    m_ret{ret}
 {
 
 }
 
-WorkerOuts::WorkerOuts(const WorkerOuts &c):
+plugframe::WorkerOuts::WorkerOuts(const WorkerOuts &c):
     m_ret{c.m_ret}
 {
 
 }
 
-WorkerOuts::~WorkerOuts()
+plugframe::WorkerOuts::~WorkerOuts()
 {
 
 }

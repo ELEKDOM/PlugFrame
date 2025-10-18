@@ -16,25 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WEEKLYSCHEDULER_H
 #define WEEKLYSCHEDULER_H
 
 #include <QString>
 #include <QVector>
-#include "pfcore-lib_forward.h"
+#include <QSharedPointer>
+#include "dailyscheduler.h"
 #include "digitalsuite.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class WeeklyScheduler
+class PFCORELIB_EXPORT WeeklyScheduler
 {
 public:
     WeeklyScheduler(const QString &name, const DigitalSuite& assignedWeeks);
@@ -46,14 +40,10 @@ public:
     DailyScheduler* dailySched(int dayOfWeek);
 
 private:
-    QString m_name;
-    DigitalSuite m_assignedWeeks;
+    QString                  m_name;
+    DigitalSuite             m_assignedWeeks;
     QVector<DailyScheduler*> m_sequenceOfDay;
 };
-
-}//namespace scheduler
-}//namespace core
+using QspWeeklyScheduler = QSharedPointer<WeeklyScheduler>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WEEKLYSCHEDULER_H

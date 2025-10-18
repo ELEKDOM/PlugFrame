@@ -16,20 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLE4PLUGININTERFACE_H
 #define BUNDLE4PLUGININTERFACE_H
 
+#include <QSharedPointer>
 #include "plugin/bundleinterface.h"
+#include "service/serviceimplementationinterface.h"
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
-{
-namespace core
-{
-namespace bundle
 {
 class PFCORELIB_EXPORT Bundle4PluginInterface
 {
@@ -41,19 +36,16 @@ public:
     virtual void setFileName(const QString& fileName) = 0;
     virtual void setAbsolutePath(const QString& absolutePath) = 0;
     virtual void setMetaData(const QJsonObject& metaData) = 0;
-    virtual service::QspServiceImplementationInterface getServiceImplementation(const QString& serviceName) = 0;
+    virtual QspServiceImplementationInterface getServiceImplementation(const QString& serviceName) = 0;
     virtual void init() = 0;
     virtual void start(QspBundleContext bundleContext) = 0;
     virtual void stop() = 0;
     virtual QString getName() = 0;
-    virtual core::bundle::Bundle *getImpl() = 0;
+    virtual Bundle *getImpl() = 0;
     virtual int getStartLevel() = 0;
-    virtual core::plugin::BundleInterface::BundleState getState() = 0;
+    virtual BundleInterface::BundleState getState() = 0;
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundle4PluginInterface = QSharedPointer<Bundle4PluginInterface>;
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // BUNDLE4PLUGININTERFACE_H

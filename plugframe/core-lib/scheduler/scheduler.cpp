@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include <QTime>
 #include <QDate>
@@ -27,11 +26,9 @@
 #include "digitalsuite.h"
 #include "logger/pflog.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-Scheduler::Scheduler(const QString &logChannel,const QString& id,QObject *parent):
+plugframe::Scheduler::Scheduler(const QString &logChannel,const QString& id,QObject *parent):
     QObject{parent},
-    logger::Loggable{logChannel},
+    plugframe::Loggable{logChannel},
     m_id{id},
     m_sequenceOfWeek{54}, // 0 is never used !
     m_curDailyScheduler{nullptr},
@@ -47,28 +44,28 @@ Scheduler::Scheduler(const QString &logChannel,const QString& id,QObject *parent
     }
 }
 
-Scheduler::~Scheduler()
+plugframe::Scheduler::~Scheduler()
 {
 
 }
 
-void Scheduler::addDailyScheduler(QspDailyScheduler ds)
+void plugframe::Scheduler::addDailyScheduler(QspDailyScheduler ds)
 {
     m_dsHash.insert(ds->name(), ds);
 }
 
-void Scheduler::addWeeklyScheduler(QspWeeklyScheduler ws)
+void plugframe::Scheduler::addWeeklyScheduler(QspWeeklyScheduler ws)
 {
     m_wsList.append(ws);
     assignWeeklyScheduler(ws);
 }
 
-QspDailyScheduler Scheduler::dailyScheduler(QString dailySchedulerName)
+plugframe::QspDailyScheduler plugframe::Scheduler::dailyScheduler(QString dailySchedulerName)
 {
     return m_dsHash.value(dailySchedulerName);
 }
 
-void Scheduler::init()
+void plugframe::Scheduler::init()
 {
     /*
     To consider:
@@ -81,7 +78,7 @@ void Scheduler::init()
     newDay();
 }
 
-void Scheduler::timerEvent(QTimerEvent *event)
+void plugframe::Scheduler::timerEvent(QTimerEvent *event)
 {
     if (event)
     {
@@ -100,7 +97,7 @@ void Scheduler::timerEvent(QTimerEvent *event)
     }
 }
 
-void Scheduler::assignWeeklyScheduler(QspWeeklyScheduler ws)
+void plugframe::Scheduler::assignWeeklyScheduler(QspWeeklyScheduler ws)
 {
     DigitalSuite suite{ws->assignedWeeks()};
 
@@ -113,7 +110,7 @@ void Scheduler::assignWeeklyScheduler(QspWeeklyScheduler ws)
 ///
 /// \brief Scheduler::newDay, Looks up for the dailyScheduler for this new day !
 ///
-void Scheduler::newDay()
+void plugframe::Scheduler::newDay()
 {
     WeeklyScheduler *ws;
     int dow{QDate::currentDate().dayOfWeek()};
@@ -144,7 +141,7 @@ void Scheduler::newDay()
     initNextScheduledEvtTimer();
 }
 
-void Scheduler::initNextDayTimer()
+void plugframe::Scheduler::initNextDayTimer()
 {
     QTime ct{QTime::currentTime()};
     QTime midnight(23,59,59);
@@ -154,7 +151,7 @@ void Scheduler::initNextDayTimer()
     m_nextDayTimerId = startTimer(msToMidnight);
 }
 
-void Scheduler::initNextScheduledEvtTimer()
+void plugframe::Scheduler::initNextScheduledEvtTimer()
 {
     if (m_curDailyScheduler)
     {
@@ -174,7 +171,7 @@ void Scheduler::initNextScheduledEvtTimer()
     }
 }
 
-void Scheduler::sendEvt()
+void plugframe::Scheduler::sendEvt()
 {
     if (m_curScheduledEvent)
     {

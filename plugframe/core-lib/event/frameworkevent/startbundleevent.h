@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef START_BUNDLE_EVENT_H
 #define START_BUNDLE_EVENT_H
 
@@ -24,34 +23,22 @@
 #include "frameworkevent.h"
 #include "plugin/bundleinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT StartBundleEvent : public FrameworkEvent
 {
 public:
     static const QString s_typeId;
 
 public:
-    StartBundleEvent(plugin::BundleInterface *toStart);
+    StartBundleEvent(BundleInterface *toStart);
     ~StartBundleEvent() override;
 
 public:
-    plugin::BundleInterface *getBundleToStart();
+    BundleInterface *getBundleToStart();
 
 private:
-    plugin::BundleInterface *m_bundleToStart;
+    BundleInterface *m_bundleToStart;
 };
-
-} //namespace event
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // START_BUNDLE_EVENT_H

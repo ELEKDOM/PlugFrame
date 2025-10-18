@@ -16,45 +16,33 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLESSTOPPINGEVENT_H
 #define BUNDLESSTOPPINGEVENT_H
 
 #include <QString>
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "frameworkevent.h"
+#include "plugin/bundleinterface.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT BundlesStoppingEvent : public FrameworkEvent
 {
 public:
     static const QString s_typeId;
 
-private:
-   plugin::BundleList m_bundlesList;
-   int m_currentStopLevel;
-
 public:
-    BundlesStoppingEvent(plugin::BundleList& bundleList, int currentStopLevel);
+    BundlesStoppingEvent(BundleList& bundleList, int currentStopLevel);
     ~BundlesStoppingEvent() override;
 
 public:
-    plugin::BundleList& getBundlesList() {return m_bundlesList;}
+    BundleList& getBundlesList() {return m_bundlesList;}
     int getCurrentStopLevel() {return m_currentStopLevel;}
-};
 
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
+private:
+    BundleList m_bundlesList;
+    int        m_currentStopLevel;
+};
+} //namespace plugframe
 
 #endif // BUNDLESSTOPPINGEVENT_H

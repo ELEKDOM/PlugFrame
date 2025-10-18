@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include <QPluginLoader>
 #include "logger/pflog.h"
@@ -25,18 +24,15 @@
 #include "plugin/bundleinterface.h"
 #include "plugin/frameworkinterface.h"
 
-using namespace elekdom::plugframe::core::launcher;
-using namespace elekdom::plugframe;
-
-BundlesStore::BundlesStore(QspLocation location):
+plugframe::BundlesStore::BundlesStore(QspLocation location):
     m_location(location)
 {
 }
 
-framework::plugin::FrameworkInterface* BundlesStore::loadFrameworkPlugin(QString caller)
+plugframe::FrameworkInterface* plugframe::BundlesStore::loadFrameworkPlugin(QString caller)
 {
-    framework::plugin::FrameworkInterface* ret = nullptr;
-    core::plugin::BundleInterface* bundleItf;
+    plugframe::FrameworkInterface* ret = nullptr;
+    plugframe::BundleInterface* bundleItf;
 
     QDir smfFrameworkDir;
     QStringList files;
@@ -60,7 +56,7 @@ framework::plugin::FrameworkInterface* BundlesStore::loadFrameworkPlugin(QString
             if (plugin)
             {
                 pfDebug5(caller) << QCoreApplication::tr("Framwork loaded %1").arg(files[0]);
-                ret = qobject_cast<framework::plugin::FrameworkInterface*>(plugin);
+                ret = qobject_cast<plugframe::FrameworkInterface*>(plugin);
                 bundleItf = ret->getBundleInterface();
                 bundleItf->setFileName(fileName);
                 bundleItf->setAbsolutePath(smfFrameworkDir.absolutePath());
@@ -89,7 +85,7 @@ framework::plugin::FrameworkInterface* BundlesStore::loadFrameworkPlugin(QString
  * plugins directories are located into the "bundles directory".
  * After loading, a bundle is initialized
  */
-void BundlesStore::loadPlugins(QString caller, plugin::BundleList& bundleList)
+void plugframe::BundlesStore::loadPlugins(QString caller,plugframe::BundleList& bundleList)
 {
     QDir BundlesDir;
 
@@ -119,7 +115,7 @@ void BundlesStore::loadPlugins(QString caller, plugin::BundleList& bundleList)
 
                 if (plugin)
                 {
-                    plugframe::core::plugin::BundleInterface* bundle = qobject_cast<plugframe::core::plugin::BundleInterface*>(plugin);
+                    plugframe::BundleInterface* bundle = qobject_cast<plugframe::BundleInterface*>(plugin);
                     if (bundle)
                     {
                         pfDebug5(caller) << QCoreApplication::tr("Plugin [ %1 ] chargé").arg(files[0]);

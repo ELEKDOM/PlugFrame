@@ -16,19 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CORE_FACTORY
 #define CORE_FACTORY
 
-#include "pfcore-lib_forward.h"
+#include <QSharedPointer>
+#include "launcher/launchingproperties.h"
+#include "launcher/location.h"
+#include "launcher/bundlesstore.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace core
-{
-namespace launcher
+namespace PFCORELIB_EXPORT plugframe
 {
 /**
  * @brief The SmfCoreFactory class
@@ -43,11 +40,7 @@ public:
     virtual QspLocation createLocation(const QString & applicationDirPath);
     virtual QspBundlesStore createBundlesStore(QspLocation location);
 };
-
-} //namespace factory
-} //namespace core
+using QspCoreFactory = QSharedPointer<CoreFactory>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // CORE_FACTORY
 

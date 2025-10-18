@@ -16,24 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLES_STARTING_EVENT_H
 #define BUNDLES_STARTING_EVENT_H
 
 #include <QString>
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "frameworkevent.h"
+#include "plugin/bundleinterface.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 /**
  * @brief The BundlesStartingEvent class
  */
@@ -43,23 +35,19 @@ public:
     static const QString s_typeId;
 
 public:
-    BundlesStartingEvent(plugin::BundleList& bundleList, int frameworkStartLevel, int currentStartLevel);
+    BundlesStartingEvent(BundleList& bundleList, int frameworkStartLevel, int currentStartLevel);
     ~BundlesStartingEvent() override;
 
 public:
-    plugin::BundleList& getBundlesList() {return m_bundlesList;}
+    BundleList& getBundlesList() {return m_bundlesList;}
     int getFrameworkStartLevel() {return m_frameworkStartLevel;}
     int getCurrentStartLevel() {return m_currentStartLevel;}
 
 private:
-   plugin::BundleList m_bundlesList;
-   int m_frameworkStartLevel;
-   int m_currentStartLevel;
+   BundleList m_bundlesList;
+   int        m_frameworkStartLevel;
+   int        m_currentStartLevel;
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
+} //namespace plugframe
 
 #endif // BUNDLES_STARTING_EVENT_H

@@ -16,27 +16,24 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "event.h"
 
-using namespace elekdom::plugframe::core::event;
-
-Event::Event():
+plugframe::Event::Event():
     m_typeId{""}
 {
 
 }
 
-Event::Event(const QString& typeId):
+plugframe::Event::Event(const QString& typeId):
     m_typeId{typeId}
 {
 
 }
 
-Event::Event(const Event& c):
+plugframe::Event::Event(const Event& c):
     m_typeId{c.m_typeId}
 {
 
 }
 
-Event::~Event() {}
+plugframe::Event::~Event() {}

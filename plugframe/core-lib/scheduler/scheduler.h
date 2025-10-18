@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
@@ -24,20 +23,14 @@
 #include <QHash>
 #include <QList>
 #include <QVector>
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "logger/loggable.h"
+#include "dailyscheduler.h"
+#include "weeklyscheduler.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class PFCORELIB_EXPORT Scheduler : public QObject, public logger::Loggable
+class PFCORELIB_EXPORT Scheduler : public QObject, public Loggable
 {
     Q_OBJECT
 
@@ -68,16 +61,11 @@ private:
     QString m_id;
     QHash<QString, QspDailyScheduler> m_dsHash;
     QList<QspWeeklyScheduler>         m_wsList;
-    QVector<WeeklyScheduler*>      m_sequenceOfWeek;
+    QVector<WeeklyScheduler*>         m_sequenceOfWeek;
     DailyScheduler                   *m_curDailyScheduler;
     ScheduledEvent                   *m_curScheduledEvent;
     int                               m_nextDayTimerId;
     int                               m_nextScheduledEvtTimerId;
 };
-
-}//namespace scheduler
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // SCHEDULER_H

@@ -16,27 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERFACTORY_H
 #define TCPSERVERFACTORY_H
 #include <QTcpSocket>
 #include "factory/bundlefactory.h"
 #include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace factory
-{
-
-class TcpServerFactory : public core::bundle::BundleFactory
+class PFCORELIB_EXPORT TcpServerFactory : public BundleFactory
 {
 public:
     TcpServerFactory();
@@ -44,22 +33,16 @@ public:
 
 public:
     virtual TcpChannelDeserializer *createDeserializer()=0;
-    virtual bundle::TcpServerChannelManager *createChannelManager(bundle::TcpServer& bundle,TcpChannel *channel,QObject *parent = nullptr)=0;
-    virtual bundle::TcpServerConnManager *createTcpServerConnManager(bundle::TcpServer& myBundle);
+    virtual TcpServerChannelManager *createChannelManager(TcpServer& bundle,TcpChannel *channel,QObject *parent = nullptr)=0;
+    virtual TcpServerConnManager *createTcpServerConnManager(TcpServer& myBundle);
     virtual TcpChannel *createChannel(QTcpSocket *socket,TcpChannelDeserializer *deserializer,QObject *parent = nullptr);
 
 protected:
-    core::bundle::BundleBuilder *createBuilder(core::bundle::Bundle& myBundle) override;
-    virtual service::TcpServerService *createBackendControlService(core::bundle::BundleImplementation *implementation);
-    plugframe::core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                                          const QString& sName,
-                                                                                          const QString& serviceVersion) override;
+    BundleBuilder *createBuilder(Bundle& myBundle) override;
+    virtual TcpServerService *createBackendControlService(BundleImplementation *implementation);
+    ServiceImplementationInterface *createServiceImplementation(BundleImplementation *implementation,
+                                                                const QString& sName,
+                                                                const QString& serviceVersion) override;
 };
-
-}//namespace factory
-}//namespace server
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVERFACTORY_H

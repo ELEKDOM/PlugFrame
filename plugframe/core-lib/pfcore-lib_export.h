@@ -20,7 +20,7 @@
 #ifndef PFCORELIB_EXPORT_H
 #define PFCORELIB_EXPORT_H
 
-#include <QtCore/qglobal.h>
+#include  <QtCore/QtGlobal>
 
 #if defined(PFCORE_LIBRARY)
 #  define PFCORELIB_EXPORT Q_DECL_EXPORT

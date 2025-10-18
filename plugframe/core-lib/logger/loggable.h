@@ -16,26 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGGABLE_H
 #define LOGGABLE_H
 
 #include <QString>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace logger
-{
-
 class PFCORELIB_EXPORT Loggable
 {
-private:
-    QString m_logChannel;
 
 public:
     explicit Loggable(const QString& logChannel);
@@ -44,11 +34,9 @@ public:
 public:
     const QString& logChannel() {return m_logChannel;}
 
+private:
+    QString m_logChannel;
 };
-
-} //namespace logger
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // LOGGABLE_H

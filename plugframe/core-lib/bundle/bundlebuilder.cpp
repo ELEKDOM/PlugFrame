@@ -16,21 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logger/pflog.h"
 #include "bundle/bundlebuilder.h"
 #include "bundle/bundle.h"
 #include "bundle/bundleheaders.h"
 #include "factory/bundlefactory.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-BundleBuilder::BundleBuilder(Bundle4BuilderInterface& myBundle) :
+plugframe::BundleBuilder::BundleBuilder(Bundle4BuilderInterface& myBundle) :
     m_bundleItf{myBundle}
 {
 }
 
-BundleBuilder::~BundleBuilder()
+plugframe::BundleBuilder::~BundleBuilder()
 {
 }
 
@@ -38,9 +35,9 @@ BundleBuilder::~BundleBuilder()
  * @brief smf::core::bundle::BundleBuilder::build
  * @param myBundle
  */
-void BundleBuilder::build()
+void plugframe::BundleBuilder::build()
 {
-    plugframe::core::bundle::BundleFactory& factory {getFactory()};
+    plugframe::BundleFactory& factory {getFactory()};
 
     // Bundle's internal structure building
     //-------------------------------------
@@ -68,73 +65,73 @@ void BundleBuilder::build()
     specificBuild();
 }
 
-Bundle &BundleBuilder::getBundle()
+plugframe::Bundle& plugframe::BundleBuilder::getBundle()
 {
     return m_bundleItf.getBundle();
 }
 
-BundleImplementation *BundleBuilder::getImplementation()
+plugframe::BundleImplementation *plugframe::BundleBuilder::getImplementation()
 {
     return m_bundleItf.getImplementation();
 }
 
-const QString &BundleBuilder::getLogBundleName()
+const QString& plugframe::BundleBuilder::getLogBundleName()
 {
     return m_bundleItf.getLogBundleName();
 }
 
-BundleFactory &BundleBuilder::getFactory()
+plugframe::BundleFactory& plugframe::BundleBuilder::getFactory()
 {
     return m_bundleItf.getFactory();
 }
 
-void BundleBuilder::setHeaders(BundleHeaders *bundleHeaders)
+void plugframe::BundleBuilder::setHeaders(BundleHeaders *bundleHeaders)
 {
     m_bundleItf.setHeaders(bundleHeaders);
 }
 
-void BundleBuilder::loadManifestHeaders()
+void plugframe::BundleBuilder::loadManifestHeaders()
 {
     m_bundleItf.loadManifestHeaders();
 }
 
-void BundleBuilder::setEmitter(BundleEmitter *emitter)
+void plugframe::BundleBuilder::setEmitter(BundleEmitter *emitter)
 {
     m_bundleItf.setEmitter(emitter);
 }
 
-void BundleBuilder::setListener(BundleListener *listener)
+void plugframe::BundleBuilder::setListener(BundleListener *listener)
 {
     m_bundleItf.setListener(listener);
 }
 
-void BundleBuilder::addExportedService(service::QspServiceImplementationInterface newService)
+void plugframe::BundleBuilder::addExportedService(plugframe::QspServiceImplementationInterface newService)
 {
     m_bundleItf.addExportedService(newService);
 }
 
-void BundleBuilder::defaultListening()
+void plugframe::BundleBuilder::defaultListening()
 {
     m_bundleItf.defaultListening();
 }
 
-void BundleBuilder::specificBuild()
+void plugframe::BundleBuilder::specificBuild()
 {
     // No op by default !
 }
 
-void BundleBuilder::buildExportedServices(const QList<QString>& providedServices)
+void plugframe::BundleBuilder::buildExportedServices(const QList<QString>& providedServices)
 {
-    plugframe::core::bundle::BundleFactory& factory {getFactory()};
-    core::service::QspServiceImplementationInterface servImpl;
-    int nbServices{providedServices.size()};
+    plugframe::BundleFactory& factory {getFactory()};
+    plugframe::QspServiceImplementationInterface servImpl;
+    qsizetype nbServices{providedServices.size()};
 
-    for (int i=0;i<nbServices;i++)
+    for (qsizetype i=0;i<nbServices;i++)
     {
         const QString& name_version{providedServices.at(i)};
         QString serviceName,serviceVersion;
 
-        BundleHeaders::splitNameVersionFromServiceDeclar(name_version,serviceName,serviceVersion);
+        plugframe::BundleHeaders::splitNameVersionFromServiceDeclar(name_version,serviceName,serviceVersion);
 
         servImpl.reset(factory.createServiceImplementation(getImplementation(),serviceName,serviceVersion));
         if (servImpl.isNull())

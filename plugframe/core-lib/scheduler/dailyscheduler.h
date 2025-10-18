@@ -16,24 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DAILYSCHEDULER_H
 #define DAILYSCHEDULER_H
 
 #include <QString>
 #include <QList>
-#include "pfcore-lib_forward.h"
+#include <QSharedPointer>
+#include "scheduledevent.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class DailyScheduler
+class PFCORELIB_EXPORT DailyScheduler
 {
 public:
     DailyScheduler(const QString& name);
@@ -47,14 +41,10 @@ public:
     ScheduledEvent *nextEvt();
 
 private:
-    QString                     m_name;
+    QString                  m_name;
     QList<QspScheduledEvent> m_scheduledEvtList;
-    int                         m_idx;
+    int                      m_idx;
 };
-
-}//namespace scheduler
-}//namespace core
+using QspDailyScheduler = QSharedPointer<DailyScheduler>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // DAILYSCHEDULER_H

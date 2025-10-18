@@ -16,23 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKERWATCHER_H
 #define WORKERWATCHER_H
 
 #include <QObject>
+#include "workerouts.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class PFCORELIB_EXPORT WorkerWatcher : public QObject
 {
     Q_OBJECT
@@ -45,12 +38,8 @@ public:
     void connectWorker(WorkerSignal* workerSign);
 
 protected slots:
-    virtual void onWorkFinished(QspWorkerOuts outs) = 0;
+    virtual void onWorkFinished(plugframe::QspWorkerOuts outs) = 0;
 };
-
-}//namespace worker
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 
 #endif // WORKERWATCHER_H

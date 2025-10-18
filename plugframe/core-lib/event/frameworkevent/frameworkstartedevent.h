@@ -16,20 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORK_STARTED_EVENT_H
 #define FRAMEWORK_STARTED_EVENT_H
 
 #include "pfcore-lib_export.h"
 #include "frameworkevent.h"
 
-namespace elekdom
-{
 namespace plugframe
-{
-namespace core
-{
-namespace event
 {
 class PFCORELIB_EXPORT FrameworkStartedEvent : public FrameworkEvent
 {
@@ -41,10 +34,5 @@ public:
     ~FrameworkStartedEvent() override;
 
 };
-
-} //namespace event
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // FRAMEWORK_STARTED_EVENT_H

@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientbuilder.h"
 #include "tcpclient.h"
 #include "tcpclientfactory.h"
@@ -24,30 +23,24 @@
 #include "abstract_network_tcp/common/tcpchanneldeserializer.h"
 #include "abstract_network_tcp/common/tcpchannel.h"
 
-using namespace elekdom::plugframe::core::tcp;
-using namespace elekdom::plugframe::core::tcp::client::builder;
-using namespace elekdom::plugframe::core::tcp::client::factory;
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-
-TcpClientBuilder::TcpClientBuilder(core::bundle::Bundle4BuilderInterface &myBundle):
-    core::bundle::BundleBuilder{myBundle}
+plugframe::TcpClientBuilder::TcpClientBuilder(plugframe::Bundle4BuilderInterface &myBundle):
+    plugframe::BundleBuilder{myBundle}
 {
 
 }
 
-TcpClientBuilder::~TcpClientBuilder()
+plugframe::TcpClientBuilder::~TcpClientBuilder()
 {
 
 }
 
-void TcpClientBuilder::specificBuild()
+void plugframe::TcpClientBuilder::specificBuild()
 {
-    TcpClient& tcpBundle{dynamic_cast<TcpClient&>(getBundle())};
-    TcpClientFactory& tcpClientFactory{dynamic_cast<TcpClientFactory&>(tcpBundle.getFactory())};
-    TcpChannelDeserializer *deserializer{tcpClientFactory.createDeserializer()};
-    TcpChannel *channel{tcpClientFactory.createChannel(tcpClientFactory.createSocket(),deserializer)};
-    TcpClientChannelManager *channelManager{tcpClientFactory.createChannelManager(channel)};
+    plugframe::TcpClient& tcpBundle{dynamic_cast<plugframe::TcpClient&>(getBundle())};
+    plugframe::TcpClientFactory& tcpClientFactory{dynamic_cast<plugframe::TcpClientFactory&>(tcpBundle.getFactory())};
+    plugframe::TcpChannelDeserializer *deserializer{tcpClientFactory.createDeserializer()};
+    plugframe::TcpChannel *channel{tcpClientFactory.createChannel(tcpClientFactory.createSocket(),deserializer)};
+    plugframe::TcpClientChannelManager *channelManager{tcpClientFactory.createChannelManager(channel)};
 
     tcpBundle.tcpClientChannelManager(channelManager);
 }

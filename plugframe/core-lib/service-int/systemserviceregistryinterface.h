@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SYSTEMSERVICEREGISTRYINTERFACE_H
 #define SYSTEMSERVICEREGISTRYINTERFACE_H
 
 #include "serviceinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace framework
-{
-namespace service
-{
-
-class SystemServiceRegistryInterface : public core::plugin::ServiceInterface
+class SystemServiceRegistryInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("SystemServiceRegistryInterface");}
@@ -40,17 +32,15 @@ public:
     ~SystemServiceRegistryInterface() override {}
 
 public:
-    virtual bool registerService(const QString& serviceInterfaceName,  core::plugin::ServiceInterface *service) = 0;
-    virtual core::plugin::ServiceInterface *getService(const QString& serviceInterfaceName) = 0;
-    virtual core::plugin::ServiceInterfaceList getServices(const QString& serviceInterfaceName) = 0;
+    virtual bool registerService(const QString& serviceInterfaceName,ServiceInterface *service) = 0;
+    virtual ServiceInterface *getService(const QString& serviceInterfaceName) = 0;
+    virtual ServiceInterfaceList getServices(const QString& serviceInterfaceName) = 0;
 };
-
-}//namespace service
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 
-#define PfSystemServiceRegistry_iid "elekdom.plugframe.framework.service.SystemServiceRegistryInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::framework::service::SystemServiceRegistryInterface, PfSystemServiceRegistry_iid)
+#define PfSystemServiceRegistry_iid "plugframe.SystemServiceRegistryInterface"
+
+Q_DECLARE_INTERFACE(plugframe::SystemServiceRegistryInterface, PfSystemServiceRegistry_iid)
+
 
 #endif // SYSTEMSERVICEREGISTRYINTERFACE_H

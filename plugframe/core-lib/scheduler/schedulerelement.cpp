@@ -16,24 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "schedulerelement.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-SchedulerElement::SchedulerElement(const QDomElement &x,SchedulerElementHook& hook):
+plugframe::SchedulerElement::SchedulerElement(const QDomElement &x,plugframe::SchedulerElementHook& hook):
     QDomElement(x),
     m_hook{hook}
 {
 
 }
 
-SchedulerElement::~SchedulerElement()
+plugframe::SchedulerElement::~SchedulerElement()
 {
 
 }
 
-bool SchedulerElement::browse(const QString &schedulerId)
+bool plugframe::SchedulerElement::browse(const QString &schedulerId)
 {
     bool ret{false};
 
@@ -52,7 +49,7 @@ bool SchedulerElement::browse(const QString &schedulerId)
     return ret;
 }
 
-bool SchedulerElement::extractDailySchedulers()
+bool plugframe::SchedulerElement::extractDailySchedulers()
 {
     bool ret{true};
     QDomNodeList dSchedulers{dailySchedulers()};
@@ -76,7 +73,7 @@ bool SchedulerElement::extractDailySchedulers()
     return ret;
 }
 
-bool SchedulerElement::extractWeeklySchedulers()
+bool plugframe::SchedulerElement::extractWeeklySchedulers()
 {
     bool ret{true};
     QDomNodeList wSchedulers{weeklySchedulers()};
@@ -88,7 +85,7 @@ bool SchedulerElement::extractWeeklySchedulers()
     {
         QDomElement elem{wSchedulers.at(i).toElement()};
         QString wsName{elem.attribute(nameAttr())};
-        DigitalSuite assignedWeeks{elem.attribute(assignedWeeksAttr())};
+        plugframe::DigitalSuite assignedWeeks{elem.attribute(assignedWeeksAttr())};
 
         m_hook.weeklySchedulerDeclarationBegin(wsName,assignedWeeks);
 
@@ -102,7 +99,7 @@ bool SchedulerElement::extractWeeklySchedulers()
     return ret;
 }
 
-bool SchedulerElement::extractDailySchedulerEvents(const QDomElement& dsElement)
+bool plugframe::SchedulerElement::extractDailySchedulerEvents(const QDomElement& dsElement)
 {
     bool ret{true};
     QDomNodeList scheduledEvts{dsElement.elementsByTagName(scheduledEventTag())};
@@ -120,7 +117,7 @@ bool SchedulerElement::extractDailySchedulerEvents(const QDomElement& dsElement)
     return ret;
 }
 
-bool SchedulerElement::extractWeeklySchedulerSequences(const QDomElement &wsElement)
+bool plugframe::SchedulerElement::extractWeeklySchedulerSequences(const QDomElement &wsElement)
 {
     bool ret{true};
     QDomNodeList dailySeqs{wsElement.elementsByTagName(dailySequenceTag())};
@@ -128,7 +125,7 @@ bool SchedulerElement::extractWeeklySchedulerSequences(const QDomElement &wsElem
     for (int i = 0; i < dailySeqs.size() && ret; i++)
     {
         QDomElement domElem{dailySeqs.at(i).toElement()};
-        DigitalSuite assignedDays{domElem.attribute(assignedDaysAttr())};
+        plugframe::DigitalSuite assignedDays{domElem.attribute(assignedDaysAttr())};
         QString dailySchedulerId{domElem.attribute(nameAttr())};
 
         ret = m_hook.weeklySchedulerDailySequenceDeclaration(dailySchedulerId,assignedDays);
@@ -137,7 +134,7 @@ bool SchedulerElement::extractWeeklySchedulerSequences(const QDomElement &wsElem
     return ret;
 }
 
-QDomNodeList SchedulerElement::dailySchedulers()
+QDomNodeList plugframe::SchedulerElement::dailySchedulers()
 {
     QDomNodeList ret;
 
@@ -151,7 +148,7 @@ QDomNodeList SchedulerElement::dailySchedulers()
     return ret;
 }
 
-QDomNodeList SchedulerElement::weeklySchedulers()
+QDomNodeList plugframe::SchedulerElement::weeklySchedulers()
 {
     QDomNodeList ret;
 

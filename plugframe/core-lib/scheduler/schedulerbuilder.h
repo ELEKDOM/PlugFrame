@@ -21,21 +21,16 @@
 #define SCHEDULERBUILDER_H
 
 #include <QDomNodeList>
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "logger/loggable.h"
 #include "schedulerelementhook.h"
+#include "dailyscheduler.h"
+#include "weeklyscheduler.h"
+#include "pfcore-lib_export.h"
+#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class PFCORELIB_EXPORT SchedulerBuilder : public logger::Loggable, public SchedulerElementHook
+class PFCORELIB_EXPORT SchedulerBuilder : public Loggable, public SchedulerElementHook
 {
 public:
     explicit SchedulerBuilder(const QString& logChannel);
@@ -69,10 +64,5 @@ private:
     QspDailyScheduler  m_dailyScheduler;
     QspWeeklyScheduler m_weeklyScheduler;
 };
-
-}//namespace scheduler
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // SCHEDULERBUILDER_H

@@ -16,40 +16,32 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLE_CONTEXT_H
 #define BUNDLE_CONTEXT_H
 
 #include <QString>
 #include <QList>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 #include "service-int/systemserviceregistryinterface.h"
 
-
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleContext
 {
 private:
-    framework::service::SystemServiceRegistryInterface *m_registryService;
+    SystemServiceRegistryInterface *m_registryService;
 
 public:
-    BundleContext(framework::service::SystemServiceRegistryInterface *registryService);
+    BundleContext(SystemServiceRegistryInterface *registryService);
     virtual ~BundleContext();
 
 public:
-    bool registerService(const QString& serviceInterfaceName,  plugin::ServiceInterface* service);
+    bool registerService(const QString& serviceInterfaceName,  ServiceInterface* service);
 
     template <typename T> T* getService(const QString& serviceInterfaceName)
     {
-        plugin::ServiceInterface* servItf{m_registryService->getService(serviceInterfaceName)};
+        ServiceInterface* servItf{m_registryService->getService(serviceInterfaceName)};
         T* ret;
 
         ret = dynamic_cast<T*>(servItf);
@@ -58,8 +50,8 @@ public:
 
     template <typename T> QList<T*> getServices(const QString& serviceInterfaceName)
     {
-        plugin::ServiceInterfaceList servItfList{m_registryService->getServices(serviceInterfaceName)};
-        plugin::ServiceInterfaceList_Iterator i;
+        ServiceInterfaceList servItfList{m_registryService->getServices(serviceInterfaceName)};
+        ServiceInterfaceList_Iterator i;
         QList<T*> ret;
 
         for (i = servItfList.begin(); i != servItfList.end(); ++i)
@@ -70,10 +62,7 @@ public:
         return ret;
     }
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundleContext = QSharedPointer<BundleContext>;
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // BUNDLE_CONTEXT_H

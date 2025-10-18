@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENT_H
 #define TCPCLIENT_H
 
@@ -25,21 +24,11 @@
 #include "pfcore-lib_forward.h"
 #include "bundle/bundleimplementation.h"
 #include "service-int/frontendclientside.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace bundle
-{
-
-class TcpClient : public core::bundle::BundleImplementation
+class PFCORELIB_EXPORT TcpClient : public BundleImplementation
 {
 public:
     TcpClient(QString logBundleName);
@@ -47,7 +36,7 @@ public:
 
 public:
     void tcpClientChannelManager(TcpClientChannelManager *clientChannelManager);
-    void connectToHost(frontend::FrontendClientSide *clientSide,
+    void connectToHost(FrontendClientSide *clientSide,
                        QString serverIpv4,
                        quint16 serverPort);
     void closeConnection();
@@ -59,18 +48,12 @@ public:
     void messageFromServer(TcpChannelMessage *msg);
 
 protected:
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    ServiceInterface *qtServiceInterface(const QString& sName) override;
 
 private:
-    TcpClientChannelManager      *m_clientChannelManager;
-    TcpClientSlots               *m_clientSlots;
-    frontend::FrontendClientSide *m_clientSide;
+    TcpClientChannelManager *m_clientChannelManager;
+    TcpClientSlots          *m_clientSlots;
+    FrontendClientSide      *m_clientSide;
 };
-
-}//namespace bundle
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENT_H

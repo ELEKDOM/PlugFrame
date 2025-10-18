@@ -16,24 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include <QStringList>
+#include <QTimer>
 #include "logger/pflog.h"
 #include "launcher.h"
-#include "launchingproperties.h"
 #include "bundlesstore.h"
 #include "factory/corefactory.h"
 #include "plugin/bundleinterface.h"
 #include "plugin/frameworkinterface.h"
 
-using namespace elekdom::plugframe::core::launcher;
-
-Launcher::Launcher()
+plugframe::Launcher::Launcher()
 {
 }
 
-Launcher::~Launcher()
+plugframe::Launcher::~Launcher()
 {
      //pfDebug2("Launcher") << "->SmfLauncher::~SmfLauncher";
 
@@ -45,7 +42,7 @@ Launcher::~Launcher()
      //pfDebug2("Launcher") << "<-SmfLauncher::~SmfLauncher";
 }
 
-int Launcher::exec(int argc, char *argv[])
+int plugframe::Launcher::exec(int argc, char *argv[])
 {
     int ret;
 
@@ -80,32 +77,32 @@ int Launcher::exec(int argc, char *argv[])
     return ret;
 }
 
-void Launcher::setStyleSheet()
+void plugframe::Launcher::setStyleSheet()
 {
 
 }
 
-CoreFactory * Launcher::createFactory()
+plugframe::CoreFactory * plugframe::Launcher::createFactory()
 {
     return new CoreFactory;
 }
 
-void Launcher::setFactory(CoreFactory *theFactory)
+void plugframe::Launcher::setFactory(plugframe::CoreFactory *theFactory)
 {
     m_spSmfCoreFactory.reset(theFactory);
 }
 
-QspCoreFactory Launcher::getFactory()
+plugframe::QspCoreFactory plugframe::Launcher::getFactory()
 {
     return m_spSmfCoreFactory;
 }
 
-void Launcher::setLaunchingProperties()
+void plugframe::Launcher::setLaunchingProperties()
 {
     m_spSmfLaunchingProperties = m_spSmfCoreFactory->createLaunchingProperties("conf/properties.ini");
 }
 
-void Launcher::startPlatform()
+void plugframe::Launcher::startPlatform()
 {
 
     m_newFwk = m_spBundlesStore->loadFrameworkPlugin("Launcher");
@@ -121,13 +118,13 @@ void Launcher::startPlatform()
         m_newFwk->initFwk(m_spBundlesStore, m_spSmfLaunchingProperties);
 
         // start the framework
-        core::plugin::BundleInterface* bundleItf{m_newFwk->getBundleInterface()};
+        plugframe::BundleInterface* bundleItf{m_newFwk->getBundleInterface()};
         bundleItf->start(nullptr);
     }
 }
 
-void Launcher::onAboutToQuit()
+void plugframe::Launcher::onAboutToQuit()
 {
-    plugframe::core::plugin::BundleInterface *frameworkBundleItf{m_newFwk->getBundleInterface()};
+    plugframe::BundleInterface *frameworkBundleItf{m_newFwk->getBundleInterface()};
     frameworkBundleItf->stop();
 }

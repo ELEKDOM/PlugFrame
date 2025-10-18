@@ -1,6 +1,6 @@
 QT       += core gui widgets
 
-CONFIG += c++11
+CONFIG += c++17
 TEMPLATE = app
 
 PF_LAUNCHER_VERSION = $$cat(./guilauncher.ver)

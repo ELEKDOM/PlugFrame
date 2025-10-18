@@ -16,25 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "abstract_network_tcp/common/tcpchannel.h"
 #include "tcpclientchannelmanager.h"
 
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-TcpClientChannelManager::TcpClientChannelManager(TcpChannel *channel, QObject *parent):
-    TcpChannelManager{channel,parent},
+plugframe::TcpClientChannelManager::TcpClientChannelManager(plugframe::TcpChannel *channel, QObject *parent):
+    plugframe::TcpChannelManager{channel,parent},
     m_connectedToHost{false}
 {
 
 }
 
-TcpClientChannelManager::~TcpClientChannelManager()
+plugframe::TcpClientChannelManager::~TcpClientChannelManager()
 {
 
 }
 
-void TcpClientChannelManager::connectToServer(QHostAddress &ipAddr, quint16 &port)
+void plugframe::TcpClientChannelManager::connectToServer(QHostAddress &ipAddr, quint16 &port)
 {
     if (!m_connectedToHost)
     {
@@ -47,12 +44,12 @@ void TcpClientChannelManager::connectToServer(QHostAddress &ipAddr, quint16 &por
     }
 }
 
-void TcpClientChannelManager::processMessage(TcpChannelMessage *input)
+void plugframe::TcpClientChannelManager::processMessage(plugframe::TcpChannelMessage *input)
 {
     emit sigMessageFromServer(input);
 }
 
-void TcpClientChannelManager::onConnectedToServer()
+void plugframe::TcpClientChannelManager::onConnectedToServer()
 {
     m_connectionTimer.stop();
     channel()->socket()->disconnect(SIGNAL(connected()));
@@ -61,14 +58,14 @@ void TcpClientChannelManager::onConnectedToServer()
     emit sigConnectedToServer();
 }
 
-void TcpClientChannelManager::onDisconnectedFromServer()
+void plugframe::TcpClientChannelManager::onDisconnectedFromServer()
 {
     channel()->socket()->disconnect(SIGNAL(disconnected()));
     m_connectedToHost = false;
     emit sigDisconnectedFromServer();
 }
 
-void TcpClientChannelManager::tryServerConnection()
+void plugframe::TcpClientChannelManager::tryServerConnection()
 {
     channel()->socket()->connectToHost(m_serverIp,m_serverPort);
 }

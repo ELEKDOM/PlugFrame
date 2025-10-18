@@ -16,17 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "defaultbundlefactory.h"
 
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::core::service;
+plugframe::DefaultBundleFactory::DefaultBundleFactory() {}
 
-DefaultBundleFactory::DefaultBundleFactory() {}
-
-DefaultBundleFactory::~DefaultBundleFactory()
+plugframe::DefaultBundleFactory::~DefaultBundleFactory()
 {
 
 }
 
-PF_createServiceImplementation_DEF(DefaultBundleFactory)
+PF_createServiceImplementation_DEF(plugframe::DefaultBundleFactory)

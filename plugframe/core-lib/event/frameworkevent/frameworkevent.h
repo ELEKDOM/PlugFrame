@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORK_EVENT_H
 #define FRAMEWORK_EVENT_H
 
 #include "pfcore-lib_export.h"
 #include "event/event.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 /**
  * @brief The SmfFrameworkEvent class
  */
@@ -41,10 +33,5 @@ public:
     FrameworkEvent(const QString& typeId);
     ~FrameworkEvent() override;
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
-
+} //namespace plugframe
 #endif // FRAMEWORK_EVENT_H

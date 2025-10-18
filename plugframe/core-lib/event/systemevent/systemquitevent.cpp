@@ -16,34 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include "systemquitevent.h"
 
-#ifndef BROWSERHOOK_H
-#define BROWSERHOOK_H
-
-#include "pfcore-lib_export.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace core
-{
-namespace xmldom
+plugframe::SystemQuitEvent::SystemQuitEvent()
 {
 
-class PFCORELIB_EXPORT BrowserHook
+}
+
+plugframe::SystemQuitEvent::~SystemQuitEvent()
 {
-public:
-    virtual ~BrowserHook() {}
 
-public:
-    virtual void browseBegin() = 0;
-    virtual void browseEnd() = 0;
-};
-
-}//namespace xmldom
-}//namespace core
-}//namespace plugframe
-}//namespace elekdom
-
-#endif // BROWSERHOOK_H
+}

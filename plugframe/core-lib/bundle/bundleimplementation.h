@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLEIMPLEMENTATION_H
 #define BUNDLEIMPLEMENTATION_H
 
@@ -25,13 +24,7 @@
 #include "bundle.h"
 #include "service/serviceimplementationinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
-{
-namespace core
-{
-namespace bundle
 {
 class PFCORELIB_EXPORT BundleImplementation : public Bundle
 {
@@ -40,37 +33,33 @@ public:
     ~BundleImplementation() override;
 
 protected: // for Bundle4PluginInterface
-    bundle::BundleImplementation *getImplementation() override;
-    service::QspServiceImplementationInterface getServiceImplementation(const QString& serviceName) override;
+    BundleImplementation *getImplementation() override;
+    QspServiceImplementationInterface getServiceImplementation(const QString& serviceName) override;
 
 protected:
     QspBundleContext& bundleContext() {return m_bundleContext;}
-    void addExportedService(service::QspServiceImplementationInterface newService) override;
-    service::QspServiceImplementationInterface getService(const QString& serviceName);
+    void addExportedService(QspServiceImplementationInterface newService) override;
+    QspServiceImplementationInterface getService(const QString& serviceName);
     void _start(QspBundleContext bundleContext) override;
     void _stop() override;
 
 protected:
-    virtual plugin::ServiceInterface *qtServiceInterface(const QString& sName)=0;
-    virtual bool registerService(const QString &serviceInterfaceName, plugin::ServiceInterface* service);
+    virtual ServiceInterface *qtServiceInterface(const QString& sName)=0;
+    virtual bool registerService(const QString &serviceInterfaceName,ServiceInterface* service);
 
 private:
     void registerExportedServices();
 
 private:
-    QspBundleContext                            m_bundleContext;
-    service::ServiceImplementationInterfaceHash m_exportedServices;
+    QspBundleContext                   m_bundleContext;
+    ServiceImplementationInterfaceHash m_exportedServices;
 
 protected:
     QMutex m_mutex;
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
-#define PF_qtServiceInterface_DECL elekdom::plugframe::core::plugin::ServiceInterface *qtServiceInterface(const QString&) override;
-#define PF_qtServiceInterface_DEF(TYPE) elekdom::plugframe::core::plugin::ServiceInterface *TYPE::qtServiceInterface(const QString &){return nullptr;}
+#define PF_qtServiceInterface_DECL plugframe::ServiceInterface *qtServiceInterface(const QString&) override;
+#define PF_qtServiceInterface_DEF(TYPE) plugframe::ServiceInterface *TYPE::qtServiceInterface(const QString &){return nullptr;}
 
 #endif // BUNDLEIMPLEMENTATION_H

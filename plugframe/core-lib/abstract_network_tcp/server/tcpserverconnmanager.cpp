@@ -16,17 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpserverconnmanager.h"
 #include "tcpserverchannelmanager.h"
 #include "tcpserver.h"
 #include "tcpserverchannelmanager.h"
-#include "abstract_network_tcp/common/tcpchanneldeserializer.h"
-#include "abstract_network_tcp/common/tcpchannel.h"
 
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-
-TcpServerConnManager::TcpServerConnManager(TcpServer& bundle,QObject *parent):
+plugframe::TcpServerConnManager::TcpServerConnManager(plugframe::TcpServer& bundle,QObject *parent):
     QObject{parent},
     m_bundle{bundle},
     m_tcpServer{new QTcpServer}
@@ -34,23 +29,23 @@ TcpServerConnManager::TcpServerConnManager(TcpServer& bundle,QObject *parent):
     connect(m_tcpServer,SIGNAL(newConnection()),SLOT(onNewConnection()));
 }
 
-TcpServerConnManager::~TcpServerConnManager()
+plugframe::TcpServerConnManager::~TcpServerConnManager()
 {
     delete m_tcpServer;
 }
 
-bool TcpServerConnManager::open(QHostAddress &ipAddr, quint16 &port)
+bool plugframe::TcpServerConnManager::open(QHostAddress &ipAddr, quint16 &port)
 {
     return m_tcpServer->listen(ipAddr,port);
 }
 
-void TcpServerConnManager::close()
+void plugframe::TcpServerConnManager::close()
 {
     closeChannelManagers();
     m_tcpServer->close();
 }
 
-void TcpServerConnManager::onNewConnection()
+void plugframe::TcpServerConnManager::onNewConnection()
 {
     QTcpSocket *newConn{m_tcpServer->nextPendingConnection()};
 
@@ -63,18 +58,18 @@ void TcpServerConnManager::onNewConnection()
     }
 }
 
-void TcpServerConnManager::addChannelManager(TcpServerChannelManager *channel)
+void plugframe::TcpServerConnManager::addChannelManager(TcpServerChannelManager *channel)
 {
     QspTcpServerChannelManager newChannel{channel};
 
     m_channelManagers.append(newChannel);
 }
 
-void TcpServerConnManager::closeChannelManagers()
+void plugframe::TcpServerConnManager::closeChannelManagers()
 {
-    for(int i = 0; i < m_channelManagers.size(); i++)
+    for(qsizetype i = 0; i < m_channelManagers.size(); i++)
     {
-        QspTcpServerChannelManager cur{m_channelManagers.at(i)};
+        plugframe::QspTcpServerChannelManager cur{m_channelManagers.at(i)};
 
         disconnect(cur.get(),nullptr,nullptr,nullptr);
         cur->close();

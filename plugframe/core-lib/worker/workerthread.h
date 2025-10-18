@@ -16,50 +16,39 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKERTHREAD_H
 #define WORKERTHREAD_H
 
 #include <QThread>
+#include <QSharedPointer>
+#include "workerargs.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class PFCORELIB_EXPORT WorkerThread : public QThread
 {
     Q_OBJECT
 
-private:
-    WorkerSignal *m_wSignal;
-    QspWorkerArgs m_args;
-
-protected:
-
-    bool               m_ret;
-
 public:
     WorkerThread(WorkerSignal *wSignal,
-                    const QspWorkerArgs& args,
-                    QObject *parent = nullptr);
+                 const QspWorkerArgs& args,
+                 QObject *parent = nullptr);
     ~WorkerThread() override;
 
 protected:
     void run() override;
     virtual bool execWork(QspWorkerArgs args) = 0;
     virtual WorkerOuts *getWorkerOuts();
+
+protected:
+    bool m_ret;
+
+private:
+    WorkerSignal *m_wSignal;
+    QspWorkerArgs m_args;
 };
-
-}//namespace worker
-}//namespace core
+using QspWorkerThread = QSharedPointer<WorkerThread>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WORKERTHREAD_H

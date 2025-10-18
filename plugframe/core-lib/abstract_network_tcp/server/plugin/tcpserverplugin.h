@@ -16,30 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERPLUGIN_H
 #define TCPSERVERPLUGIN_H
 
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "plugin/plugin.h"
 #include "service-int/backendcontrolserviceinterface.h"
+#include "abstract_network_tcp/server/service/tcpserverservice.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace plugin
-{
-
-class PFCORELIB_EXPORT TcpServerPlugin : public core::plugin::Plugin,
-                                         public frontenditf::service::BackendControlServiceInterface
+class PFCORELIB_EXPORT TcpServerPlugin : public Plugin,
+                                         public BackendControlServiceInterface
 {
 public:
     TcpServerPlugin();
@@ -53,14 +41,7 @@ protected: // BackendControlServiceInterface
     void stopListen() override;
 
 private:
-    server::service::QspTcpServerService m_serverServiceImpl;
+    QspTcpServerService m_serverServiceImpl;
 };
-
-}//namespace plugin
-}//namespace server
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // TCPSERVERPLUGIN_H
