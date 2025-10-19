@@ -24,7 +24,7 @@
 #include <QStringList>
 #include <QAction>
 #include <QSharedPointer>
-#include "guipageview.h"
+#include "gui/guipageview.h"
 #include "pfcore-lib_export.h"
 
 namespace plugframe

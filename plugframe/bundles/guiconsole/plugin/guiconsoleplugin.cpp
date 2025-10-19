@@ -16,13 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guiconsoleplugin.h"
 #include "guiconsole.h"
-
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::guiconsole::plugin;
-using namespace elekdom::plugframe::guiconsole::bundle;
 
 GuiConsolePlugin::GuiConsolePlugin()
 {
@@ -34,7 +29,7 @@ GuiConsolePlugin::~GuiConsolePlugin()
 
 }
 
-Bundle4PluginInterface *GuiConsolePlugin::createImplementation()
+plugframe::Bundle4PluginInterface *GuiConsolePlugin::createImplementation()
 {
     return new GuiConsole;
 }

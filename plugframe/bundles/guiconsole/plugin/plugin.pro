@@ -1,12 +1,13 @@
-QT       += gui
+QT       += gui \
+            widgets
 
 TEMPLATE = lib
 CONFIG  += plugin
 
 BUNDLE_NAME = guiconsole
-BUNDLE_NAME_QT5 = $${BUNDLE_NAME}-qt5
+BUNDLE_NAME_QT = $${BUNDLE_NAME}-qt6
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = $${BUNDLE_NAME_QT5}-$${BUNDLE_VERSION}
+TARGET = $${BUNDLE_NAME_QT}-$${BUNDLE_VERSION}
 
 SOURCES += \
     guiconsoleplugin.cpp
@@ -22,5 +23,5 @@ INCLUDEPATH += \
         ../lib\
         ../../../core-lib
 
-LIBS    +=  -l$${BUNDLE_NAME_QT5}-$${BUNDLE_VERSION} -L../lib
-PRE_TARGETDEPS += ../lib/lib$${BUNDLE_NAME_QT5}-$${BUNDLE_VERSION}.a
+LIBS    +=  -l$${BUNDLE_NAME_QT}-$${BUNDLE_VERSION} -L../lib
+PRE_TARGETDEPS += ../lib/lib$${BUNDLE_NAME_QT}-$${BUNDLE_VERSION}.a

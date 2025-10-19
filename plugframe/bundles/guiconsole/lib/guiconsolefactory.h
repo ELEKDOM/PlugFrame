@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLEFACTORY_H
 #define GUICONSOLEFACTORY_H
 
@@ -24,31 +23,14 @@
 #include "guiconsole_forward.h"
 #include "service-int/systemserviceinterface.h"
 
-using namespace elekdom::plugframe::framework::service;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guiconsole
-{
-namespace factory
-{
-
-class GuiConsoleFactory : public core::bundle::BundleFactory
+class GuiConsoleFactory : public plugframe::BundleFactory
 {
 public:
     GuiConsoleFactory();
     ~GuiConsoleFactory() override;
 
 public:
-    virtual GuiConsoleController *createGuiConsoleController(SystemServiceInterface *systemServiceItf);
+    virtual GuiConsoleController *createGuiConsoleController(plugframe::SystemServiceInterface *systemServiceItf);
     PF_createServiceImplementation_DECL
 };
-
-} //namespace factory
-} //namespace guiconsole
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUICONSOLEFACTORY_H

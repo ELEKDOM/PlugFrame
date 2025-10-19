@@ -16,41 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLEPLUGIN_H
 #define GUICONSOLEPLUGIN_H
 
 #include "plugin/plugin.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guiconsole
-{
-namespace plugin
-{
-
-class GuiConsolePlugin : public core::plugin::Plugin
+class GuiConsolePlugin : public plugframe::Plugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.guiconsole.plugin" FILE "../guiconsolebundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface)
+    Q_PLUGIN_METADATA(IID "plugframe.guiconsole.plugin" FILE "../guiconsolebundle.json")
+    Q_INTERFACES(plugframe::BundleInterface)
 
 public:
     GuiConsolePlugin();
     virtual ~GuiConsolePlugin();
 
 protected: // SmfPLugin
-    core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     PF_bindServicesImplementations_DECL
 
 protected: // SmfTemplateServiceInterface
 };
-
-} //namespace plugin
-} //namespace guiconsole
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUICONSOLEPLUGIN_H
