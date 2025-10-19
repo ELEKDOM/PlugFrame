@@ -16,16 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "displayservice.h"
 #include "display.h"
 #include "service-int/displayserviceinterface.h"
 
-using namespace elekdom::plugframe::display;
-using namespace elekdom::plugframe::display::service;
-
-DisplayService::DisplayService(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+DisplayService::DisplayService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
@@ -37,7 +33,7 @@ DisplayService::~DisplayService()
 
 void DisplayService::print(const QString &msg)
 {
-    bundle::Display *logger{dynamic_cast<bundle::Display*>(implementation())};
+    Display *logger{dynamic_cast<Display*>(implementation())};
 
     logger->print(msg);
 }
@@ -49,5 +45,5 @@ void DisplayService::log(const QString &msg)
 
 QString DisplayService::serviceName()
 {
-    return DisplayServiceInterface::serviceName();
+    return plugframe::DisplayServiceInterface::serviceName();
 }

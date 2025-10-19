@@ -4,7 +4,7 @@ TEMPLATE = lib
 CONFIG  += staticlib
 
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = display-qt5-$${BUNDLE_VERSION}
+TARGET = display-qt6-$${BUNDLE_VERSION}
 
 SOURCES += \
     display.cpp \

@@ -16,30 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DISPLAY_FORWARD_H
 #define DISPLAY_FORWARD_H
 
-#include <QSharedPointer>
+class DisplayService;
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace display
-{
-    namespace bundle
-    {
-        class Display;
-    }
-    namespace service
-    {
-        class DisplayService;
-
-        using QspDisplayService = QSharedPointer<DisplayService>;
-    }
-
-} //namespace display
-} //namespace plugframe
-} //namespace elekdom
 #endif // DISPLAY_FORWARD_H

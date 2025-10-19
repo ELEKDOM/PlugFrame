@@ -16,25 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DISPLAYSERVICE_H
 #define DISPLAYSERVICE_H
 
+#include <QSharedPointer>
 #include "service/serviceimplementation.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace display
-{
-namespace service
-{
-
-class DisplayService : public core::service::ServiceImplementation
+class DisplayService : public plugframe::ServiceImplementation
 {
 public:
-    DisplayService(core::bundle::BundleImplementation *implementation);
+    DisplayService(plugframe::BundleImplementation *implementation);
     virtual ~DisplayService();
 
 public:
@@ -44,10 +35,5 @@ public:
 protected:
     virtual QString serviceName();
 };
-
-} //namespace service
-} //namespace display
-} //namespace plugframe
-} //namespace elekdom
-
+using QspDisplayService = QSharedPointer<DisplayService>;
 #endif // DISPLAYSERVICE_H
