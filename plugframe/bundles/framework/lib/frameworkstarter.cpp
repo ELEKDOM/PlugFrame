@@ -16,31 +16,24 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logger/pflog.h"
 #include "frameworkstarter.h"
 #include "frameworkfactory.h"
 #include "framework.h"
-#include "event/frameworkevent/bundlesstartingevent.h"
-#include "event/frameworkevent/startbundleevent.h"
-#include "event/frameworkevent/frameworkstartedevent.h"
-#include "event/frameworkevent/bundlesstoppingevent.h"
-#include "event/frameworkevent/stopbundleevent.h"
+#include "event/event.h"
 
-using namespace elekdom::plugframe;
-
-framework::bundle::FrameworkStarter::FrameworkStarter(core::bundle::Bundle& fwk):
+FrameworkStarter::FrameworkStarter(plugframe::Bundle& fwk):
     BundleEmitter{fwk}
 {
 
 }
 
-framework::bundle::FrameworkStarter::~FrameworkStarter()
+FrameworkStarter::~FrameworkStarter()
 {
 
 }
 
-void framework::bundle::FrameworkStarter::start()
+void FrameworkStarter::start()
 {
     //pfDebug3(getLogBundleName()) << "->SmfFrameworkStarter::start";
 
@@ -51,7 +44,7 @@ void framework::bundle::FrameworkStarter::start()
     //pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarter::start";
 }
 
-void framework::bundle::FrameworkStarter::stop()
+void FrameworkStarter::stop()
 {
     //pfDebug3(getLogBundleName()) << "->SmfFrameworkStarter::stop";
 
@@ -61,56 +54,55 @@ void framework::bundle::FrameworkStarter::stop()
     //pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarter::stop";
 }
 
-void framework::bundle::FrameworkStarter::postBundlesStartingEvt(core::plugin::BundleList& bundlesToStart,
-                                                            int frameworkStartLevel,
-                                                            int curStartLevel)
+void FrameworkStarter::postBundlesStartingEvt(plugframe::BundleList& bundlesToStart,
+                                              int frameworkStartLevel,
+                                              int curStartLevel)
 {
     // Create the event
-    framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-    core::event::QspEvent evt{myFactory.createBundlesStartingEvent(bundlesToStart,
-                                                                      frameworkStartLevel,
-                                                                      curStartLevel)};
+    FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+    plugframe::QspEvent evt{myFactory.createBundlesStartingEvent(bundlesToStart,
+                                                                 frameworkStartLevel,
+                                                                 curStartLevel)};
+    // Post the event
+    emit pfEvent(evt);
+}
+
+void FrameworkStarter::postStartBundleEvt(plugframe::BundleInterface *toStart)
+{
+    // Create the event
+    FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+    plugframe::QspEvent evt{myFactory.createStartBundleEvent(toStart)};
 
     // Post the event
     emit pfEvent(evt);
 }
 
-void framework::bundle::FrameworkStarter::postStartBundleEvt(core::plugin::BundleInterface *toStart)
+void FrameworkStarter::postFrameworkStartedEvt()
 {
     // Create the event
-    framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-    core::event::QspEvent evt{myFactory.createStartBundleEvent(toStart)};
+    FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+    plugframe::QspEvent evt{myFactory.createFrameworkStartedEvent()};
 
     // Post the event
     emit pfEvent(evt);
 }
 
-void framework::bundle::FrameworkStarter::postFrameworkStartedEvt()
+void FrameworkStarter::postBundlesStoppingEvt(plugframe::BundleList &bundlesToStop,
+                                              int curStopLevel)
 {
     // Create the event
-    framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-    core::event::QspEvent evt{myFactory.createFrameworkStartedEvent()};
+    FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+    plugframe::QspEvent evt{myFactory.createBundlesStoppingEvent(bundlesToStop, curStopLevel)};
 
     // Post the event
     emit pfEvent(evt);
 }
 
-void framework::bundle::FrameworkStarter::postBundlesStoppingEvt(core::plugin::BundleList &bundlesToStop,
-                                                            int curStopLevel)
+void FrameworkStarter::postStopBundleEvt(plugframe::BundleInterface *toStop)
 {
     // Create the event
-    framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-    core::event::QspEvent evt{myFactory.createBundlesStoppingEvent(bundlesToStop, curStopLevel)};
-
-    // Post the event
-    emit pfEvent(evt);
-}
-
-void framework::bundle::FrameworkStarter::postStopBundleEvt(core::plugin::BundleInterface *toStop)
-{
-    // Create the event
-    framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-    core::event::QspEvent evt{myFactory.createStopBundleEvent(toStop)};
+    FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+    plugframe::QspEvent evt{myFactory.createStopBundleEvent(toStop)};
 
     // Post the event
     emit pfEvent(evt);
@@ -127,15 +119,15 @@ void framework::bundle::FrameworkStarter::postStopBundleEvt(core::plugin::Bundle
  * So, the loop is implemented by an event/event handler couple according to
  * the  Qt event mechanism !
  */
-void framework::bundle::FrameworkStarter::startAllBundles()
+void FrameworkStarter::startAllBundles()
 {
     //pfDebug3(getLogBundleName()) << "->SmfFrameworkStarter::startAllBundles";
 
-    framework::bundle::Framework&     fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
-    int                               frameworkStartLevelToReach;
-    core::plugin::BundleList          bundlesToStart;
-    core::plugin::BundleList_Iterator iter;
-    core::plugin::BundleList          listBundles{fwk.bundleList()};
+    Framework&                     fwk{dynamic_cast<Framework&>(getBundle())};
+    int                            frameworkStartLevelToReach;
+    plugframe::BundleList          bundlesToStart;
+    plugframe::BundleList_Iterator iter;
+    plugframe::BundleList          listBundles{fwk.bundleList()};
 
     frameworkStartLevelToReach = fwk.startLevelToReach();
 
@@ -144,7 +136,7 @@ void framework::bundle::FrameworkStarter::startAllBundles()
     // bundles with startlevel <= frameworkStartLevelToReach must be started
     for (iter = listBundles.begin(); iter != listBundles.end(); ++iter)
     {
-        core::plugin::BundleInterface *curBundle = *iter;
+        plugframe::BundleInterface *curBundle = *iter;
 
         pfDebug4(getLogBundleName()) << "curBundle name = " << curBundle->getName() << " StartLevel = " << curBundle->getStartLevel();
 
@@ -165,17 +157,17 @@ void framework::bundle::FrameworkStarter::startAllBundles()
     //pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarter::startAllBundles";
 }
 
-void framework::bundle::FrameworkStarter::stopAllBundles()
+void FrameworkStarter::stopAllBundles()
 {
-    framework::bundle::Framework&     fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
-    core::plugin::BundleList          bundlesToStop;
-    core::plugin::BundleList_Iterator iter;
-    core::plugin::BundleList          listBundles{fwk.bundleList()};
+    Framework&                     fwk{dynamic_cast<Framework&>(getBundle())};
+    plugframe::BundleList          bundlesToStop;
+    plugframe::BundleList_Iterator iter;
+    plugframe::BundleList          listBundles{fwk.bundleList()};
 
     for (iter = listBundles.begin(); iter != listBundles.end(); ++iter)
     {
-        core::plugin::BundleInterface *curBundle{*iter};
-        if (core::plugin::BundleInterface::BundleState::Started == curBundle->getState())
+        plugframe::BundleInterface *curBundle{*iter};
+        if (plugframe::BundleInterface::BundleState::Started == curBundle->getState())
         {
             bundlesToStop.append(curBundle);
         }

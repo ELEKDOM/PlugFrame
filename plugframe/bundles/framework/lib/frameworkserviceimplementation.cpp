@@ -16,15 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "frameworkserviceimplementation.h"
 #include "framework.h"
 
-using namespace elekdom::plugframe::framework::service;
-using namespace elekdom::plugframe::framework;
-
-FrameworkServiceImplementation::FrameworkServiceImplementation(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+FrameworkServiceImplementation::FrameworkServiceImplementation(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
@@ -34,7 +30,7 @@ FrameworkServiceImplementation::~FrameworkServiceImplementation()
 
 }
 
-bundle::Framework *FrameworkServiceImplementation::framework()
+Framework *FrameworkServiceImplementation::framework()
 {
-    return dynamic_cast<bundle::Framework*>(implementation());
+    return dynamic_cast<Framework*>(implementation());
 }

@@ -20,7 +20,7 @@
 #define CONSOLELISTENER_H
 
 #include "bundle/bundlelistener.h"
-#include "pfcore-lib_forward.h"
+#include "event/frameworkevent/frameworkstartedevent.h"
 
 class ConsoleListener : public plugframe::BundleListener
 {

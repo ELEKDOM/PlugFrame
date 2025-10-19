@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "framework.h"
 #include "frameworkfactory.h"
 #include "frameworkstarter.h"
@@ -33,44 +32,41 @@
 #include "service-int/systemserviceinterface.h"
 #include "service-int/systemserviceregistryinterface.h"
 
-using namespace elekdom::plugframe::framework;
-using namespace elekdom::plugframe;
-
-factory::FrameworkFactory::FrameworkFactory()
+FrameworkFactory::FrameworkFactory()
 {
 }
 
-factory::FrameworkFactory::~FrameworkFactory()
+FrameworkFactory::~FrameworkFactory()
 {
 
 }
 
-core::bundle::BundleEmitter *factory::FrameworkFactory::createBundleEmitter(core::bundle::Bundle &myBundle)
+plugframe::BundleEmitter *FrameworkFactory::createBundleEmitter(plugframe::Bundle &myBundle)
 {
-    return new bundle::FrameworkStarter{myBundle};
+    return new FrameworkStarter{myBundle};
 }
 
-core::bundle::BundleListener *factory::FrameworkFactory::createBundleListener(core::bundle::Bundle &myBundle)
+plugframe::BundleListener *FrameworkFactory::createBundleListener(plugframe::Bundle &myBundle)
 {
-   return new bundle::FrameworkStarterListener{myBundle};
+   return new FrameworkStarterListener{myBundle};
 }
 
-core::service::ServiceImplementationInterface *factory::FrameworkFactory::createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                                                      const QString &sName,
-                                                                                                      const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *FrameworkFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                         const QString &sName,
+                                                                                         const QString &serviceVersion)
 {
-    core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (service::SystemServiceRegistryInterface::serviceName() == sName)
+    if (plugframe::SystemServiceRegistryInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createServiceRegistry(implementation);
         }
     }
-    else if (service::SystemServiceInterface::serviceName() == sName)
+    else if (plugframe::SystemServiceInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createSystemService(implementation);
         }
@@ -79,43 +75,46 @@ core::service::ServiceImplementationInterface *factory::FrameworkFactory::create
     return ret;
 }
 
-core::bundle::BundleContext *factory::FrameworkFactory::createBundleContext(service::SystemServiceRegistryInterface *registryService)
+plugframe::BundleContext *FrameworkFactory::createBundleContext(plugframe::SystemServiceRegistryInterface *registryService)
 {
-    return new core::bundle::BundleContext{registryService};
+    return new plugframe::BundleContext{registryService};
 }
 
-core::event::BundlesStartingEvent *factory::FrameworkFactory::createBundlesStartingEvent(core::plugin::BundleList& bundlesToStart, int fwkLevel, int level)
+plugframe::BundlesStartingEvent *FrameworkFactory::createBundlesStartingEvent(plugframe::BundleList& bundlesToStart,
+                                                                              int fwkLevel,
+                                                                              int level)
 {
-    return  new core::event::BundlesStartingEvent{bundlesToStart, fwkLevel, level};
+    return  new plugframe::BundlesStartingEvent{bundlesToStart,fwkLevel,level};
 }
 
-core::event::StartBundleEvent *factory::FrameworkFactory::createStartBundleEvent(core::plugin::BundleInterface *toStart)
+plugframe::StartBundleEvent *FrameworkFactory::createStartBundleEvent(plugframe::BundleInterface *toStart)
 {
-    return new core::event::StartBundleEvent{toStart};
+    return new plugframe::StartBundleEvent{toStart};
 }
 
-core::event::FrameworkStartedEvent *factory::FrameworkFactory::createFrameworkStartedEvent()
+plugframe::FrameworkStartedEvent *FrameworkFactory::createFrameworkStartedEvent()
 {
-    return new core::event::FrameworkStartedEvent{};
+    return new plugframe::FrameworkStartedEvent{};
 }
 
-core::event::BundlesStoppingEvent *factory::FrameworkFactory::createBundlesStoppingEvent(core::plugin::BundleList &bundlesToStop, int level)
+plugframe::BundlesStoppingEvent *FrameworkFactory::createBundlesStoppingEvent(plugframe::BundleList &bundlesToStop,
+                                                                              int level)
 {
-    return  new core::event::BundlesStoppingEvent{bundlesToStop, level};
+    return  new plugframe::BundlesStoppingEvent{bundlesToStop, level};
 }
 
-core::event::StopBundleEvent *factory::FrameworkFactory::createStopBundleEvent(core::plugin::BundleInterface *toStop)
+plugframe::StopBundleEvent *FrameworkFactory::createStopBundleEvent(plugframe::BundleInterface *toStop)
 {
-    return new core::event::StopBundleEvent{toStop};
+    return new plugframe::StopBundleEvent{toStop};
 }
 
-framework::service::ServiceRegistry *factory::FrameworkFactory::createServiceRegistry(core::bundle::BundleImplementation *implementation)
+ServiceRegistry *FrameworkFactory::createServiceRegistry(plugframe::BundleImplementation *implementation)
 {
-    return new framework::service::ServiceRegistry{implementation};
+    return new ServiceRegistry{implementation};
 }
 
-framework::service::SystemService *factory::FrameworkFactory::createSystemService(core::bundle::BundleImplementation *implementation)
+SystemService *FrameworkFactory::createSystemService(plugframe::BundleImplementation *implementation)
 {
-    return new framework::service::SystemService{implementation};
+    return new SystemService{implementation};
 }
 

@@ -16,32 +16,23 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORK_H
 #define FRAMEWORK_H
 
 #include "bundle/longstartbundleimplementation.h"
+#include "launcher/bundlesstore.h"
+#include "launcher/launchingproperties.h"
 #include "service-int/systemserviceregistryinterface.h"
-#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace bundle
-{
-
-class Framework : public core::bundle::LongStartBundleImplementation
+class Framework : public plugframe::LongStartBundleImplementation
 {
 public:
-    Framework(QSharedPointer<core::launcher::BundlesStore> bundlesStore,
-                 QSharedPointer<core::launcher::LaunchingProperties> launchingProperties);
+    Framework(plugframe::QspBundlesStore bundlesStore,
+              plugframe::QspLaunchingProperties launchingProperties);
     ~Framework() override;
 
 public: // for SmfSystemService
-    core::plugin::BundleList bundleList();
+    plugframe::BundleList bundleList();
     int runningLevel();
     void quit();
 
@@ -50,38 +41,32 @@ public: // for the emitter
     void setNumberOfBundlesToStart(int nb);
 
 public: // for the listener
-    void postBundlesStartingEvt(core::plugin::BundleList& bundlesToStart,
+    void postBundlesStartingEvt(plugframe::BundleList& bundlesToStart,
                                 int frameworkStartLevel,
                                 int curStartLevel);
-    void postBundlesStoppingEvt(core::plugin::BundleList& bundlesToStop,
+    void postBundlesStoppingEvt(plugframe::BundleList& bundlesToStop,
                                 int curStopLevel);
     void postFrameworkStartedEvt();
     int getNumberOfBundlesToStart();
-    service::SystemServiceRegistryInterface *getRegistryService();
+    plugframe::SystemServiceRegistryInterface *getRegistryService();
     void fwkStarted();
     void fwkStopped();
 
 protected:
-    core::bundle::BundleFactory *createFactory() override;
+    plugframe::BundleFactory *createFactory() override;
     void init() override;
-    void _start(core::bundle::QspBundleContext bundleContext) override;
+    void _start(plugframe::QspBundleContext bundleContext) override;
     void stop() override;
     void _stop() override;
 
 protected:
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
-    bool registerService(const QString &serviceInterfaceName, core::plugin::ServiceInterface* service) override;
+    plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    bool registerService(const QString &serviceInterfaceName, plugframe::ServiceInterface* service) override;
 
 private:
-    core::launcher::QspBundlesStore        m_bundlesStore;
-    core::launcher::QspLaunchingProperties m_launchingProperties;
-    core::plugin::BundleList               m_ListBundles; // loaded bundles interfaces
-    int                                    m_numberOfBundlesToStart;
+    plugframe::QspBundlesStore        m_bundlesStore;
+    plugframe::QspLaunchingProperties m_launchingProperties;
+    plugframe::BundleList             m_ListBundles; // loaded bundles interfaces
+    int                               m_numberOfBundlesToStart;
 };
-
-} //namespace bundle
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // FRAMEWORK_H

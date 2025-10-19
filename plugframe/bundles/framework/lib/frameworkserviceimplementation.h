@@ -16,35 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORKSERVICEIMPLEMENTATION_H
 #define FRAMEWORKSERVICEIMPLEMENTATION_H
 
 #include "service/serviceimplementation.h"
 #include "framework_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace service
-{
-
-class FrameworkServiceImplementation : public core::service::ServiceImplementation
+class FrameworkServiceImplementation : public plugframe::ServiceImplementation
 {
 public:
-    FrameworkServiceImplementation(core::bundle::BundleImplementation *implementation);
+    FrameworkServiceImplementation(plugframe::BundleImplementation *implementation);
     ~ FrameworkServiceImplementation() override;
 
 protected:
-    framework::bundle::Framework *framework();
+    Framework *framework();
 };
-
-} //namespace service
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // FRAMEWORKSERVICEIMPLEMENTATION_H

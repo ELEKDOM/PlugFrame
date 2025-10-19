@@ -32,8 +32,6 @@ namespace plugframe
     class BundleEmitter;
     class BundleListener;
     //
-    class FrameworkStartedEvent;
-    //
     class ServiceImplementationInterface;
     //
     class WorkerOuts;

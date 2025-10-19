@@ -16,17 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include "smfframeworkplugin.h"
+#include "frameworkplugin.h"
 #include "framework.h"
-#include "serviceregistry.h"
-#include "systemservice.h"
-#include "bundle/bundlecontext.h"
 #include "launcher/launchingproperties.h"
 #include "launcher/bundlesstore.h"
-
-using namespace elekdom::plugframe::framework::plugin;
-using namespace elekdom::plugframe;
 
 SmfFrameworkPlugin::SmfFrameworkPlugin()
 {
@@ -38,39 +31,38 @@ SmfFrameworkPlugin::~SmfFrameworkPlugin()
 
 }
 
-void elekdom::plugframe::framework::plugin::SmfFrameworkPlugin::init()
+void SmfFrameworkPlugin::init()
 {
     // Framework initialization is doing by initFwk !
 }
 
-core::bundle::Bundle4PluginInterface *SmfFrameworkPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *SmfFrameworkPlugin::createImplementation()
 {
-    return new framework::bundle::Framework{m_bundlesStore,
-                                               m_launchingProperties};
+    return new Framework{m_bundlesStore,m_launchingProperties};
 }
 
 void SmfFrameworkPlugin::bindServicesImplementations()
 {
-    core::service::QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
     serviceImplementationItf = implementation()->getServiceImplementation(SystemServiceInterface::serviceName());
-    m_systemServiceImpl = serviceImplementationItf.dynamicCast<service::SystemService>();
+    m_systemServiceImpl = serviceImplementationItf.dynamicCast<SystemService>();
 
     serviceImplementationItf = implementation()->getServiceImplementation(SystemServiceRegistryInterface::serviceName());
-    m_serviceRegistryImpl = serviceImplementationItf.dynamicCast<service::ServiceRegistry>();
+    m_serviceRegistryImpl = serviceImplementationItf.dynamicCast<ServiceRegistry>();
 }
 
-void SmfFrameworkPlugin::initFwk(core::launcher::QspBundlesStore bundlesStore,
-                                 core::launcher::QspLaunchingProperties launchingProperties)
+void SmfFrameworkPlugin::initFwk(plugframe::QspBundlesStore bundlesStore,
+                                 plugframe::QspLaunchingProperties launchingProperties)
 {
     m_bundlesStore = bundlesStore;
     m_launchingProperties = launchingProperties;
     _init();
 }
 
-core::plugin::BundleInterface *SmfFrameworkPlugin::getBundleInterface()
+plugframe::BundleInterface *SmfFrameworkPlugin::getBundleInterface()
 {
-    return qobject_cast<core::plugin::BundleInterface*>(this);
+    return qobject_cast<plugframe::BundleInterface*>(this);
 }
 
 QString SmfFrameworkPlugin::applicationName()
@@ -78,17 +70,17 @@ QString SmfFrameworkPlugin::applicationName()
     return m_systemServiceImpl->applicationName();
 }
 
-bool SmfFrameworkPlugin::registerListener(elekdom::plugframe::core::bundle::BundleListener *observer)
+bool SmfFrameworkPlugin::registerListener(plugframe::BundleListener *observer)
 {
     return m_systemServiceImpl->registerListener(observer);
 }
 
-bool SmfFrameworkPlugin::unregisterListener(elekdom::plugframe::core::bundle::BundleListener *observer)
+bool SmfFrameworkPlugin::unregisterListener(plugframe::BundleListener *observer)
 {
     return m_systemServiceImpl->registerListener(observer);
 }
 
-core::plugin::BundleList SmfFrameworkPlugin::bundleList()
+plugframe::BundleList SmfFrameworkPlugin::bundleList()
 {
     return m_systemServiceImpl->bundleList();
 }
@@ -103,17 +95,17 @@ void SmfFrameworkPlugin::quit()
     m_systemServiceImpl->quit();
 }
 
-bool SmfFrameworkPlugin::registerService(const QString &serviceInterfaceName, elekdom::plugframe::core::plugin::ServiceInterface *service)
+bool SmfFrameworkPlugin::registerService(const QString &serviceInterfaceName,plugframe::ServiceInterface *service)
 {
     return m_serviceRegistryImpl->registerService(serviceInterfaceName, service);
 }
 
-elekdom::plugframe::core::plugin::ServiceInterface *SmfFrameworkPlugin::getService(const QString &serviceInterfaceName)
+plugframe::ServiceInterface *SmfFrameworkPlugin::getService(const QString &serviceInterfaceName)
 {
     return m_serviceRegistryImpl->getService(serviceInterfaceName);
 }
 
-elekdom::plugframe::core::plugin::ServiceInterfaceList SmfFrameworkPlugin::getServices(const QString &serviceInterfaceName)
+plugframe::ServiceInterfaceList SmfFrameworkPlugin::getServices(const QString &serviceInterfaceName)
 {
     return m_serviceRegistryImpl->getServices(serviceInterfaceName);
 }

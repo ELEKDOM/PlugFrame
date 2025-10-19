@@ -16,46 +16,31 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORKSTARTER_H
 #define FRAMEWORKSTARTER_H
 
+#include <QSharedPointer>
 #include "bundle/bundleemitter.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace bundle
-{
-class FrameworkStarter : public core::bundle::BundleEmitter
+class FrameworkStarter : public plugframe::BundleEmitter
 {
 public:
-    FrameworkStarter(core::bundle::Bundle& fwk);
+    FrameworkStarter(plugframe::Bundle& fwk);
     ~FrameworkStarter() override;
 
 public:
     void start();
     void stop();
-    void postBundlesStartingEvt(core::plugin::BundleList& bundlesToStart, int frameworkStartLevel, int curStartLevel);
-    void postStartBundleEvt(core::plugin::BundleInterface *toStart);
+    void postBundlesStartingEvt(plugframe::BundleList& bundlesToStart, int frameworkStartLevel, int curStartLevel);
+    void postStartBundleEvt(plugframe::BundleInterface *toStart);
     void postFrameworkStartedEvt();
-    void postBundlesStoppingEvt(core::plugin::BundleList& bundlesToStop, int curStopLevel);
-    void postStopBundleEvt(core::plugin::BundleInterface *toStop);
+    void postBundlesStoppingEvt(plugframe::BundleList& bundlesToStop, int curStopLevel);
+    void postStopBundleEvt(plugframe::BundleInterface *toStop);
 
 protected:
     virtual void startAllBundles();
     virtual void stopAllBundles();
 };
-
 using QspSmfFrameworkStarter = QSharedPointer<FrameworkStarter>;
-
-} //namespace bundle
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // FRAMEWORKSTARTER_H
