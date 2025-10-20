@@ -16,34 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef USERS_FORWARD_H
 #define USERS_FORWARD_H
 
-#include <QSharedPointer>
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-    namespace bundle
-    {
-        class LoggedUser;
-        class Users;
-
-        using QspLoggedUser = QSharedPointer<LoggedUser>;
-        using QspUsers = QSharedPointer<Users>;
-    }
-    namespace service
-    {
-        class LoginService;
-
-        using QspLoginService = QSharedPointer<LoginService>;
-    }
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
+class LoggedUser;
+class LoginService;
 
 #endif // USERS_FORWARD_H

@@ -22,6 +22,6 @@ INCLUDEPATH +=  \
                 ../plugin \
                 ../../../core-lib
 
-TARGET = users-qt5-$${BUNDLE_VERSION}
+TARGET = users-qt6-$${BUNDLE_VERSION}
 
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT

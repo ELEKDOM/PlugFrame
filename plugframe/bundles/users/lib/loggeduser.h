@@ -16,21 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGGEDUSER_H
 #define LOGGEDUSER_H
 
 #include <QSharedPointer>
 #include <QString>
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-namespace bundle
-{
 
 class LoggedUser
 {
@@ -48,10 +38,5 @@ private:
     QString m_identifier;
     quint32 m_sessionId;
 };
-
-}//namespace bundle
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
-
+using QspLoggedUser = QSharedPointer<LoggedUser>;
 #endif // LOGGEDUSER_H

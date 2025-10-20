@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QMutexLocker>
 #include <QSettings>
 #include <QRandomGenerator>
@@ -26,11 +25,8 @@
 #include "loggeduser.h"
 #include "logger/pflog.h"
 
-using namespace elekdom::plugframe::users::service;
-using namespace elekdom::plugframe::users::bundle;
-
 Users::Users():
-    plugframe::core::bundle::BundleImplementation{"Users"}
+    plugframe::BundleImplementation{"Users"}
 {
 }
 
@@ -39,18 +35,18 @@ Users::~Users()
 
 }
 
-elekdom::plugframe::core::bundle::BundleFactory *Users::createFactory()
+plugframe::BundleFactory *Users::createFactory()
 {
-    return new users::factory::UsersFactory;
+    return new UsersFactory;
 }
 
-elekdom::plugframe::core::plugin::ServiceInterface *Users::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *Users::qtServiceInterface(const QString &sName)
 {
-    core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (service::LoginServiceInterface::serviceName() == sName)
+    if (plugframe::LoginServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<service::LoginServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::LoginServiceInterface*>(getQplugin());
     }
 
     return ret;
@@ -60,7 +56,7 @@ void Users::login(QString                             frontendItf,
                   QString                             frontendIp,
                   QString                             identifier,
                   QString                             password,
-                  LoginServiceInterface::LoginStatus& loginStatus,
+                  plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                   quint32&                            sessionId,
                   QString&                            profil)
 {
@@ -73,7 +69,7 @@ void Users::login(QString                             frontendItf,
                              frontendItf,
                              frontendIp,
                              profil);
-    if (loginStatus == service::LoginServiceInterface::LoginStatus::Ok)
+    if (loginStatus == plugframe::LoginServiceInterface::LoginStatus::Ok)
     {
         sessionId = generateSessionId();
         addLoggedUser(sessionId, frontendItf, identifier);
@@ -95,14 +91,14 @@ void Users::logout(quint32 sessionId)
     m_loggedUsers.remove(sessionId);
 }
 
-LoginServiceInterface::LoginStatus  Users::checkLogin(QString identifier,
-                                                      QString password,
-                                                      QString frontendItf,
-                                                      QString frontendIp,
-                                                      QString& profil)
+plugframe::LoginServiceInterface::LoginStatus  Users::checkLogin(QString identifier,
+                                                                 QString password,
+                                                                 QString frontendItf,
+                                                                 QString frontendIp,
+                                                                 QString& profil)
 {
     quint8    found{false};
-    LoginServiceInterface::LoginStatus ret{service::LoginServiceInterface::LoginStatus::PasswordErr};
+    plugframe::LoginServiceInterface::LoginStatus ret{plugframe::LoginServiceInterface::LoginStatus::PasswordErr};
     int       size;
     QString   userIdentifier;
     QString   userPassword;
@@ -111,7 +107,7 @@ LoginServiceInterface::LoginStatus  Users::checkLogin(QString identifier,
     Q_UNUSED(frontendIp)  // Not yet implemented.
 
     size = usersSettings.beginReadArray(QStringLiteral("Profils"));
-    for (int i = 0; i < size && !found; ++i) {
+    for (qsizetype i = 0; i < size && !found; ++i) {
         usersSettings.setArrayIndex(i);
         userIdentifier = usersSettings.value(QStringLiteral("identifier")).toString();
         found = userIdentifier == identifier;
@@ -121,7 +117,7 @@ LoginServiceInterface::LoginStatus  Users::checkLogin(QString identifier,
             userPassword = usersSettings.value(QStringLiteral("password")).toString();
             if (userPassword == password)
             {
-                ret = service::LoginServiceInterface::LoginStatus::Ok;
+                ret = plugframe::LoginServiceInterface::LoginStatus::Ok;
             }
         }
     }
@@ -129,7 +125,7 @@ LoginServiceInterface::LoginStatus  Users::checkLogin(QString identifier,
 
     if (!found)
     {
-        ret = service::LoginServiceInterface::LoginStatus::IdentifierErr;
+        ret = plugframe::LoginServiceInterface::LoginStatus::IdentifierErr;
     }
 
     return ret;
@@ -150,7 +146,7 @@ quint32 Users::generateSessionId()
 void Users::addLoggedUser(const quint32& sessionId, const QString& frontendItf, const QString& identifier)
 {
     QspLoggedUser loggedUser;
-    factory::UsersFactory& usersFactory{dynamic_cast<factory::UsersFactory&>(getFactory())};
+    UsersFactory& usersFactory{dynamic_cast<UsersFactory&>(getFactory())};
 
     loggedUser.reset(usersFactory.createLoggedUser(frontendItf,identifier,sessionId));
     m_loggedUsers.insert(sessionId, loggedUser);

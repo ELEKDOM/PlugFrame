@@ -16,15 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QFile>
 #include "loginservice.h"
 #include "users.h"
 
-using namespace elekdom::plugframe::users::service;
-
-LoginService::LoginService(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+LoginService::LoginService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
@@ -38,11 +35,11 @@ void LoginService::login(QString frontendItf,
                          QString frontendIp,
                          QString identifier,
                          QString password,
-                         LoginServiceInterface::LoginStatus& loginStatus,
+                         plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                          quint32 &sessionId,
                          QString& profil)
 {
-    bundle::Users *gacUsers{dynamic_cast<bundle::Users*>(implementation())};
+    Users *gacUsers{dynamic_cast<Users*>(implementation())};
 
     gacUsers->login(frontendItf,
                     frontendIp,
@@ -55,7 +52,7 @@ void LoginService::login(QString frontendItf,
 
 void LoginService::logout(quint32 sessionId)
 {
-    bundle::Users *gacUsers{dynamic_cast<bundle::Users*>(implementation())};
+    Users *gacUsers{dynamic_cast<Users*>(implementation())};
 
     gacUsers->logout(sessionId);
 }
@@ -76,5 +73,5 @@ QString LoginService::absoluteUserConfFileName(const QString &profil)
 
 QString LoginService::serviceName()
 {
-    return users::service::LoginServiceInterface::serviceName();
+    return plugframe::LoginServiceInterface::serviceName();
 }

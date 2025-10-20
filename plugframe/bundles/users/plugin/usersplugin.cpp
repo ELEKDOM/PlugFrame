@@ -16,11 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "usersplugin.h"
 #include "users.h"
-
-using namespace elekdom::plugframe::users::plugin;
 
 UsersPlugin::UsersPlugin()
 {
@@ -32,24 +29,24 @@ UsersPlugin::~UsersPlugin()
 
 }
 
-elekdom::plugframe::core::bundle::Bundle4PluginInterface *UsersPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *UsersPlugin::createImplementation()
 {
-    return new users::bundle::Users;
+    return new Users;
 }
 
 void UsersPlugin::bindServicesImplementations()
 {
-    plugframe::core::service::QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
-    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::users::service::LoginServiceInterface::serviceName());
-    m_loginServiceImpl = serviceImplementationItf.dynamicCast<service::LoginService>();
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::LoginServiceInterface::serviceName());
+    m_loginServiceImpl = serviceImplementationItf.dynamicCast<LoginService>();
 }
 
 void UsersPlugin::login(QString frontendItf,
                         QString frontendIp,
                         QString identifier,
                         QString password,
-                        service::LoginServiceInterface::LoginStatus& loginStatus,
+                        plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                         quint32 &sessionId,
                         QString& profil)
 {

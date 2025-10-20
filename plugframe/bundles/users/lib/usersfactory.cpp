@@ -16,18 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include "bundle/bundle.h"
 #include "usersfactory.h"
 #include "loggeduser.h"
 #include "loginservice.h"
-#include "users.h"
 #include "service-int/loginserviceinterface.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::users;
-using namespace elekdom::plugframe::users::factory;
-
 
 UsersFactory::UsersFactory()
 {
@@ -39,15 +31,15 @@ UsersFactory::~UsersFactory()
 
 }
 
-core::service::ServiceImplementationInterface *UsersFactory::createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                                         const QString &sName,
-                                                                                         const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *UsersFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                     const QString &sName,
+                                                                                     const QString &serviceVersion)
 {
-    core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (service::LoginServiceInterface::serviceName() == sName)
+    if (plugframe::LoginServiceInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createLoginService(implementation);
         }
@@ -56,14 +48,14 @@ core::service::ServiceImplementationInterface *UsersFactory::createServiceImplem
     return ret;
 }
 
-service::LoginService *UsersFactory::createLoginService(core::bundle::BundleImplementation *implementation)
+LoginService *UsersFactory::createLoginService(plugframe::BundleImplementation *implementation)
 {
-    return new service::LoginService{implementation};
+    return new LoginService{implementation};
 }
 
-bundle::LoggedUser *UsersFactory::createLoggedUser(const QString &frontendItf,const QString &identifier,const quint32& sessionId)
+LoggedUser *UsersFactory::createLoggedUser(const QString &frontendItf,const QString &identifier,const quint32& sessionId)
 {
-    return new bundle::LoggedUser{frontendItf,identifier,sessionId};
+    return new LoggedUser{frontendItf,identifier,sessionId};
 }
 
 

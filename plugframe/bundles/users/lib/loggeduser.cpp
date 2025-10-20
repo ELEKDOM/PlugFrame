@@ -16,10 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "loggeduser.h"
-
-using namespace elekdom::plugframe::users::bundle;
 
 LoggedUser::LoggedUser(const QString &frontendItf,const QString &identifier,const quint32& sessionId):
     m_frontendItf{frontendItf},
