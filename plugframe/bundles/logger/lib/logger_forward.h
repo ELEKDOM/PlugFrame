@@ -16,22 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGGER_FORWARD_H
 #define LOGGER_FORWARD_H
 
-#include <QSharedPointer>
+class LogFilter;
+class LogDevice;
 
-namespace elekdom::plugframe::logger::bundle
-{
-    class Logger;
-    class LogFilter;
-    class LogDevice;
-    class LogDisplay;
-    class LogFile;
-
-    using QspLogFilter = QSharedPointer<LogFilter>;
-    using QspLogDevice = QSharedPointer<LogDevice>;
-
-} //namespace elekdom::plugframe::logger::bundle
 #endif // LOGGER_FORWARD_H

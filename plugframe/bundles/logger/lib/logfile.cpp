@@ -16,10 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logfile.h"
-
-using namespace elekdom::plugframe::logger::bundle;
 
 LogFile::LogFile(const QString &fileName)
 {

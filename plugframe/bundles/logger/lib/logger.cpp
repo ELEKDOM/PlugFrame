@@ -16,21 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QSettings>
 #include "logfilter.h"
 #include "loggerfactory.h"
 #include "bundle/bundlecontext.h"
 #include "logger.h"
 
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::logger::bundle;
-using namespace elekdom::plugframe::logger;
-using namespace elekdom::plugframe;
-
 Logger *Logger::s_logger = nullptr;
 
-void logger::bundle::myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     if (Logger::s_logger)
     {
@@ -39,7 +33,7 @@ void logger::bundle::myMessageOutput(QtMsgType type, const QMessageLogContext &c
 }
 
 Logger::Logger():
-    core::bundle::BundleImplementation{"Logger"},
+    plugframe::BundleImplementation{"Logger"},
     m_re{"^\\{(\\d)\\}\\[(\\w*)\\]"} // raw message > {level}[channel]msg
 {
 
@@ -76,23 +70,21 @@ void Logger::log(QtMsgType type, const QMessageLogContext &context, const QStrin
     }
 }
 
-BundleFactory *Logger::createFactory()
+plugframe::BundleFactory *Logger::createFactory()
 {
-    return new factory::LoggerFactory;
+    return new LoggerFactory;
 }
 
-void Logger::_start(QspBundleContext bundleContext)
+void Logger::_start(plugframe::QspBundleContext bundleContext)
 {
-    core::bundle::BundleImplementation::_start(bundleContext);
-
-    m_display = bundleContext->getService<display::service::DisplayServiceInterface>(display::service::DisplayServiceInterface::serviceName());
+    plugframe::BundleImplementation::_start(bundleContext);
+    m_display = bundleContext->getService<plugframe::DisplayServiceInterface>(plugframe::DisplayServiceInterface::serviceName());
     open();
 }
 
 void Logger::_stop()
 {
-    core::bundle::BundleImplementation::_stop();
-
+    plugframe::BundleImplementation::_stop();
     close();
 }
 
@@ -109,7 +101,7 @@ void Logger::open()
 
 void Logger::loadIniFile()
 {
-    factory::LoggerFactory& loggerFactory{dynamic_cast<factory::LoggerFactory&>(getFactory())};
+    LoggerFactory& loggerFactory{dynamic_cast<LoggerFactory&>(getFactory())};
     QString   file{getConfPath()},channelName,logFileName,timestampFormat;
     QSettings logsettings{file,QSettings::IniFormat};  // conf/log.ini
     uint      dFlags,wFlags,iFlags,outputFlags;

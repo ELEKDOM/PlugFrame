@@ -16,26 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGDISPLAY_H
 #define LOGDISPLAY_H
 
 #include "logdevice.h"
 #include "service-int/displayserviceinterface.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
-{
-
 class LogDisplay : public LogDevice
 {
 public:
-    LogDisplay(plugframe::display::service::DisplayServiceInterface *display);
+    LogDisplay(plugframe::DisplayServiceInterface *display);
     ~LogDisplay() override;
 
 protected:
@@ -43,12 +33,6 @@ protected:
     void _close() override;
 
 private:
-    plugframe::display::service::DisplayServiceInterface *m_display;
+    plugframe::DisplayServiceInterface *m_display;
 };
-
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // LOGDISPLAY_H

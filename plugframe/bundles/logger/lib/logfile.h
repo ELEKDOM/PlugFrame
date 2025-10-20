@@ -16,22 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGFILE_H
 #define LOGFILE_H
 
 #include <QFile>
 #include <QTextStream>
 #include "logdevice.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
-{
 
 class LogFile : public LogDevice
 {
@@ -44,13 +34,7 @@ protected:
     void _close() override;
 
 private:
-    QFile m_file;
+    QFile       m_file;
     QTextStream m_outputStream;
 };
-
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // LOGFILE_H

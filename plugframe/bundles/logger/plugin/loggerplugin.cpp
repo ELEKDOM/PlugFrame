@@ -16,25 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "loggerplugin.h"
 #include "logger.h"
 
-using namespace elekdom::plugframe;
-
-logger::plugin::LoggerPlugin::LoggerPlugin()
+LoggerPlugin::LoggerPlugin()
 {
 
 }
 
-logger::plugin::LoggerPlugin::~LoggerPlugin()
+LoggerPlugin::~LoggerPlugin()
 {
 
 }
 
-core::bundle::Bundle4PluginInterface *logger::plugin::LoggerPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *LoggerPlugin::createImplementation()
 {
-    return new logger::bundle::Logger;
+    return new Logger;
 }
 
-PF_bindServicesImplementations_DEF(logger::plugin::LoggerPlugin)
+PF_bindServicesImplementations_DEF(LoggerPlugin)

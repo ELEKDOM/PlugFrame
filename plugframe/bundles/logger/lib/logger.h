@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGGER_H
 #define LOGGER_H
 
@@ -24,27 +23,15 @@
 #include <QHash>
 #include <QtGlobal>
 #include <QRegularExpression>
-#include "logger_forward.h"
 #include "bundle/bundleimplementation.h"
 #include "service-int/displayserviceinterface.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
-{
+#include "logfilter.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
-class Logger : public core::bundle::BundleImplementation
+class Logger : public plugframe::BundleImplementation
 {
     friend void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-
-private:
-
 
 public:
     Logger();
@@ -54,8 +41,8 @@ public:
     void log(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 protected:
-    core::bundle::BundleFactory* createFactory() override;
-    void _start(core::bundle::QspBundleContext bundleContext) override;
+    plugframe::BundleFactory* createFactory() override;
+    void _start(plugframe::QspBundleContext bundleContext) override;
     void _stop() override;
     PF_qtServiceInterface_DECL
 
@@ -67,15 +54,9 @@ private:
 private:
     static Logger *s_logger;
 private:
-    QHash<QString, QspLogFilter>                          m_channelFilter;
-    plugframe::display::service::DisplayServiceInterface *m_display;
-    QRegularExpression                                    m_re;
-    QRegularExpressionMatch                               m_match;
+    QHash<QString, QspLogFilter>        m_channelFilter;
+    plugframe::DisplayServiceInterface *m_display;
+    QRegularExpression                  m_re;
+    QRegularExpressionMatch             m_match;
 };
-
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // LOGGER_H
