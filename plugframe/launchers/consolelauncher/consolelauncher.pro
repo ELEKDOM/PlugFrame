@@ -5,7 +5,7 @@ CONFIG -= app_bundle
 
 PF_LAUNCHER_VERSION = $$cat(./consolelauncher.ver)
 LAUNCHER_NAME = plugframe_launcher
-TARGET = $${LAUNCHER_NAME}-qt5-$${PF_LAUNCHER_VERSION}
+TARGET = $${LAUNCHER_NAME}-qt6-$${PF_LAUNCHER_VERSION}
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -28,7 +28,7 @@ OTHER_FILES += \
             conf/properties.ini
 
 PF_LIB_VERSION = $$cat(../../core-lib/pfcore-lib.ver)
-PF_LIB_NAME = plugframe-core-qt5-$${PF_LIB_VERSION}
+PF_LIB_NAME = plugframe-core-qt6-$${PF_LIB_VERSION}
 LIBS += -l$${PF_LIB_NAME} -L../../core-lib
 
 DESTDIR = ../../../bin/plugframe

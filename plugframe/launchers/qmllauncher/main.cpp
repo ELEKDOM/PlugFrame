@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
