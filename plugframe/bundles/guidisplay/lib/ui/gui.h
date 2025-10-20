@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUI_H
 #define GUI_H
 
@@ -26,7 +25,7 @@
 #include <QString>
 #include <QHash>
 #include <QMenu>
-#include "pfcore-lib_forward.h"
+#include "gui/guipagecontroller.h"
 #include "guidisplay_forward.h"
 
 QT_BEGIN_NAMESPACE
@@ -34,15 +33,6 @@ namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
-
-using namespace elekdom::plugframe::core::gui;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
 
 class Gui : public QMainWindow
 {
@@ -59,10 +49,10 @@ public slots:
     virtual void onLog(QString msg);
     virtual void onStatusMessage(QString msg);
     virtual void onClearStatusMessages();
-    virtual void onAddGuiController(QspGuiPageController controller);
-    virtual void onRemoveAllPages(QspGuiPageController controller);
+    virtual void onAddGuiController(plugframe::QspGuiPageController controller);
+    virtual void onRemoveAllPages(plugframe::QspGuiPageController controller);
     void onShowPage(int idx);
-    void onUpdatePageIdx(GuiPageController *controller);
+    void onUpdatePageIdx(plugframe::GuiPageController *controller);
     void onSetMainWindowTitle(const QString& title);
 
 protected:
@@ -76,32 +66,27 @@ signals:
 
 private slots:
     void onPageSelected(int idx);
-    void onCurrentCtrl(GuiPageController *controller);
+    void onCurrentCtrl(plugframe::GuiPageController *controller);
 
 private:
     void addMenu(const QString& menuName,QMenu* menu);
     QMenu *menu(const QString& menuName);
-    void checkForMenu(QspGuiPageController controller);
-    void addViews(QspGuiPageController controller);
+    void checkForMenu(plugframe::QspGuiPageController controller);
+    void addViews(plugframe::QspGuiPageController controller);
     void showPage(int pageIdx);
     void updateToolBar(int idx);
     void enableCtrlSelectionMenu();
     void disableCtrlSelectionMenu();
 
 private:
-    Ui::MainWindow                     *ui;
-    QString                             m_windowTitle;       // Gui's window name
-    QPixmap                             m_elekdomIcon;       // Gui's window icon
-    QLabel                             *m_iconLbl;           // Gui's window label for icon
-    QHash<QString,QMenu*>               m_ctrlSelectionMenu; // set of selection menus
-    QHash<QString,QspGuiPageController> m_ctrlSet;           // set of controllers
-    GuiPageController                  *m_currentCtrl;       // active controller
-    QList<GuiPageSelector*>             m_actionSet;         // toolbar page selector set
-    GuiLogsView                        *m_logsView;          // the logs are viewed in the display
+    Ui::MainWindow                                *ui;
+    QString                                        m_windowTitle;       // Gui's window name
+    QPixmap                                        m_elekdomIcon;       // Gui's window icon
+    QLabel                                        *m_iconLbl;           // Gui's window label for icon
+    QHash<QString,QMenu*>                          m_ctrlSelectionMenu; // set of selection menus
+    QHash<QString,plugframe::QspGuiPageController> m_ctrlSet;           // set of controllers
+    plugframe::GuiPageController                  *m_currentCtrl;       // active controller
+    QList<GuiPageSelector*>                        m_actionSet;         // toolbar page selector set
+    GuiLogsView                                   *m_logsView;          // the logs are viewed in the display
 };
-
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUI_H

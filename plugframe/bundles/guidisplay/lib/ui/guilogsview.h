@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUILOGSVIEW_H
 #define GUILOGSVIEW_H
 
@@ -28,16 +27,7 @@ class logsView;
 }
 QT_END_NAMESPACE
 
-using namespace elekdom::plugframe::core::gui;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-
-class GuiLogsView : public GuiPageView
+class GuiLogsView : public plugframe::GuiPageView
 {
     Q_OBJECT
 
@@ -54,9 +44,4 @@ private slots:
 private:
     Ui::logsView *ui;
 };
-
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUILOGSVIEW_H

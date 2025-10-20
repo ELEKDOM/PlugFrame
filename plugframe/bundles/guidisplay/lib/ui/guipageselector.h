@@ -16,19 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIPAGESELECTOR_H
 #define GUIPAGESELECTOR_H
 
 #include <QAction>
 #include "pfcore-lib_forward.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
 
 class GuiPageSelector : public QAction
 {
@@ -37,13 +29,13 @@ class GuiPageSelector : public QAction
 public:
     explicit GuiPageSelector(int idx,
                              QString name,
-                             core::gui::GuiPageController *ctrl,
+                             plugframe::GuiPageController *ctrl,
                              QWidget *parent = nullptr);
     ~ GuiPageSelector() override;
 
 public:
     int idx() {return m_idx;}
-    core::gui::GuiPageController *ctrl(){return m_ctrl;}
+    plugframe::GuiPageController *ctrl(){return m_ctrl;}
 
 signals:
     void selectedPage(int idx);
@@ -53,11 +45,6 @@ private slots:
 
 private:
     int m_idx;
-    core::gui::GuiPageController *m_ctrl;
+    plugframe::GuiPageController *m_ctrl;
 };
-
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUIPAGESELECTOR_H

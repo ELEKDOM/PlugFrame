@@ -16,44 +16,30 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIDISPLAYPLUGIN_H
 #define GUIDISPLAYPLUGIN_H
 
 #include "plugin/plugin.h"
 #include "service-int/displayserviceinterface.h"
 #include "service-int/guibuilderserviceinterface.h"
-#include "guidisplay_forward.h"
+#include "guibuilderservice.h"
+#include "guidisplayservice.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-namespace plugin
-{
-
-class GuiDisplayPlugin : public core::plugin::Plugin,
-                         public display::service::DisplayServiceInterface,
-                         public service::GuiBuilderServiceInterface
+class GuiDisplayPlugin : public plugframe::Plugin,
+                         public plugframe::DisplayServiceInterface,
+                         public plugframe::GuiBuilderServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.guidisplay.plugin" FILE "../guidisplaybundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface
-                 elekdom::plugframe::display::service::DisplayServiceInterface
-                 elekdom::plugframe::guidisplay::service::GuiBuilderServiceInterface)
-
-private:
-    QSharedPointer<service::GuiDisplayService> m_displayServiceImpl;
-    QSharedPointer<service::GuiBuilderService> m_guiBuilderServiceImpl;
-
+    Q_PLUGIN_METADATA(IID "plugframe.guidisplay.plugin" FILE "../guidisplaybundle.json")
+    Q_INTERFACES(plugframe::BundleInterface
+                 plugframe::DisplayServiceInterface
+                 plugframe::GuiBuilderServiceInterface)
 public:
     GuiDisplayPlugin();
     virtual ~GuiDisplayPlugin();
 
 protected: // SmfPLugin
-    core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     void bindServicesImplementations() override;
 
 protected: // SmfDisplayServiceInterface
@@ -63,14 +49,13 @@ protected: // SmfDisplayServiceInterface
     void clearStatusMessages() override;
 
 protected: // SmfGuiBuilderServiceInterface
-    void addGuiController(const core::gui::QspGuiPageController& controller) override;
-    void removeAllPages(const core::gui::QspGuiPageController& controller) override;
+    void addGuiController(const plugframe::QspGuiPageController& controller) override;
+    void removeAllPages(const plugframe::QspGuiPageController& controller) override;
     void setMainWindowTitle(const QString& title) override;
-};
 
-} //namespace plugin
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
+private:
+    QspGuiDisplayService m_displayServiceImpl;
+    QspGuiBuilderService m_guiBuilderServiceImpl;
+};
 
 #endif // GUIDISPLAYPLUGIN_H

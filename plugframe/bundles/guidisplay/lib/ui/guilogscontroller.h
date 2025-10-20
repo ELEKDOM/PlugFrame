@@ -16,22 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUILOGSCONTROLLER_H
 #define GUILOGSCONTROLLER_H
 
 #include "gui/guipagecontroller.h"
 
-using namespace elekdom::plugframe::core::gui;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-
-class GuiLogsController : public GuiPageController
+class GuiLogsController : public plugframe::GuiPageController
 {
     Q_OBJECT
 
@@ -45,11 +35,6 @@ public:
 
 protected:
     void buildViews() override;
-    virtual GuiPageView *createLogsView();
+    virtual plugframe::GuiPageView *createLogsView();
 };
-
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUILOGSCONTROLLER_H

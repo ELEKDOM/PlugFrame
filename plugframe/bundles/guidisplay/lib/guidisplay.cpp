@@ -16,20 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guidisplay.h"
 #include "guidisplayfactory.h"
 #include "ui/guihook.h"
-#include "ui/guilogscontroller.h"
 #include "service-int/displayserviceinterface.h"
 #include "service-int/guibuilderserviceinterface.h"
 #include "service-int/systemserviceinterface.h"
 #include "bundle/bundlecontext.h"
-
-using namespace elekdom::plugframe::display::service;
-using namespace elekdom::plugframe::guidisplay::service;
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::guidisplay::bundle;
 
 GuiDisplay::GuiDisplay():
     BundleImplementation{"Display"},
@@ -56,12 +49,12 @@ void GuiDisplay::clearStatusMessages()
     m_guiHook->clearStatusMessages();
 }
 
-void GuiDisplay::addGuiController(const core::gui::QspGuiPageController &controller)
+void GuiDisplay::addGuiController(const plugframe::QspGuiPageController &controller)
 {
     m_guiHook->addGuiController(controller);
 }
 
-void GuiDisplay::removeAllPages(const core::gui::QspGuiPageController &controller)
+void GuiDisplay::removeAllPages(const plugframe::QspGuiPageController &controller)
 {
     m_guiHook->removeAllPages(controller);
 }
@@ -73,9 +66,9 @@ void GuiDisplay::setMainWindowTitle(const QString &title)
 
 void GuiDisplay::closeApp()
 {
-    framework::service::SystemServiceInterface *systemServiceItf;
+    plugframe::SystemServiceInterface *systemServiceItf;
 
-    systemServiceItf = bundleContext()->getService<framework::service::SystemServiceInterface>(framework::service::SystemServiceInterface::serviceName());
+    systemServiceItf = bundleContext()->getService<plugframe::SystemServiceInterface>(plugframe::SystemServiceInterface::serviceName());
 
     if (systemServiceItf != nullptr)
     {
@@ -83,28 +76,28 @@ void GuiDisplay::closeApp()
     }
 }
 
-BundleFactory *GuiDisplay::createFactory()
+plugframe::BundleFactory *GuiDisplay::createFactory()
 {
-    return new factory::GuiDisplayFactory;
+    return new GuiDisplayFactory;
 }
 
-elekdom::plugframe::core::plugin::ServiceInterface *GuiDisplay::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *GuiDisplay::qtServiceInterface(const QString &sName)
 {
-    core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (DisplayServiceInterface::serviceName() == sName)
+    if (plugframe::DisplayServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<DisplayServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::DisplayServiceInterface*>(getQplugin());
     }
-    else if (GuiBuilderServiceInterface::serviceName() == sName)
+    else if (plugframe::GuiBuilderServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<GuiBuilderServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::GuiBuilderServiceInterface*>(getQplugin());
     }
 
     return ret;
 }
 
-void GuiDisplay::_start(QspBundleContext bundleContext)
+void GuiDisplay::_start(plugframe::QspBundleContext bundleContext)
 {
     BundleImplementation::_start(bundleContext);
     buildGui();
@@ -115,8 +108,8 @@ void GuiDisplay::_start(QspBundleContext bundleContext)
 /// basic page view/controller are build for logs view
 void GuiDisplay::buildGui()
 {
-    factory::GuiDisplayFactory &factory{dynamic_cast<factory::GuiDisplayFactory&>(getFactory())};
-    QspGuiPageController pageCtrl{factory.createLogsPageController()};
+    GuiDisplayFactory &factory{dynamic_cast<GuiDisplayFactory&>(getFactory())};
+    plugframe::QspGuiPageController pageCtrl{factory.createLogsPageController()};
 
     // Gui build & init
     m_guiHook = factory.createGuiHook(factory.createGui(),*this);

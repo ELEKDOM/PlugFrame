@@ -16,23 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIDISPLAYFACTORY_H
 #define GUIDISPLAYFACTORY_H
 
 #include "factory/bundlefactory.h"
+#include "ui/guilogscontroller.h"
 #include "guidisplay_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-namespace factory
-{
-
-class GuiDisplayFactory : public core::bundle::BundleFactory
+class GuiDisplayFactory : public plugframe::BundleFactory
 {
 public:
     GuiDisplayFactory();
@@ -40,21 +31,15 @@ public:
 
 public:
     virtual Gui *createGui();
-    virtual GuiHook *createGuiHook(Gui* parent, bundle::GuiDisplay& bundle);
+    virtual GuiHook *createGuiHook(Gui* parent, GuiDisplay& bundle);
     virtual GuiLogsController *createLogsPageController();
 
 protected:
-    virtual service::GuiDisplayService *createDisplayService(core::bundle::BundleImplementation *implementation);
-    virtual service::GuiBuilderService *createBuilderService(core::bundle::BundleImplementation *implementation);
-    core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                               const QString& sName,
-                                                                               const QString& serviceVersion) override;
+    virtual GuiDisplayService *createDisplayService(plugframe::BundleImplementation *implementation);
+    virtual GuiBuilderService *createBuilderService(plugframe::BundleImplementation *implementation);
+    plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                           const QString& sName,
+                                                                           const QString& serviceVersion) override;
 
 };
-
-} //namespace factory
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUIDISPLAYFACTORY_H

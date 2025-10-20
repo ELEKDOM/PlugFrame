@@ -16,37 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIDISPLAY_FORWARD_H
 #define GUIDISPLAY_FORWARD_H
 
-#include <QSharedPointer>
+class Gui;
+class GuiPageSelector;
+class GuiHook;
+class GuiLogsView;
+class GuiDisplay;
+class GuiDisplayService;
+class GuiBuilderService;
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-    class Gui;
-    class GuiPageSelector;
-    class GuiHook;
-    class GuiLogsView;
-    class GuiLogsController;
-
-    namespace bundle
-    {
-        class GuiDisplay;
-    }
-    namespace service
-    {
-        class GuiDisplayService;
-        class GuiBuilderService;
-
-        using QspSmfGuiDisplayService = QSharedPointer<GuiDisplayService>;
-        using QspSmfGuiBuilderService = QSharedPointer<GuiBuilderService>;
-    }
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
 #endif // GUIDISPLAY_FORWARD_H

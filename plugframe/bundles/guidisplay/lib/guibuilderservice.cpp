@@ -16,16 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "service-int/guibuilderserviceinterface.h"
 #include "guibuilderservice.h"
 #include "guidisplay.h"
 
-using namespace elekdom::plugframe::guidisplay::service;
-using namespace elekdom::plugframe::guidisplay::bundle;
-
-GuiBuilderService::GuiBuilderService(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+GuiBuilderService::GuiBuilderService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {}
 
 GuiBuilderService::~GuiBuilderService()
@@ -33,14 +29,14 @@ GuiBuilderService::~GuiBuilderService()
 
 }
 
-void GuiBuilderService::addGuiController(const core::gui::QspGuiPageController &controller)
+void GuiBuilderService::addGuiController(const plugframe::QspGuiPageController &controller)
 {
     GuiDisplay *console{dynamic_cast<GuiDisplay*>(implementation())};
 
     console->addGuiController(controller);
 }
 
-void GuiBuilderService::removeAllPages(const core::gui::QspGuiPageController &controller)
+void GuiBuilderService::removeAllPages(const plugframe::QspGuiPageController &controller)
 {
     GuiDisplay *console{dynamic_cast<GuiDisplay*>(implementation())};
 
@@ -56,5 +52,5 @@ void GuiBuilderService::setMainWindowTitle(const QString &title)
 
 QString GuiBuilderService::serviceName()
 {
-    return guidisplay::service::GuiBuilderServiceInterface::serviceName();
+    return plugframe::GuiBuilderServiceInterface::serviceName();
 }

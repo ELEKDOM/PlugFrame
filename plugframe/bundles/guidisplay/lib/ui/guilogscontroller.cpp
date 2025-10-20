@@ -16,12 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QStringLiteral>
 #include "guilogscontroller.h"
 #include "guilogsview.h"
-
-using namespace elekdom::plugframe::guidisplay;
 
 GuiLogsController::GuiLogsController(QObject *parent):
     GuiPageController{logsPageCtrlName(),
@@ -39,7 +36,7 @@ void GuiLogsController::buildViews()
     addView(createLogsView());
 }
 
-GuiPageView *GuiLogsController::createLogsView()
+plugframe::GuiPageView *GuiLogsController::createLogsView()
 {
     return new GuiLogsView;
 }

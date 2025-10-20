@@ -16,11 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guilogsview.h"
 #include "ui_logsview.h"
-
-using namespace elekdom::plugframe::guidisplay;
 
 GuiLogsView::GuiLogsView(QWidget *parent):
     GuiPageView("",parent),
