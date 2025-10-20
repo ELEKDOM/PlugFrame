@@ -6,7 +6,7 @@ DEFINES += PFCORE_LIBRARY
 CONFIG += c++17
 
 PF_LIB_VERSION = $$cat(pfcore-lib.ver)
-TARGET = plugframe-core-q6-$${PF_LIB_VERSION}
+TARGET = plugframe-core-qt6-$${PF_LIB_VERSION}
 
 SOURCES += \
         abstract_network_tcp/client/plugin/tcpclientplugin.cpp \
