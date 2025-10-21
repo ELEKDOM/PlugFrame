@@ -26,14 +26,14 @@
 
 namespace plugframe
 {
-class PFCORELIB_EXPORT Document : public QDomDocument
+class PFCORELIB_EXPORT XmlDocument : public QDomDocument
 {
 protected:
     static QString confidAttr() {return QStringLiteral("conf-id");}
 
 public:
-    Document(XmlBrowserHook& browserHook);
-    virtual ~Document();
+    XmlDocument(XmlBrowserHook& browserHook);
+    virtual ~XmlDocument();
 
 public:
     void load(const QString& xmlFileName);

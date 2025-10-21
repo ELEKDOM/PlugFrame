@@ -19,19 +19,19 @@
 #include <QFile>
 #include "xmldocument.h"
 
-plugframe::Document::Document(XmlBrowserHook &browserHook):
+plugframe::XmlDocument::XmlDocument(XmlBrowserHook &browserHook):
     m_browserHook{browserHook},
     m_fileLoaded{false}
 {
 
 }
 
-plugframe::Document::~Document()
+plugframe::XmlDocument::~XmlDocument()
 {
 
 }
 
-void plugframe::Document::load(const QString &xmlFileName)
+void plugframe::XmlDocument::load(const QString &xmlFileName)
 {
     QFile file(xmlFileName);
 
@@ -48,7 +48,7 @@ void plugframe::Document::load(const QString &xmlFileName)
     }
 }
 
-qint16 plugframe::Document::confId()
+qint16 plugframe::XmlDocument::confId()
 {
     qint16 ret{-1};
 
@@ -72,7 +72,7 @@ qint16 plugframe::Document::confId()
     return ret;
 }
 
-bool plugframe::Document::browse()
+bool plugframe::XmlDocument::browse()
 {
     bool ret{false};
 
