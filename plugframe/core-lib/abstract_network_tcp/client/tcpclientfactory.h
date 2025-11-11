@@ -26,7 +26,7 @@
 
 namespace plugframe
 {
-class PFCORELIB_EXPORT TcpClientFactory : BundleFactory
+class PFCORELIB_EXPORT TcpClientFactory : public BundleFactory
 {
 public:
     TcpClientFactory();

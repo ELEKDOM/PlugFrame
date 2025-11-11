@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QList>
 #include <QVector>
+#include <QSharedPointer>
 #include "logger/loggable.h"
 #include "dailyscheduler.h"
 #include "weeklyscheduler.h"
@@ -67,5 +68,6 @@ private:
     int                               m_nextDayTimerId;
     int                               m_nextScheduledEvtTimerId;
 };
+using QspScheduler = QSharedPointer<Scheduler>;
 }//namespace plugframe
 #endif // SCHEDULER_H

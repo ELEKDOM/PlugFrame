@@ -21,6 +21,7 @@
 #define SCHEDULERBUILDER_H
 
 #include <QDomNodeList>
+#include <QSharedPointer>
 #include "logger/loggable.h"
 #include "schedulerelementhook.h"
 #include "dailyscheduler.h"
@@ -64,5 +65,6 @@ private:
     QspDailyScheduler  m_dailyScheduler;
     QspWeeklyScheduler m_weeklyScheduler;
 };
+using QspSchedulerBuilder = QSharedPointer<SchedulerBuilder>;
 }//namespace plugframe
 #endif // SCHEDULERBUILDER_H

@@ -38,6 +38,7 @@ namespace plugframe
     //
     class WorkerOuts;
     class WorkerSignal;
+    class WorkerWatcher;
     //
     class Scheduler;
     //
