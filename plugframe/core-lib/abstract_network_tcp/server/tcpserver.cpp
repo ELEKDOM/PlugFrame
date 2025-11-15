@@ -18,8 +18,8 @@
 
 #include <QSettings>
 #include "tcpserver.h"
-#include "tcpserverconnmanager.h"
 #include "tcpserverfactory.h"
+#include "tcpserverconnmanager.h"
 #include "tcpserverchannelmanager.h"
 #include "abstract_network_tcp/common/tcpchannel.h"
 #include "service-int/backendcontrolserviceinterface.h"
@@ -62,12 +62,16 @@ void plugframe::TcpServer::stopListen()
 
 plugframe::TcpServerChannelManager *plugframe::TcpServer::newChannelManager(QTcpSocket *newConn)
 {
-    plugframe::TcpServerFactory& tcpServerFactory{dynamic_cast<plugframe::TcpServerFactory&>(getFactory())};
+    plugframe::TcpServerChannelManager *channelManager{nullptr};
+
+    plugframe::BundleFactory& bundleFactory{getFactory()};
+    plugframe::TcpServerFactory& tcpServerFactory{dynamic_cast<plugframe::TcpServerFactory&>(bundleFactory)};
     plugframe::TcpChannelDeserializer *deserializer{tcpServerFactory.createDeserializer()};
     plugframe::TcpChannel *channel{tcpServerFactory.createChannel(newConn,deserializer)};
-    plugframe::TcpServerChannelManager *channelManager(tcpServerFactory.createChannelManager(*this,channel));
 
+    channelManager = tcpServerFactory.createChannelManager(*this,channel);
     QObject::connect(channel->socket(),SIGNAL(disconnected()),channelManager,SLOT(onDisconnectedFromClient()));
+
     return channelManager;
 }
 

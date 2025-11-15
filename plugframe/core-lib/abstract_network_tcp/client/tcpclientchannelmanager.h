@@ -43,7 +43,7 @@ protected:
 signals:
     void sigConnectedToServer();
     void sigDisconnectedFromServer();
-    void sigMessageFromServer(TcpChannelMessage *input);
+    void sigMessageFromServer(plugframe::TcpChannelMessage *input);
 
 private slots:
     void tryServerConnection();

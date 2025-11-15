@@ -78,8 +78,8 @@ void Gui::onAddGuiController(plugframe::QspGuiPageController controller)
 
     // Connect signals/slots for mainwindow/ctrl link
     connect(controller.get(),SIGNAL(showPage(int)),SLOT(onShowPage(int)));
-    connect(controller.get(),SIGNAL(updatePageIdx(GuiPageController*)),SLOT(onUpdatePageIdx(GuiPageController*)));
-    connect(controller.get(),SIGNAL(curCtrl(GuiPageController*)),SLOT(onCurrentCtrl(GuiPageController*)));
+    connect(controller.get(),SIGNAL(updatePageIdx(plugframe::GuiPageController*)),SLOT(onUpdatePageIdx(plugframe::GuiPageController*)));
+    connect(controller.get(),SIGNAL(curCtrl(plugframe::GuiPageController*)),SLOT(onCurrentCtrl(plugframe::GuiPageController*)));
     connect(controller.get(),SIGNAL(statusMessage(QString)),SLOT(onStatusMessage(QString)));
     connect(controller.get(),SIGNAL(clearStatusMessage()),SLOT(onClearStatusMessages()));
 }

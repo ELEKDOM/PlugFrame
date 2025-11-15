@@ -26,3 +26,9 @@ RESOURCES +=
 
 LIBS    +=  -l$${BUNDLE_NAME_QT}-$${BUNDLE_VERSION} -L../lib
 PRE_TARGETDEPS += ../lib/lib$${BUNDLE_NAME_QT}-$${BUNDLE_VERSION}.a
+
+#PlugFrame LIB
+##############
+PF_LIB_VERSION = $$cat(../../../core-lib/pfcore-lib.ver)
+PF_LIB_NAME = plugframe-core-qt6-$${PF_LIB_VERSION}
+LIBS += -l$${PF_LIB_NAME} -L../../../core-lib

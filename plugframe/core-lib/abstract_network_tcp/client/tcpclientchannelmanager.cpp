@@ -40,7 +40,7 @@ void plugframe::TcpClientChannelManager::connectToServer(QHostAddress &ipAddr, q
 
         connect(channel()->socket(),SIGNAL(connected()),SLOT(onConnectedToServer()));
         connect(&m_connectionTimer,SIGNAL(timeout()),SLOT(tryServerConnection()));
-        m_connectionTimer.start(3000);
+        m_connectionTimer.start(2000);//Connection attempt every 2 seconds
     }
 }
 
@@ -52,7 +52,7 @@ void plugframe::TcpClientChannelManager::processMessage(plugframe::TcpChannelMes
 void plugframe::TcpClientChannelManager::onConnectedToServer()
 {
     m_connectionTimer.stop();
-    channel()->socket()->disconnect(SIGNAL(connected()));
+    channel()->socket()->disconnect(SIGNAL(connected()));//Ok, connected to the server
     m_connectedToHost = true;
     connect(channel()->socket(),SIGNAL(disconnected()),SLOT(onDisconnectedFromServer()));
     emit sigConnectedToServer();

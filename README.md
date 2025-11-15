@@ -10,7 +10,7 @@ This repository contains the core framework developed by [ELEKDOM](https://elekd
 
 - **Bundle architecture** based on QtPlugin (dynamic libraries)
 - **Service-oriented communication** between bundles (with service registration & lookup)
-- **Qt 5.15 integration**, including CLI and GUI-based bundle interaction
+- **Qt 6.9.3 integration**, including CLI and GUI-based bundle interaction
 - Core components: lifecycle manager, logging system, headless or GUI-based shells
 - Designed with clean separation between plugin loading and logic implementation
 
@@ -19,7 +19,7 @@ This repository contains the core framework developed by [ELEKDOM](https://elekd
 ## Repository Structure
 
 ```bash
-ELEKDOM-PlugFrame/
+PlugFrame/
 │
 ├── plugframe/           # Main framework modules (core-lib, framework, logger, etc.)
 │   ├── core-lib/        # Base types and interfaces for all bundles
@@ -32,7 +32,7 @@ ELEKDOM-PlugFrame/
 │   └── users/           # Optional bundle for authentication logic
 │
 ├── applications/        # Placeholder directory for applications using PlugFrame
-│   └── oplink/          # [NOT included in this repository] See the OpLink repo
+│   └── OpLink/          # [NOT included in this repository] See the OpLink repo
 │
 └── PlugFrame.pro        # Qt project file for IDE setup
 ```
@@ -41,8 +41,8 @@ ELEKDOM-PlugFrame/
 
 ## Requirements
 
-- **Qt 5.15** (with qmake)
-- C++11 compatible compiler (tested with `g++` on **Ubuntu 24.04**)
+- **Qt 6.9.3** (with qmake)
+- C++17 compatible compiler (tested with `g++` on **Kubuntu 25.10**)
 - Recommended: [QtCreator](https://www.qt.io/product/development-tools) for development
 
 ---
@@ -118,9 +118,9 @@ All source files include appropriate GPLv3 headers.
 
 ### Next milestones:
 
-- Qt6 integration
+- Replacing qmake with cmake
+- Raspy cross compiation
 - Windows and MacOs compilation
-- Raspy cross compiation 
 - Unit tests and CI integration
 - GitHub wiki with technical documentation
 - First packaged release (v0.1.0)

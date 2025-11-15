@@ -43,7 +43,7 @@ plugframe::Bundle::~Bundle()
 {
 }
 
-plugframe::BundleFactory &plugframe::Bundle::getFactory()
+plugframe::BundleFactory& plugframe::Bundle::getFactory()
 {
     return *m_factory;
 }

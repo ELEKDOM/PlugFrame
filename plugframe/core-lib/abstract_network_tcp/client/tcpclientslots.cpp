@@ -34,7 +34,7 @@ void plugframe::TcpClientSlots::connectChannelManager(TcpClientChannelManager *c
 {
     connect(clientChannelManager,SIGNAL(sigConnectedToServer()),SLOT(onConnectedToServer()));
     connect(clientChannelManager,SIGNAL(sigDisconnectedFromServer()),SLOT(onDisconnectedFromServer()));
-    connect(clientChannelManager,SIGNAL(sigMessageFromServer(TcpChannelMessage*)),SLOT(onMessageFromServer(TcpChannelMessage*)));
+    connect(clientChannelManager,SIGNAL(sigMessageFromServer(plugframe::TcpChannelMessage*)),SLOT(onMessageFromServer(plugframe::TcpChannelMessage*)));
 }
 
 void plugframe::TcpClientSlots::onConnectedToServer()
