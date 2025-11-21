@@ -16,43 +16,30 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SERVICEREGISTRY_H
 #define SERVICEREGISTRY_H
 
 #include <QMultiHash>
+#include <QSharedPointer>
 #include "frameworkserviceimplementation.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace service
-{
+#include "service-int/serviceinterface.h"
 
 class ServiceRegistry : public FrameworkServiceImplementation
 {
-private:
-    QMultiHash<QString, core::plugin::ServiceInterface*> m_registry;
-
 public:
-    ServiceRegistry(core::bundle::BundleImplementation *implementation);
+    ServiceRegistry(plugframe::BundleImplementation *implementation);
     virtual ~ServiceRegistry();
 
 public:
-    bool registerService(const QString& serviceInterfaceName,  core::plugin::ServiceInterface *service);
-    core::plugin::ServiceInterface *getService(const QString& serviceInterfaceName);
-    QList<core::plugin::ServiceInterface*> getServices(const QString& serviceInterfaceName);
+    bool registerService(const QString& serviceInterfaceName,  plugframe::ServiceInterface *service);
+    plugframe::ServiceInterface *getService(const QString& serviceInterfaceName);
+    QList<plugframe::ServiceInterface*> getServices(const QString& serviceInterfaceName);
 
 protected:
     virtual QString serviceName();
+
+private:
+    QMultiHash<QString,plugframe::ServiceInterface*> m_registry;
 };
-
-} //namespace service
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
+using QspServiceRegistry = QSharedPointer<ServiceRegistry>;
 #endif // SERVICEREGISTRY_H

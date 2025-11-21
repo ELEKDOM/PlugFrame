@@ -16,14 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "loggerfactory.h"
 #include "logfilter.h"
 #include "logdisplay.h"
 #include "logfile.h"
-
-using namespace elekdom::plugframe::logger::factory;
-using namespace elekdom::plugframe::logger::bundle;
 
 LoggerFactory::LoggerFactory() {}
 
@@ -37,7 +33,7 @@ LogFilter *LoggerFactory::createLogFilter(const QString &name, const QString &ti
     return new LogFilter{name,timestampFormat,dFlags,wFlags,iFlags};
 }
 
-LogDevice *LoggerFactory::createLogDisplay(display::service::DisplayServiceInterface *display)
+LogDevice *LoggerFactory::createLogDisplay(plugframe::DisplayServiceInterface *display)
 {
     return new LogDisplay{display};
 }

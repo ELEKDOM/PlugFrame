@@ -16,29 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERSERVICE_H
 #define TCPSERVERSERVICE_H
 
+#include <QSharedPointer>
 #include "service/serviceimplementation.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace service
-{
-
-class TcpServerService : public plugframe::core::service::ServiceImplementation
+class PFCORELIB_EXPORT TcpServerService : public ServiceImplementation
 {
 public:
-    TcpServerService(plugframe::core::bundle::BundleImplementation *implementation);
+    TcpServerService(BundleImplementation *implementation);
     ~TcpServerService() override;
 
 public:
@@ -48,11 +38,6 @@ public:
 protected:
     QString serviceName() override;
 };
-
-}//namespace service
-}//namespace server
-}//namespace tcp
-}//namespace core
+using QspTcpServerService = QSharedPointer<TcpServerService>;
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVERSERVICE_H

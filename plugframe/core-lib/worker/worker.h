@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKER_H
 #define WORKER_H
 
 #include "workersignal.h"
-#include "pfcore-lib_forward.h"
+#include "workerthread.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class PFCORELIB_EXPORT Worker : public WorkerSignal
 {
     Q_OBJECT
@@ -52,10 +44,5 @@ protected:
 private slots:
     void onThreadFinished();
 };
-
-}//namespace worker
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WORKER_H

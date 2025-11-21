@@ -16,21 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QDebug>
 #include "frameworkstartedevent.h"
 
-using namespace elekdom::plugframe::core::event;
+const QString plugframe::FrameworkStartedEvent::s_typeId {"PlugFrame.Framework.Started"};
 
-const QString FrameworkStartedEvent::s_typeId {"PlugFrame.Framework.Started"};
-
-FrameworkStartedEvent::FrameworkStartedEvent():
-    FrameworkEvent{FrameworkStartedEvent::s_typeId}
+plugframe::FrameworkStartedEvent::FrameworkStartedEvent():
+    FrameworkEvent{plugframe::FrameworkStartedEvent::s_typeId}
 {
-   // qDebug() << "--SmfFrameworkStartedEvent::SmfFrameworkStartedEvent";
 }
 
-FrameworkStartedEvent::~FrameworkStartedEvent()
+plugframe::FrameworkStartedEvent::~FrameworkStartedEvent()
 {
-  //  qDebug() << "--SmfFrameworkStartedEvent::~SmfFrameworkStartedEvent";
 }

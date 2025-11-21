@@ -16,22 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QSettings>
-#include "logger.h"
 #include "logfilter.h"
-#include "logdevice.h"
 #include "loggerfactory.h"
 #include "bundle/bundlecontext.h"
-
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::logger::bundle;
-using namespace elekdom::plugframe::logger;
-using namespace elekdom::plugframe;
+#include "logger.h"
 
 Logger *Logger::s_logger = nullptr;
 
-void logger::bundle::myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     if (Logger::s_logger)
     {
@@ -40,7 +33,8 @@ void logger::bundle::myMessageOutput(QtMsgType type, const QMessageLogContext &c
 }
 
 Logger::Logger():
-    core::bundle::BundleImplementation{"Logger"}
+    plugframe::BundleImplementation{"Logger"},
+    m_re{"^\\{(\\d)\\}\\[(\\w*)\\]"} // raw message > {level}[channel]msg
 {
 
 }
@@ -54,21 +48,18 @@ void Logger::log(QtMsgType type, const QMessageLogContext &context, const QStrin
 {
     QMutexLocker mtxLck(&m_mutex);
     Q_UNUSED(context)
-
     QString message{msg};
-    QRegExp rx{"^\\{(\\d)\\}\\[(\\w*)\\]"}; // raw message > {level}[channel]msg
-    int index{rx.indexIn(message)};
-    QStringList list{rx.capturedTexts()};
 
-    if (index >= 0)
+    m_match = m_re.match(message);
+    if (m_match.hasMatch())
     {
-        QString channelName{list[2]};
+        QString channelName{m_match.captured(2)};
         QspLogFilter filter{m_channelFilter.value(channelName)};
         if (false == filter.isNull())
         {
-            uint level{list[1].toUInt()};
+            uint level{m_match.captured(1).toUInt()};
 
-            message = message.remove(list[0]);
+            message = message.remove(m_match.captured(0)); // message without header
             filter->log(type,level,message);
         } //if (false == filter.isNull())
     } //if (index >= 0)
@@ -79,23 +70,21 @@ void Logger::log(QtMsgType type, const QMessageLogContext &context, const QStrin
     }
 }
 
-BundleFactory *Logger::createFactory()
+plugframe::BundleFactory *Logger::createFactory()
 {
-    return new factory::LoggerFactory;
+    return new LoggerFactory;
 }
 
-void Logger::_start(QspBundleContext bundleContext)
+void Logger::_start(plugframe::QspBundleContext bundleContext)
 {
-    core::bundle::BundleImplementation::_start(bundleContext);
-
-    m_display = bundleContext->getService<display::service::DisplayServiceInterface>(display::service::DisplayServiceInterface::serviceName());
+    plugframe::BundleImplementation::_start(bundleContext);
+    m_display = bundleContext->getService<plugframe::DisplayServiceInterface>(plugframe::DisplayServiceInterface::serviceName());
     open();
 }
 
 void Logger::_stop()
 {
-    core::bundle::BundleImplementation::_stop();
-
+    plugframe::BundleImplementation::_stop();
     close();
 }
 
@@ -112,7 +101,7 @@ void Logger::open()
 
 void Logger::loadIniFile()
 {
-    factory::LoggerFactory& loggerFactory{dynamic_cast<factory::LoggerFactory&>(getFactory())};
+    LoggerFactory& loggerFactory{dynamic_cast<LoggerFactory&>(getFactory())};
     QString   file{getConfPath()},channelName,logFileName,timestampFormat;
     QSettings logsettings{file,QSettings::IniFormat};  // conf/log.ini
     uint      dFlags,wFlags,iFlags,outputFlags;

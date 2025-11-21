@@ -16,35 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORK_FORWARD_H
 #define FRAMEWORK_FORWARD_H
 
-#include <QSharedPointer>
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-    namespace bundle
-    {
-        class Framework;
-        class FrameworkStarterListener;
-
-        using QspFrameworkStarterListener = QSharedPointer<FrameworkStarterListener>;
-    }
-    namespace service
-    {
-        class ServiceRegistry;
-        class SystemService;
-
-        using QspSmfServiceRegistry = QSharedPointer<ServiceRegistry>;
-        using QspSmfSystemService = QSharedPointer<SystemService>;
-    }
-}//namespace framework
-}//namespace plugframe
-}//namespace elekdom
+class Framework;
+class ServiceRegistry;
+class SystemService;
 
 #endif // FRAMEWORK_FORWARD_H

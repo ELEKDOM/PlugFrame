@@ -16,20 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGDEVICE_H
 #define LOGDEVICE_H
 
-#include "logger_forward.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
-{
+#include <QSharedPointer>
 
 class LogDevice
 {
@@ -38,7 +28,7 @@ public:
     virtual ~LogDevice();
 
 public:
-    void next(const QspLogDevice& next) {m_next = next;}
+    void next(const QSharedPointer<LogDevice>& next) {m_next = next;}
     void log(const QString& msg);
     void close();
 
@@ -47,12 +37,7 @@ protected:
     virtual void _close() = 0;
 
 private:
-    QspLogDevice m_next;
+    QSharedPointer<LogDevice> m_next;
 };
-
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
+using QspLogDevice = QSharedPointer<LogDevice>;
 #endif // LOGDEVICE_H

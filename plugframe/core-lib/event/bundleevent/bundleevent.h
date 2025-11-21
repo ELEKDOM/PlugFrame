@@ -24,32 +24,20 @@
 #include "event/event.h"
 #include "plugin/bundleinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT BundleEvent : public Event
 {
 private:
-    core::plugin::BundleInterface *m_bundleItf;
+    plugframe::BundleInterface *m_bundleItf;
 
 public:
-    BundleEvent(const QString& typeId, core::plugin::BundleInterface *bundleItf);
+    BundleEvent(const QString& typeId, plugframe::BundleInterface *bundleItf);
     ~BundleEvent() override;
 
 public:
-    core::plugin::BundleInterface *getBundle() {return m_bundleItf;}
+    plugframe::BundleInterface *getBundle() {return m_bundleItf;}
 
 };
-
-} //namespace event
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // SMF_BUNDLE_EVENT_H

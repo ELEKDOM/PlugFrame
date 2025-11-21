@@ -16,53 +16,47 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORKSTARTERLISTENER_H
 #define FRAMEWORKSTARTERLISTENER_H
 
+#include <QSharedPointer>
 #include "bundle/bundlelistener.h"
-#include "pfcore-lib_forward.h"
+#include "event/frameworkevent/bundlesstartingevent.h"
+#include "event/frameworkevent/bundlesstoppingevent.h"
+#include "event/frameworkevent/startbundleevent.h"
+#include "event/frameworkevent/stopbundleevent.h"
+#include "event/frameworkevent/frameworkstartedevent.h"
+#include "event/bundleevent/bundlestartingevent.h"
+#include "event/bundleevent/bundlestartedevent.h"
+#include "event/bundleevent/bundlestoppingevent.h"
+#include "event/bundleevent/bundlestoppedevent.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace bundle
-{
-
-class FrameworkStarterListener : public core::bundle::BundleListener
+class FrameworkStarterListener : public plugframe::BundleListener
 {
 public:
-    FrameworkStarterListener(core::bundle::Bundle& fwk);
+    FrameworkStarterListener(plugframe::Bundle& fwk);
     ~FrameworkStarterListener() override;
 
 public:
     void reset() {m_started_bundles_cpt = 0;}
 
 protected:
-    void onEvent(core::event::QspEvent ev) override;
-    virtual void onBundlesStartingEvent(core::event::BundlesStartingEvent *evt);
-    virtual void onStartBundleEvent(core::event::StartBundleEvent *evt);
-    virtual void onFrameworkStartedEvent(core::event::FrameworkStartedEvent *evt);
-    virtual void onBundlesStoppingEvent(core::event::BundlesStoppingEvent *evt);
-    virtual void onStopBundleEvent(core::event::StopBundleEvent *evt);
-    virtual void onBundleStartingEvent(core::event::BundleStartingEvent *evt);
-    virtual void onBundleStartedEvent(core::event::BundleStartedEvent *evt);
-    virtual void onBundleStoppingEvent(core::event::BundleStoppingEvent *evt);
-    virtual void onBundleStoppedEvent(core::event::BundleStoppedEvent *evt);
+    void onEvent(plugframe::QspEvent ev) override;
+    virtual void onBundlesStartingEvent(plugframe::BundlesStartingEvent *evt);
+    virtual void onStartBundleEvent(plugframe::StartBundleEvent *evt);
+    virtual void onFrameworkStartedEvent(plugframe::FrameworkStartedEvent *evt);
+    virtual void onBundlesStoppingEvent(plugframe::BundlesStoppingEvent *evt);
+    virtual void onStopBundleEvent(plugframe::StopBundleEvent *evt);
+    virtual void onBundleStartingEvent(plugframe::BundleStartingEvent *evt);
+    virtual void onBundleStartedEvent(plugframe::BundleStartedEvent *evt);
+    virtual void onBundleStoppingEvent(plugframe::BundleStoppingEvent *evt);
+    virtual void onBundleStoppedEvent(plugframe::BundleStoppedEvent *evt);
 
 private:
-    void startBundle(core::plugin::BundleInterface* bundleItf);
+    void startBundle(plugframe::BundleInterface* bundleItf);
 
 private:
     int m_started_bundles_cpt; // number of started bundles
 };
-
-} //namespace bundle
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
+using QspFrameworkStarterListener = QSharedPointer<FrameworkStarterListener>;
 #endif // FRAMEWORKSTARTERLISTENER_H

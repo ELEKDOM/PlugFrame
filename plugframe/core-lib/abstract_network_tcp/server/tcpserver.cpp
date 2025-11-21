@@ -16,37 +16,34 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QSettings>
 #include "tcpserver.h"
-#include "tcpserverconnmanager.h"
 #include "tcpserverfactory.h"
+#include "tcpserverconnmanager.h"
 #include "tcpserverchannelmanager.h"
 #include "abstract_network_tcp/common/tcpchannel.h"
 #include "service-int/backendcontrolserviceinterface.h"
 #include "logger/pflog.h"
 
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-
-TcpServer::TcpServer(QString logBundleName):
-    core::bundle::BundleImplementation{logBundleName},
+plugframe::TcpServer::TcpServer(QString logBundleName):
+    plugframe::BundleImplementation{logBundleName},
     m_serverComManager{nullptr}
 {
 
 }
 
-TcpServer::~TcpServer()
+plugframe::TcpServer::~TcpServer()
 {
     stopListen();
     delete m_serverComManager;
 }
 
-void TcpServer::tcpServerConnManager(TcpServerConnManager *serverComManager)
+void plugframe::TcpServer::tcpServerConnManager(plugframe::TcpServerConnManager *serverComManager)
 {
     m_serverComManager = serverComManager;
 }
 
-void TcpServer::startListen()
+void plugframe::TcpServer::startListen()
 {
     QHostAddress serverIpAddr;
     quint16 ServerPort;
@@ -58,35 +55,39 @@ void TcpServer::startListen()
     }
 }
 
-void TcpServer::stopListen()
+void plugframe::TcpServer::stopListen()
 {
     m_serverComManager->close();
 }
 
-TcpServerChannelManager *TcpServer::newChannelManager(QTcpSocket *newConn)
+plugframe::TcpServerChannelManager *plugframe::TcpServer::newChannelManager(QTcpSocket *newConn)
 {
-    factory::TcpServerFactory& tcpServerFactory{dynamic_cast<factory::TcpServerFactory&>(getFactory())};
-    TcpChannelDeserializer *deserializer{tcpServerFactory.createDeserializer()};
-    TcpChannel *channel{tcpServerFactory.createChannel(newConn,deserializer)};
-    TcpServerChannelManager *channelManager(tcpServerFactory.createChannelManager(*this,channel));
+    plugframe::TcpServerChannelManager *channelManager{nullptr};
 
+    plugframe::BundleFactory& bundleFactory{getFactory()};
+    plugframe::TcpServerFactory& tcpServerFactory{dynamic_cast<plugframe::TcpServerFactory&>(bundleFactory)};
+    plugframe::TcpChannelDeserializer *deserializer{tcpServerFactory.createDeserializer()};
+    plugframe::TcpChannel *channel{tcpServerFactory.createChannel(newConn,deserializer)};
+
+    channelManager = tcpServerFactory.createChannelManager(*this,channel);
     QObject::connect(channel->socket(),SIGNAL(disconnected()),channelManager,SLOT(onDisconnectedFromClient()));
+
     return channelManager;
 }
 
-elekdom::plugframe::core::plugin::ServiceInterface *TcpServer::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *plugframe::TcpServer::qtServiceInterface(const QString &sName)
 {
-    plugframe::core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (frontenditf::service::BackendControlServiceInterface::serviceName() == sName)
+    if (plugframe::BackendControlServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<frontenditf::service::BackendControlServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::BackendControlServiceInterface*>(getQplugin());
     }
 
     return ret;
 }
 
-void TcpServer::readListenAddr(QHostAddress &ipAddr, quint16 &port)
+void plugframe::TcpServer::readListenAddr(QHostAddress &ipAddr, quint16 &port)
 {
     QString confPath{getConfPath()};
     QSettings listenAddrSettings{confPath,QSettings::IniFormat};

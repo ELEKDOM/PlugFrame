@@ -16,18 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include <iostream>
 #include "guiconsole.h"
 #include "guiconsolefactory.h"
 #include "ui/guiconsolecontroller.h"
 #include "bundle/bundlecontext.h"
 #include "service-int/systemserviceinterface.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::guiconsole::bundle;
-using namespace elekdom::plugframe::guidisplay::service;
 
 GuiConsole::GuiConsole():
     BundleImplementation{"Console"}
@@ -40,12 +33,12 @@ GuiConsole::~GuiConsole()
 
 }
 
-BundleFactory *GuiConsole::createFactory()
+plugframe::BundleFactory *GuiConsole::createFactory()
 {
-    return new factory::GuiConsoleFactory;
+    return new GuiConsoleFactory;
 }
 
-void GuiConsole::_start(core::bundle::QspBundleContext bundleContext)
+void GuiConsole::_start(plugframe::QspBundleContext bundleContext)
 {
     BundleImplementation::_start(bundleContext);
     buildGui();
@@ -53,7 +46,7 @@ void GuiConsole::_start(core::bundle::QspBundleContext bundleContext)
 
 void GuiConsole::buildGui()
 {
-    GuiBuilderServiceInterface *builderGuiServiceItf{bundleContext()->getService<GuiBuilderServiceInterface>(GuiBuilderServiceInterface::serviceName())};
+    plugframe::GuiBuilderServiceInterface *builderGuiServiceItf{bundleContext()->getService<plugframe::GuiBuilderServiceInterface>(plugframe::GuiBuilderServiceInterface::serviceName())};
 
     // MainWindow's  title
     builderGuiServiceItf->setMainWindowTitle(guiTitle());
@@ -65,19 +58,19 @@ void GuiConsole::buildGui()
     buildControllerViews(builderGuiServiceItf);
 }
 
-void GuiConsole::buildConsoleController(guidisplay::service::GuiBuilderServiceInterface *builderGuiServiceItf)
+void GuiConsole::buildConsoleController(plugframe::GuiBuilderServiceInterface *builderGuiServiceItf)
 {
-    factory::GuiConsoleFactory &factory{dynamic_cast<factory::GuiConsoleFactory&>(getFactory())};
-    SystemServiceInterface *systemServiceItf{bundleContext()->getService<SystemServiceInterface>(SystemServiceInterface::serviceName())};
+    GuiConsoleFactory &factory{dynamic_cast<GuiConsoleFactory&>(getFactory())};
+    plugframe::SystemServiceInterface *systemServiceItf{bundleContext()->getService<plugframe::SystemServiceInterface>(plugframe::SystemServiceInterface::serviceName())};
     GuiConsoleController *ptrCtrl{factory.createGuiConsoleController(systemServiceItf)};
-    core::gui::QspGuiPageController pageCtrl{ptrCtrl};
+    plugframe::QspGuiPageController pageCtrl{ptrCtrl};
 
     pageCtrl->buildViews();
     builderGuiServiceItf->addGuiController(pageCtrl);
     pageCtrl->currentCtrl();
 }
 
-void GuiConsole::buildControllerViews(GuiBuilderServiceInterface *builderGuiServiceItf)
+void GuiConsole::buildControllerViews(plugframe::GuiBuilderServiceInterface *builderGuiServiceItf)
 {
     Q_UNUSED(builderGuiServiceItf)
 }

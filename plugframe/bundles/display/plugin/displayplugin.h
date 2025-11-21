@@ -16,40 +16,26 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DISPLAYPLUGIN_H
 #define DISPLAYPLUGIN_H
 
 #include "plugin/plugin.h"
 #include "service-int/displayserviceinterface.h"
-#include "display_forward.h"
+#include "displayservice.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace display
-{
-namespace plugin
-{
-
-class DisplayPlugin : public core::plugin::Plugin,
-                      public service::DisplayServiceInterface
+class DisplayPlugin : public plugframe::Plugin,
+                      public plugframe::DisplayServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.display.plugin" FILE "../displaybundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface
-                 elekdom::plugframe::display::service::DisplayServiceInterface)
-
-private:
-    QSharedPointer<service::DisplayService> m_displayServiceImpl;
+    Q_PLUGIN_METADATA(IID "plugframe.display.plugin" FILE "../displaybundle.json")
+    Q_INTERFACES(plugframe::BundleInterface plugframe::DisplayServiceInterface)
 
 public:
     DisplayPlugin();
     ~DisplayPlugin() override;
 
 protected: // SmfPLugin
-    core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     void bindServicesImplementations() override;
 
 protected: // SmfDisplayServiceInterface
@@ -57,11 +43,8 @@ protected: // SmfDisplayServiceInterface
     void log(const QString& msg) override;
     void statusMessage(const QString& msg) override;
     void clearStatusMessages() override;
+
+private:
+    QspDisplayService m_displayServiceImpl;
 };
-
-} //namespace plugin
-} //namespace display
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // DISPLAYPLUGIN_H

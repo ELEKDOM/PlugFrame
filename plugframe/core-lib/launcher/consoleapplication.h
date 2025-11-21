@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLE_APPLICATION_H
 #define CONSOLE_APPLICATION_H
 
 #include "pfcore-lib_export.h"
 #include "launcher.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace launcher
-{
-
 class PFCORELIB_EXPORT ConsoleApplication : public Launcher
 {
 public:
@@ -41,10 +33,6 @@ public:
 protected:
     void createApp(int& argc, char *argv[]) override;
 };
-
-} // namespace smf
-} // namespace core
-} // namespace launcher
-} // namespace elekdom
+} // namespace plugframe
 
 #endif // CONSOLE_APPLICATION_H

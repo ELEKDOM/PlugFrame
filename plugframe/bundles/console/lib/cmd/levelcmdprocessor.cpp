@@ -16,21 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QObject>
-#include "logger/pflog.h"
-#include "terminal.h"
 #include "cmd/levelcmdprocessor.h"
 #include "console.h"
 
-using namespace elekdom::plugframe::console::cmd;
-
 LevelCmdProcessor::LevelCmdProcessor(const QString& logChannel,
-                                           console::bundle::Console& console):
+                                     Console& console):
     CmdProcessor{logChannel,
-                    console,
-                    "level",
-                    QObject::tr("Affiche le niveau d'exécution de la plateforme")}
+                 console,
+                 "level",
+                 QObject::tr("Affiche le niveau d'exécution de la plateforme")}
 {
 
 }

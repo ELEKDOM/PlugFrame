@@ -4,7 +4,7 @@ TEMPLATE = lib
 CONFIG  += staticlib
 
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = logger-qt5-$${BUNDLE_VERSION}
+TARGET = logger-qt6-$${BUNDLE_VERSION}
 
 SOURCES += \
     logdevice.cpp \

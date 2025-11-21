@@ -16,52 +16,41 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORK_FACTORY_H
 #define FRAMEWORK_FACTORY_H
 
 #include "factory/bundlefactory.h"
+#include "event/frameworkevent/bundlesstartingevent.h"
+#include "event/frameworkevent/bundlesstoppingevent.h"
+#include "event/frameworkevent/startbundleevent.h"
+#include "event/frameworkevent/stopbundleevent.h"
+#include "event/frameworkevent/frameworkstartedevent.h"
 #include "service-int/systemserviceregistryinterface.h"
-#include "pfcore-lib_forward.h"
 #include "framework_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace factory
-{
-
-class FrameworkFactory : public core::bundle::BundleFactory
+class FrameworkFactory : public plugframe::BundleFactory
 {
 public:
     FrameworkFactory();
     ~FrameworkFactory() override;
 
 public:
-    virtual core::bundle::BundleContext *createBundleContext(service::SystemServiceRegistryInterface *registryService);
-    virtual core::event::BundlesStartingEvent *createBundlesStartingEvent(core::plugin::BundleList& bundlesToStart, int fwkLevel, int level);
-    virtual core::event::StartBundleEvent *createStartBundleEvent(core::plugin::BundleInterface *toStart);
-    virtual core::event::FrameworkStartedEvent *createFrameworkStartedEvent();
-    virtual core::event::BundlesStoppingEvent *createBundlesStoppingEvent(core::plugin::BundleList& bundlesToStop, int level);
-    virtual core::event::StopBundleEvent *createStopBundleEvent(core::plugin::BundleInterface *toStop);
+    virtual plugframe::BundleContext *createBundleContext(plugframe::SystemServiceRegistryInterface *registryService);
+    virtual plugframe::BundlesStartingEvent *createBundlesStartingEvent(plugframe::BundleList& bundlesToStart,
+                                                                        int fwkLevel,
+                                                                        int level);
+    virtual plugframe::StartBundleEvent *createStartBundleEvent(plugframe::BundleInterface *toStart);
+    virtual plugframe::FrameworkStartedEvent *createFrameworkStartedEvent();
+    virtual plugframe::BundlesStoppingEvent *createBundlesStoppingEvent(plugframe::BundleList& bundlesToStop, int level);
+    virtual plugframe::StopBundleEvent *createStopBundleEvent(plugframe::BundleInterface *toStop);
 
 protected:
-    core::bundle::BundleEmitter *createBundleEmitter(core::bundle::Bundle& myBundle) override;
-    core::bundle::BundleListener *createBundleListener(core::bundle::Bundle& myBundle) override;
-    virtual service::ServiceRegistry *createServiceRegistry(core::bundle::BundleImplementation *implementation);
-    virtual service::SystemService *createSystemService(core::bundle::BundleImplementation *implementation);
-    core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                               const QString& sName,
-                                                                               const QString& serviceVersion) override;
-
+    plugframe::BundleEmitter *createBundleEmitter(plugframe::Bundle& myBundle) override;
+    plugframe::BundleListener *createBundleListener(plugframe::Bundle& myBundle) override;
+    virtual ServiceRegistry *createServiceRegistry(plugframe::BundleImplementation *implementation);
+    virtual SystemService *createSystemService(plugframe::BundleImplementation *implementation);
+    plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                           const QString& sName,
+                                                                           const QString& serviceVersion) override;
 };
-
-} //namespace factory
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // FRAMEWORK_FACTORY_H

@@ -16,16 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guiconsolecontroller.h"
 #include "guiconsoleview.h"
 
-using namespace elekdom::plugframe::core::gui;
-using namespace elekdom::plugframe::core::plugin;
-using namespace elekdom::plugframe::framework::service;
-using namespace elekdom::plugframe::guiconsole;
-
-GuiConsoleController::GuiConsoleController(SystemServiceInterface *systemServiceItf,QObject *parent):
+GuiConsoleController::GuiConsoleController(plugframe::SystemServiceInterface *systemServiceItf,QObject *parent):
     GuiPageController{ConsolePageCtrlName(),
                       QStringList{systemMenuName(),ConsoleMenuName() },
                       parent},
@@ -64,19 +58,19 @@ void GuiConsoleController::onLevelCmd()
 
 void GuiConsoleController::onLoadedCmd()
 {
-    displayBundlesList(BundleInterface::BundleState::Initialized);
+    displayBundlesList(plugframe::BundleInterface::BundleState::Initialized);
 }
 
 void GuiConsoleController::onStartedCmd()
 {
-    displayBundlesList(BundleInterface::BundleState::Started);
+    displayBundlesList(plugframe::BundleInterface::BundleState::Started);
 }
 
-void GuiConsoleController::displayBundlesList(BundleInterface::BundleState state)
+void GuiConsoleController::displayBundlesList(plugframe::BundleInterface::BundleState state)
 {
-    core::plugin::BundleList list{bundlesList(state)};
-    core::plugin::BundleList_Iterator it;
-    int firstColSize{padding(list)};
+    plugframe::BundleList list{bundlesList(state)};
+    plugframe::BundleList_Iterator it;
+    qsizetype firstColSize{padding(list)};
     QString spaces;
 
     spaces.fill(' ', firstColSize - 6);
@@ -84,8 +78,8 @@ void GuiConsoleController::displayBundlesList(BundleInterface::BundleState state
 
     for (it = list.begin(); it != list.end(); ++it)
     {
-        BundleInterface* bItf{*it};
-        int namewidth{(bItf->getName()).size()};
+        plugframe::BundleInterface* bItf{*it};
+        qsizetype namewidth{(bItf->getName()).size()};
 
         spaces.fill(' ', firstColSize - namewidth);
         QString msg{QString("%1%2%3").arg(bItf->getName(), spaces, QString::number(bItf->getStartLevel()))};
@@ -94,11 +88,11 @@ void GuiConsoleController::displayBundlesList(BundleInterface::BundleState state
     }
 }
 
-BundleList GuiConsoleController::bundlesList(BundleInterface::BundleState state)
+plugframe::BundleList GuiConsoleController::bundlesList(plugframe::BundleInterface::BundleState state)
 {
-    BundleList ret;
-    BundleList bundleL{m_systemServiceItf->bundleList()};
-    BundleList_Iterator it;
+    plugframe::BundleList ret;
+    plugframe::BundleList bundleL{m_systemServiceItf->bundleList()};
+    plugframe::BundleList_Iterator it;
 
     for (it = bundleL.begin(); it != bundleL.end(); ++it)
     {
@@ -111,14 +105,14 @@ BundleList GuiConsoleController::bundlesList(BundleInterface::BundleState state)
     return ret;
 }
 
-int GuiConsoleController::padding(BundleList &listToDisplay)
+qsizetype GuiConsoleController::padding(plugframe::BundleList &listToDisplay)
 {
-    BundleList_Iterator it;
-    int maxWidthSize{6};
+    plugframe::BundleList_Iterator it;
+    qsizetype maxWidthSize{6};
 
     for (it = listToDisplay.begin(); it != listToDisplay.end(); ++it)
     {
-        int curS{((*it)->getName()).size()};
+        qsizetype curS{((*it)->getName()).size()};
         if (curS > maxWidthSize)
         {
             maxWidthSize = curS;

@@ -16,31 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
+#ifndef XMLBROWSERHOOK_H
+#define XMLBROWSERHOOK_H
 
-#ifndef SMFSYSTEMQUITEVENT_H
-#define SMFSYSTEMQUITEVENT_H
+#include "pfcore-lib_export.h"
 
-#include "systemevent.h"
-
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
-class PFCORELIB_EXPORT SmfSystemQuitEvent : public SystemEvent
+class PFCORELIB_EXPORT XmlBrowserHook
 {
 public:
-    SmfSystemQuitEvent();
-    ~SmfSystemQuitEvent() override;
+    virtual ~XmlBrowserHook() {}
+
+public:
+    virtual void browseBegin() = 0;
+    virtual void browseEnd() = 0;
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
-
-#endif // SMFSYSTEMQUITEVENT_H
+}//namespace plugframe
+#endif // XMLBROWSERHOOK_H

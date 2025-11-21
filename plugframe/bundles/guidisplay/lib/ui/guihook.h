@@ -16,29 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIHOOK_H
 #define GUIHOOK_H
 
 #include <QObject>
+#include "gui/guipagecontroller.h"
 #include "guidisplay_forward.h"
-#include "pfcore-lib_forward.h"
-
-using namespace elekdom::plugframe::core::gui;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
 
 class GuiHook : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit GuiHook(Gui* parent,bundle::GuiDisplay& bundle);
+    explicit GuiHook(Gui* parent,GuiDisplay& bundle);
     ~GuiHook();
 
 public:
@@ -47,28 +37,23 @@ public:
     void log(const QString &msg);
     void statusMessage(const QString& msg);
     void clearStatusMessages();
-    void addGuiController(const core::gui::QspGuiPageController &controller);
-    void removeAllPages(QspGuiPageController controller);
+    void addGuiController(const plugframe::QspGuiPageController &controller);
+    void removeAllPages(plugframe::QspGuiPageController controller);
     void setMainWindowTitle(const QString& title);
 
 signals:
     void sigLog(QString msg);
     void sigStatusMessage(QString msg);
     void sigClearStatusMessages();
-    void sigAddGuiController(QspGuiPageController controller);
-    void sigRemoveAllPages(QspGuiPageController controller);
+    void sigAddGuiController(plugframe::QspGuiPageController controller);
+    void sigRemoveAllPages(plugframe::QspGuiPageController controller);
     void sigSetWindowTitle(const QString& title);
 
 private slots:
     void onGuiCloseEvt();
 
 private:
-    Gui                *m_mainWindow;
-    bundle::GuiDisplay& m_bundle;
+    Gui        *m_mainWindow;
+    GuiDisplay& m_bundle;
 };
-
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUIHOOK_H

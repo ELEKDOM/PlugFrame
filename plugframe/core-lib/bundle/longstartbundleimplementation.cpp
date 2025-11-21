@@ -16,41 +16,37 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundle/longstartbundleimplementation.h"
 #include "bundle/bundleemitter.h"
-#include "bundle/bundlecontext.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-elekdom::plugframe::core::bundle::LongStartBundleImplementation::LongStartBundleImplementation(QString logBundleName):
-    BundleImplementation{logBundleName}
+plugframe::LongStartBundleImplementation::LongStartBundleImplementation(QString logBundleName):
+    plugframe::BundleImplementation{logBundleName}
 {
 
 }
 
-LongStartBundleImplementation::~LongStartBundleImplementation()
+plugframe::LongStartBundleImplementation::~LongStartBundleImplementation()
 {
 
 }
 
-void LongStartBundleImplementation::start(QspBundleContext bundleContext)
+void plugframe::LongStartBundleImplementation::start(plugframe::QspBundleContext bundleContext)
 {
-    setState(core::plugin::BundleInterface::BundleState::Starting);
+    setState(plugframe::BundleInterface::BundleState::Starting);
     //notify starting
     getEmitter()->postBundleStartingEvt();
     _start(bundleContext);
 }
 
-void LongStartBundleImplementation::defaultListening()
+void plugframe::LongStartBundleImplementation::defaultListening()
 {
     // Long start are performed by a series of small procedures
     // whose sequence is determined by a series of internal events!
     getEmitter()->registerListener(getListener().get());
 }
 
-void LongStartBundleImplementation::started()
+void plugframe::LongStartBundleImplementation::started()
 {
-    setState(core::plugin::BundleInterface::BundleState::Started);
+    setState(plugframe::BundleInterface::BundleState::Started);
     getEmitter()->postBundleStartedEvt();
 }

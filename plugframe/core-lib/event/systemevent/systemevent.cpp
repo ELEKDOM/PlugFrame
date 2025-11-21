@@ -16,17 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "systemevent.h"
 
-using namespace elekdom::plugframe::core::event;
-
-SystemEvent::SystemEvent()
+plugframe::SystemEvent::SystemEvent()
 {
 
 }
 
-SystemEvent::~SystemEvent()
+plugframe::SystemEvent::~SystemEvent()
 {
 
 }

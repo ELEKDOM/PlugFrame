@@ -16,16 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpserverchannelmanager.h"
 
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-
-TcpServerChannelManager::TcpServerChannelManager(TcpServer& bundle,TcpChannel *channel,QObject *parent):
-    TcpChannelManager{channel,parent},
+plugframe::TcpServerChannelManager::TcpServerChannelManager(plugframe::TcpServer& bundle,
+                                                            plugframe::TcpChannel *channel,
+                                                            QObject *parent):
+    plugframe::TcpChannelManager{channel,parent},
     m_bundle{bundle}
 {}
 
-TcpServerChannelManager::~TcpServerChannelManager()
+plugframe::TcpServerChannelManager::~TcpServerChannelManager()
 {
 }

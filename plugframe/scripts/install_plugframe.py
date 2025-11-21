@@ -20,7 +20,7 @@ pf.create_pf_dirs(guiconsole_install_dir)
 
 # plugframe's lib
 #================
-pf_lib = projects_dirs.build_dir + '/plugframe/core-lib/libplugframe-core-qt5-1.0.0.so'
+pf_lib = projects_dirs.build_dir + '/plugframe/core-lib/libplugframe-core-qt6-1.0.0.so'
 pf.install_pf_lib(root_install_dir,pf_lib)
 
 # GUI launcher's properties
@@ -35,13 +35,13 @@ pf.install_pf_lauching_properties(guiconsole_install_dir,pf.CONF,stylesheet_qss,
 
 # framework
 #----------
-pf_framework = projects_dirs.build_dir + '/plugframe/bundles/framework/plugin/libframework-qt5-1.0.0.so'
+pf_framework = projects_dirs.build_dir + '/plugframe/bundles/framework/plugin/libframework-qt6-1.0.0.so'
 pf.install_pf_bundle(console_install_dir,'framework',pf_framework)
 pf.install_pf_bundle(guiconsole_install_dir,'framework',pf_framework)
 
 # logger
 #-------
-pf_logger = projects_dirs.build_dir + '/plugframe/bundles/logger/plugin/liblogger-qt5-1.0.0.so'
+pf_logger = projects_dirs.build_dir + '/plugframe/bundles/logger/plugin/liblogger-qt6-1.0.0.so'
 pf_logger_ini = projects_dirs.conf_dir + '/pf_log.ini'
 pf.install_pf_bundle(console_install_dir,'logger',pf_logger)
 pf.install_bundle_conf_file(console_install_dir,'logger',pf_logger_ini, 'log.ini')
@@ -51,20 +51,20 @@ pf.install_bundle_conf_file(guiconsole_install_dir,'logger',pf_logger_ini, 'log.
 
 # display
 #--------
-pf_display = projects_dirs.build_dir + '/plugframe/bundles/display/plugin/libdisplay-qt5-1.0.0.so'
+pf_display = projects_dirs.build_dir + '/plugframe/bundles/display/plugin/libdisplay-qt6-1.0.0.so'
 pf.install_pf_bundle(console_install_dir,'display',pf_display)
 
 # GUI display
 #--------
-pf_guidisplay = projects_dirs.build_dir + '/plugframe/bundles/guidisplay/plugin/libguidisplay-qt5-1.0.0.so'
+pf_guidisplay = projects_dirs.build_dir + '/plugframe/bundles/guidisplay/plugin/libguidisplay-qt6-1.0.0.so'
 pf.install_pf_bundle(guiconsole_install_dir,'guidisplay',pf_guidisplay)
 
 # console
 #--------
-pf_console = projects_dirs.build_dir + '/plugframe/bundles/console/plugin/libconsole-qt5-1.0.0.so'
+pf_console = projects_dirs.build_dir + '/plugframe/bundles/console/plugin/libconsole-qt6-1.0.0.so'
 pf.install_pf_bundle(console_install_dir,'console',pf_console)
 
 # GUI console
 #------------
-pf_guiconsole = projects_dirs.build_dir + '/plugframe/bundles/guiconsole/plugin/libguiconsole-qt5-1.0.0.so'
+pf_guiconsole = projects_dirs.build_dir + '/plugframe/bundles/guiconsole/plugin/libguiconsole-qt6-1.0.0.so'
 pf.install_pf_bundle(guiconsole_install_dir,'guiconsole',pf_guiconsole)

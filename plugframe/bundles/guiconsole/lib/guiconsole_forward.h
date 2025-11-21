@@ -16,21 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLE_FORWARD_H
 #define GUICONSOLE_FORWARD_H
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guiconsole
-{
-    class GuiConsoleController;
-    class GuiConsoleView;
-
-} //namespace guiconsole
-} //namespace plugframe
-} //namespace elekdom
+class GuiConsoleController;
+class GuiConsoleView;
 
 #endif // GUICONSOLE_FORWARD_H

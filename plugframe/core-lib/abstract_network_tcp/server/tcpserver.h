@@ -16,29 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
 #include <QHostAddress>
 #include <QTcpSocket>
-#include "pfcore-lib_forward.h"
 #include "bundle/bundleimplementation.h"
+#include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace bundle
-{
-
-class TcpServer : public core::bundle::BundleImplementation
+class PFCORELIB_EXPORT TcpServer : public BundleImplementation
 {
 public:
     TcpServer(QString logBundleName);
@@ -53,7 +42,7 @@ public:
     TcpServerChannelManager *newChannelManager(QTcpSocket *newConn);
 
 protected:
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    ServiceInterface *qtServiceInterface(const QString& sName) override;
 
 private:
     void readListenAddr(QHostAddress& ipAddr,quint16& port);
@@ -61,11 +50,5 @@ private:
 private:
     TcpServerConnManager *m_serverComManager;
 };
-
-}//namespace bundle
-}//namespace server
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVER_H

@@ -16,23 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SCHEDULEDEVENT_H
 #define SCHEDULEDEVENT_H
 
 #include <QString>
 #include <QTime>
+#include <QSharedPointer>
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class ScheduledEvent
+class PFCORELIB_EXPORT ScheduledEvent
 {
 public:
     ScheduledEvent(const QTime& timeEvt,const QString& evt);
@@ -46,10 +40,6 @@ private:
     QTime   m_time;
     QString m_evt;
 };
-
-}//namespace scheduler
-}//namespace core
+using QspScheduledEvent = QSharedPointer<ScheduledEvent>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // SCHEDULEDEVENT_H

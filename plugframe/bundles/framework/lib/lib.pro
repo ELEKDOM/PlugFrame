@@ -3,10 +3,8 @@ QT -= gui
 TEMPLATE = lib
 CONFIG += staticlib
 
-CONFIG += c++11
-
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = framework-qt5-$${BUNDLE_VERSION}
+TARGET = framework-qt6-$${BUNDLE_VERSION}
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

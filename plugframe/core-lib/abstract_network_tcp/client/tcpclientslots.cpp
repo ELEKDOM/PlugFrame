@@ -16,41 +16,38 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientslots.h"
 #include "tcpclient.h"
 #include "tcpclientchannelmanager.h"
 
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-TcpClientSlots::TcpClientSlots(TcpClient &clientSide,QObject *parent)
+plugframe::TcpClientSlots::TcpClientSlots(plugframe::TcpClient &clientSide,QObject *parent)
     : QObject{parent}
     , m_clientSide{clientSide}
 {}
 
-TcpClientSlots::~TcpClientSlots()
+plugframe::TcpClientSlots::~TcpClientSlots()
 {
 
 }
 
-void TcpClientSlots::connectChannelManager(TcpClientChannelManager *clientChannelManager)
+void plugframe::TcpClientSlots::connectChannelManager(TcpClientChannelManager *clientChannelManager)
 {
     connect(clientChannelManager,SIGNAL(sigConnectedToServer()),SLOT(onConnectedToServer()));
     connect(clientChannelManager,SIGNAL(sigDisconnectedFromServer()),SLOT(onDisconnectedFromServer()));
-    connect(clientChannelManager,SIGNAL(sigMessageFromServer(TcpChannelMessage*)),SLOT(onMessageFromServer(TcpChannelMessage*)));
+    connect(clientChannelManager,SIGNAL(sigMessageFromServer(plugframe::TcpChannelMessage*)),SLOT(onMessageFromServer(plugframe::TcpChannelMessage*)));
 }
 
-void TcpClientSlots::onConnectedToServer()
+void plugframe::TcpClientSlots::onConnectedToServer()
 {
     m_clientSide.connectedToServer();
 }
 
-void TcpClientSlots::onDisconnectedFromServer()
+void plugframe::TcpClientSlots::onDisconnectedFromServer()
 {
     m_clientSide.disconnectedFromServer();
 }
 
-void TcpClientSlots::onMessageFromServer(TcpChannelMessage *input)
+void plugframe::TcpClientSlots::onMessageFromServer(plugframe::TcpChannelMessage *input)
 {
     m_clientSide.messageFromServer(input);
 }

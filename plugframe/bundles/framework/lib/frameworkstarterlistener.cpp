@@ -16,75 +16,63 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "frameworkstarterlistener.h"
 #include "framework.h"
 #include "bundle/bundlecontext.h"
 #include "frameworkfactory.h"
 #include "logger/pflog.h"
-#include "event/frameworkevent/bundlesstartingevent.h"
-#include "event/frameworkevent/startbundleevent.h"
-#include "event/frameworkevent/frameworkstartedevent.h"
-#include "event/frameworkevent/bundlesstoppingevent.h"
-#include "event/frameworkevent/stopbundleevent.h"
-#include "event/bundleevent/bundlestartingevent.h"
-#include "event/bundleevent/bundlestartedevent.h"
-#include "event/bundleevent/bundlestoppingevent.h"
-#include "event/bundleevent/bundlestoppedevent.h"
 
-using namespace elekdom::plugframe;
-
-framework::bundle::FrameworkStarterListener::FrameworkStarterListener(core::bundle::Bundle& fwk):
-    core::bundle::BundleListener{fwk}
+FrameworkStarterListener::FrameworkStarterListener(plugframe::Bundle& fwk):
+    plugframe::BundleListener{fwk}
 {
 
 }
 
-framework::bundle::FrameworkStarterListener::~FrameworkStarterListener()
+FrameworkStarterListener::~FrameworkStarterListener()
 {
 
 }
 
-void framework::bundle::FrameworkStarterListener::onEvent(plugframe::core::event::QspEvent ev)
+void FrameworkStarterListener::onEvent(plugframe::QspEvent ev)
 {
-    core::event::Event* event{ev.get()};
+    plugframe::Event* event{ev.get()};
     QString evtTypeId {ev->getTypeId()};
 
-    if (evtTypeId == core::event::BundlesStartingEvent::s_typeId)
+    if (evtTypeId == plugframe::BundlesStartingEvent::s_typeId)
     {
-        onBundlesStartingEvent(dynamic_cast<core::event::BundlesStartingEvent*>(event));
+        onBundlesStartingEvent(dynamic_cast<plugframe::BundlesStartingEvent*>(event));
     }
-    else if (evtTypeId == core::event::StartBundleEvent::s_typeId)
+    else if (evtTypeId == plugframe::StartBundleEvent::s_typeId)
     {
-        onStartBundleEvent(dynamic_cast<core::event::StartBundleEvent*>(event));
+        onStartBundleEvent(dynamic_cast<plugframe::StartBundleEvent*>(event));
     }
-    else if (evtTypeId == core::event::FrameworkStartedEvent::s_typeId)
+    else if (evtTypeId == plugframe::FrameworkStartedEvent::s_typeId)
     {
-        onFrameworkStartedEvent(dynamic_cast<core::event::FrameworkStartedEvent*>(event));
+        onFrameworkStartedEvent(dynamic_cast<plugframe::FrameworkStartedEvent*>(event));
     }
-    else if (evtTypeId == core::event::BundlesStoppingEvent::s_typeId)
+    else if (evtTypeId == plugframe::BundlesStoppingEvent::s_typeId)
     {
-        onBundlesStoppingEvent(dynamic_cast<core::event::BundlesStoppingEvent*>(event));
+        onBundlesStoppingEvent(dynamic_cast<plugframe::BundlesStoppingEvent*>(event));
     }
-    else if (evtTypeId == core::event::StopBundleEvent::s_typeId)
+    else if (evtTypeId == plugframe::StopBundleEvent::s_typeId)
     {
-        onStopBundleEvent(dynamic_cast<core::event::StopBundleEvent*>(event));
+        onStopBundleEvent(dynamic_cast<plugframe::StopBundleEvent*>(event));
     }
-    else if (evtTypeId == core::event::BundleStartingEvent::s_typeId)
+    else if (evtTypeId == plugframe::BundleStartingEvent::s_typeId)
     {
-        onBundleStartingEvent(dynamic_cast<core::event::BundleStartingEvent*>(event));
+        onBundleStartingEvent(dynamic_cast<plugframe::BundleStartingEvent*>(event));
     }
-    else if (evtTypeId == core::event::BundleStartedEvent::s_typeId)
+    else if (evtTypeId == plugframe::BundleStartedEvent::s_typeId)
     {
-        onBundleStartedEvent(dynamic_cast<core::event::BundleStartedEvent*>(event));
+        onBundleStartedEvent(dynamic_cast<plugframe::BundleStartedEvent*>(event));
     }
-    else if (evtTypeId == core::event::BundleStoppingEvent::s_typeId)
+    else if (evtTypeId == plugframe::BundleStoppingEvent::s_typeId)
     {
-        onBundleStoppingEvent(dynamic_cast<core::event::BundleStoppingEvent*>(event));
+        onBundleStoppingEvent(dynamic_cast<plugframe::BundleStoppingEvent*>(event));
     }
-    else if (evtTypeId == core::event::BundleStoppedEvent::s_typeId)
+    else if (evtTypeId == plugframe::BundleStoppedEvent::s_typeId)
     {
-        onBundleStoppedEvent(dynamic_cast<core::event::BundleStoppedEvent*>(event));
+        onBundleStoppedEvent(dynamic_cast<plugframe::BundleStoppedEvent*>(event));
     }
     else
     {
@@ -97,7 +85,7 @@ void framework::bundle::FrameworkStarterListener::onEvent(plugframe::core::event
  * Event management of the bundles start loop : each bundle to start is starting into this handler
  * @param evt
  */
-void framework::bundle::FrameworkStarterListener::onBundlesStartingEvent(core::event::BundlesStartingEvent *evt)
+void FrameworkStarterListener::onBundlesStartingEvent(plugframe::BundlesStartingEvent *evt)
 {
     pfDebug3(getLogBundleName()) << "->SmfFrameworkStarterListener::onBundlesStartingEvent";
 
@@ -107,7 +95,7 @@ void framework::bundle::FrameworkStarterListener::onBundlesStartingEvent(core::e
     }
     else
     {
-        framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+        Framework& fwk{dynamic_cast<Framework&>(getBundle())};
         int nbOfBundlesToStart{fwk.getNumberOfBundlesToStart()};
 
         if (m_started_bundles_cpt < nbOfBundlesToStart)
@@ -121,14 +109,14 @@ void framework::bundle::FrameworkStarterListener::onBundlesStartingEvent(core::e
 
                 // Looking for the next bundle to start for the current level
                 //-----------------------------------------------------------
-                core::plugin::BundleList_Iterator it, curIt;
-                core::plugin::BundleList& bundlesToStart {evt->getBundlesList()};
+                plugframe::BundleList_Iterator it, curIt;
+                plugframe::BundleList& bundlesToStart {evt->getBundlesList()};
                 bool found {false};
                 int pos, curPos = 0;
 
                 for (it = bundlesToStart.begin(), pos = 0; (found == false) && (it != bundlesToStart.end()); ++pos, ++it)
                 {
-                     core::plugin::BundleInterface *curBundle = *it;
+                     plugframe::BundleInterface *curBundle = *it;
                      int bundleStartLevel = curBundle->getStartLevel();
 
                      found = bundleStartLevel == currentLevelToStart;
@@ -168,7 +156,7 @@ void framework::bundle::FrameworkStarterListener::onBundlesStartingEvent(core::e
     pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarterListener::onBundlesStartingEvent";
 }
 
-void framework::bundle::FrameworkStarterListener::onStartBundleEvent(core::event::StartBundleEvent *evt)
+void FrameworkStarterListener::onStartBundleEvent(plugframe::StartBundleEvent *evt)
 {
     if (evt == nullptr)
     {
@@ -180,25 +168,25 @@ void framework::bundle::FrameworkStarterListener::onStartBundleEvent(core::event
     }
 }
 
-void framework::bundle::FrameworkStarterListener::onFrameworkStartedEvent(core::event::FrameworkStartedEvent *evt)
+void FrameworkStarterListener::onFrameworkStartedEvent(plugframe::FrameworkStartedEvent *evt)
 {
     pfDebug3(getLogBundleName()) << "->SmfFrameworkStarterListener::onFrameworkStartedEvent";
 
     Q_UNUSED(evt)
-    framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+    Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
     pfDebug5(getLogBundleName()) << tr("Plateforme démarrée au niveau [ %1 ]").arg(fwk.runningLevel());
 
     // No evt to receive !
     fwk.fwkStarted();
 
-    core::plugin::BundleList_Iterator it;
-    core::plugin::BundleList bundlesList {fwk.bundleList()};
+    plugframe::BundleList_Iterator it;
+    plugframe::BundleList bundlesList {fwk.bundleList()};
 
     pfDebug5(getLogBundleName()) << tr("== Liste des bundles démarrés ==");
     for (it = bundlesList.begin(); it != bundlesList.end(); ++it)
     {
-        if ( core::plugin::BundleInterface::BundleState::Started == (*it)->getState() )
+        if ( plugframe::BundleInterface::BundleState::Started == (*it)->getState() )
         {
             pfDebug5(getLogBundleName()) << (*it)->getName() << " start level : " << (*it)->getStartLevel();
         }
@@ -214,11 +202,11 @@ void framework::bundle::FrameworkStarterListener::onFrameworkStartedEvent(core::
  * Main loop for stopping bundles
  * @param evt
  */
-void framework::bundle::FrameworkStarterListener::onBundlesStoppingEvent(core::event::BundlesStoppingEvent *evt)
+void FrameworkStarterListener::onBundlesStoppingEvent(plugframe::BundlesStoppingEvent *evt)
 {
     //pfDebug3(getLogBundleName()) << "->SmfFrameworkStarterListener::onBundlesStoppingEvent";
 
-    framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+    Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
     if (evt == nullptr)
     {
@@ -233,14 +221,14 @@ void framework::bundle::FrameworkStarterListener::onBundlesStoppingEvent(core::e
 
             // Looking for the next bundle to stop for the current level
             //-----------------------------------------------------------
-            core::plugin::BundleList_Iterator it, curIt;
-            core::plugin::BundleList& bundlesToStop {evt->getBundlesList()};
+            plugframe::BundleList_Iterator it, curIt;
+            plugframe::BundleList& bundlesToStop {evt->getBundlesList()};
             bool found {false};
             int pos, curPos = 0;
 
             for (it = bundlesToStop.begin(), pos = 0; (found == false) && (it != bundlesToStop.end()); ++pos, ++it)
             {
-                 core::plugin::BundleInterface *curBundle = *it;
+                 plugframe::BundleInterface *curBundle = *it;
                  int bundleStartLevel = curBundle->getStartLevel();
 
                  found = bundleStartLevel == currentLevelToStop;
@@ -278,7 +266,7 @@ void framework::bundle::FrameworkStarterListener::onBundlesStoppingEvent(core::e
     //pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarterListener::onBundlesStoppingEvent";
 }
 
-void framework::bundle::FrameworkStarterListener::onStopBundleEvent(core::event::StopBundleEvent *evt)
+void FrameworkStarterListener::onStopBundleEvent(plugframe::StopBundleEvent *evt)
 {
     //pfDebug3(getLogBundleName()) << "->SmfFrameworkStarterListener::onStopBundleEvent";
 
@@ -290,7 +278,7 @@ void framework::bundle::FrameworkStarterListener::onStopBundleEvent(core::event:
     {
         // Stop the bundle
         //_________________
-        core::plugin::BundleInterface *bundleItf {evt->getBundleToStop()};
+        plugframe::BundleInterface *bundleItf {evt->getBundleToStop()};
 
         bundleItf->stop();
     }
@@ -298,15 +286,15 @@ void framework::bundle::FrameworkStarterListener::onStopBundleEvent(core::event:
     //pfDebug3(getLogBundleName()) << "<-SmfFrameworkStarterListener::onStopBundleEvent";
 }
 
-void framework::bundle::FrameworkStarterListener::onBundleStartingEvent(core::event::BundleStartingEvent *evt)
+void FrameworkStarterListener::onBundleStartingEvent(plugframe::BundleStartingEvent *evt)
 {
     pfDebug5(getLogBundleName()) << tr("Démarrage du bundle [ %1 ]").arg(evt->getBundle()->getName());
 }
 
-void framework::bundle::FrameworkStarterListener::onBundleStartedEvent(core::event::BundleStartedEvent *evt)
+void FrameworkStarterListener::onBundleStartedEvent(plugframe::BundleStartedEvent *evt)
 {
     pfDebug5(getLogBundleName()) << tr("Bundle [ %1 ], démarré").arg(evt->getBundle()->getName());
-    framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+    Framework& fwk{dynamic_cast<Framework&>(getBundle())};
     int nbOfBundlesToStart{fwk.getNumberOfBundlesToStart()};
 
     if (++m_started_bundles_cpt == nbOfBundlesToStart)
@@ -316,15 +304,15 @@ void framework::bundle::FrameworkStarterListener::onBundleStartedEvent(core::eve
     }
 }
 
-void framework::bundle::FrameworkStarterListener::onBundleStoppingEvent(core::event::BundleStoppingEvent *evt)
+void FrameworkStarterListener::onBundleStoppingEvent(plugframe::BundleStoppingEvent *evt)
 {
     pfInfo4(getLogBundleName()) << tr("Arrêt du bundle [ %1 ]").arg(evt->getBundle()->getName());
 }
 
-void framework::bundle::FrameworkStarterListener::onBundleStoppedEvent(core::event::BundleStoppedEvent *evt)
+void FrameworkStarterListener::onBundleStoppedEvent(plugframe::BundleStoppedEvent *evt)
 {
     pfInfo4(getLogBundleName()) << tr("Bundle [ %1 ], Arrêté" ).arg(evt->getBundle()->getName());
-    framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+    Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
     if (++m_started_bundles_cpt >= fwk.getNumberOfBundlesToStart())
     {
@@ -332,9 +320,9 @@ void framework::bundle::FrameworkStarterListener::onBundleStoppedEvent(core::eve
     }
 }
 
-void framework::bundle::FrameworkStarterListener::startBundle(core::plugin::BundleInterface *bundleItf)
+void FrameworkStarterListener::startBundle(plugframe::BundleInterface *bundleItf)
 {
-    framework::bundle::Framework& fwk{dynamic_cast<framework::bundle::Framework&>(getBundle())};
+    Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
     if (bundleItf == nullptr)
     {
@@ -344,14 +332,14 @@ void framework::bundle::FrameworkStarterListener::startBundle(core::plugin::Bund
     {
         // Start the bundle
         //_________________
-        framework::factory::FrameworkFactory& myFactory = dynamic_cast<framework::factory::FrameworkFactory&>(getFactory());
-        core::bundle::Bundle *bundleImpl{bundleItf->getImpl()};
+        FrameworkFactory& myFactory = dynamic_cast<FrameworkFactory&>(getFactory());
+        plugframe::Bundle *bundleImpl{bundleItf->getImpl()};
 
         // connect to the bundle emitter
         bundleImpl->registerListener(this);
 
         // and start with bundlecontext
-        core::bundle::QspBundleContext bundleCtx{myFactory.createBundleContext(fwk.getRegistryService())};
+        plugframe::QspBundleContext bundleCtx{myFactory.createBundleContext(fwk.getRegistryService())};
         bundleItf->start(bundleCtx);
      }
 }

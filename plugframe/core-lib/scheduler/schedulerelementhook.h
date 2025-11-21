@@ -25,15 +25,8 @@
 #include "digitalsuite.h"
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
 class PFCORELIB_EXPORT SchedulerElementHook
 {
 public:
@@ -53,10 +46,5 @@ public:
     virtual bool weeklySchedulerDeclarationEnd() = 0;
     virtual bool weeklySchedulerDailySequenceDeclaration(const QString& dailySchedulerId,const DigitalSuite& assignedDays) = 0;
 };
-
-}//namespace scheduler
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // SCHEDULERELEMENTHOOK_H

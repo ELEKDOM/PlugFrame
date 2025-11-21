@@ -16,17 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "workersignal.h"
 
-using namespace elekdom::plugframe::core::worker;
-
-WorkerSignal::WorkerSignal(QObject *parent) : QObject(parent)
+plugframe::WorkerSignal::WorkerSignal(QObject *parent) : QObject(parent)
 {
 
 }
 
-WorkerSignal::~WorkerSignal()
+plugframe::WorkerSignal::~WorkerSignal()
 {
 
 }

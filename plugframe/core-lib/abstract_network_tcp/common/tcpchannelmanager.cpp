@@ -16,36 +16,33 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpchannelmanager.h"
 #include "tcpchannel.h"
 #include "tcpchannelmessage.h"
 
-using namespace elekdom::plugframe::core::tcp;
-
-TcpChannelManager::TcpChannelManager(TcpChannel *channel,QObject *parent):
+plugframe::TcpChannelManager::TcpChannelManager(plugframe::TcpChannel *channel,QObject *parent):
     QObject{parent},
     m_channel{channel}
 {
-    connect(m_channel,SIGNAL(newMessage(TcpChannelMessage*)),SLOT(onNewMessage(TcpChannelMessage*)));
+    connect(m_channel,SIGNAL(newMessage(plugframe::TcpChannelMessage*)),SLOT(onNewMessage(plugframe::TcpChannelMessage*)));
 }
 
-TcpChannelManager::~TcpChannelManager()
+plugframe::TcpChannelManager::~TcpChannelManager()
 {
     delete m_channel;
 }
 
-void TcpChannelManager::sendMessage(TcpChannelMessage &output)
+void plugframe::TcpChannelManager::sendMessage(plugframe::TcpChannelMessage &output)
 {
     m_channel->sendMessage(output);
 }
 
-void TcpChannelManager::close()
+void plugframe::TcpChannelManager::close()
 {
     m_channel->close();
 }
 
-void TcpChannelManager::onNewMessage(TcpChannelMessage *input)
+void plugframe::TcpChannelManager::onNewMessage(plugframe::TcpChannelMessage *input)
 {
     processMessage(input);
     delete input;

@@ -16,16 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "service-int/displayserviceinterface.h"
 #include "guidisplayservice.h"
 #include "guidisplay.h"
 
-using namespace elekdom::plugframe::guidisplay::service;
-using namespace elekdom::plugframe::guidisplay::bundle;
-
-GuiDisplayService::GuiDisplayService(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+GuiDisplayService::GuiDisplayService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
@@ -58,6 +54,6 @@ void GuiDisplayService::clearStatusMessages()
 
 QString GuiDisplayService::serviceName()
 {
-    return display::service::DisplayServiceInterface::serviceName();
+    return plugframe::DisplayServiceInterface::serviceName();
 }
 

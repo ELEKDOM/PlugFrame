@@ -16,20 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGFILTER_H
 #define LOGFILTER_H
 
-#include "logger_forward.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace bundle
-{
+#include <QSharedPointer>
+#include "logdevice.h"
 
 class LogFilter
 {
@@ -57,10 +48,5 @@ private:
     uint         m_iFlags;
     QspLogDevice m_firstOutput;
 };
-
-} //namespace bundle
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
+using QspLogFilter= QSharedPointer<LogFilter>;
 #endif // LOGFILTER_H

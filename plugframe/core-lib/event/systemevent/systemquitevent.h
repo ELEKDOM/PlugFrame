@@ -16,17 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
+#ifndef SYSTEMQUITEVENT_H
+#define SYSTEMQUITEVENT_H
 
-#include "smfsystemquitevent.h"
+#include "systemevent.h"
 
-using namespace elekdom::plugframe::core::event;
-
-SmfSystemQuitEvent::SmfSystemQuitEvent()
+namespace plugframe
 {
-
-}
-
-SmfSystemQuitEvent::~SmfSystemQuitEvent()
+class PFCORELIB_EXPORT SystemQuitEvent : public SystemEvent
 {
+public:
+    SystemQuitEvent();
+    ~SystemQuitEvent() override;
+};
+} //namespace plugframe
 
-}
+#endif // SYSTEMQUITEVENT_H

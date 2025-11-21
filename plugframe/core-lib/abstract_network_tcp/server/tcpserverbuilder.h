@@ -16,39 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERBUILDER_H
 #define TCPSERVERBUILDER_H
 
 #include "bundle/bundlebuilder.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace builder
-{
-
-class TcpServerBuilder : public core::bundle::BundleBuilder
+class PFCORELIB_EXPORT TcpServerBuilder : public BundleBuilder
 {
 public:
-    TcpServerBuilder(core::bundle::Bundle4BuilderInterface& myBundle);
+    TcpServerBuilder(Bundle4BuilderInterface& myBundle);
     ~TcpServerBuilder() override;
 
 protected:
     void specificBuild() override;
 };
-
-}//namespace builder
-}//namespace server
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVERBUILDER_H

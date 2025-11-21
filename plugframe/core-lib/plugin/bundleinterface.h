@@ -16,22 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLE_INTERFACE
 #define BUNDLE_INTERFACE
 
 #include <QtPlugin>
 #include <QString>
 #include <QJsonObject>
+#include <QList>
+#include "bundle/bundlecontext.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
-{
-namespace core
-{
-namespace plugin
 {
 /**
  * @brief The BundleInterface class
@@ -46,49 +41,58 @@ public:
     virtual ~BundleInterface() {}
 
 public:
-    QString stateStr() {
+    QString stateStr()
+    {
         BundleState state{getState()};
+        QString ret;
 
         switch(state)
         {
-        case BundleState::Unknown:
-            return QStringLiteral("Unknown");
-        case BundleState::Loaded:
-            return QStringLiteral("Loaded");
-        case BundleState::Initialized:
-            return QStringLiteral("Initialized");
-        case BundleState::Starting:
-            return QStringLiteral("Starting");
-        case BundleState::Started:
-            return QStringLiteral("Started");
-        case BundleState::Stopping:
-            return QStringLiteral("Stopping");
-        case BundleState::Stopped:
-            return QStringLiteral("Stopped");
+            case BundleState::Loaded:
+                ret = QStringLiteral("Loaded");
+                break;
+            case BundleState::Initialized:
+                ret = QStringLiteral("Initialized");
+                break;
+            case BundleState::Starting:
+                ret = QStringLiteral("Starting");
+                break;
+            case BundleState::Started:
+                ret = QStringLiteral("Started");
+                break;
+            case BundleState::Stopping:
+                ret = QStringLiteral("Stopping");
+                break;
+            case BundleState::Stopped:
+                ret = QStringLiteral("Stopped");
+                break;
+            default:
+                ret = QStringLiteral("Unknown");
         }
+
+        return ret;
     }
+
 public:
     virtual void setFileName(const QString& fileName) = 0;
     virtual void setAbsolutePath(const QString& absolutePath) = 0;
     virtual void setMetaData(const QJsonObject& metaData) = 0;
     virtual void setQplugin(QObject *qplugin) = 0;
     virtual void init() = 0;
-    virtual void start(bundle::QspBundleContext bundleContext) = 0;
+    virtual void start(QspBundleContext bundleContext) = 0;
     virtual void stop() = 0;
     virtual QString getName() = 0;
-    virtual core::bundle::Bundle *getImpl() = 0;
+    virtual Bundle *getImpl() = 0;
     virtual int getStartLevel() = 0;
     virtual BundleState getState() = 0;
     virtual QString state2String(BundleState state) = 0;
 };
-
-} //namespace plugin
-} //namespace core
+using BundleList = QList<BundleInterface*>;
+using BundleList_Iterator = BundleList::iterator;
 } //namespace plugframe
-} //namespace elekdom
 
-#define PfBundle_iid "elekdom.smf.core.plugin"
-Q_DECLARE_INTERFACE(elekdom::plugframe::core::plugin::BundleInterface, PfBundle_iid)
+#define PfBundle_iid "plugframe.core.plugin"
+Q_DECLARE_INTERFACE(plugframe::BundleInterface, PfBundle_iid)
 
 #endif // BUNDLE_INTERFACE
 

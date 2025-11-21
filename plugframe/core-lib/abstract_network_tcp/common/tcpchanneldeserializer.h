@@ -16,23 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCHANNELDESERIALIZER_H
 #define TCPCHANNELDESERIALIZER_H
 
 #include <QDataStream>
 #include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-
-class TcpChannelDeserializer
+class PFCORELIB_EXPORT TcpChannelDeserializer
 {
 public:
     TcpChannelDeserializer();
@@ -42,9 +35,5 @@ public:
     virtual TcpChannelMessage *deserialize(QDataStream& input)=0;
     virtual void serialize(TcpChannelMessage& msg, QDataStream& out)=0;
 };
-
-} //namespace tcp
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 #endif // TCPCHANNELDESERIALIZER_H

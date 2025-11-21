@@ -16,13 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "displayplugin.h"
 #include "displayservice.h"
 #include "display.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::display::plugin;
 
 DisplayPlugin::DisplayPlugin()
 {
@@ -34,17 +30,17 @@ DisplayPlugin::~DisplayPlugin()
 
 }
 
-core::bundle::Bundle4PluginInterface *DisplayPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *DisplayPlugin::createImplementation()
 {
-    return new bundle::Display;
+    return new Display;
 }
 
 void DisplayPlugin::bindServicesImplementations()
 {
-    core::service::QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
     serviceImplementationItf = implementation()->getServiceImplementation(DisplayServiceInterface::serviceName());
-    m_displayServiceImpl = serviceImplementationItf.dynamicCast<service::DisplayService>();
+    m_displayServiceImpl = serviceImplementationItf.dynamicCast<DisplayService>();
 }
 
 void DisplayPlugin::print(const QString &msg)

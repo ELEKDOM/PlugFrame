@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SCHEDULERELEMENT_H
 #define SCHEDULERELEMENT_H
 
@@ -24,15 +23,8 @@
 #include "schedulerelementhook.h"
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
 class PFCORELIB_EXPORT SchedulerElement : public QDomElement
 {
 public:
@@ -72,10 +64,5 @@ private:
 private:
     SchedulerElementHook& m_hook;
 };
-
-}//namespace scheduler
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // SCHEDULERELEMENT_H

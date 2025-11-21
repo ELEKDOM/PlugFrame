@@ -16,18 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "frameworkevent.h"
 
-using namespace elekdom::plugframe::core::event;
-
-FrameworkEvent::FrameworkEvent(const QString& typeId) :
+plugframe::FrameworkEvent::FrameworkEvent(const QString& typeId) :
     Event{typeId}
 {
 
 }
 
-FrameworkEvent::~FrameworkEvent()
+plugframe::FrameworkEvent::~FrameworkEvent()
 {
 
 }

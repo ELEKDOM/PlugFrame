@@ -16,41 +16,30 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef USERSPLUGIN_H
 #define USERSPLUGIN_H
 
 #include "plugin/plugin.h"
 #include "loginservice.h"
 #include "service-int/loginserviceinterface.h"
-#include "users_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-namespace plugin
-{
-
-class UsersPlugin : public plugframe::core::plugin::Plugin,
-                    public service::LoginServiceInterface
+class UsersPlugin : public plugframe::Plugin,
+                    public plugframe::LoginServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.users.plugin" FILE "../users.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface
-                 elekdom::plugframe::users::service::LoginServiceInterface)
+    Q_PLUGIN_METADATA(IID "plugframe.users.plugin" FILE "../users.json")
+    Q_INTERFACES(plugframe::BundleInterface
+                 plugframe::LoginServiceInterface)
 
 private:
-    service::QspLoginService m_loginServiceImpl;
+    QspLoginService m_loginServiceImpl;
 
 public:
     UsersPlugin();
     ~UsersPlugin() override;
 
 protected:
-    plugframe::core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     void bindServicesImplementations() override;
 
 protected: // GacServiceTemplate1Interface
@@ -58,16 +47,10 @@ protected: // GacServiceTemplate1Interface
                QString                                      frontendIp,
                QString                                      identifier,
                QString                                      password,
-               service::LoginServiceInterface::LoginStatus& loginStatus,
+               plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                quint32&                                     sessionId,
                QString&                                     profil) override;
     void logout(quint32 sessionId) override;
     QString absoluteUserConfFileName(const QString& profil) override;
 };
-
-}//namespace plugin
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
-
 #endif // USERSPLUGIN_H

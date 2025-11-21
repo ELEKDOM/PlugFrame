@@ -16,26 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QDebug>
 #include "startbundleevent.h"
 
-using namespace elekdom::plugframe::core;
-using namespace event;
+const QString plugframe::StartBundleEvent::s_typeId {"PlugFrame.Framework.StartBundle"};
 
-const QString StartBundleEvent::s_typeId {"PlugFrame.Framework.StartBundle"};
-
-StartBundleEvent::StartBundleEvent(plugin::BundleInterface *toStart):
-     FrameworkEvent{StartBundleEvent::s_typeId},
-     m_bundleToStart{toStart}
+plugframe::StartBundleEvent::StartBundleEvent(plugframe::BundleInterface *toStart):
+    plugframe::FrameworkEvent{plugframe::StartBundleEvent::s_typeId},
+    m_bundleToStart{toStart}
 {
 }
 
-StartBundleEvent::~StartBundleEvent()
+plugframe::StartBundleEvent::~StartBundleEvent()
 {
 }
 
-plugin::BundleInterface *StartBundleEvent::getBundleToStart()
+plugframe::BundleInterface *plugframe::StartBundleEvent::getBundleToStart()
 {
     return m_bundleToStart;
 }

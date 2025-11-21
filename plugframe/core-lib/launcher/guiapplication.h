@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIAPPLICATION_H
 #define GUIAPPLICATION_H
 
@@ -24,15 +23,8 @@
 #include "pfcore-lib_export.h"
 #include "launcher.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace launcher
-{
-
 class PFCORELIB_EXPORT GuiApplication : public Launcher
 {
 public:
@@ -43,10 +35,6 @@ protected:
     void createApp(int& argc, char *argv[]) override;
     void setStyleSheet() override;
 };
-
-} // namespace smf
-} // namespace core
-} // namespace launcher
-} // namespace elekdom
+} // namespace plugframe
 
 #endif // GUIAPPLICATION_H

@@ -16,18 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guipageview.h"
 
-using namespace elekdom::plugframe::core::gui;
-
-GuiPageView::GuiPageView(QString toolActionName,QWidget *parent)
+plugframe::GuiPageView::GuiPageView(QString toolActionName,QWidget *parent)
     : QWidget{parent}
     , m_toolActionName{toolActionName}
     , m_stackedIndex{-1}
 {}
 
-GuiPageView::~GuiPageView()
+plugframe::GuiPageView::~GuiPageView()
 {
 
 }

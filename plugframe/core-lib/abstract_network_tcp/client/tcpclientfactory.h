@@ -16,27 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENTFACTORY_H
 #define TCPCLIENTFACTORY_H
 
 #include <QTcpSocket>
 #include "factory/bundlefactory.h"
+#include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace factory
-{
-
-class TcpClientFactory : public core::bundle::BundleFactory
+class PFCORELIB_EXPORT TcpClientFactory : public BundleFactory
 {
 public:
     TcpClientFactory();
@@ -44,22 +34,16 @@ public:
 
 public:
     virtual TcpChannelDeserializer *createDeserializer()=0;
-    virtual bundle::TcpClientChannelManager *createChannelManager(TcpChannel *channel,QObject *parent = nullptr);
+    virtual TcpClientChannelManager *createChannelManager(TcpChannel *channel,QObject *parent = nullptr);
     virtual QTcpSocket *createSocket();
     virtual TcpChannel *createChannel(QTcpSocket *socket,TcpChannelDeserializer *deserializer,QObject *parent = nullptr);
 
 protected:
-    core::bundle::BundleBuilder *createBuilder(core::bundle::Bundle& myBundle) override;
-    virtual service::TcpClientService *createFrontendControlService(core::bundle::BundleImplementation *implementation);
-    plugframe::core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                                          const QString& sName,
-                                                                                          const QString& serviceVersion) override;
+    BundleBuilder *createBuilder(Bundle& myBundle) override;
+    virtual TcpClientService *createFrontendControlService(BundleImplementation *implementation);
+    ServiceImplementationInterface *createServiceImplementation(BundleImplementation *implementation,
+                                                                const QString& sName,
+                                                                const QString& serviceVersion) override;
 };
-
-}//namespace factory
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENTFACTORY_H

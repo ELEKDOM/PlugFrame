@@ -23,28 +23,17 @@
 #include "pfcore-lib_export.h"
 #include "bundleevent.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT BundleStartedEvent : public BundleEvent
 {
 public:
     static const QString s_typeId;
 
 public:
-    BundleStartedEvent(core::plugin::BundleInterface *bundleItf);
+    BundleStartedEvent(BundleInterface *bundleItf);
     ~BundleStartedEvent() override;
 };
-
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
+} //namespace plugframe
 
 #endif // BUNDLESTARTEDEVENT_H

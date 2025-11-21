@@ -16,39 +16,23 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef HELPCMDPROCESSOR_H
 #define HELPCMDPROCESSOR_H
 
 #include "cmd/cmdprocessor.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace cmd
-{
-
 class HelpCmdProcessor : public CmdProcessor
 {
-private:
-     cmd::QspCmdProcessor m_firstProc;
-
 public:
     HelpCmdProcessor(const QString& logChannel,
-                     console::bundle::Console& console,
-                     cmd::QspCmdProcessor firstProc);
+                     Console& console,
+                     QspCmdProcessor firstProc);
     virtual ~HelpCmdProcessor();
 
 protected:
     virtual bool exec(const RawCmd& cmd);
+
+private:
+    QspCmdProcessor m_firstProc;
 };
-
-} //namespace cmd
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // HELPCMDPROCESSOR_H

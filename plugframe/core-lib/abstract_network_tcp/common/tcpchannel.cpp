@@ -16,16 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QByteArray>
 #include "tcpchannel.h"
 #include "tcpchannelmessage.h"
 #include "tcpchanneldeserializer.h"
 
-using namespace elekdom::plugframe::core::tcp;
-
-TcpChannel::TcpChannel(QTcpSocket *socket,
-                       TcpChannelDeserializer *deserializer,
+plugframe::TcpChannel::TcpChannel(QTcpSocket *socket,
+                       plugframe::TcpChannelDeserializer *deserializer,
                        QObject *parent):
     QObject{parent},
     m_socket{socket},
@@ -37,12 +34,12 @@ TcpChannel::TcpChannel(QTcpSocket *socket,
     connect(m_socket,SIGNAL(readyRead()),SLOT(onReadyRead()));
 }
 
-TcpChannel::~TcpChannel()
+plugframe::TcpChannel::~TcpChannel()
 {
     delete m_deserializer;
 }
 
-void TcpChannel::sendMessage(TcpChannelMessage &msg)
+void plugframe::TcpChannel::sendMessage(TcpChannelMessage &msg)
 {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
@@ -53,13 +50,13 @@ void TcpChannel::sendMessage(TcpChannelMessage &msg)
     m_socket->flush();  // send data immediatly !
 }
 
-void TcpChannel::close()
+void plugframe::TcpChannel::close()
 {
     disconnect(m_socket,nullptr,nullptr,nullptr);
     m_socket->close();
 }
 
-void TcpChannel::onReadyRead()
+void plugframe::TcpChannel::onReadyRead()
 {
     bool rmOk, noMoreMsg;
 
@@ -70,10 +67,10 @@ void TcpChannel::onReadyRead()
     } while (rmOk && !noMoreMsg);
 }
 
-bool TcpChannel::readMessage()
+bool plugframe::TcpChannel::readMessage()
 {
     bool ret;
-    TcpChannelMessage *input{nullptr};
+    plugframe::TcpChannelMessage *input{nullptr};
     m_inputStream.startTransaction();
 
     input = m_deserializer->deserialize(m_inputStream);

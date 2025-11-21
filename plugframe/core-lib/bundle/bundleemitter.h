@@ -16,25 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLEEMITTER_H
 #define BUNDLEEMITTER_H
 
 #include <QList>
 #include <QMutex>
+#include <QSharedPointer>
 #include "bundleobject.h"
+#include "event/event.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleEmitter : public BundleObject
 {
     Q_OBJECT
@@ -48,7 +42,7 @@ public:
     ~BundleEmitter() override;
 
 signals:
-    void pfEvent(plugframe::core::event::QspEvent ev);
+    void pfEvent(plugframe::QspEvent ev);
 
 public:
     bool registerListener(BundleListener* observer);
@@ -58,10 +52,6 @@ public:
     void postBundleStoppingEvt();
     void postBundleStoppedEvt();
 };
-
-} //namespace bundle
-} //namespace core
+using QspBundleEmitter = QSharedPointer<BundleEmitter>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLEEMITTER_H

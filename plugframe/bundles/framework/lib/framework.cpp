@@ -16,118 +16,112 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include "framework.h"
 #include "frameworkfactory.h"
 #include "frameworkstarter.h"
 #include "frameworkstarterlistener.h"
 #include "bundle/bundleheaders.h"
-#include "bundle/bundlecontext.h"
 #include "logger/pflog.h"
 #include "launcher/bundlesstore.h"
 #include "launcher/launchingproperties.h"
-#include "event/event.h"
 #include "service-int/systemserviceinterface.h"
 #include "serviceregistry.h"
 
-using namespace elekdom::plugframe::framework;
-using namespace elekdom::plugframe;
-
-bundle::Framework::Framework(core::launcher::QspBundlesStore bundlesStore,
-                                   core::launcher::QspLaunchingProperties launchingProperties):
-    core::bundle::LongStartBundleImplementation{"Framework"},
+Framework::Framework(plugframe::QspBundlesStore bundlesStore,
+                     plugframe::QspLaunchingProperties launchingProperties):
+    plugframe::LongStartBundleImplementation{"Framework"},
     m_bundlesStore{bundlesStore},
     m_launchingProperties{launchingProperties},
     m_numberOfBundlesToStart{0}
 {
-    qRegisterMetaType<plugframe::core::event::QspEvent>("plugframe::core::event::QspEvent");
+    qRegisterMetaType<plugframe::QspEvent>("plugframe::QspEvent");
 }
 
-bundle::Framework::~Framework()
+Framework::~Framework()
 {
 
 }
 
-core::plugin::BundleList bundle::Framework::bundleList()
+plugframe::BundleList Framework::bundleList()
 {
     return m_ListBundles;
 }
 
-int bundle::Framework::runningLevel()
+int Framework::runningLevel()
 {
     return getStartLevel();
 }
 
-void bundle::Framework::quit()
+void Framework::quit()
 {
     stop();
 }
 
-int bundle::Framework::startLevelToReach()
+int Framework::startLevelToReach()
 {
     return getStartLevel();
 }
 
-void bundle::Framework::setNumberOfBundlesToStart(int nb)
+void Framework::setNumberOfBundlesToStart(int nb)
 {
     m_numberOfBundlesToStart = nb;
 }
 
-void bundle::Framework::postBundlesStartingEvt(core::plugin::BundleList &bundlesToStart,
-                                          int frameworkStartLevel,
-                                          int curStartLevel)
+void Framework::postBundlesStartingEvt(plugframe::BundleList &bundlesToStart,
+                                       int frameworkStartLevel,
+                                       int curStartLevel)
 {
     QspSmfFrameworkStarter fwkStarter{getEmitter().dynamicCast<FrameworkStarter>()};
 
     fwkStarter->postBundlesStartingEvt(bundlesToStart,frameworkStartLevel,curStartLevel);
 }
 
-void bundle::Framework::postBundlesStoppingEvt(core::plugin::BundleList &bundlesToStop, int curStopLevel)
+void Framework::postBundlesStoppingEvt(plugframe::BundleList &bundlesToStop,int curStopLevel)
 {
     QspSmfFrameworkStarter fwkStarter{getEmitter().dynamicCast<FrameworkStarter>()};
 
     fwkStarter->postBundlesStoppingEvt(bundlesToStop,curStopLevel);
 }
 
-void bundle::Framework::postFrameworkStartedEvt()
+void Framework::postFrameworkStartedEvt()
 {
     QspSmfFrameworkStarter fwkStarter{getEmitter().dynamicCast<FrameworkStarter>()};
 
     fwkStarter->postFrameworkStartedEvt();
 }
 
-int bundle::Framework::getNumberOfBundlesToStart()
+int Framework::getNumberOfBundlesToStart()
 {
     return m_numberOfBundlesToStart;
 }
 
-service::SystemServiceRegistryInterface *bundle::Framework::getRegistryService()
+plugframe::SystemServiceRegistryInterface *Framework::getRegistryService()
 {
-    service::SystemServiceRegistryInterface *ret{qobject_cast<service::SystemServiceRegistryInterface*>(getQplugin())};
+    plugframe::SystemServiceRegistryInterface *ret{qobject_cast<plugframe::SystemServiceRegistryInterface*>(getQplugin())};
     return ret;
 }
 
-void bundle::Framework::fwkStarted()
+void Framework::fwkStarted()
 {
     started();
 }
 
-void bundle::Framework::fwkStopped()
+void Framework::fwkStopped()
 {
-    setState(core::plugin::BundleInterface::BundleState::Stopped);
+    setState(plugframe::BundleInterface::BundleState::Stopped);
     pfInfo1(getLogBundleName()) << QObject::tr("Framework, Arrêté" );
 
     // All bundles have been stopped
     QCoreApplication::quit();
 }
 
-core::bundle::BundleFactory *bundle::Framework::createFactory()
+plugframe::BundleFactory *Framework::createFactory()
 {
-    return new factory::FrameworkFactory;
+    return new FrameworkFactory;
 }
 
-void bundle::Framework::init()
+void Framework::init()
 {
     // Bundle initialization : creation and build
     //--------------------------------------------
@@ -144,27 +138,27 @@ void bundle::Framework::init()
     m_bundlesStore->loadPlugins(getLogBundleName(), m_ListBundles);
 }
 
-void bundle::Framework::_start(elekdom::plugframe::core::bundle::QspBundleContext bundleContext)
+void Framework::_start(plugframe::QspBundleContext bundleContext)
 {
     Q_UNUSED(bundleContext)
 
     BundleImplementation::_start(bundleContext); // To register services!
 
-    core::bundle::QspBundleEmitter emitter{getEmitter()};
+    plugframe::QspBundleEmitter emitter{getEmitter()};
     QspSmfFrameworkStarter fwkStarter{emitter.dynamicCast<FrameworkStarter>()};
-    core::bundle::QspBundleListener listener{getListener()};
+    plugframe::QspBundleListener listener{getListener()};
     QspFrameworkStarterListener fwkStarterListener{listener.dynamicCast<FrameworkStarterListener>()};
 
     fwkStarterListener->reset(); // number of bundles to start reset to 0!
     fwkStarter->start();
 }
 
-void bundle::Framework::stop()
+void Framework::stop()
 {
-    core::bundle::QspBundleEmitter emitter{getEmitter()};
+    plugframe::QspBundleEmitter emitter{getEmitter()};
     QspSmfFrameworkStarter fwkStarter{emitter.dynamicCast<FrameworkStarter>()};
 
-    setState(core::plugin::BundleInterface::BundleState::Stopping);
+    setState(plugframe::BundleInterface::BundleState::Stopping);
 
     //notify stopping
     fwkStarter->postBundleStoppingEvt();
@@ -173,13 +167,13 @@ void bundle::Framework::stop()
     _stop();
 }
 
-void bundle::Framework::_stop()
+void Framework::_stop()
 {
     //pfDebug3(getLogBundleName()) << "->SmfFramework::_stop";
 
-    core::bundle::QspBundleEmitter emitter{getEmitter()};
+    plugframe::QspBundleEmitter emitter{getEmitter()};
     QspSmfFrameworkStarter fwkStarter{emitter.dynamicCast<FrameworkStarter>()};
-    core::bundle::QspBundleListener listener{getListener()};
+    plugframe::QspBundleListener listener{getListener()};
     QspFrameworkStarterListener fwkStarterListener{listener.dynamicCast<FrameworkStarterListener>()};
 
     fwkStarterListener->reset(); // number of bundles to stop reset to 0!
@@ -188,33 +182,33 @@ void bundle::Framework::_stop()
     //pfDebug3(getLogBundleName()) << "<-SmfFramework::_stop";
 }
 
-core::plugin::ServiceInterface *bundle::Framework::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *Framework::qtServiceInterface(const QString &sName)
 {
-    core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (service::SystemServiceRegistryInterface::serviceName() == sName)
+    if (plugframe::SystemServiceRegistryInterface::serviceName() == sName)
     {
-        ret = qobject_cast<elekdom::plugframe::framework::service::SystemServiceRegistryInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::SystemServiceRegistryInterface*>(getQplugin());
     }
-    else if (service::SystemServiceInterface::serviceName() == sName)
+    else if (plugframe::SystemServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<elekdom::plugframe::framework::service::SystemServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::SystemServiceInterface*>(getQplugin());
     }
 
     return ret;
 }
 
-bool bundle::Framework::registerService(const QString &serviceInterfaceName, core::plugin::ServiceInterface *service)
+bool Framework::registerService(const QString &serviceInterfaceName,plugframe::ServiceInterface *service)
 {
     bool ret{true};
 
-    if (service::SystemServiceRegistryInterface::serviceName() != serviceInterfaceName)
+    if (plugframe::SystemServiceRegistryInterface::serviceName() != serviceInterfaceName)
     {
-        plugframe::core::service::QspServiceImplementationInterface qspSii;
-        service::ServiceRegistry *sr;
+        plugframe::QspServiceImplementationInterface qspSii;
+        ServiceRegistry *sr;
 
-        qspSii = getService(service::SystemServiceRegistryInterface::serviceName());
-        sr =  dynamic_cast<service::ServiceRegistry*>(qspSii.get());
+        qspSii = getService(plugframe::SystemServiceRegistryInterface::serviceName());
+        sr =  dynamic_cast<ServiceRegistry*>(qspSii.get());
         if (sr)
         {
             sr->registerService(serviceInterfaceName,service);

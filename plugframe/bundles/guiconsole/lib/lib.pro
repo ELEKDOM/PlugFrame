@@ -5,7 +5,7 @@ TEMPLATE = lib
 CONFIG  += staticlib
 
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = guiconsole-qt5-$${BUNDLE_VERSION}
+TARGET = guiconsole-qt6-$${BUNDLE_VERSION}
 
 SOURCES += \
          guiconsole.cpp \

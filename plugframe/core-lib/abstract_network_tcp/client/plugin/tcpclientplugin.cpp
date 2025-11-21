@@ -16,41 +16,38 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientplugin.h"
 #include "bundle/bundle4plugininterface.h"
 #include "abstract_network_tcp/client/service/tcpclientservice.h"
 
-using namespace elekdom::plugframe::core::tcp::client::plugin;
+plugframe::TcpClientPlugin::TcpClientPlugin() {}
 
-TcpClientPlugin::TcpClientPlugin() {}
-
-TcpClientPlugin::~TcpClientPlugin()
+plugframe::TcpClientPlugin::~TcpClientPlugin()
 {
 
 }
 
-void TcpClientPlugin::bindServicesImplementations()
+void plugframe::TcpClientPlugin::bindServicesImplementations()
 {
-    plugframe::core::service::QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
-    serviceImplementationItf = implementation()->getServiceImplementation(FrontendControlServiceInterface::serviceName());
-    m_clientServiceImpl = serviceImplementationItf.dynamicCast<client::service::TcpClientService>();
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::FrontendControlServiceInterface::serviceName());
+    m_clientServiceImpl = serviceImplementationItf.dynamicCast<plugframe::TcpClientService>();
 }
 
-void TcpClientPlugin::connectToHost(frontend::FrontendClientSide *clientSide,
-                                    QString serverIpv4,
-                                    quint16 serverPort)
+void plugframe::TcpClientPlugin::connectToHost(plugframe::FrontendClientSide *clientSide,
+                                               QString serverIpv4,
+                                               quint16 serverPort)
 {
     m_clientServiceImpl->connectToHost(clientSide,serverIpv4,serverPort);
 }
 
-void TcpClientPlugin::closeConnection()
+void plugframe::TcpClientPlugin::closeConnection()
 {
     m_clientServiceImpl->closeConnection();
 }
 
-void TcpClientPlugin::sendMessageToServer(TcpChannelMessage &msg)
+void plugframe::TcpClientPlugin::sendMessageToServer(TcpChannelMessage &msg)
 {
     m_clientServiceImpl->sendMessageToServer(msg);
 }

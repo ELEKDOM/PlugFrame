@@ -16,18 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "serviceimplementation.h"
 
-using namespace elekdom::plugframe::core::service;
-
-ServiceImplementation::ServiceImplementation(bundle::BundleImplementation *implementation):
+plugframe::ServiceImplementation::ServiceImplementation(plugframe::BundleImplementation *implementation):
     m_implementation{implementation}
 {
 
 }
 
-elekdom::plugframe::core::service::ServiceImplementation::~ServiceImplementation()
+plugframe::ServiceImplementation::~ServiceImplementation()
 {
 
 }

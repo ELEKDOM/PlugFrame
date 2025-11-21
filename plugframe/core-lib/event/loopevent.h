@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOOP_EVENT_H
 #define LOOP_EVENT_H
 
 #include <QString>
 #include "event.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT LoopEvent : public Event
 {
 private:
@@ -45,10 +37,6 @@ public:
     quint16 cpt() {return m_cpt;}
 
 };
-
-} //namespace event
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // LOOP_EVENT_H

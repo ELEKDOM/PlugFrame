@@ -16,20 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundleevent.h"
-#include "bundle/bundle.h"
 
-using namespace elekdom::plugframe::core::event;
-
-BundleEvent::BundleEvent(const QString& typeId, core::plugin::BundleInterface *bundleItf) :
+plugframe::BundleEvent::BundleEvent(const QString& typeId, plugframe::BundleInterface *bundleItf) :
     Event{typeId},
     m_bundleItf{bundleItf}
 {
 
 }
 
-BundleEvent::~BundleEvent()
+plugframe::BundleEvent::~BundleEvent()
 {
 
 }

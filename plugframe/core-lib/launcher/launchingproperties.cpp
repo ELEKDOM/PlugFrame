@@ -16,26 +16,23 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "launchingproperties.h"
 
-using namespace elekdom::plugframe::core::launcher;
-
 // Framework launching properties
-const QString LaunchingProperties::PF_GROUP = "plugframe properties";
-const QString LaunchingProperties::PF_FRAMEWORK_STARTLEVEL = "plugframe.framework.startlevel";
+const QString plugframe::LaunchingProperties::PF_GROUP = "plugframe properties";
+const QString plugframe::LaunchingProperties::PF_FRAMEWORK_STARTLEVEL = "plugframe.framework.startlevel";
 
 // Qt StyleSheet for gui
-const QString LaunchingProperties::QT_GROUP = "qt properties";
-const QString LaunchingProperties::GUI_STYLESHEET_FILE = "qt.styleSheet.file";
+const QString plugframe::LaunchingProperties::QT_GROUP = "qt properties";
+const QString plugframe::LaunchingProperties::GUI_STYLESHEET_FILE = "qt.styleSheet.file";
 
-LaunchingProperties::LaunchingProperties(const QString &fileName) :
+plugframe::LaunchingProperties::LaunchingProperties(const QString &fileName) :
     QSettings{fileName, QSettings::IniFormat}
 {
 
 }
 
-bool LaunchingProperties::hasStartlevel()
+bool plugframe::LaunchingProperties::hasStartlevel()
 {
     bool ret{false};
 
@@ -45,7 +42,7 @@ bool LaunchingProperties::hasStartlevel()
     return ret;
 }
 
-QString LaunchingProperties::getStartlevel()
+QString plugframe::LaunchingProperties::getStartlevel()
 {
     QString ret;
 
@@ -56,7 +53,7 @@ QString LaunchingProperties::getStartlevel()
     return ret;
 }
 
-bool LaunchingProperties::hasStyleSheet()
+bool plugframe::LaunchingProperties::hasStyleSheet()
 {
     bool ret{false};
 
@@ -66,7 +63,7 @@ bool LaunchingProperties::hasStyleSheet()
     return ret;
 }
 
-QString LaunchingProperties::getStyleSheetFile()
+QString plugframe::LaunchingProperties::getStyleSheetFile()
 {
     QString ret;
 

@@ -16,36 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLE_FORWARD_H
 #define CONSOLE_FORWARD_H
 
-#include <QSharedPointer>
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-    namespace cmd
-    {
-        class CmdProcessor;
-
-        using QspCmdProcessor = QSharedPointer<CmdProcessor>;
-    }
-    namespace bundle
-    {
-        class Console;
-        class Terminal;
-        class ConsoleExit;
-
-        using QspConsole = QSharedPointer<Console>;
-        using QspConsoleExit = QSharedPointer<ConsoleExit>;
-
-    }//namespace bundle
-}//namespace console
-}//namespace plugframe
-}//namespace elekdom
+class Console;
+class Terminal;
 
 #endif // CONSOLE_FORWARD_H

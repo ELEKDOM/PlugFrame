@@ -20,21 +20,19 @@
 #define PF_BUNDLE
 
 #include <QJsonObject>
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "logger/loggable.h"
 #include "bundle4builderinterface.h"
 #include "bundle4plugininterface.h"
+#include "bundleemitter.h"
+#include "bundlelistener.h"
+#include "bundleheaders.h"
+#include "factory/bundlefactory.h"
+#include "pfcore-lib_export.h"
+#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-class PFCORELIB_EXPORT Bundle : public logger::Loggable,
+class PFCORELIB_EXPORT Bundle : public Loggable,
                                 public Bundle4BuilderInterface,
                                 public Bundle4PluginInterface
 {
@@ -68,35 +66,31 @@ protected: // for Bundle4PluginInterface
    void start(QspBundleContext bundleContext) override;
    void stop() override;
    QString getName() override;
-   core::bundle::Bundle *getImpl() override;
+   Bundle *getImpl() override;
    int getStartLevel() override;
-   core::plugin::BundleInterface::BundleState getState() override;
+   BundleInterface::BundleState getState() override;
 
 protected: // internals methods
    BundleHeaders& getHeaders();
    QspBundleEmitter& getEmitter();
    QspBundleListener& getListener();
-   void setState(core::plugin::BundleInterface::BundleState state) {m_state = state;}
+   void setState(BundleInterface::BundleState state) {m_state = state;}
    virtual BundleFactory* createFactory()=0;
    virtual void _start(QspBundleContext bundleContext)=0;
    virtual void _stop()=0;
 
 private:
-   QObject*          m_qplugin;          // plugin loaded by Qt for services interfaces extracting
-   QString           m_fileName;         // plugin file name
-   QString           m_absolutePath;     // plugin location
-   QJsonObject       m_metadata;         // plugin metadata
-   QspBundleFactory  m_factory;          // Bundle's object factory
-   QspBundleHeaders  m_headers;          // Manifest's headers properties
-   QspBundleEmitter  m_emitter;          // bundle's event emitter
-   QspBundleListener m_listener;         // events listener
-   core::plugin::BundleInterface::BundleState m_state; // Bundle life state
+   QObject*                     m_qplugin;     // plugin loaded by Qt for services interfaces extracting
+   QString                      m_fileName;    // plugin file name
+   QString                      m_absolutePath;// plugin location
+   QJsonObject                  m_metadata;    // plugin metadata
+   QspBundleFactory             m_factory;     // Bundle's object factory
+   QspBundleHeaders             m_headers;     // Manifest's headers properties
+   QspBundleEmitter             m_emitter;     // bundle's event emitter
+   QspBundleListener            m_listener;    // events listener
+   BundleInterface::BundleState m_state;       // Bundle life state
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // PF_BUNDLE
 

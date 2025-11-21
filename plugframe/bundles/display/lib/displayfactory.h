@@ -16,39 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DISPLAYFACTORY_H
 #define DISPLAYFACTORY_H
 
 #include "factory/bundlefactory.h"
 #include "display_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace display
-{
-namespace factory
-{
-
-class DisplayFactory : public core::bundle::BundleFactory
+class DisplayFactory : public plugframe::BundleFactory
 {
 public:
     DisplayFactory();
-    virtual ~DisplayFactory();
+    ~DisplayFactory() override;
 
 protected:
-    virtual service::DisplayService *createDisplayService(core::bundle::BundleImplementation *implementation);
-    core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                               const QString& sName,
-                                                                               const QString& serviceVersion) override;
-
+    virtual DisplayService *createDisplayService(plugframe::BundleImplementation *implementation);
+    plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                           const QString& sName,
+                                                                           const QString& serviceVersion) override;
 };
-
-} //namespace factory
-} //namespace display
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // DISPLAYFACTORY_H

@@ -16,26 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPSERVERCHANNELMANAGER_H
 #define TCPSERVERCHANNELMANAGER_H
 
+#include <QSharedPointer>
 #include "abstract_network_tcp/common/tcpchannelmanager.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace server
-{
-namespace bundle
-{
-
-class TcpServerChannelManager : public TcpChannelManager
+class PFCORELIB_EXPORT TcpServerChannelManager : public TcpChannelManager
 {
     Q_OBJECT
 
@@ -52,11 +42,6 @@ protected:
 private:
     TcpServer& m_bundle;
 };
-
-}//namespace bundle
-}//namespace server
-}//namespace tcp
-}//namespace core
+using QspTcpServerChannelManager = QSharedPointer<TcpServerChannelManager>;
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPSERVERCHANNELMANAGER_H

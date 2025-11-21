@@ -16,37 +16,39 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QFile>
-#include "document.h"
+#include "xmldocument.h"
 
-using namespace elekdom::plugframe::core::xmldom;
-
-Document::Document(BrowserHook &browserHook):
+plugframe::XmlDocument::XmlDocument(XmlBrowserHook &browserHook):
     m_browserHook{browserHook},
     m_fileLoaded{false}
 {
 
 }
 
-Document::~Document()
+plugframe::XmlDocument::~XmlDocument()
 {
 
 }
 
-void Document::load(const QString &xmlFileName)
+void plugframe::XmlDocument::load(const QString &xmlFileName)
 {
     QFile file(xmlFileName);
 
     m_fileLoaded = false;
     if (file.open(QIODevice::ReadOnly))
     {
-        m_fileLoaded = setContent(&file);
+        ParseResult noErr{setContent(&file)};
+
+        if (noErr)
+        {
+            m_fileLoaded = true;
+        }
         file.close();
     }
 }
 
-qint16 Document::confId()
+qint16 plugframe::XmlDocument::confId()
 {
     qint16 ret{-1};
 
@@ -70,7 +72,7 @@ qint16 Document::confId()
     return ret;
 }
 
-bool Document::browse()
+bool plugframe::XmlDocument::browse()
 {
     bool ret{false};
 

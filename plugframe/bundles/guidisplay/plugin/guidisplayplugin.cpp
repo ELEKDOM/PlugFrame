@@ -16,16 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guidisplayplugin.h"
 #include "guidisplay.h"
 #include "guidisplayservice.h"
 #include "guibuilderservice.h"
-
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::core::service;
-using namespace elekdom::plugframe::guidisplay::plugin;
-using namespace elekdom::plugframe::guidisplay::bundle;
 
 GuiDisplayPlugin::GuiDisplayPlugin()
 {
@@ -37,20 +31,20 @@ GuiDisplayPlugin::~GuiDisplayPlugin()
 
 }
 
-Bundle4PluginInterface *GuiDisplayPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *GuiDisplayPlugin::createImplementation()
 {
     return new GuiDisplay;
 }
 
 void GuiDisplayPlugin::bindServicesImplementations()
 {
-    QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
-    serviceImplementationItf = implementation()->getServiceImplementation(display::service::DisplayServiceInterface::serviceName());
-    m_displayServiceImpl = serviceImplementationItf.dynamicCast<service::GuiDisplayService>();
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::DisplayServiceInterface::serviceName());
+    m_displayServiceImpl = serviceImplementationItf.dynamicCast<GuiDisplayService>();
 
-    serviceImplementationItf = implementation()->getServiceImplementation(guidisplay::service::GuiBuilderServiceInterface::serviceName());
-    m_guiBuilderServiceImpl = serviceImplementationItf.dynamicCast<service::GuiBuilderService>();
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::GuiBuilderServiceInterface::serviceName());
+    m_guiBuilderServiceImpl = serviceImplementationItf.dynamicCast<GuiBuilderService>();
 }
 
 void GuiDisplayPlugin::print(const QString &msg)
@@ -73,12 +67,12 @@ void GuiDisplayPlugin::clearStatusMessages()
     m_displayServiceImpl->clearStatusMessages();
 }
 
-void GuiDisplayPlugin::addGuiController(const core::gui::QspGuiPageController &controller)
+void GuiDisplayPlugin::addGuiController(const plugframe::QspGuiPageController &controller)
 {
     m_guiBuilderServiceImpl->addGuiController(controller);
 }
 
-void GuiDisplayPlugin::removeAllPages(const core::gui::QspGuiPageController &controller)
+void GuiDisplayPlugin::removeAllPages(const plugframe::QspGuiPageController &controller)
 {
     m_guiBuilderServiceImpl->removeAllPages(controller);
 }

@@ -16,38 +16,34 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpserverservice.h"
 #include "abstract_network_tcp/server/tcpserver.h"
 #include "service-int/backendcontrolserviceinterface.h"
 
-using namespace elekdom::plugframe::core::tcp::server::service;
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-
-TcpServerService::TcpServerService(plugframe::core::bundle::BundleImplementation *implementation):
-    plugframe::core::service::ServiceImplementation{implementation}
+plugframe::TcpServerService::TcpServerService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {}
 
-TcpServerService::~TcpServerService()
+plugframe::TcpServerService::~TcpServerService()
 {
 
 }
 
-void TcpServerService::startListen()
+void plugframe::TcpServerService::startListen()
 {
-    TcpServer *bundle{dynamic_cast<TcpServer*>(implementation())};
+    plugframe::TcpServer *bundle{dynamic_cast<plugframe::TcpServer*>(implementation())};
 
     bundle->startListen();
 }
 
-void TcpServerService::stopListen()
+void plugframe::TcpServerService::stopListen()
 {
-    TcpServer *bundle{dynamic_cast<TcpServer*>(implementation())};
+    plugframe::TcpServer *bundle{dynamic_cast<plugframe::TcpServer*>(implementation())};
 
     bundle->stopListen();
 }
 
-QString TcpServerService::serviceName()
+QString plugframe::TcpServerService::serviceName()
 {
-    return frontenditf::service::BackendControlServiceInterface::serviceName();
+    return plugframe::BackendControlServiceInterface::serviceName();
 }

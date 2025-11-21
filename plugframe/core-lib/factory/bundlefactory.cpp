@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlefactory.h"
 #include "bundle/bundle.h"
 #include "bundle/bundlebuilder.h"
@@ -28,50 +27,47 @@
 #include "event/bundleevent/bundlestoppedevent.h"
 #include "event/bundleevent/bundlestoppingevent.h"
 
-using namespace elekdom::plugframe::core;
-using namespace elekdom::plugframe::core::bundle;
-
-BundleFactory::BundleFactory()
+plugframe::BundleFactory::BundleFactory()
 {
 }
 
-BundleBuilder *BundleFactory::createBuilder(Bundle& myBundle)
+plugframe::BundleBuilder *plugframe::BundleFactory::createBuilder(Bundle& myBundle)
 {
     return new BundleBuilder{myBundle};
 }
 
-BundleHeaders *BundleFactory::createHeaders(const QString& logChannel)
+plugframe::BundleHeaders *plugframe::BundleFactory::createHeaders(const QString& logChannel)
 {
     return new BundleHeaders{logChannel};
 }
 
-BundleEmitter *BundleFactory::createBundleEmitter(Bundle& myBundle)
+plugframe::BundleEmitter *plugframe::BundleFactory::createBundleEmitter(plugframe::Bundle& myBundle)
 {
-    return new BundleEmitter{myBundle};
+    return new plugframe::BundleEmitter{myBundle};
 }
 
-BundleListener *BundleFactory::createBundleListener(Bundle& myBundle)
+plugframe::BundleListener *plugframe::BundleFactory::createBundleListener(plugframe::Bundle& myBundle)
 {
-    return new BundleListener{myBundle};
+    return new plugframe::BundleListener{myBundle};
 }
 
-event::BundleStartingEvent *BundleFactory::createBundleStartingEvent(core::plugin::BundleInterface *bundleItf)
+plugframe::BundleStartingEvent *plugframe::BundleFactory::createBundleStartingEvent(plugframe::BundleInterface *bundleItf)
 {
-    return new event::BundleStartingEvent{bundleItf};
+    return new plugframe::BundleStartingEvent{bundleItf};
 }
 
-event::BundleStartedEvent *BundleFactory::createBundleStartedEvent(core::plugin::BundleInterface *bundleItf)
+plugframe::BundleStartedEvent *plugframe::BundleFactory::createBundleStartedEvent(plugframe::BundleInterface *bundleItf)
 {
-    return new event::BundleStartedEvent{bundleItf};
+    return new plugframe::BundleStartedEvent{bundleItf};
 }
 
-event::BundleStoppingEvent *BundleFactory::createBundleStoppingEvent(core::plugin::BundleInterface *bundleItf)
+plugframe::BundleStoppingEvent *plugframe::BundleFactory::createBundleStoppingEvent(plugframe::BundleInterface *bundleItf)
 {
-    return new event::BundleStoppingEvent{bundleItf};
+    return new plugframe::BundleStoppingEvent{bundleItf};
 }
 
-event::BundleStoppedEvent *BundleFactory::createBundleStoppedEvent(core::plugin::BundleInterface *bundleItf)
+plugframe::BundleStoppedEvent *plugframe::BundleFactory::createBundleStoppedEvent(plugframe::BundleInterface *bundleItf)
 {
-    return new event::BundleStoppedEvent{bundleItf};
+    return new plugframe::BundleStoppedEvent{bundleItf};
 }
 

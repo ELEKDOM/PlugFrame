@@ -16,23 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "worker.h"
 #include "workerargs.h"
 #include "workerthread.h"
 
-using namespace elekdom::plugframe::core::worker;
-
-Worker::Worker(QObject *parent) : WorkerSignal(parent)
+plugframe::Worker::Worker(QObject *parent) :
+    plugframe::WorkerSignal(parent)
 {
 }
 
-Worker::~Worker()
+plugframe::Worker::~Worker()
 {
 
 }
 
-void Worker::startWork(QspWorkerArgs args)
+void plugframe::Worker::startWork(QspWorkerArgs args)
 {   
     // Creates and starts the background worker thread
     m_wThread.reset(createWorkerThread(args));
@@ -44,7 +42,7 @@ void Worker::startWork(QspWorkerArgs args)
     m_wThread->start();
 }
 
-void Worker::onThreadFinished()
+void plugframe::Worker::onThreadFinished()
 {
     m_wThread.reset();
 }

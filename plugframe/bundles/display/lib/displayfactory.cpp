@@ -16,16 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "displayfactory.h"
-#include "bundle/bundle.h"
 #include "displayservice.h"
-#include "display.h"
 #include "service-int/displayserviceinterface.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::display;
-using namespace elekdom::plugframe::display::factory;
 
 DisplayFactory::DisplayFactory()
 {
@@ -37,20 +30,20 @@ DisplayFactory::~DisplayFactory()
 
 }
 
-service::DisplayService *DisplayFactory::createDisplayService(core::bundle::BundleImplementation *implementation)
+DisplayService *DisplayFactory::createDisplayService(plugframe::BundleImplementation *implementation)
 {
-    return new service::DisplayService{implementation};
+    return new DisplayService{implementation};
 }
 
-core::service::ServiceImplementationInterface *DisplayFactory::createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                                           const QString &sName,
-                                                                                           const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *DisplayFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                       const QString &sName,
+                                                                                       const QString &serviceVersion)
 {
-    core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (service::DisplayServiceInterface::serviceName() == sName)
+    if (plugframe::DisplayServiceInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createDisplayService(implementation);
         }

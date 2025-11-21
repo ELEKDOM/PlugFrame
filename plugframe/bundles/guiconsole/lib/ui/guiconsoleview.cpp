@@ -16,11 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guiconsoleview.h"
 #include "ui_consoleview.h"
-
-using namespace elekdom::plugframe::guiconsole;
 
 GuiConsoleView::GuiConsoleView(QWidget *parent):
     GuiPageView{"",parent},

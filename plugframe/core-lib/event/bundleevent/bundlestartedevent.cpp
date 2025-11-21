@@ -16,20 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlestartedevent.h"
 
-using namespace elekdom::plugframe::core::event;
+const QString plugframe::BundleStartedEvent::s_typeId {"PluFrame.Bundle.Started"};
 
-const QString BundleStartedEvent::s_typeId {"PluFrame.Bundle.Started"};
-
-BundleStartedEvent::BundleStartedEvent(core::plugin::BundleInterface *bundleItf):
+plugframe::BundleStartedEvent::BundleStartedEvent(plugframe::BundleInterface *bundleItf):
     BundleEvent{BundleStartedEvent::s_typeId, bundleItf}
 {
 
 }
 
-BundleStartedEvent::~BundleStartedEvent()
+plugframe::BundleStartedEvent::~BundleStartedEvent()
 {
 
 }

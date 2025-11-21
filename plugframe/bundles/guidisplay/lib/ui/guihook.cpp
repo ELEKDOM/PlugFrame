@@ -16,22 +16,18 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QMenuBar>
 #include <QMessageBox>
 #include "guihook.h"
 #include "guidisplay.h"
 #include "ui/gui.h"
-#include "gui/guipagecontroller.h"
 
-using namespace elekdom::plugframe::guidisplay;
-
-GuiHook::GuiHook(Gui* parent,bundle::GuiDisplay& bundle):
+GuiHook::GuiHook(Gui* parent,GuiDisplay& bundle):
     QObject{parent},
     m_mainWindow{parent},
     m_bundle{bundle}
 {
-    qRegisterMetaType<QspGuiPageController>("QspGuiPageController");
+    qRegisterMetaType<plugframe::QspGuiPageController>("QspGuiPageController");
 }
 
 GuiHook::~GuiHook()
@@ -49,8 +45,8 @@ void GuiHook::initGui()
     connect(this,SIGNAL(sigClearStatusMessages()),m_mainWindow,SLOT(onClearStatusMessages()),Qt::QueuedConnection);
 
     // GuiBuilder's services
-    connect(this,SIGNAL(sigAddGuiController(QspGuiPageController)),m_mainWindow,SLOT(onAddGuiController(QspGuiPageController)));
-    connect(this,SIGNAL(sigRemoveAllPages(QspGuiPageController)),m_mainWindow,SLOT(onRemoveAllPages(QspGuiPageController)));
+    connect(this,SIGNAL(sigAddGuiController(plugframe::QspGuiPageController)),m_mainWindow,SLOT(onAddGuiController(plugframe::QspGuiPageController)));
+    connect(this,SIGNAL(sigRemoveAllPages(plugframe::QspGuiPageController)),m_mainWindow,SLOT(onRemoveAllPages(plugframe::QspGuiPageController)));
     connect(this,SIGNAL(sigSetWindowTitle(QString)),m_mainWindow,SLOT(onSetMainWindowTitle(QString)));
 
     // To Manage Gui CLose Event
@@ -77,12 +73,12 @@ void GuiHook::clearStatusMessages()
     emit sigClearStatusMessages();
 }
 
-void GuiHook::addGuiController(const core::gui::QspGuiPageController &controller)
+void GuiHook::addGuiController(const plugframe::QspGuiPageController &controller)
 {
     emit sigAddGuiController(controller);
 }
 
-void GuiHook::removeAllPages(QspGuiPageController controller)
+void GuiHook::removeAllPages(plugframe::QspGuiPageController controller)
 {
     emit sigRemoveAllPages(controller);
 }
@@ -104,5 +100,6 @@ void GuiHook::onGuiCloseEvt()
     if (ret == QMessageBox::Yes)
     {
         m_bundle.closeApp();
+        m_mainWindow->close();
     }
 }

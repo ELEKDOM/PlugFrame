@@ -16,39 +16,30 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRAMEWORKINTERFACE_H
 #define FRAMEWORKINTERFACE_H
 
+#include <QObject>
+#include "launcher/bundlesstore.h"
+#include "launcher/launchingproperties.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace framework
-{
-namespace plugin
-{
-
 class  FrameworkInterface
 {
 public:
     virtual ~FrameworkInterface() {}
 
 public:
-    virtual void initFwk(core::launcher::QspBundlesStore bundlesStore,
-                         core::launcher::QspLaunchingProperties launchingProperties) = 0;
-    virtual plugframe::core::plugin::BundleInterface *getBundleInterface() = 0;
+    virtual void initFwk(QspBundlesStore bundlesStore,
+                         QspLaunchingProperties launchingProperties) = 0;
+    virtual BundleInterface *getBundleInterface() = 0;
 };
-
-} //namespace plugin
-} //namespace framework
 } //namespace plugframe
-} //namespace elekdom
 
-#define PfFramework_iid "elekdom.plugframe.framework.plugin.FrameworkInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::framework::plugin::FrameworkInterface, PfFramework_iid)
+#define PfFramework_iid "plugframe.FrameworkInterface"
+Q_DECLARE_INTERFACE(plugframe::FrameworkInterface, PfFramework_iid)
 
 #endif // FRAMEWORKINTERFACE_H
 

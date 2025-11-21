@@ -16,34 +16,31 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpserverplugin.h"
 #include "bundle/bundle4plugininterface.h"
 #include "abstract_network_tcp/server/service/tcpserverservice.h"
 
-using namespace elekdom::plugframe::core::tcp::server::plugin;
+plugframe::TcpServerPlugin::TcpServerPlugin() {}
 
-TcpServerPlugin::TcpServerPlugin() {}
-
-TcpServerPlugin::~TcpServerPlugin()
+plugframe::TcpServerPlugin::~TcpServerPlugin()
 {
 
 }
 
-void TcpServerPlugin::bindServicesImplementations()
+void plugframe::TcpServerPlugin::bindServicesImplementations()
 {
-    plugframe::core::service::QspServiceImplementationInterface serviceImplementationItf;
+    plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
-    serviceImplementationItf = implementation()->getServiceImplementation(BackendControlServiceInterface::serviceName());
-    m_serverServiceImpl = serviceImplementationItf.dynamicCast<server::service::TcpServerService>();
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::BackendControlServiceInterface::serviceName());
+    m_serverServiceImpl = serviceImplementationItf.dynamicCast<plugframe::TcpServerService>();
 }
 
-void TcpServerPlugin::startListen()
+void plugframe::TcpServerPlugin::startListen()
 {
     m_serverServiceImpl->startListen();
 }
 
-void TcpServerPlugin::stopListen()
+void plugframe::TcpServerPlugin::stopListen()
 {
     m_serverServiceImpl->stopListen();
 }

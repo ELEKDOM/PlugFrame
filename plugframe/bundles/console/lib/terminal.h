@@ -16,57 +16,44 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
 #include <QTextStream>
 #include "worker/workerthread.h"
+#include "worker/workerargs.h"
+#include "cmd/cmdprocessor.h"
 #include "console_forward.h"
 
-namespace elekdom
+class Terminal : public plugframe::WorkerThread
 {
-namespace plugframe
-{
-namespace console
-{
-namespace bundle
-{
-
-class Terminal : public core::worker::WorkerThread
-{
-private:
-    bool                                 m_stopFlag;
-    QSharedPointer<cmd::CmdProcessor> m_firstProc;
-    QString                              m_prompt;
-    QTextStream                          m_stream;
-    QString                              m_line;
-    console::bundle::Console&         m_console;
-
 public:
     Terminal(QString& applicationName,
-             core::worker::WorkerSignal *wSignal,
-             const QSharedPointer<core::worker::WorkerArgs>& args,
-             console::bundle::Console& console);
+             plugframe::WorkerSignal *wSignal,
+             const plugframe::QspWorkerArgs& args,
+             Console& console);
     ~Terminal() override;
 public:
-    void addCmdProcessor(QSharedPointer<cmd::CmdProcessor> cmdProcessor);
+    void addCmdProcessor(QspCmdProcessor cmdProcessor);
     void stopFlag();
 
 protected:
-    bool execWork(QSharedPointer<core::worker::WorkerArgs> args) override;
+    bool execWork(plugframe::QspWorkerArgs args) override;
 
 private:
     void printPrompt();
     void waitForInput();
     void parseAndExec();
+
+private:
+    bool            m_stopFlag;
+    QspCmdProcessor m_firstProc;
+    QString         m_prompt;
+    QTextStream     m_stream;
+    QString         m_line;
+    Console&        m_console;
 };
 
 using CmdArgs = QStringList;
-
-}//namespace bundle
-}//namespace console
-}//namespace plugframe
-}//namespace elekdom
 
 #endif // TERMINAL_H

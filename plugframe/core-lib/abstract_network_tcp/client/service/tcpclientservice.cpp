@@ -16,49 +16,45 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientservice.h"
 #include "abstract_network_tcp/client/tcpclient.h"
 #include "service-int/frontendcontrolserviceinterface.h"
 
-using namespace elekdom::plugframe::core::tcp::client::service;
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-TcpClientService::TcpClientService(core::bundle::BundleImplementation *implementation):
-    plugframe::core::service::ServiceImplementation{implementation}
+plugframe::TcpClientService::TcpClientService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
 
-TcpClientService::~TcpClientService()
+plugframe::TcpClientService::~TcpClientService()
 {
 
 }
 
-void TcpClientService::connectToHost(frontend::FrontendClientSide *clientSide,
-                                     QString serverIpv4,
-                                     quint16 serverPort)
+void plugframe::TcpClientService::connectToHost(plugframe::FrontendClientSide *clientSide,
+                                                QString serverIpv4,
+                                                quint16 serverPort)
 {
-    TcpClient *bundle{dynamic_cast<TcpClient*>(implementation())};
+    plugframe::TcpClient *bundle{dynamic_cast<plugframe::TcpClient*>(implementation())};
 
     bundle->connectToHost(clientSide,serverIpv4,serverPort);
 }
 
-void TcpClientService::closeConnection()
+void plugframe::TcpClientService::closeConnection()
 {
-    TcpClient *bundle{dynamic_cast<TcpClient*>(implementation())};
+    plugframe::TcpClient *bundle{dynamic_cast<plugframe::TcpClient*>(implementation())};
 
     bundle->closeConnection();
 }
 
-void TcpClientService::sendMessageToServer(TcpChannelMessage &msg)
+void plugframe::TcpClientService::sendMessageToServer(plugframe::TcpChannelMessage &msg)
 {
-    TcpClient *bundle{dynamic_cast<TcpClient*>(implementation())};
+    plugframe::TcpClient *bundle{dynamic_cast<plugframe::TcpClient*>(implementation())};
 
     bundle->sendMessageToServer(msg);
 }
 
-QString TcpClientService::serviceName()
+QString plugframe::TcpClientService::serviceName()
 {
-    return frontend::service::FrontendControlServiceInterface::serviceName();
+    return plugframe::FrontendControlServiceInterface::serviceName();
 }

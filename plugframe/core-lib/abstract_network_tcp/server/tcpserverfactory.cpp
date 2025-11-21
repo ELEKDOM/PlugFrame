@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundle/bundle.h"
 #include "bundle/bundleimplementation.h"
 #include "tcpserverfactory.h"
@@ -26,47 +25,44 @@
 #include "abstract_network_tcp/server/service/tcpserverservice.h"
 #include "abstract_network_tcp/common/tcpchannel.h"
 
-using namespace elekdom::plugframe::core::tcp::server::factory;
-using namespace elekdom::plugframe::core::tcp::server::service;
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-using namespace elekdom::plugframe::core;
+plugframe::TcpServerFactory::TcpServerFactory() {}
 
-TcpServerFactory::TcpServerFactory() {}
-
-TcpServerFactory::~TcpServerFactory()
+plugframe::TcpServerFactory::~TcpServerFactory()
 {
 
 }
 
-TcpServerConnManager *TcpServerFactory::createTcpServerConnManager(bundle::TcpServer &myBundle)
+plugframe::TcpServerConnManager *plugframe::TcpServerFactory::createTcpServerConnManager(plugframe::TcpServer &myBundle)
 {
     return new TcpServerConnManager{myBundle};
 }
 
-tcp::TcpChannel *TcpServerFactory::createChannel(QTcpSocket *socket,
-                                                 TcpChannelDeserializer *deserializer,
-                                                 QObject *parent)
+plugframe::TcpChannel *plugframe::TcpServerFactory::createChannel(QTcpSocket *socket,
+                                                                  plugframe::TcpChannelDeserializer *deserializer,
+                                                                  QObject *parent)
 {
-    return new tcp::TcpChannel{socket,deserializer,parent};
+    return new plugframe::TcpChannel{socket,deserializer,parent};
 }
 
-bundle::BundleBuilder *TcpServerFactory::createBuilder(plugframe::core::bundle::Bundle &myBundle)
+plugframe::BundleBuilder *plugframe::TcpServerFactory::createBuilder(plugframe::Bundle &myBundle)
 {
-    return new builder::TcpServerBuilder{myBundle};
+    return new plugframe::TcpServerBuilder{myBundle};
 }
 
-TcpServerService *TcpServerFactory::createBackendControlService(plugframe::core::bundle::BundleImplementation *implementation)
+plugframe::TcpServerService *plugframe::TcpServerFactory::createBackendControlService(plugframe::BundleImplementation *implementation)
 {
-    return new TcpServerService{implementation};
+    return new plugframe::TcpServerService{implementation};
 }
 
-service::ServiceImplementationInterface *TcpServerFactory::createServiceImplementation(plugframe::core::bundle::BundleImplementation *implementation, const QString &sName, const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *plugframe::TcpServerFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                                    const QString &sName,
+                                                                                                    const QString &serviceVersion)
 {
-    plugframe::core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (frontenditf::service::BackendControlServiceInterface::serviceName() == sName)
+    if (plugframe::BackendControlServiceInterface::serviceName() == sName)
     {
-        if (plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createBackendControlService(implementation);
         }

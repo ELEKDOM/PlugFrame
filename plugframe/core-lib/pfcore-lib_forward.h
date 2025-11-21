@@ -16,171 +16,43 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef PFCORELIB_FORWARD_H
 #define PFCORELIB_FORWARD_H
 
-#include <QSharedPointer>
-#include <QList>
-
-namespace elekdom
-{
 namespace plugframe
 {
-    namespace framework
-    {
-        namespace plugin
-        {
-            class  FrameworkInterface;
-        }
-    }
-    namespace core
-    {
-        namespace event
-        {
-            class Event;
-            class StartBundleEvent;
-            class BundleStartingEvent;
-            class BundleStartedEvent;
-            class BundleStoppingEvent;
-            class BundleStoppedEvent;
-            class BundlesStartingEvent;
-            class BundlesStoppingEvent;
-            class StopBundleEvent;
-            class FrameworkStartedEvent;
-
-            using QspEvent = QSharedPointer<Event>;
-        }
-        namespace bundle
-        {
-            class Bundle;
-            class BundleImplementation;
-            class BundleContext;
-            class BundleFactory;
-            class BundleBuilder;
-            class Bundle4BuilderInterface;
-            class Bundle4PluginInterface;
-            class BundleHeaders;
-            class BundleEmitter;
-            class BundleListener;
-
-            using QspBundle = QSharedPointer<Bundle>;
-            using QspBundle4PluginInterface = QSharedPointer<Bundle4PluginInterface>;
-            using QspBundleListener = QSharedPointer<BundleListener>;
-            using QspBundleEmitter = QSharedPointer<BundleEmitter>;
-            using QspBundleContext = QSharedPointer<BundleContext>;
-            using QspBundleHeaders = QSharedPointer<BundleHeaders>;
-            using QspBundleFactory = QSharedPointer<BundleFactory>;
-        }
-        namespace service
-        {
-            class ServiceImplementationInterface;
-
-            using QspServiceImplementationInterface = QSharedPointer<ServiceImplementationInterface>;
-        }
-        namespace launcher
-        {
-            class LaunchingProperties;
-            class Location;
-            class BundlesStore;
-            class CoreFactory;
-
-            using QspLaunchingProperties = QSharedPointer<LaunchingProperties>;
-            using QspLocation = QSharedPointer<Location>;
-            using QspBundlesStore = QSharedPointer<BundlesStore>;
-            using QspCoreFactory = QSharedPointer<CoreFactory>;
-        }
-        namespace plugin
-        {
-            class BundleInterface;
-            class ServiceInterface;
-
-            using BundleList = QList<core::plugin::BundleInterface*>;
-            using BundleList_Iterator = BundleList::iterator;
-        }
-        namespace worker
-        {
-            class Worker;
-            class WorkerOuts;
-            class WorkerThread;
-            class WorkerArgs;
-            class WorkerSignal;
-            class WorkerWatcher;
-
-            using QspWorker = QSharedPointer<Worker>;
-            using QspWorkerOuts = QSharedPointer<WorkerOuts>;
-            using QspWorkerArgs = QSharedPointer<WorkerArgs>;
-            using QspWorkerWatcher = QSharedPointer<WorkerWatcher>;
-            using QspWorkerThread = QSharedPointer<WorkerThread>;
-            using QspWorkerSignal = QSharedPointer<WorkerSignal>;
-        }
-        namespace scheduler
-        {
-            class SchedulerElement;
-            class SchedulerElementHook;
-            class Scheduler;
-            class SchedulerBuilder;
-            class DailyScheduler;
-            class ScheduledEvent;
-            class WeeklyScheduler;
-            class DigitalSuite;
-
-            using QspScheduler = QSharedPointer<Scheduler>;
-            using QspSchedulerBuilder = QSharedPointer<SchedulerBuilder>;
-            using QspDailyScheduler = QSharedPointer<DailyScheduler>;
-            using QspScheduledEvent = QSharedPointer<ScheduledEvent>;
-            using QspWeeklyScheduler = QSharedPointer<WeeklyScheduler>;
-        }
-        namespace gui
-        {
-            class GuiPageController;
-            class GuiPageView;
-
-            using QspGuiPageController = QSharedPointer<GuiPageController>;
-            using GuiPageViewList = QList<GuiPageView*>;
-        }
-        namespace tcp
-        {
-            class TcpChannelDeserializer;
-            class TcpChannelMessage;
-            class TcpChannel;
-
-            namespace server
-            {
-                namespace bundle
-                {
-                    class TcpServer;
-                    class TcpServerConnManager;
-                    class TcpServerChannelManager;
-
-                    using QspTcpServerChannelManager = QSharedPointer<TcpServerChannelManager>;
-                }
-                namespace service
-                {
-                    class TcpServerService;
-
-                    using QspTcpServerService = QSharedPointer<TcpServerService>;
-                }
-            }
-            namespace client
-            {
-                namespace bundle
-                {
-                    class TcpClient;
-                    class TcpClientSlots;
-                    class TcpClientChannelManager;
-                }
-                namespace service
-                {
-                    class TcpClientService;
-
-                    using QspTcpClientService = QSharedPointer<TcpClientService>;
-                }
-            }
-        }
-
-    } //namespace core
+    class FrameworkInterface;
+    //
+    class Bundle;
+    class BundleImplementation;
+    class BundleFactory;
+    class BundleBuilder;
+    class Bundle4BuilderInterface;
+    class BundleHeaders;
+    class BundleEmitter;
+    class BundleListener;
+    //
+    class ServiceImplementationInterface;
+    //
+    class GuiPageController;
+    //
+    class WorkerOuts;
+    class WorkerSignal;
+    class WorkerWatcher;
+    //
+    class Scheduler;
+    //
+    class TcpChannelDeserializer;
+    class TcpChannelMessage;
+    class TcpChannel;
+    class TcpServer;
+    class TcpServerConnManager;
+    class TcpServerChannelManager;
+    class TcpServerService;
+    class TcpClient;
+    class TcpClientSlots;
+    class TcpClientChannelManager;
+    class TcpClientService;
 } //namespace plugframe
-} //namespace elekdom
 
 #endif // PFCORELIB_FORWARD_H

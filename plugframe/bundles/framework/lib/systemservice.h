@@ -16,43 +16,29 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SYSTEMSERVICE_H
 #define SYSTEMSERVICE_H
 
+#include <QSharedPointer>
 #include "frameworkserviceimplementation.h"
-#include "pfcore-lib_forward.h"
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace framework
-{
-namespace service
-{
+#include "plugin/bundleinterface.h"
 
 class SystemService : public FrameworkServiceImplementation
 {
 public:
-    SystemService(core::bundle::BundleImplementation *implementation);
+    SystemService(plugframe::BundleImplementation *implementation);
     ~SystemService() override;
 
 public:
     QString applicationName();
-    bool registerListener(core::bundle::BundleListener* observer);
-    bool unregisterListener(core::bundle::BundleListener* observer);
-    core::plugin::BundleList bundleList();
+    bool registerListener(plugframe::BundleListener* observer);
+    bool unregisterListener(plugframe::BundleListener* observer);
+    plugframe::BundleList bundleList();
     int runningLevel();
     void quit();
 
 protected:
     QString serviceName() override;
 };
-
-} //namespace service
-} //namespace framework
-} //namespace plugframe
-} //namespace elekdom
-
+using QSpSystemService = QSharedPointer<SystemService>;
 #endif // SYSTEMSERVICE_H

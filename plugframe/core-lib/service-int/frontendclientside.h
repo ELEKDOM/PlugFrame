@@ -16,19 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef FRONTENDCLIENTSIDE_H
 #define FRONTENDCLIENTSIDE_H
 
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace frontend
-{
-
 class FrontendClientSide
 {
 public:
@@ -37,11 +31,7 @@ public:
 public:
     virtual void connectedToServer() = 0;
     virtual void disconnectedFromServer() = 0;
-    virtual void messageFromServer(core::tcp::TcpChannelMessage *msg) = 0;
+    virtual void messageFromServer(TcpChannelMessage *msg) = 0;
 };
-
-}//namespace frontend
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // FRONTENDCLIENTSIDE_H

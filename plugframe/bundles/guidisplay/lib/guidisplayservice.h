@@ -16,25 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIDISPLAYSERVICE_H
 #define GUIDISPLAYSERVICE_H
 
+#include <QSharedPointer>
 #include "service/serviceimplementation.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-namespace service
-{
-
-class GuiDisplayService : public core::service::ServiceImplementation
+class GuiDisplayService : public plugframe::ServiceImplementation
 {
 public:
-    GuiDisplayService(core::bundle::BundleImplementation *implementation);
+    GuiDisplayService(plugframe::BundleImplementation *implementation);
     ~GuiDisplayService()override;
 
 public:
@@ -45,10 +36,5 @@ public:
 protected:
     QString serviceName() override;
 };
-
-} //namespace service
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
+using QspGuiDisplayService = QSharedPointer<GuiDisplayService>;
 #endif // GUIDISPLAYSERVICE_H

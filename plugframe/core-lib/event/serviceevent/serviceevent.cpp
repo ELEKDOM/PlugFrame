@@ -16,18 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "serviceevent.h"
 
-using namespace elekdom::plugframe::core::event;
-
-ServiceEvent::ServiceEvent(const QString& typeId) :
+plugframe::ServiceEvent::ServiceEvent(const QString& typeId) :
     Event{typeId}
 {
 
 }
 
-ServiceEvent::~ServiceEvent()
+plugframe::ServiceEvent::~ServiceEvent()
 {
 
 }

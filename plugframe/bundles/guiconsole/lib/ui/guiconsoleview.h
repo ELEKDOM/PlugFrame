@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLEVIEW_H
 #define GUICONSOLEVIEW_H
 
@@ -28,16 +27,7 @@ class consoleView;
 }
 QT_END_NAMESPACE
 
-using namespace elekdom::plugframe::core::gui;
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guiconsole
-{
-
-class GuiConsoleView : public GuiPageView
+class GuiConsoleView : public plugframe::GuiPageView
 {
     Q_OBJECT
 
@@ -59,9 +49,4 @@ private slots:
 private:
     Ui::consoleView *ui;
 };
-
-}//namespace guiconsole
-}//namespace plugframe
-}//namespace elekdom
-
 #endif // GUICONSOLEVIEW_H

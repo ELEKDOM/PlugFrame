@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QAction>
 #include <QCloseEvent>
 #include "gui.h"
@@ -25,9 +24,6 @@
 #include "guilogsview.h"
 #include "gui/guipagecontroller.h"
 #include "gui/guipageview.h"
-
-using namespace elekdom::plugframe::guidisplay;
-using namespace elekdom::plugframe::core::gui;
 
 Gui::Gui(QWidget *parent):
     QMainWindow{parent},
@@ -71,7 +67,7 @@ void Gui::onClearStatusMessages()
     statusBar()->clearMessage();
 }
 
-void Gui::onAddGuiController(QspGuiPageController controller)
+void Gui::onAddGuiController(plugframe::QspGuiPageController controller)
 {
     // Add a controller to manage
     m_ctrlSet.insert(controller->ctrlName(),controller);
@@ -82,8 +78,8 @@ void Gui::onAddGuiController(QspGuiPageController controller)
 
     // Connect signals/slots for mainwindow/ctrl link
     connect(controller.get(),SIGNAL(showPage(int)),SLOT(onShowPage(int)));
-    connect(controller.get(),SIGNAL(updatePageIdx(GuiPageController*)),SLOT(onUpdatePageIdx(GuiPageController*)));
-    connect(controller.get(),SIGNAL(curCtrl(GuiPageController*)),SLOT(onCurrentCtrl(GuiPageController*)));
+    connect(controller.get(),SIGNAL(updatePageIdx(plugframe::GuiPageController*)),SLOT(onUpdatePageIdx(plugframe::GuiPageController*)));
+    connect(controller.get(),SIGNAL(curCtrl(plugframe::GuiPageController*)),SLOT(onCurrentCtrl(plugframe::GuiPageController*)));
     connect(controller.get(),SIGNAL(statusMessage(QString)),SLOT(onStatusMessage(QString)));
     connect(controller.get(),SIGNAL(clearStatusMessage()),SLOT(onClearStatusMessages()));
 }
@@ -93,13 +89,13 @@ void Gui::onAddGuiController(QspGuiPageController controller)
 /// Removes all controller's pages from stackedwidget and toolbar
 /// \param controller
 ///
-void Gui::onRemoveAllPages(QspGuiPageController controller)
+void Gui::onRemoveAllPages(plugframe::QspGuiPageController controller)
 {
-    const GuiPageViewList& vl{controller->viewList()};
+    const plugframe::GuiPageViewList& vl{controller->viewList()};
 
-    for (int i = 0; i < vl.size(); i++)
+    for (qsizetype i = 0; i < vl.size(); i++)
     {
-        GuiPageView *pv{vl.at(i)};
+        plugframe::GuiPageView *pv{vl.at(i)};
         int idx{pv->stackedPageIndex()};
 
         //remove from central widget
@@ -107,7 +103,7 @@ void Gui::onRemoveAllPages(QspGuiPageController controller)
 
         //remove selector from toolbar
         GuiPageSelector *selec{nullptr};
-        for (int j = 0; j < m_actionSet.size() && !selec; j++)
+        for (qsizetype j = 0; j < m_actionSet.size() && !selec; j++)
         {
             if (m_actionSet.at(j)->idx() == idx)
             {
@@ -132,13 +128,13 @@ void Gui::onShowPage(int idx)
 ///        adds unindexed pages to the central widget
 /// \param controller
 ///
-void Gui::onUpdatePageIdx(GuiPageController *controller)
+void Gui::onUpdatePageIdx(plugframe::GuiPageController *controller)
 {
-    const GuiPageViewList& vl{controller->viewList()};
+    const plugframe::GuiPageViewList& vl{controller->viewList()};
 
-    for (int i = 0; i < vl.size(); i++)
+    for (qsizetype i = 0; i < vl.size(); i++)
     {
-        GuiPageView *pv{vl.at(i)};
+        plugframe::GuiPageView *pv{vl.at(i)};
 
         if (pv->stackedPageIndex() == -1)
         {
@@ -205,7 +201,7 @@ void Gui::onPageSelected(int idx)
     showPage(idx);
 }
 
-void Gui::onCurrentCtrl(GuiPageController *controller)
+void Gui::onCurrentCtrl(plugframe::GuiPageController *controller)
 {
     if(m_currentCtrl)
     {
@@ -228,7 +224,7 @@ QMenu *Gui::menu(const QString &menuName)
     return m_ctrlSelectionMenu.value(menuName);
 }
 
-void Gui::checkForMenu(QspGuiPageController controller)
+void Gui::checkForMenu(plugframe::QspGuiPageController controller)
 {
     const QStringList& ctrlMenusNames{controller->menusNames()};
     const QString& mainMenuName{ctrlMenusNames[0]}, ctrlMenuName{ctrlMenusNames[1]};
@@ -255,13 +251,13 @@ void Gui::checkForMenu(QspGuiPageController controller)
     }
 }
 
-void Gui::addViews(QspGuiPageController controller)
+void Gui::addViews(plugframe::QspGuiPageController controller)
 {
-    const GuiPageViewList& vl{controller->viewList()};
+    const plugframe::GuiPageViewList& vl{controller->viewList()};
 
-    for (int i = 0; i < vl.size(); i++)
+    for (qsizetype i = 0; i < vl.size(); i++)
     {
-        GuiPageView *pv{vl.at(i)};
+        plugframe::GuiPageView *pv{vl.at(i)};
 
         // New widget into the stacked container
         int idx = ui->stackedWidget->addWidget(pv);
@@ -309,7 +305,7 @@ void Gui::updateToolBar(int idx)
 {
     if (idx >= 0)
     {
-        for (int i = 0; i < m_actionSet.size(); ++i)
+        for (qsizetype i = 0; i < m_actionSet.size(); ++i)
         {
             bool flag{true};
             GuiPageSelector *curSelector{m_actionSet.at(i)};

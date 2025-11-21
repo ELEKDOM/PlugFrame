@@ -16,12 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "launcher/consoleapplication.h"
 
 int main(int argc, char *argv[])
 {
-    elekdom::plugframe::core::launcher::ConsoleApplication a;
+    plugframe::ConsoleApplication a;
 
     return a.exec(argc, argv);
 }

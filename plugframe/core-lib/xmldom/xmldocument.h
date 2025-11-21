@@ -16,31 +16,24 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef XMLDOCUMENT_H
+#define XMLDOCUMENT_H
 
 #include <QDomDocument>
 #include <QString>
-#include "browserhook.h"
+#include "xmlbrowserhook.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace xmldom
-{
-
-class Document : public QDomDocument
+class PFCORELIB_EXPORT XmlDocument : public QDomDocument
 {
 protected:
     static QString confidAttr() {return QStringLiteral("conf-id");}
 
 public:
-    Document(BrowserHook& browserHook);
-    virtual ~Document();
+    XmlDocument(XmlBrowserHook& browserHook);
+    virtual ~XmlDocument();
 
 public:
     void load(const QString& xmlFileName);
@@ -49,18 +42,14 @@ public:
     bool browse();
 
 protected:
-    BrowserHook& browserHook() {return m_browserHook;}
+    XmlBrowserHook& browserHook() {return m_browserHook;}
     virtual QString rootNodeName() = 0;
     virtual bool _browse() = 0;
 
 private:
-    BrowserHook& m_browserHook;
-    bool         m_fileLoaded;
+    XmlBrowserHook& m_browserHook;
+    bool            m_fileLoaded;
 };
-
-}//namespace xmldom
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 
-#endif // DOCUMENT_H
+#endif // XMLDOCUMENT_H

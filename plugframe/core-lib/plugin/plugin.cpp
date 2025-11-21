@@ -16,50 +16,46 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "plugin/plugin.h"
-#include "bundle/bundlecontext.h"
 #include "bundle/bundle4plugininterface.h"
 
-using namespace elekdom::plugframe::core::plugin;
-
-Plugin::Plugin():
+plugframe::Plugin::Plugin():
     m_qplugin{nullptr}
 {
 
 }
 
-Plugin::~Plugin()
+plugframe::Plugin::~Plugin()
 {
 
 }
 
-void Plugin::setFileName(const QString &fileName)
+void plugframe::Plugin::setFileName(const QString &fileName)
 {
     m_fileName = fileName;
 }
 
-void Plugin::setAbsolutePath(const QString &absolutePath)
+void plugframe::Plugin::setAbsolutePath(const QString &absolutePath)
 {
     m_absolutePath = absolutePath;
 }
 
-void Plugin::setMetaData(const QJsonObject &metaData)
+void plugframe::Plugin::setMetaData(const QJsonObject &metaData)
 {
     m_metadata = metaData;
 }
 
-void Plugin::setQplugin(QObject *qplugin)
+void plugframe::Plugin::setQplugin(QObject *qplugin)
 {
     m_qplugin = qplugin;
 }
 
-void Plugin::init()
+void plugframe::Plugin::init()
 {
     _init();
 }
 
-void Plugin::start(bundle::QspBundleContext bundleContext)
+void plugframe::Plugin::start(plugframe::QspBundleContext bundleContext)
 {
     if (!m_implementation.isNull())
     {
@@ -67,7 +63,7 @@ void Plugin::start(bundle::QspBundleContext bundleContext)
     }
 }
 
-void Plugin::stop()
+void plugframe::Plugin::stop()
 {
     if (!m_implementation.isNull())
     {
@@ -75,7 +71,7 @@ void Plugin::stop()
     }
 }
 
-QString Plugin::getName()
+QString plugframe::Plugin::getName()
 {
     QString ret;
 
@@ -87,9 +83,9 @@ QString Plugin::getName()
     return ret;
 }
 
-elekdom::plugframe::core::bundle::Bundle *Plugin::getImpl()
+plugframe::Bundle *plugframe::Plugin::getImpl()
 {
-    elekdom::plugframe::core::bundle::Bundle *ret{nullptr};
+    plugframe::Bundle *ret{nullptr};
 
     if (!m_implementation.isNull())
     {
@@ -99,7 +95,7 @@ elekdom::plugframe::core::bundle::Bundle *Plugin::getImpl()
     return ret;
 }
 
-int Plugin::getStartLevel()
+int plugframe::Plugin::getStartLevel()
 {
     int ret{0};
 
@@ -111,7 +107,7 @@ int Plugin::getStartLevel()
     return ret;
 }
 
-BundleInterface::BundleState Plugin::getState()
+plugframe::BundleInterface::BundleState plugframe::Plugin::getState()
 {
    BundleInterface::BundleState ret{BundleInterface::BundleState::Unknown};
 
@@ -123,7 +119,7 @@ BundleInterface::BundleState Plugin::getState()
    return ret;
 }
 
-QString Plugin::state2String(BundleInterface::BundleState state)
+QString plugframe::Plugin::state2String(BundleInterface::BundleState state)
 {
     switch (state)
     {
@@ -145,7 +141,7 @@ QString Plugin::state2String(BundleInterface::BundleState state)
     return "";
 }
 
-void Plugin::_init()
+void plugframe::Plugin::_init()
 {
     m_implementation.reset(createImplementation());
 
@@ -160,7 +156,7 @@ void Plugin::_init()
     }
 }
 
-elekdom::plugframe::core::bundle::QspBundle4PluginInterface &Plugin::implementation()
+plugframe::QspBundle4PluginInterface& plugframe::Plugin::implementation()
 {
     return m_implementation;
 }

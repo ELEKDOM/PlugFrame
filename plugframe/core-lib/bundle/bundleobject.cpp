@@ -16,40 +16,37 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundle/bundleobject.h"
 #include "bundle/bundle.h"
 
-using namespace elekdom::plugframe::core;
-
-bundle::BundleObject::BundleObject(Bundle &bundle, QObject *parent):
+plugframe::BundleObject::BundleObject(plugframe::Bundle &bundle, QObject *parent):
     QObject{parent},
     m_bundle{bundle}
 {
 
 }
 
-bundle::BundleObject::~BundleObject()
+plugframe::BundleObject::~BundleObject()
 {
 
 }
 
-bundle::Bundle& bundle::BundleObject::getBundle()
+plugframe::Bundle& plugframe::BundleObject::getBundle()
 {
     return m_bundle;
 }
 
-plugin::BundleInterface *bundle::BundleObject::getBundleItf()
+plugframe::BundleInterface *plugframe::BundleObject::getBundleItf()
 {
-    return qobject_cast<plugin::BundleInterface*>(m_bundle.getQplugin());
+    return qobject_cast<plugframe::BundleInterface*>(m_bundle.getQplugin());
 }
 
-bundle::BundleFactory& bundle::BundleObject::getFactory()
+plugframe::BundleFactory& plugframe::BundleObject::getFactory()
 {
     return m_bundle.getFactory();
 }
 
-const QString& bundle::BundleObject::getLogBundleName()
+const QString& plugframe::BundleObject::getLogBundleName()
 {
     return m_bundle.logChannel();
 }

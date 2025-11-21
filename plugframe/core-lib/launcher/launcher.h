@@ -19,21 +19,17 @@
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
-#include <QtCore>
 #include <QScopedPointer>
 #include <QCoreApplication>
+#include "launcher/launchingproperties.h"
+#include "launcher/bundlesstore.h"
+#include "launcher/location.h"
+#include "factory/corefactory.h"
 #include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 
 class QCoreApplication;
 
-namespace elekdom
-{
 namespace plugframe
-{
-namespace core
-{
-namespace launcher
 {
 class PFCORELIB_EXPORT Launcher : public QObject
 {
@@ -64,18 +60,15 @@ private slots:
     void onAboutToQuit();
 
 protected:
-    QScopedPointer<QCoreApplication>          m_spApp;
+    QScopedPointer<QCoreApplication> m_spApp;
 
 private:
-    QspCoreFactory                         m_spSmfCoreFactory;
-    QspLaunchingProperties                 m_spSmfLaunchingProperties;
-    QspLocation                            m_spSmfLocation;
-    QspBundlesStore                        m_spBundlesStore;
-    framework::plugin::FrameworkInterface *m_newFwk;
+    QspCoreFactory         m_spSmfCoreFactory;
+    QspLaunchingProperties m_spSmfLaunchingProperties;
+    QspLocation            m_spSmfLocation;
+    QspBundlesStore        m_spBundlesStore;
+    FrameworkInterface    *m_newFwk;
 };
-} // namespace launcher
-} // namespace core
-} // namespace smf
-} // namespace elekdom
+} // namespace plugframe
 
 #endif // LAUNCHER_H

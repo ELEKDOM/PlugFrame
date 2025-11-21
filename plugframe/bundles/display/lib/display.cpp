@@ -16,46 +16,41 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <iostream>
 #include "display.h"
 #include "displayfactory.h"
 #include "service-int/displayserviceinterface.h"
-#include "bundle/bundlecontext.h"
 
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::display;
-
-bundle::Display::Display():
-    core::bundle::BundleImplementation{"Display"}
+Display::Display():
+    plugframe::BundleImplementation{"Display"}
 {
 
 }
 
-bundle::Display::~Display()
+Display::~Display()
 {
 
 }
 
-void bundle::Display::print(const QString &msg)
+void Display::print(const QString &msg)
 {
     QMutexLocker lock(&m_mutex);
 
     std::cout << msg.toStdString();
 }
 
-core::bundle::BundleFactory *bundle::Display::createFactory()
+plugframe::BundleFactory *Display::createFactory()
 {
-    return new factory::DisplayFactory;
+    return new DisplayFactory;
 }
 
-core::plugin::ServiceInterface *bundle::Display::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *Display::qtServiceInterface(const QString &sName)
 {
-    core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (service::DisplayServiceInterface::serviceName() == sName)
+    if (plugframe::DisplayServiceInterface::serviceName() == sName)
     {
-        ret = qobject_cast<service::DisplayServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::DisplayServiceInterface*>(getQplugin());
     }
 
     return ret;

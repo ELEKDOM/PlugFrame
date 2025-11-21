@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BACKENDCONTROLSERVICEINTERFACE_H
 #define BACKENDCONTROLSERVICEINTERFACE_H
 
 #include "service-int/serviceinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace frontenditf
-{
-namespace service
-{
-
-class BackendControlServiceInterface : public core::plugin::ServiceInterface
+class BackendControlServiceInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("BackendControlServiceInterface");}
@@ -43,13 +35,9 @@ public: // service interface definition = 0
     virtual void startListen() = 0;
     virtual void stopListen() = 0;
 };
-
-}//namespace service
-}//namespace frontenditf
 }//namespace plugframe
-}//namespace elekdom
 
-#define PfBackendControlService_iid "elekdom.plugframe.frontenditf.service.BackendControlServiceInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::frontenditf::service::BackendControlServiceInterface,PfBackendControlService_iid)
+#define PfBackendControlService_iid "plugframe.BackendControlServiceInterface"
+Q_DECLARE_INTERFACE(plugframe::BackendControlServiceInterface,PfBackendControlService_iid)
 
 #endif // BACKENDCONTROLSERVICEINTERFACE_H

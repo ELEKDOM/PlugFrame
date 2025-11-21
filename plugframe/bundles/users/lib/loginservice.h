@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGINSERVICE_H
 #define LOGINSERVICE_H
 
@@ -24,19 +23,10 @@
 #include "service/serviceimplementation.h"
 #include "service-int/loginserviceinterface.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-namespace service
-{
-
-class LoginService : public plugframe::core::service::ServiceImplementation
+class LoginService : public plugframe::ServiceImplementation
 {
 public:
-    LoginService(core::bundle::BundleImplementation *implementation);
+    LoginService(plugframe::BundleImplementation *implementation);
     ~LoginService() override;
 
 public: // service interface implementation
@@ -44,7 +34,7 @@ public: // service interface implementation
                QString                             frontendIp,
                QString                             identifier,
                QString                             password,
-               LoginServiceInterface::LoginStatus& loginStatus,
+               plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                quint32&                            sessionId,
                QString&                            profil);
     void logout(quint32 sessionId);
@@ -53,10 +43,5 @@ public: // service interface implementation
 protected:
     QString serviceName() override;
 };
-
-}//namespace service
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
-
+using QspLoginService = QSharedPointer<LoginService>;
 #endif // LOGINSERVICE_H

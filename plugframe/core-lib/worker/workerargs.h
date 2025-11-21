@@ -16,32 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef WORKERARGS_H
 #define WORKERARGS_H
 
 #include <QSharedPointer>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace worker
-{
-
 class PFCORELIB_EXPORT WorkerArgs
 {
 public:
     WorkerArgs();
     virtual ~WorkerArgs();
 };
-
-}//namespace worker
-}//namespace core
+using QspWorkerArgs = QSharedPointer<WorkerArgs>;
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // WORKERARGS_H

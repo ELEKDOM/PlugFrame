@@ -16,13 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QTextStream>
 #include <QDateTime>
 #include "logfilter.h"
 #include "logdevice.h"
-
-using namespace elekdom::plugframe::logger::bundle;
 
 LogFilter::LogFilter(const QString &name, const QString &timestampFormat, uint dFlags, uint wFlags, uint iFlags):
     m_name{name},

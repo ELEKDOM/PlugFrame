@@ -16,33 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLELISTENER_H
 #define CONSOLELISTENER_H
 
 #include "bundle/bundlelistener.h"
-#include "pfcore-lib_forward.h"
+#include "event/frameworkevent/frameworkstartedevent.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-
-class ConsoleListener : public core::bundle::BundleListener
+class ConsoleListener : public plugframe::BundleListener
 {
 public:
-    ConsoleListener(core::bundle::Bundle& bundle, QObject *parent = nullptr);
+    ConsoleListener(plugframe::Bundle& bundle, QObject *parent = nullptr);
     ~ConsoleListener() override;
 
 protected:
-    void onEvent(core::event::QspEvent ev) override;
-    virtual void onFrameworkStartedEvent(core::event::FrameworkStartedEvent *evt);
+    void onEvent(plugframe::QspEvent ev) override;
+    virtual void onFrameworkStartedEvent(plugframe::FrameworkStartedEvent *evt);
 };
-
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
 
 #endif // CONSOLELISTENER_H

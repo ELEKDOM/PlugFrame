@@ -16,24 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef SERVICEINTERFACE_H
 #define SERVICEINTERFACE_H
 
+#include <QObject>//declare Q_DECLARE_INTERFACE
 #include <QString>
 #include <QSharedPointer>
 #include <QHash>
 #include <QList>
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace plugin
-{
-
 class ServiceInterface
 {
 public:
@@ -43,13 +36,10 @@ public:
     virtual ~ServiceInterface() {}
 };
 
-using ServiceInterfaceHash = QHash<QString, plugin::ServiceInterface*>;
-using ServiceInterfaceList = QList<plugin::ServiceInterface*>;
+using ServiceInterfaceHash = QHash<QString, ServiceInterface*>;
+using ServiceInterfaceList = QList<ServiceInterface*>;
 using ServiceInterfaceList_Iterator = ServiceInterfaceList::iterator;
 
-}//namespace plugin
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 
 #endif // SERVICEINTERFACE_H

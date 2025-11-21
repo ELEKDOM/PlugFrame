@@ -16,22 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef EVENT_H
 #define EVENT_H
 
 #include <QString>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT Event
 {
 private:
@@ -47,10 +40,6 @@ public:
 public:
     const QString& getTypeId() {return m_typeId;}
 };
-
-} //namespace event
-} //namespace core
+using QspEvent = QSharedPointer<Event>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // EVENT_H

@@ -16,15 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QScopedPointer>
 #include "launcher/guiapplication.h"
 
-using namespace elekdom::plugframe::core::launcher;
-
 int main(int argc, char *argv[])
 {
-    GuiApplication a;
+    plugframe::GuiApplication a;
 
     return a.exec(argc, argv);
 }

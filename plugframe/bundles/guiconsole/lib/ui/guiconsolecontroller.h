@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLECONTROLLER_H
 #define GUICONSOLECONTROLLER_H
 
@@ -25,14 +24,7 @@
 #include "plugin/bundleinterface.h"
 #include "guiconsole_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guiconsole
-{
-
-class GuiConsoleController : public core::gui::GuiPageController
+class GuiConsoleController : public plugframe::GuiPageController
 {
     Q_OBJECT
 
@@ -41,7 +33,7 @@ private:
     static inline QString ConsolePageCtrlName() {return QStringLiteral("Console");}
 
 public:
-    GuiConsoleController(framework::service::SystemServiceInterface *systemServiceItf,QObject *parent = nullptr);
+    GuiConsoleController(plugframe::SystemServiceInterface *systemServiceItf,QObject *parent = nullptr);
     ~GuiConsoleController() override;
 
 protected:
@@ -57,15 +49,11 @@ private slots:
     void onStartedCmd();
 
 private:
-    void displayBundlesList(core::plugin::BundleInterface::BundleState state);
-    core::plugin::BundleList bundlesList(core::plugin::BundleInterface::BundleState state);
-    int padding(core::plugin::BundleList& listToDisplay);
+    void displayBundlesList(plugframe::BundleInterface::BundleState state);
+    plugframe::BundleList bundlesList(plugframe::BundleInterface::BundleState state);
+    qsizetype padding(plugframe::BundleList& listToDisplay);
 
 private:
-    framework::service::SystemServiceInterface *m_systemServiceItf;
+    plugframe::SystemServiceInterface *m_systemServiceItf;
 };
-
-}//namespace guiconsole
-}//namespace plugframe
-}//namespace elekdom
 #endif // GUICONSOLECONTROLLER_H

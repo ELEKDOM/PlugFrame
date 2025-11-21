@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
@@ -24,22 +23,12 @@
 #include "worker/worker.h"
 #include "service-int/systemserviceinterface.h"
 #include "service-int/displayserviceinterface.h"
-#include "console_forward.h"
-#include "pfcore-lib_forward.h"
+#include "cmd/cmdprocessor.h"
+#include "consoleexit.h"
 
-namespace elekdom
+class Console : public plugframe::BundleImplementation,
+                public plugframe::Worker
 {
-namespace plugframe
-{
-namespace console
-{
-namespace bundle
-{
-
-class Console : public core::bundle::BundleImplementation,
-                public core::worker::Worker
-{
-
 public:
     Console(int descriptionTab = 20);
     ~Console() override;
@@ -47,38 +36,32 @@ public:
 public:
     void startTerminal();
     int runningLevel();
-    core::plugin::BundleList loadedBundleList();
-    core::plugin::BundleList startedBundleList();
+    plugframe::BundleList loadedBundleList();
+    plugframe::BundleList startedBundleList();
     void quit();
     void quitApp();
     void print(const QString& msg);
     void printDescription(const QString& cmd, const QString& usage);
 
 protected:
-    core::bundle::BundleFactory* createFactory() override;
-    void _start(core::bundle::QspBundleContext bundleContext) override;
+    plugframe::BundleFactory* createFactory() override;
+    void _start(plugframe::QspBundleContext bundleContext) override;
 
 protected: // for SmfWorker
-    core::worker::WorkerThread *createWorkerThread(QSharedPointer<core::worker::WorkerArgs> args) override;
+    plugframe::WorkerThread *createWorkerThread(plugframe::QspWorkerArgs args) override;
 
 protected:
     virtual void buildCommandProcessorSet();
 
 protected:
-    void addCmdProcessor(QSharedPointer<cmd::CmdProcessor> cmdProcessor);
+    void addCmdProcessor(QspCmdProcessor cmdProcessor);
     PF_qtServiceInterface_DECL
 
 private:
-    QspConsoleExit                                        m_exit;
-    Terminal                                             *m_terminal;
-    framework::service::SystemServiceInterface           *m_systemServiceItf;
-    plugframe::display::service::DisplayServiceInterface *m_display;
-    int                                                   m_descriptionTab;
+    QspConsoleExit                      m_exit;
+    Terminal                           *m_terminal;
+    plugframe::SystemServiceInterface  *m_systemServiceItf;
+    plugframe::DisplayServiceInterface *m_display;
+    qsizetype                           m_descriptionTab;
 };
-
-} //namespace bundle
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // CONSOLE_H

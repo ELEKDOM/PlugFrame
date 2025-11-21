@@ -16,30 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpserverbuilder.h"
 #include "tcpserverfactory.h"
 #include "tcpserver.h"
 #include "tcpserverconnmanager.h"
 
-using namespace elekdom::plugframe::core::tcp::server::builder;
-using namespace elekdom::plugframe::core::tcp::server::factory;
-using namespace elekdom::plugframe::core::tcp::server::bundle;
-
-TcpServerBuilder::TcpServerBuilder(core::bundle::Bundle4BuilderInterface& myBundle):
-    core::bundle::BundleBuilder{myBundle}
+plugframe::TcpServerBuilder::TcpServerBuilder(plugframe::Bundle4BuilderInterface& myBundle):
+    plugframe::BundleBuilder{myBundle}
 {}
 
-TcpServerBuilder::~TcpServerBuilder()
+plugframe::TcpServerBuilder::~TcpServerBuilder()
 {
 
 }
 
-void TcpServerBuilder::specificBuild()
+void plugframe::TcpServerBuilder::specificBuild()
 {
-    TcpServer& tcpBundle{dynamic_cast<TcpServer&>(getBundle())};
-    TcpServerFactory& tcpServerFactory{dynamic_cast<TcpServerFactory&>(tcpBundle.getFactory())};
-    TcpServerConnManager *connManager;
+    plugframe::TcpServer& tcpBundle{dynamic_cast<plugframe::TcpServer&>(getBundle())};
+    plugframe::TcpServerFactory& tcpServerFactory{dynamic_cast<plugframe::TcpServerFactory&>(tcpBundle.getFactory())};
+    plugframe::TcpServerConnManager *connManager;
 
     connManager = tcpServerFactory.createTcpServerConnManager(tcpBundle);
     tcpBundle.tcpServerConnManager(connManager);

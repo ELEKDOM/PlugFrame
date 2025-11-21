@@ -16,41 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef USERSFACTORY_H
 #define USERSFACTORY_H
 
 #include "factory/bundlefactory.h"
 #include "users_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-namespace factory
-{
-
-class UsersFactory : public plugframe::core::bundle::BundleFactory
+class UsersFactory : public plugframe::BundleFactory
 {
 public:
     UsersFactory();
     ~UsersFactory() override;
 
 public:
-    virtual bundle::LoggedUser *createLoggedUser(const QString& frontendItf,const QString& identifier,const quint32& sessionId);
+    virtual LoggedUser *createLoggedUser(const QString& frontendItf,const QString& identifier,const quint32& sessionId);
 
 protected:
-    virtual service::LoginService *createLoginService(core::bundle::BundleImplementation *implementation);
-    core::service::ServiceImplementationInterface *createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                               const QString& sName,
-                                                                               const QString& serviceVersion) override;
+    virtual LoginService *createLoginService(plugframe::BundleImplementation *implementation);
+    plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                           const QString& sName,
+                                                                           const QString& serviceVersion) override;
 };
-
-}//namespace factory
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
-
 #endif // USERSFACTORY_H

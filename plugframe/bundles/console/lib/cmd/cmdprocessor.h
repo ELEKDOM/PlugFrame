@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CMDPROCESSOR_H
 #define CMDPROCESSOR_H
 
@@ -25,48 +24,34 @@
 #include "logger/loggable.h"
 #include "console_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace cmd
-{
-
 using RawCmd = QStringList;
 
-class CmdProcessor : public core::logger::Loggable
+class CmdProcessor : public plugframe::Loggable
 {
 public:
     CmdProcessor(const QString& logChannel,
-                 console::bundle::Console& console,
+                 Console& console,
                  QString cmdName,
                  QString description);
     virtual ~CmdProcessor();
 
 public:
-    void next(QspCmdProcessor procCmd);
+    void next(QSharedPointer<CmdProcessor> procCmd);
     bool execCmd(const RawCmd& cmd);
     void printCmdDescription();
 
 protected:
-    console::bundle::Console& console();
+    Console& console();
     virtual bool exec(const RawCmd& cmd) = 0;
 
 private:
     virtual void printDescription();
 
 private:
-    console::bundle::Console& m_console;
+    Console&                     m_console;
     QString                      m_cmdName;
     QString                      m_description;
-    QspCmdProcessor              m_nextProcessor;
+    QSharedPointer<CmdProcessor> m_nextProcessor;
 };
-
-} //namespace cmd
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
+using QspCmdProcessor = QSharedPointer<CmdProcessor>;
 #endif // CMDPROCESSOR_H

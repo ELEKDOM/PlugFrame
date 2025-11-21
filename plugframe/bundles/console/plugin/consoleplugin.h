@@ -16,41 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLE_BUNDLE_H
 #define CONSOLE_BUNDLE_H
 
 #include "plugin/plugin.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace plugin
-{
-
-class ConsolePlugin : public core::plugin::Plugin
+class ConsolePlugin : public plugframe::Plugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.console.plugin" FILE "../consolebundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface)
+    Q_PLUGIN_METADATA(IID "plugframe.console.plugin" FILE "../consolebundle.json")
+    Q_INTERFACES(plugframe::BundleInterface)
 
 public:
     ConsolePlugin();
     ~ConsolePlugin() override;
 
 protected: // BundleInterface
-    core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
 
 protected: // Plugin
     PF_bindServicesImplementations_DECL
 };
-
-} //namespace plugin
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
-
 #endif

@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLELISTENER4FWS_H
 #define BUNDLELISTENER4FWS_H
 
 #include "bundlelistener.h"
 #include "event/frameworkevent/frameworkstartedevent.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleListener4fws : public BundleListener
 {
 public:
@@ -39,13 +31,8 @@ public:
     ~BundleListener4fws() override;
 
 protected:
-    void onEvent(event::QspEvent ev) override;
-    virtual void onFrameworkStartedEvent(event::FrameworkStartedEvent *evt) = 0;
+    void onEvent(QspEvent ev) override;
+    virtual void onFrameworkStartedEvent(FrameworkStartedEvent *evt) = 0;
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLELISTENER4FWS_H

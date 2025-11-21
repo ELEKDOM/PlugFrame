@@ -16,25 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef USERS_H
 #define USERS_H
 
 #include <QHash>
 #include "bundle/bundleimplementation.h"
 #include "service-int/loginserviceinterface.h"
-#include "users_forward.h"
+#include "loggeduser.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace users
-{
-namespace bundle
-{
-
-class Users: public plugframe::core::bundle::BundleImplementation
+class Users: public plugframe::BundleImplementation
 {
 public:
     Users();
@@ -45,21 +35,21 @@ public:
                QString                                      frontendIp,
                QString                                      identifier,
                QString                                      password,
-               service::LoginServiceInterface::LoginStatus& loginStatus,
+               plugframe::LoginServiceInterface::LoginStatus& loginStatus,
                quint32&                                     sessionId,
                QString&                                     profil);
     void logout(quint32 sessionId);
 
 protected:
-    plugframe::core::bundle::BundleFactory* createFactory() override;
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    plugframe::BundleFactory* createFactory() override;
+    plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
 
 private:
-    service::LoginServiceInterface::LoginStatus checkLogin(QString identifier,
-                                                           QString password,
-                                                           QString frontendItf,
-                                                           QString frontendIp,
-                                                           QString& profil);
+    plugframe::LoginServiceInterface::LoginStatus checkLogin(QString identifier,
+                                                             QString password,
+                                                             QString frontendItf,
+                                                             QString frontendIp,
+                                                             QString& profil);
     quint32 generateSessionId();
     void addLoggedUser(const quint32& sessionId,
                        const QString& frontendItf,
@@ -68,10 +58,4 @@ private:
 private:
     QHash<quint32, QspLoggedUser> m_loggedUsers;
 };
-
-}//namespace bundle
-}//namespace users
-}//namespace plugframe
-}//namespace elekdom
-
 #endif // USERS_H

@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "consolefactory.h"
 #include "consolelistener.h"
 #include "cmd/loadedlistcmdprocessor.h"
@@ -25,54 +24,51 @@
 #include "cmd/quitcmdprocessor.h"
 #include "cmd/helpcmdprocessor.h"
 
-using namespace elekdom::plugframe::console;
-using namespace elekdom::plugframe;
-
-factory::ConsoleFactory::ConsoleFactory()
+ConsoleFactory::ConsoleFactory()
 {
 
 }
 
-factory::ConsoleFactory::~ConsoleFactory()
+ConsoleFactory::~ConsoleFactory()
 {
 
 }
 
-core::bundle::BundleListener *factory::ConsoleFactory::createBundleListener(core::bundle::Bundle& myBundle)
+plugframe::BundleListener *ConsoleFactory::createBundleListener(plugframe::Bundle& myBundle)
 {
     return new ConsoleListener{myBundle};
 }
 
-cmd::QspCmdProcessor factory::ConsoleFactory::createStartedListCmdProcessor(const QString& logChannel,
-                                                                                  console::bundle::Console& console)
+QspCmdProcessor ConsoleFactory::createStartedListCmdProcessor(const QString& logChannel,
+                                                              Console& console)
 {
-    return cmd::QspCmdProcessor(new cmd::StartedListCmdProcessor{logChannel, console});
+    return QspCmdProcessor(new StartedListCmdProcessor{logChannel, console});
 }
 
-cmd::QspCmdProcessor factory::ConsoleFactory::createLoadedListCmdProcessor(const QString& logChannel,
-                                                                                 console::bundle::Console& console)
+QspCmdProcessor ConsoleFactory::createLoadedListCmdProcessor(const QString& logChannel,
+                                                             Console& console)
 {
-    return cmd::QspCmdProcessor(new cmd::LoadedListCmdProcessor{logChannel, console});
+    return QspCmdProcessor(new LoadedListCmdProcessor{logChannel, console});
 }
 
-cmd::QspCmdProcessor factory::ConsoleFactory::createLevelCmdProcessor(const QString& logChannel,
-                                                                            console::bundle::Console& console)
+QspCmdProcessor ConsoleFactory::createLevelCmdProcessor(const QString& logChannel,
+                                                        Console& console)
 {
-    return cmd::QspCmdProcessor(new cmd::LevelCmdProcessor{logChannel, console});
+    return QspCmdProcessor(new LevelCmdProcessor{logChannel, console});
 }
 
-cmd::QspCmdProcessor factory::ConsoleFactory::createQuitCmdProcessor(const QString& logChannel,
-                                                                           console::bundle::Console& console)
+QspCmdProcessor ConsoleFactory::createQuitCmdProcessor(const QString& logChannel,
+                                                       Console& console)
 {
-    return cmd::QspCmdProcessor(new cmd::QuitCmdProcessor{logChannel, console});
+    return QspCmdProcessor(new QuitCmdProcessor{logChannel, console});
 }
 
-cmd::QspCmdProcessor factory::ConsoleFactory::createHelpCmdProcessor(const QString& logChannel,
-                                                                           console::bundle::Console& console,
-                                                                           cmd::QspCmdProcessor firstProc)
+QspCmdProcessor ConsoleFactory::createHelpCmdProcessor(const QString& logChannel,
+                                                       Console& console,
+                                                       QspCmdProcessor firstProc)
 {
-    return cmd::QspCmdProcessor(new cmd::HelpCmdProcessor{logChannel, console, firstProc});
+    return QspCmdProcessor(new HelpCmdProcessor{logChannel, console, firstProc});
 }
 
-PF_createServiceImplementation_DEF(factory::ConsoleFactory)
+PF_createServiceImplementation_DEF(ConsoleFactory)
 

@@ -16,35 +16,23 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef BUNDLESTOPPINGEVENT_H
 #define BUNDLESTOPPINGEVENT_H
 
 #include "pfcore-lib_export.h"
 #include "event/bundleevent/bundleevent.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace event
-{
-
 class PFCORELIB_EXPORT BundleStoppingEvent : public BundleEvent
 {
 public:
     static const QString s_typeId;
 
 public:
-    BundleStoppingEvent(core::plugin::BundleInterface *bundleItf);
+    BundleStoppingEvent(plugframe::BundleInterface *bundleItf);
     ~BundleStoppingEvent() override;
 };
 
-} //namespace bundle
-} //namespace core
-} //namespace event
-} //namespace elekdom
-
+} //namespace plugframe
 #endif // BUNDLESTOPPINGEVENT_H

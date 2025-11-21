@@ -16,24 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QObject>
-#include "logger/pflog.h"
-#include "terminal.h"
 #include "cmd/loadedlistcmdprocessor.h"
 #include "plugin/bundleinterface.h"
 #include "console.h"
-#include "pfcore-lib_forward.h"
-
-using namespace elekdom::plugframe::console::cmd;
-using namespace elekdom::plugframe;
 
 LoadedListCmdProcessor::LoadedListCmdProcessor(const QString& logChannel,
-                                                     console::bundle::Console& console):
+                                               Console& console):
     CmdProcessor{logChannel,
-                    console,
-                    "loaded",
-                    QObject::tr("Affiche la liste des bundles chargés et initialisés mais non démarrés avec leur start level")}
+                 console,
+                 "loaded",
+                 QObject::tr("Affiche la liste des bundles chargés et initialisés mais non démarrés avec leur start level")}
 {
 
 }
@@ -46,8 +39,8 @@ LoadedListCmdProcessor::~LoadedListCmdProcessor()
 bool LoadedListCmdProcessor::exec(const RawCmd &cmd)
 {
     Q_UNUSED(cmd)
-    core::plugin::BundleList list{console().loadedBundleList()};
-    core::plugin::BundleList_Iterator it;
+    plugframe::BundleList list{console().loadedBundleList()};
+    plugframe::BundleList_Iterator it;
 
     console().print(QObject::tr("\t Bundle\t\trang de démarrage\n"));
     for (it = list.begin(); it != list.end(); ++it)

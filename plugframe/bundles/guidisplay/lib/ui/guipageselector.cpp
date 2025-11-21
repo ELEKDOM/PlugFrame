@@ -16,14 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
+#include <QWidget>
+#include "gui/guipagecontroller.h"
 #include "guipageselector.h"
-
-using namespace elekdom::plugframe::guidisplay;
 
 GuiPageSelector::GuiPageSelector(int idx,
                                  QString name,
-                                 core::gui::GuiPageController *ctrl,
+                                 plugframe::GuiPageController *ctrl,
                                  QWidget *parent)
     : QAction{name, parent}
     , m_idx{idx}

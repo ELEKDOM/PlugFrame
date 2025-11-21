@@ -16,18 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "loggable.h"
 
-using namespace elekdom::plugframe::core::logger;
-
-Loggable::Loggable(const QString &logChannel):
+plugframe::Loggable::Loggable(const QString &logChannel):
     m_logChannel{logChannel}
 {
 
 }
 
-Loggable::~Loggable()
+plugframe::Loggable::~Loggable()
 {
 
 }

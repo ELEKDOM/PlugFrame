@@ -16,19 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "scheduledevent.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-ScheduledEvent::ScheduledEvent(const QTime& timeEvt,const QString& evt):
+plugframe::ScheduledEvent::ScheduledEvent(const QTime& timeEvt,const QString& evt):
     m_time{timeEvt},
     m_evt{evt}
-
 {
 }
 
-ScheduledEvent::~ScheduledEvent()
+plugframe::ScheduledEvent::~ScheduledEvent()
 {
 
 }

@@ -16,25 +16,22 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QTime>
 #include "dailyscheduler.h"
 #include "scheduledevent.h"
 
-using namespace elekdom::plugframe::core::scheduler;
-
-DailyScheduler::DailyScheduler(const QString& name):
+plugframe::DailyScheduler::DailyScheduler(const QString& name):
     m_name{name}
 {}
 
-void DailyScheduler::addScheduledEvent(ScheduledEvent *sEvt)
+void plugframe::DailyScheduler::addScheduledEvent(ScheduledEvent *sEvt)
 {
     QspScheduledEvent newly{sEvt};
 
     m_scheduledEvtList.append(newly);
 }
 
-void DailyScheduler::initDay()
+void plugframe::DailyScheduler::initDay()
 {
     m_idx = 0;
 }
@@ -45,14 +42,14 @@ void DailyScheduler::initDay()
 ///          The next event is selected based on the current time.
 /// \return next event or nullptr if there no event to fire before midnight.
 ///
-ScheduledEvent *DailyScheduler::nextEvt()
+plugframe::ScheduledEvent *plugframe::DailyScheduler::nextEvt()
 {
-    ScheduledEvent *ret{nullptr};
+    plugframe::ScheduledEvent *ret{nullptr};
     QTime ct{QTime::currentTime()};
 
     while (m_idx < m_scheduledEvtList.size() && !ret)
     {
-        QspScheduledEvent se{m_scheduledEvtList.at(m_idx++)};
+        plugframe::QspScheduledEvent se{m_scheduledEvtList.at(m_idx++)};
         QTime nextTime{se->time()};
 
         if (nextTime > ct)

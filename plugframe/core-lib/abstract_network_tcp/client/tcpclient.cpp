@@ -16,30 +16,26 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QSettings>
 #include "tcpclient.h"
 #include "tcpclientslots.h"
 #include "tcpclientchannelmanager.h"
 #include "service-int/frontendcontrolserviceinterface.h"
-#include "logger/pflog.h"
 
-using namespace elekdom::plugframe::core::tcp::client::bundle;
-
-TcpClient::TcpClient(QString logBundleName):
-    core::bundle::BundleImplementation{logBundleName},
+plugframe::TcpClient::TcpClient(QString logBundleName):
+    plugframe::BundleImplementation{logBundleName},
     m_clientChannelManager{nullptr},
-    m_clientSlots{new TcpClientSlots(*this)},
+    m_clientSlots{new plugframe::TcpClientSlots(*this)},
     m_clientSide{nullptr}
 {}
 
-TcpClient::~TcpClient()
+plugframe::TcpClient::~TcpClient()
 {
     delete m_clientChannelManager;
     delete m_clientSlots;
 }
 
-void TcpClient::tcpClientChannelManager(TcpClientChannelManager *clientChannelManager)
+void plugframe::TcpClient::tcpClientChannelManager(plugframe::TcpClientChannelManager *clientChannelManager)
 {
     m_clientChannelManager = clientChannelManager;
 
@@ -47,9 +43,9 @@ void TcpClient::tcpClientChannelManager(TcpClientChannelManager *clientChannelMa
     m_clientSlots->connectChannelManager(clientChannelManager);
 }
 
-void TcpClient::connectToHost(frontend::FrontendClientSide *clientSide,
-                              QString serverIpv4,
-                              quint16 serverPort)
+void plugframe::TcpClient::connectToHost(plugframe::FrontendClientSide *clientSide,
+                                         QString serverIpv4,
+                                         quint16 serverPort)
 {
     m_clientSide = clientSide;
 
@@ -60,38 +56,38 @@ void TcpClient::connectToHost(frontend::FrontendClientSide *clientSide,
     }
 }
 
-void TcpClient::closeConnection()
+void plugframe::TcpClient::closeConnection()
 {
     m_clientChannelManager->close();
 }
 
-void TcpClient::sendMessageToServer(TcpChannelMessage &msg)
+void plugframe::TcpClient::sendMessageToServer(plugframe::TcpChannelMessage &msg)
 {
     m_clientChannelManager->sendMessage(msg);
 }
 
-void TcpClient::connectedToServer()
+void plugframe::TcpClient::connectedToServer()
 {
     m_clientSide->connectedToServer();
 }
 
-void TcpClient::disconnectedFromServer()
+void plugframe::TcpClient::disconnectedFromServer()
 {
     m_clientSide->disconnectedFromServer();
 }
 
-void TcpClient::messageFromServer(TcpChannelMessage *msg)
+void plugframe::TcpClient::messageFromServer(plugframe::TcpChannelMessage *msg)
 {
     m_clientSide->messageFromServer(msg);
 }
 
-elekdom::plugframe::core::plugin::ServiceInterface *TcpClient::qtServiceInterface(const QString &sName)
+plugframe::ServiceInterface *plugframe::TcpClient::qtServiceInterface(const QString &sName)
 {
-    plugframe::core::plugin::ServiceInterface *ret{nullptr};
+    plugframe::ServiceInterface *ret{nullptr};
 
-    if (frontend::service::FrontendControlServiceInterface::serviceName()== sName)
+    if (plugframe::FrontendControlServiceInterface::serviceName()== sName)
     {
-        ret = qobject_cast<frontend::service::FrontendControlServiceInterface*>(getQplugin());
+        ret = qobject_cast<plugframe::FrontendControlServiceInterface*>(getQplugin());
     }
 
     return ret;

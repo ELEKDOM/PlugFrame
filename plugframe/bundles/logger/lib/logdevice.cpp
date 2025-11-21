@@ -16,10 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logdevice.h"
-
-using namespace elekdom::plugframe::logger::bundle;
 
 LogDevice::LogDevice() {}
 

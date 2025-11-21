@@ -16,24 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIDISPLAY_H
 #define GUIDISPLAY_H
 
 #include <QString>
 #include "bundle/bundleimplementation.h"
+#include "gui/guipagecontroller.h"
 #include "guidisplay_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-namespace bundle
-{
-
-class GuiDisplay : public core::bundle::BundleImplementation
+class GuiDisplay : public plugframe::BundleImplementation
 {
 
 public:
@@ -44,24 +35,18 @@ public:
     void log(const QString& msg);
     void statusMessage(const QString& msg);
     void clearStatusMessages();
-    void addGuiController(const core::gui::QspGuiPageController& controller);
-    void removeAllPages(const core::gui::QspGuiPageController& controller);
+    void addGuiController(const plugframe::QspGuiPageController& controller);
+    void removeAllPages(const plugframe::QspGuiPageController& controller);
     void setMainWindowTitle(const QString& title);
     void closeApp();
 
 protected:
-    core::bundle::BundleFactory* createFactory() override;
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
-    void _start(core::bundle::QspBundleContext bundleContext) override;
+    plugframe::BundleFactory* createFactory() override;
+    plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    void _start(plugframe::QspBundleContext bundleContext) override;
     virtual void buildGui();
 
 private:
     GuiHook *m_guiHook;  // mainwindow's child, deleted by Qt
 };
-
-} //namespace bundle
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUIDISPLAY_H

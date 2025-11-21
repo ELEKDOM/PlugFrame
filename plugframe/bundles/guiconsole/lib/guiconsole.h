@@ -16,42 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUICONSOLE_H
 #define GUICONSOLE_H
 
 #include "bundle/bundleimplementation.h"
 #include "service-int/guibuilderserviceinterface.h"
 
-namespace elekdom
+class GuiConsole : public plugframe::BundleImplementation
 {
-namespace plugframe
-{
-namespace guiconsole
-{
-namespace bundle
-{
-
-class GuiConsole : public core::bundle::BundleImplementation
-{
-
 public:
     GuiConsole();
     ~GuiConsole() override;
 
 protected:
-    core::bundle::BundleFactory* createFactory() override;
-    void _start(core::bundle::QspBundleContext bundleContext) override;
+    plugframe::BundleFactory* createFactory() override;
+    void _start(plugframe::QspBundleContext bundleContext) override;
     virtual void buildGui();
-    virtual void buildConsoleController(guidisplay::service::GuiBuilderServiceInterface *builderGuiServiceItf);
-    virtual void buildControllerViews(guidisplay::service::GuiBuilderServiceInterface *builderGuiServiceItf);
+    virtual void buildConsoleController(plugframe::GuiBuilderServiceInterface *builderGuiServiceItf);
+    virtual void buildControllerViews(plugframe::GuiBuilderServiceInterface *builderGuiServiceItf);
     virtual QString guiTitle();
     PF_qtServiceInterface_DECL
 };
-
-} //namespace bundle
-} //namespace guiconsole
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // GUICONSOLE_H

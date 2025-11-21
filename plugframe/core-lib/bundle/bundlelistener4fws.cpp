@@ -16,29 +16,26 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlelistener4fws.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-BundleListener4fws::BundleListener4fws(plugframe::core::bundle::Bundle &bundle, QObject *parent):
+plugframe::BundleListener4fws::BundleListener4fws(plugframe::Bundle &bundle, QObject *parent):
     BundleListener{bundle, parent}
 {
 
 }
 
-BundleListener4fws::~BundleListener4fws()
+plugframe::BundleListener4fws::~BundleListener4fws()
 {
 
 }
 
-void BundleListener4fws::onEvent(event::QspEvent ev)
+void plugframe::BundleListener4fws::onEvent(plugframe::QspEvent ev)
 {
-    event::Event* event{ev.data()};
+    plugframe::Event* event{ev.data()};
     QString evtTypeId {ev->getTypeId()};
 
-    if (evtTypeId == event::FrameworkStartedEvent::s_typeId)
+    if (evtTypeId == plugframe::FrameworkStartedEvent::s_typeId)
     {
-        onFrameworkStartedEvent(dynamic_cast<event::FrameworkStartedEvent*>(event));
+        onFrameworkStartedEvent(dynamic_cast<plugframe::FrameworkStartedEvent*>(event));
     }
 }

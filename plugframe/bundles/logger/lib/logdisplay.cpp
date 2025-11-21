@@ -16,13 +16,9 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "logdisplay.h"
-#include "logger.h"
 
-using namespace elekdom::plugframe::logger::bundle;
-
-LogDisplay::LogDisplay(plugframe::display::service::DisplayServiceInterface *display):
+LogDisplay::LogDisplay(plugframe::DisplayServiceInterface *display):
     m_display{display}
 {}
 

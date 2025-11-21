@@ -16,19 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "terminal.h"
 #include "console.h"
 #include "cmd/cmdprocessor.h"
 #include "worker/workerargs.h"
 
-using namespace elekdom::plugframe;
-
-console::bundle::Terminal::Terminal(QString& applicationName,
-                                 core::worker::WorkerSignal *wSignal,
-                                 const core::worker::QspWorkerArgs &args,
-                                 console::bundle::Console& console):
-    core::worker::WorkerThread{wSignal, args},
+Terminal::Terminal(QString& applicationName,
+                   plugframe::WorkerSignal *wSignal,
+                   const plugframe::QspWorkerArgs& args,
+                   Console& console):
+    plugframe::WorkerThread{wSignal, args},
     m_stopFlag{false},
     m_stream{stdin},
     m_line{""},
@@ -38,28 +35,25 @@ console::bundle::Terminal::Terminal(QString& applicationName,
     m_prompt.append(">");
 }
 
-console::bundle::Terminal::~Terminal()
+Terminal::~Terminal()
 {
 
 }
 
-void console::bundle::Terminal::addCmdProcessor(cmd::QspCmdProcessor procCmd)
+void Terminal::addCmdProcessor(QspCmdProcessor cmdProcessor)
 {
-    procCmd->next(m_firstProc);
-    m_firstProc = procCmd;
+    cmdProcessor->next(m_firstProc);
+    m_firstProc = cmdProcessor;
 }
 
-void console::bundle::Terminal::stopFlag()
+void Terminal::stopFlag()
 {
     m_stopFlag = true;
 }
 
-bool console::bundle::Terminal::execWork(core::worker::QspWorkerArgs args)
+bool Terminal::execWork(plugframe::QspWorkerArgs args)
 {
     Q_UNUSED(args)
-
-    // To avoid log message into prompt line at starting
-   // msleep(100);
 
     while (!m_stopFlag)
     {
@@ -71,18 +65,18 @@ bool console::bundle::Terminal::execWork(core::worker::QspWorkerArgs args)
     return true;
 }
 
-void console::bundle::Terminal::printPrompt()
+void Terminal::printPrompt()
 {
     m_console.print(m_prompt);
 }
 
-void console::bundle::Terminal::waitForInput()
+void Terminal::waitForInput()
 {
     m_line = QString();
     m_stream.readLineInto(&m_line);
 }
 
-void console::bundle::Terminal::parseAndExec()
+void Terminal::parseAndExec()
 {
     m_line = m_line.toLower();
     if (false == m_line.isEmpty())

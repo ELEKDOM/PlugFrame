@@ -16,39 +16,26 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef GUIBUILDERSERVICE_H
 #define GUIBUILDERSERVICE_H
 
+#include <QSharedPointer>
 #include "service/serviceimplementation.h"
+#include "gui/guipagecontroller.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace guidisplay
-{
-namespace service
-{
-
-class GuiBuilderService : public core::service::ServiceImplementation
+class GuiBuilderService : public plugframe::ServiceImplementation
 {
 public:
-    GuiBuilderService(core::bundle::BundleImplementation *implementation);
+    GuiBuilderService(plugframe::BundleImplementation *implementation);
     ~GuiBuilderService() override;
 
 public:
-    void addGuiController(const core::gui::QspGuiPageController& controller);
-    void removeAllPages(const core::gui::QspGuiPageController& controller);
+    void addGuiController(const plugframe::QspGuiPageController& controller);
+    void removeAllPages(const plugframe::QspGuiPageController& controller);
     void setMainWindowTitle(const QString& title);
 
 protected:
     QString serviceName() override;
 };
-
-} //namespace service
-} //namespace guidisplay
-} //namespace plugframe
-} //namespace elekdom
-
+using QspGuiBuilderService = QSharedPointer<GuiBuilderService>;
 #endif // GUIBUILDERSERVICE_H

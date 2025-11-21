@@ -16,24 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlelistener.h"
 #include "bundle.h"
-#include "event/event.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
-BundleListener::BundleListener(Bundle& bundle, QObject *parent):
-    BundleObject{bundle, parent}
+plugframe::BundleListener::BundleListener(plugframe::Bundle& bundle, QObject *parent):
+    plugframe::BundleObject{bundle, parent}
 {
 
 }
 
-BundleListener::~BundleListener()
+plugframe::BundleListener::~BundleListener()
 {
 }
 
-void BundleListener::onEvent(plugframe::core::event::QspEvent ev)
+void plugframe::BundleListener::onEvent(plugframe::QspEvent ev)
 {
     Q_UNUSED(ev)
 }

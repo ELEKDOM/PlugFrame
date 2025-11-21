@@ -16,48 +16,44 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include <QFile>
 #include <QJsonArray>
 #include "logger/pflog.h"
 #include "bundle.h"
-#include "bundlecontext.h"
 #include "bundlebuilder.h"
 #include "bundleheaders.h"
 #include "bundleemitter.h"
 #include "bundlelistener.h"
 #include "factory/bundlefactory.h"
 
-using namespace elekdom::plugframe::core::bundle;
-
 /**
  * @brief Bundle::Bundle
  */
-Bundle::Bundle(QString logBundleName):
-    logger::Loggable(logBundleName),
-    m_state{core::plugin::BundleInterface::BundleState::Loaded}
+plugframe::Bundle::Bundle(QString logBundleName):
+    plugframe::Loggable(logBundleName),
+    m_state{plugframe::BundleInterface::BundleState::Loaded}
 {
 }
 
 /**
  * @brief Bundle::~Bundle
  */
-Bundle::~Bundle()
+plugframe::Bundle::~Bundle()
 {
 }
 
-BundleFactory &Bundle::getFactory()
+plugframe::BundleFactory& plugframe::Bundle::getFactory()
 {
     return *m_factory;
 }
 
-QObject *Bundle::getQplugin()
+QObject *plugframe::Bundle::getQplugin()
 {
     return m_qplugin;
 }
 
-QString Bundle::getConfPath()
+QString plugframe::Bundle::getConfPath()
 {
     QString ret;
     QString confFile = getHeaders().getConfFile();
@@ -67,18 +63,18 @@ QString Bundle::getConfPath()
     return ret;
 }
 
-QString Bundle::getConfDir()
+QString plugframe::Bundle::getConfDir()
 {
     QString ret{m_absolutePath + "/" + "conf" + "/"};
     return ret;
 }
 
-bool Bundle::registerListener(BundleListener *observer)
+bool plugframe::Bundle::registerListener(BundleListener *observer)
 {
     return getEmitter()->registerListener(observer);
 }
 
-bool Bundle::unregisterListener(BundleListener *observer)
+bool plugframe::Bundle::unregisterListener(BundleListener *observer)
 {
     return getEmitter()->unregisterListener(observer);
 }
@@ -87,22 +83,22 @@ bool Bundle::unregisterListener(BundleListener *observer)
 // for Bundle4BuilderInterface
 //////////////////////////////////
 
-Bundle &Bundle::getBundle()
+plugframe::Bundle& plugframe::Bundle::getBundle()
 {
     return *this;
 }
 
-const QString& Bundle::getLogBundleName()
+const QString& plugframe::Bundle::getLogBundleName()
 {
     return logChannel();
 }
 
-void Bundle::setHeaders(BundleHeaders* bundleHeaders)
+void plugframe::Bundle::setHeaders(plugframe::BundleHeaders* bundleHeaders)
 {
     m_headers.reset(bundleHeaders);
 }
 
-void Bundle::loadManifestHeaders()
+void plugframe::Bundle::loadManifestHeaders()
 {
     // populate the headers from the plugin's metadata
     //-------------------------------------------------
@@ -119,27 +115,27 @@ void Bundle::loadManifestHeaders()
     }
 }
 
-void Bundle::setEmitter(BundleEmitter *emitter)
+void plugframe::Bundle::setEmitter(plugframe::BundleEmitter *emitter)
 {
     m_emitter.reset(emitter);
 }
 
-void Bundle::setListener(BundleListener *listener)
+void plugframe::Bundle::setListener(plugframe::BundleListener *listener)
 {
     m_listener.reset(listener);
 }
 
-void Bundle::defaultListening()
+void plugframe::Bundle::defaultListening()
 {
     // No listening event by default !
 }
 
-QspBundleEmitter& Bundle::getEmitter()
+plugframe::QspBundleEmitter& plugframe::Bundle::getEmitter()
 {
     return m_emitter;
 }
 
-QspBundleListener& Bundle::getListener()
+plugframe::QspBundleListener& plugframe::Bundle::getListener()
 {
     return m_listener;
 }
@@ -148,22 +144,22 @@ QspBundleListener& Bundle::getListener()
 // for Bundle4PluginInterface
 //////////////////////////////////
 
-void Bundle::setQplugin(QObject *qplugin)
+void plugframe::Bundle::setQplugin(QObject *qplugin)
 {
     m_qplugin = qplugin;
 }
 
-void Bundle::setFileName(const QString& fileName)
+void plugframe::Bundle::setFileName(const QString& fileName)
 {
     m_fileName = fileName;
 }
 
-void Bundle::setAbsolutePath(const QString& absolutePath)
+void plugframe::Bundle::setAbsolutePath(const QString& absolutePath)
 {
     m_absolutePath = absolutePath;
 }
 
-void Bundle::setMetaData(const QJsonObject &metaData)
+void plugframe::Bundle::setMetaData(const QJsonObject &metaData)
 {
     m_metadata = metaData;
 }
@@ -171,25 +167,25 @@ void Bundle::setMetaData(const QJsonObject &metaData)
 /**
  * @brief Bundle::init
  */
-void Bundle::init()
+void plugframe::Bundle::init()
 {
     // All bundle's objects are created by a factory allowing bundle extending
     m_factory.reset(createFactory());
 
     // Get the Bundle's builder
-    QScopedPointer <BundleBuilder> builder(m_factory->createBuilder(*this));
+    QScopedPointer <plugframe::BundleBuilder> builder(m_factory->createBuilder(*this));
 
     // Build the bundle's internal structure
     builder->build();
 
-    m_state = core::plugin::BundleInterface::BundleState::Initialized;
+    m_state = plugframe::BundleInterface::BundleState::Initialized;
 }
 
-void Bundle::start(QspBundleContext bundleContext)
+void plugframe::Bundle::start(plugframe::QspBundleContext bundleContext)
 {
     //pfDebug3(logChannel()) << "->Bundle::start()";
 
-    m_state = core::plugin::BundleInterface::BundleState::Starting;
+    m_state = plugframe::BundleInterface::BundleState::Starting;
 
     //notify starting
     m_emitter->postBundleStartingEvt();
@@ -197,7 +193,7 @@ void Bundle::start(QspBundleContext bundleContext)
     //starting implementation
     _start(bundleContext);
 
-    m_state = core::plugin::BundleInterface::BundleState::Started;
+    m_state = plugframe::BundleInterface::BundleState::Started;
 
     //Notify started
     m_emitter->postBundleStartedEvt();
@@ -205,9 +201,9 @@ void Bundle::start(QspBundleContext bundleContext)
     //pfDebug3(logChannel()) << "<-Bundle::start()";
 }
 
-void Bundle::stop()
+void plugframe::Bundle::stop()
 {
-    m_state = core::plugin::BundleInterface::BundleState::Stopping;
+    m_state = plugframe::BundleInterface::BundleState::Stopping;
 
     //notify stopping
     m_emitter->postBundleStoppingEvt();
@@ -215,28 +211,28 @@ void Bundle::stop()
     //stopping implementation
     _stop();
 
-    m_state = core::plugin::BundleInterface::BundleState::Stopped;
+    m_state = plugframe::BundleInterface::BundleState::Stopped;
 
     //Notify stopped
     m_emitter->postBundleStoppedEvt();
 }
 
-QString Bundle::getName()
+QString plugframe::Bundle::getName()
 {
     return getHeaders().getName();
 }
 
-Bundle *Bundle::getImpl()
+plugframe::Bundle *plugframe::Bundle::getImpl()
 {
     return this;
 }
 
-int Bundle::getStartLevel()
+int plugframe::Bundle::getStartLevel()
 {
     return getHeaders().getStartLevel();
 }
 
-elekdom::plugframe::core::plugin::BundleInterface::BundleState Bundle::getState()
+plugframe::BundleInterface::BundleState plugframe::Bundle::getState()
 {
     return m_state;
 }
@@ -245,7 +241,7 @@ elekdom::plugframe::core::plugin::BundleInterface::BundleState Bundle::getState(
 // internals methods
 /////////////////////
 
-BundleHeaders& Bundle::getHeaders()
+plugframe::BundleHeaders& plugframe::Bundle::getHeaders()
 {
     if (m_headers.isNull())
     {

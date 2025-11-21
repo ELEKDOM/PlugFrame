@@ -16,43 +16,23 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGGERPLUGIN_H
 #define LOGGERPLUGIN_H
 
 #include "plugin/plugin.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace logger
-{
-namespace service
-{
-    class SmfDisplayService;
-}
-namespace plugin
-{
-
-class LoggerPlugin : public core::plugin::Plugin
+class LoggerPlugin : public plugframe::Plugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.logger.plugin" FILE "../loggerbundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface)
+    Q_PLUGIN_METADATA(IID "plugframe.logger.plugin" FILE "../loggerbundle.json")
+    Q_INTERFACES(plugframe::BundleInterface)
 
 public:
     LoggerPlugin();
     ~LoggerPlugin() override;
 
 protected: // PLugin
-    core::bundle::Bundle4PluginInterface *createImplementation() override;
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     PF_bindServicesImplementations_DECL
 };
-
-} //namespace plugin
-} //namespace logger
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // LOGGERPLUGIN_H

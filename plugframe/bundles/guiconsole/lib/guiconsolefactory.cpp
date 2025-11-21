@@ -16,13 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guiconsolefactory.h"
 #include "ui/guiconsolecontroller.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::guiconsole;
-using namespace elekdom::plugframe::guiconsole::factory;
 
 GuiConsoleFactory::GuiConsoleFactory()
 {
@@ -34,7 +29,7 @@ GuiConsoleFactory::~GuiConsoleFactory()
 
 }
 
-GuiConsoleController *GuiConsoleFactory::createGuiConsoleController(SystemServiceInterface *systemServiceItf)
+GuiConsoleController *GuiConsoleFactory::createGuiConsoleController(plugframe::SystemServiceInterface *systemServiceItf)
 {
     return new GuiConsoleController{systemServiceItf};
 }

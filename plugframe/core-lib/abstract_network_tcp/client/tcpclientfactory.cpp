@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "tcpclientfactory.h"
 #include "bundle/bundle.h"
 #include "abstract_network_tcp/client/tcpclientchannel.h"
@@ -25,56 +24,50 @@
 #include "abstract_network_tcp/client/service/tcpclientservice.h"
 #include "service-int/frontendcontrolserviceinterface.h"
 
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::core::service;
-using namespace elekdom::plugframe::core::tcp;
-using namespace elekdom::plugframe::core::tcp::client::factory;
-using namespace elekdom::plugframe::core::tcp::client::service;
-using namespace elekdom::plugframe::core::tcp::client::builder;
+plugframe::TcpClientFactory::TcpClientFactory() {}
 
-TcpClientFactory::TcpClientFactory() {}
-
-TcpClientFactory::~TcpClientFactory()
+plugframe::TcpClientFactory::~TcpClientFactory()
 {
 
 }
 
-client::bundle::TcpClientChannelManager *TcpClientFactory::createChannelManager(TcpChannel *channel, QObject *parent)
+plugframe::TcpClientChannelManager *plugframe::TcpClientFactory::createChannelManager(plugframe::TcpChannel *channel,
+                                                                                      QObject *parent)
 {
-    return new bundle::TcpClientChannelManager{channel,parent};
+    return new plugframe::TcpClientChannelManager{channel,parent};
 }
 
-QTcpSocket *TcpClientFactory::createSocket()
+QTcpSocket *plugframe::TcpClientFactory::createSocket()
 {
     return new QTcpSocket;
 }
 
-TcpChannel *TcpClientFactory::createChannel(QTcpSocket *socket,
-                                            TcpChannelDeserializer *deserializer,
-                                            QObject *parent)
+plugframe::TcpChannel *plugframe::TcpClientFactory::createChannel(QTcpSocket *socket,
+                                                                  plugframe::TcpChannelDeserializer *deserializer,
+                                                                  QObject *parent)
 {
-    return new client::bundle::TcpClientChannel{socket,deserializer,parent};
+    return new plugframe::TcpClientChannel{socket,deserializer,parent};
 }
 
-BundleBuilder *TcpClientFactory::createBuilder(core::bundle::Bundle &myBundle)
+plugframe::BundleBuilder *plugframe::TcpClientFactory::createBuilder(plugframe::Bundle &myBundle)
 {
-    return new TcpClientBuilder{myBundle};
+    return new plugframe::TcpClientBuilder{myBundle};
 }
 
-TcpClientService *TcpClientFactory::createFrontendControlService(core::bundle::BundleImplementation *implementation)
+plugframe::TcpClientService *plugframe::TcpClientFactory::createFrontendControlService(plugframe::BundleImplementation *implementation)
 {
-    return new TcpClientService{implementation};
+    return new plugframe::TcpClientService{implementation};
 }
 
-ServiceImplementationInterface *TcpClientFactory::createServiceImplementation(core::bundle::BundleImplementation *implementation,
-                                                                              const QString &sName,
-                                                                              const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *plugframe::TcpClientFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                                    const QString &sName,
+                                                                                                    const QString &serviceVersion)
 {
-    plugframe::core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (frontend::service::FrontendControlServiceInterface::serviceName() == sName)
+    if (plugframe::FrontendControlServiceInterface::serviceName() == sName)
     {
-        if (plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createFrontendControlService(implementation);
         }

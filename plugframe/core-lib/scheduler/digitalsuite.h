@@ -16,32 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DIGITALSUITE_H
 #define DIGITALSUITE_H
 
 #include <QList>
 #include <QString>
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace scheduler
-{
-
-class DigitalSuite : public QList<int>
+class PFCORELIB_EXPORT DigitalSuite : public QList<int>
 {
 public:
     DigitalSuite(const QString& strSuite);
     bool isValid(int minValue, int maxValue);
 };
-
-}//namespace scheduler
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
-
 #endif // DIGITALSUITE_H

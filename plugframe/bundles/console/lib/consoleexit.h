@@ -16,23 +16,15 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef CONSOLEEXIT_H
 #define CONSOLEEXIT_H
 
+#include <QSharedPointer>
 #include "worker/workerwatcher.h"
+#include "worker/workerouts.h"
 #include "console_forward.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace console
-{
-namespace bundle
-{
-
-class ConsoleExit : public core::worker::WorkerWatcher
+class ConsoleExit : public plugframe::WorkerWatcher
 {
 private:
     Console& m_console;
@@ -42,14 +34,9 @@ public:
     virtual ~ConsoleExit();
 
 protected:
-    virtual void onWorkFinished(QSharedPointer<core::worker::WorkerOuts> outs);
+    virtual void onWorkFinished(plugframe::QspWorkerOuts outs);
 };
 
 using QspConsoleExit = QSharedPointer<ConsoleExit>;
-
-} //namespace bundle
-} //namespace console
-} //namespace plugframe
-} //namespace elekdom
 
 #endif // CONSOLEEXIT_H

@@ -4,7 +4,7 @@ TEMPLATE = lib
 CONFIG  += staticlib
 
 BUNDLE_VERSION = $$cat(../bundle.ver)
-TARGET = console-qt5-$${BUNDLE_VERSION}
+TARGET = console-qt6-$${BUNDLE_VERSION}
 
 SOURCES +=  \
             cmd/cmdprocessor.cpp \

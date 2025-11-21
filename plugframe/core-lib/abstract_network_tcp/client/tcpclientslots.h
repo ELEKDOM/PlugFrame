@@ -16,27 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENTSLOTS_H
 #define TCPCLIENTSLOTS_H
 
 #include <QObject>
 #include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace bundle
-{
-
-class TcpClientSlots : public QObject
+class PFCORELIB_EXPORT TcpClientSlots : public QObject
 {
     Q_OBJECT
 public:
@@ -49,16 +38,10 @@ public:
 private slots:
     void onConnectedToServer();
     void onDisconnectedFromServer();
-    void onMessageFromServer(TcpChannelMessage *input);
+    void onMessageFromServer(plugframe::TcpChannelMessage *input);
 
 private:
     TcpClient &m_clientSide;
 };
-
-}//namespace bundle
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENTSLOTS_H

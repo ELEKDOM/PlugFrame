@@ -16,30 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCLIENTPLUGIN_H
 #define TCPCLIENTPLUGIN_H
 
-#include "pfcore-lib_export.h"
-#include "pfcore-lib_forward.h"
 #include "plugin/plugin.h"
 #include "service-int/frontendcontrolserviceinterface.h"
+#include "abstract_network_tcp/client/service/tcpclientservice.h"
+#include "pfcore-lib_export.h"
+#include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-namespace client
-{
-namespace plugin
-{
-
-class PFCORELIB_EXPORT TcpClientPlugin : public core::plugin::Plugin,
-                                         public frontend::service::FrontendControlServiceInterface
+class PFCORELIB_EXPORT TcpClientPlugin : public Plugin,
+                                         public FrontendControlServiceInterface
 {
 public:
     TcpClientPlugin();
@@ -49,20 +38,14 @@ protected: // Plugin
     void bindServicesImplementations() override;
 
 protected: // FrontendControlServiceInterface
-    void connectToHost(frontend::FrontendClientSide *clientSide,
+    void connectToHost(FrontendClientSide *clientSide,
                        QString serverIpv4,
                        quint16 serverPort) override;
     void closeConnection() override;
-    void sendMessageToServer(core::tcp::TcpChannelMessage& msg) override;
+    void sendMessageToServer(TcpChannelMessage& msg) override;
 
 private:
-    client::service::QspTcpClientService m_clientServiceImpl;
+    QspTcpClientService m_clientServiceImpl;
 };
-
-}//namespace plugin
-}//namespace client
-}//namespace tcp
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 #endif // TCPCLIENTPLUGIN_H

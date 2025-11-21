@@ -16,19 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "loopevent.h"
 
-using namespace elekdom::plugframe::core::event;
-
-LoopEvent::LoopEvent(const QString &typeId, unsigned short cpt):
-    Event{typeId},
+plugframe::LoopEvent::LoopEvent(const QString &typeId, unsigned short cpt):
+    plugframe::Event{typeId},
     m_cpt{cpt}
 {
 
 }
 
-LoopEvent::~LoopEvent()
+plugframe::LoopEvent::~LoopEvent()
 {
 
 }

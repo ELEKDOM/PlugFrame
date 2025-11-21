@@ -16,22 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LOGINSERVICEINTERFACE_H
 #define LOGINSERVICEINTERFACE_H
 
 #include "service-int/serviceinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace users
-{
-namespace service
-{
-
-class LoginServiceInterface : public plugframe::core::plugin::ServiceInterface
+class LoginServiceInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("LoginServiceInterface");}
@@ -57,13 +49,9 @@ public: // service interface definition = 0
     // Else, returns an empty string.
     virtual QString absoluteUserConfFileName(const QString& profil)=0;
 };
-
-}//namespace service
-}//namespace users
 }//namespace plugframe
-}//namespace elekdom
 
-#define PfLoginService_iid "elekdom.plugframe.users.service.LoginServiceInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::users::service::LoginServiceInterface, PfLoginService_iid)
+#define PfLoginService_iid "plugframe.LoginServiceInterface"
+Q_DECLARE_INTERFACE(plugframe::LoginServiceInterface, PfLoginService_iid)
 
 #endif // LOGINSERVICEINTERFACE_H

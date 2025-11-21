@@ -25,15 +25,8 @@
 #include "pfcore-lib_forward.h"
 #include "plugin/bundleinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace bundle
-{
-
 class PFCORELIB_EXPORT BundleObject : public QObject
 {
     Q_OBJECT
@@ -47,14 +40,9 @@ public:
 
 public:
     Bundle &getBundle();
-    core::plugin::BundleInterface *getBundleItf();
+    BundleInterface *getBundleItf();
     BundleFactory& getFactory();
     const QString &getLogBundleName();
 };
-
-} //namespace bundle
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // BUNDLEOBJECT_H

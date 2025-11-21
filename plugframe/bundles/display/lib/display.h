@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
@@ -26,16 +25,7 @@
 #include "bundle/bundleimplementation.h"
 #include "service-int/serviceinterface.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace display
-{
-namespace bundle
-{
-
-class Display : public core::bundle::BundleImplementation
+class Display : public plugframe::BundleImplementation
 {
 public:
     Display();
@@ -45,13 +35,7 @@ public:
     void print(const QString& msg);
 
 protected:
-    core::bundle::BundleFactory* createFactory() override;
-    core::plugin::ServiceInterface *qtServiceInterface(const QString& sName) override;
+    plugframe::BundleFactory* createFactory() override;
+    plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
 };
-
-} //namespace bundle
-} //namespace display
-} //namespace plugframe
-} //namespace elekdom
-
 #endif // DISPLAY_H

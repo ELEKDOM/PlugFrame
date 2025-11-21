@@ -16,20 +16,17 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "bundlestoppingevent.h"
 
-using namespace elekdom::plugframe::core::event;
+const QString plugframe::BundleStoppingEvent::s_typeId {"PlugFrame.Bundle.Stopping"};
 
-const QString BundleStoppingEvent::s_typeId {"PlugFrame.Bundle.Stopping"};
-
-BundleStoppingEvent::BundleStoppingEvent(core::plugin::BundleInterface *bundleItf):
+plugframe::BundleStoppingEvent::BundleStoppingEvent(plugframe::BundleInterface *bundleItf):
     BundleEvent{BundleStoppingEvent::s_typeId, bundleItf}
 {
 
 }
 
-BundleStoppingEvent::~BundleStoppingEvent()
+plugframe::BundleStoppingEvent::~BundleStoppingEvent()
 {
 
 }

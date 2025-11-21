@@ -16,16 +16,12 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include <QCoreApplication>
 #include "systemservice.h"
 #include "framework.h"
 #include "service-int/systemserviceinterface.h"
 
-using namespace elekdom::plugframe::framework::service;
-using namespace elekdom::plugframe;
-
-SystemService::SystemService(core::bundle::BundleImplementation *implementation):
+SystemService::SystemService(plugframe::BundleImplementation *implementation):
     FrameworkServiceImplementation{implementation}
 {
 
@@ -41,21 +37,22 @@ QString SystemService::applicationName()
     return QCoreApplication::applicationName();
 }
 
-bool SystemService::registerListener(elekdom::plugframe::core::bundle::BundleListener *observer)
+bool SystemService::registerListener(plugframe::BundleListener *observer)
 {
-    QMutexLocker    mtxLck{&m_mtx};
-    bool        ret{framework()->registerListener(observer)};
+    QMutexLocker mtxLck{&m_mtx};
+    bool         ret{framework()->registerListener(observer)};
+
     return ret;
 }
 
-bool SystemService::unregisterListener(elekdom::plugframe::core::bundle::BundleListener *observer)
+bool SystemService::unregisterListener(plugframe::BundleListener *observer)
 {
     QMutexLocker    mtxLck{&m_mtx};
 
     return framework()->unregisterListener(observer);
 }
 
-core::plugin::BundleList SystemService::bundleList()
+plugframe::BundleList SystemService::bundleList()
 {
     QMutexLocker    mtxLck{&m_mtx};
 
@@ -78,5 +75,5 @@ void SystemService::quit()
 
 QString SystemService::serviceName()
 {
-    return SystemServiceInterface::serviceName();
+    return plugframe::SystemServiceInterface::serviceName();
 }

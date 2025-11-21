@@ -16,12 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "consoleplugin.h"
 #include "console.h"
-
-using namespace elekdom::plugframe::console::plugin;
-using namespace elekdom::plugframe;
 
 ConsolePlugin::ConsolePlugin()
 {
@@ -33,9 +29,9 @@ ConsolePlugin::~ConsolePlugin()
     // ...
 }
 
-core::bundle::Bundle4PluginInterface *ConsolePlugin::createImplementation()
+plugframe::Bundle4PluginInterface *ConsolePlugin::createImplementation()
 {
-    return new console::bundle::Console;
+    return new Console;
 }
 
 PF_bindServicesImplementations_DEF(ConsolePlugin)

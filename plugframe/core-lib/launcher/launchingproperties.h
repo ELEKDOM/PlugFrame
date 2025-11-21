@@ -16,28 +16,21 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef LAUNCHING_PROPERTIES
 #define LAUNCHING_PROPERTIES
 
 #include <QSettings>
 #include <QVariant>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace launcher
-{
-
 class PFCORELIB_EXPORT LaunchingProperties : public QSettings
 {
     // Framework launching properties
     static const QString PF_GROUP;
-    static const QString PF_FRAMEWORK_STARTLEVEL; // = "smf.framework.startlevel";
+    static const QString PF_FRAMEWORK_STARTLEVEL;
 
     // Qt StyleSheet for gui
     static const QString QT_GROUP;
@@ -52,11 +45,7 @@ public:
     bool hasStyleSheet();
     QString getStyleSheetFile();
 };
-
-} //namespace launcher
-} //namespace core
+using QspLaunchingProperties = QSharedPointer<LaunchingProperties>;
 } //namespace plugframe
-} //namespace elekdom
-
 #endif // LAUNCHING_PROPERTIES
 

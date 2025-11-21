@@ -16,23 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TCPCHANNELMANAGER_H
 #define TCPCHANNELMANAGER_H
 
 #include <QObject>
 #include "pfcore-lib_forward.h"
+#include "pfcore-lib_export.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
-{
-namespace tcp
-{
-
-class TcpChannelManager : public QObject
+class PFCORELIB_EXPORT TcpChannelManager : public QObject
 {
     Q_OBJECT
 
@@ -45,7 +38,7 @@ public:
     void close();
 
 public slots:
-    void onNewMessage(TcpChannelMessage *input);
+    void onNewMessage(plugframe::TcpChannelMessage *input);
 
 protected:
     virtual void processMessage(TcpChannelMessage *input)=0;
@@ -54,9 +47,5 @@ protected:
 private:
     TcpChannel *m_channel;
 };
-
-} //namespace tcp
-} //namespace core
 } //namespace plugframe
-} //namespace elekdom
 #endif // TCPCHANNELMANAGER_H

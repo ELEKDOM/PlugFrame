@@ -16,9 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "guidisplayfactory.h"
-#include "bundle/bundle.h"
 #include "guidisplay.h"
 #include "guidisplayservice.h"
 #include "guibuilderservice.h"
@@ -27,12 +25,6 @@
 #include "ui/guilogscontroller.h"
 #include "service-int/displayserviceinterface.h"
 #include "service-int/guibuilderserviceinterface.h"
-
-using namespace elekdom::plugframe::core;
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::guidisplay::factory;
-using namespace elekdom::plugframe::guidisplay::bundle;
-using namespace elekdom::plugframe::guidisplay::service;
 
 GuiDisplayFactory::GuiDisplayFactory()
 {
@@ -44,32 +36,32 @@ GuiDisplayFactory::~GuiDisplayFactory()
 
 }
 
-GuiDisplayService *GuiDisplayFactory::createDisplayService(core::bundle::BundleImplementation *implementation)
+GuiDisplayService *GuiDisplayFactory::createDisplayService(plugframe::BundleImplementation *implementation)
 {
     return new GuiDisplayService{implementation};
 }
 
-GuiBuilderService *GuiDisplayFactory::createBuilderService(core::bundle::BundleImplementation *implementation)
+GuiBuilderService *GuiDisplayFactory::createBuilderService(plugframe::BundleImplementation *implementation)
 {
     return new GuiBuilderService{implementation};
 }
 
-service::ServiceImplementationInterface *GuiDisplayFactory::createServiceImplementation(BundleImplementation *implementation,
-                                                                                        const QString &sName,
-                                                                                        const QString &serviceVersion)
+plugframe::ServiceImplementationInterface *GuiDisplayFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
+                                                                                          const QString &sName,
+                                                                                          const QString &serviceVersion)
 {
-    core::service::ServiceImplementationInterface *ret{nullptr};
+    plugframe::ServiceImplementationInterface *ret{nullptr};
 
-    if (display::service::DisplayServiceInterface::serviceName() == sName)
+    if (plugframe::DisplayServiceInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createDisplayService(implementation);
         }
     }
-    else if(service::GuiBuilderServiceInterface::serviceName() == sName)
+    else if(plugframe::GuiBuilderServiceInterface::serviceName() == sName)
     {
-        if (plugframe::core::plugin::ServiceInterface::V_100() == serviceVersion)
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createBuilderService(implementation);
         }
@@ -78,17 +70,17 @@ service::ServiceImplementationInterface *GuiDisplayFactory::createServiceImpleme
     return ret;
 }
 
-elekdom::plugframe::guidisplay::Gui *GuiDisplayFactory::createGui()
+Gui *GuiDisplayFactory::createGui()
 {
     return new Gui;
 }
 
-elekdom::plugframe::guidisplay::GuiHook *GuiDisplayFactory::createGuiHook(Gui* parent, bundle::GuiDisplay& bundle)
+GuiHook *GuiDisplayFactory::createGuiHook(Gui* parent,GuiDisplay& bundle)
 {
     return new GuiHook{parent, bundle};
 }
 
-elekdom::plugframe::guidisplay::GuiLogsController *GuiDisplayFactory::createLogsPageController()
+GuiLogsController *GuiDisplayFactory::createLogsPageController()
 {
     return new GuiLogsController;
 }

@@ -16,11 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef PF_LOG_H
 #define PF_LOG_H
 
 #include <QDebug>
+#include <QObject>
 
 #define PFDEBUG(n,m) qDebug().nospace().noquote() <<"{" << (m) << "}["<<(n)<<"]"
 #define pfDebug1(n) PFDEBUG(n,1)

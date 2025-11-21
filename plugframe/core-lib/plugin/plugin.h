@@ -16,31 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
 #include <QObject>
 #include "bundleinterface.h"
+#include "bundle/bundle4plugininterface.h"
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace core
+class PFCORELIB_EXPORT Plugin : public QObject, public BundleInterface
 {
-namespace plugin
-{
-class PFCORELIB_EXPORT Plugin : public QObject, public plugin::BundleInterface
-{
-private:
-    QString                              m_fileName;
-    QString                              m_absolutePath;
-    QJsonObject                          m_metadata;
-    QObject                             *m_qplugin;
-    bundle::QspBundle4PluginInterface m_implementation;
 
 public:
     Plugin();
@@ -52,10 +40,10 @@ protected:
     void setMetaData(const QJsonObject& metaData) override;
     void setQplugin(QObject *qplugin) override;
     void init() override;
-    void start(bundle::QspBundleContext bundleContext) override;
+    void start(QspBundleContext bundleContext) override;
     void stop() override;
     QString getName() override;
-    core::bundle::Bundle *getImpl() override;
+    Bundle *getImpl() override;
     int getStartLevel() override;
     BundleState getState() override;
     QString state2String(BundleState state) override;
@@ -64,14 +52,18 @@ protected:
     void _init();
 
 protected:
-    bundle::QspBundle4PluginInterface &implementation();
-    virtual bundle::Bundle4PluginInterface *createImplementation() = 0;
+    QspBundle4PluginInterface &implementation();
+    virtual Bundle4PluginInterface *createImplementation() = 0;
     virtual void bindServicesImplementations() = 0;
+
+private:
+    QString                   m_fileName;
+    QString                   m_absolutePath;
+    QJsonObject               m_metadata;
+    QObject                  *m_qplugin;
+    QspBundle4PluginInterface m_implementation;
 };
-}//namespace pluginpattern
-}//namespace core
 }//namespace plugframe
-}//namespace elekdom
 
 #define PF_bindServicesImplementations_DECL void bindServicesImplementations()override;
 #define PF_bindServicesImplementations_DEF(TYPE) void TYPE::bindServicesImplementations(){}
