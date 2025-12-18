@@ -125,6 +125,9 @@ void plugframe::Launcher::startPlatform()
 
 void plugframe::Launcher::onAboutToQuit()
 {
-    plugframe::BundleInterface *frameworkBundleItf{m_newFwk->getBundleInterface()};
-    frameworkBundleItf->stop();
+    if (m_newFwk)
+    {
+        plugframe::BundleInterface *frameworkBundleItf{m_newFwk->getBundleInterface()};
+        frameworkBundleItf->stop();
+    }
 }

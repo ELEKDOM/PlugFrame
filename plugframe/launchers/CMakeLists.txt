@@ -1,0 +1,3 @@
+add_subdirectory(consolelauncher)
+add_subdirectory(guilauncher)
+add_subdirectory(qmllauncher)

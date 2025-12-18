@@ -27,7 +27,7 @@ class UsersPlugin : public plugframe::Plugin,
                     public plugframe::LoginServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "plugframe.users.plugin" FILE "../users.json")
+    Q_PLUGIN_METADATA(IID "plugframe.users.plugin" FILE "../usersbundle.json")
     Q_INTERFACES(plugframe::BundleInterface
                  plugframe::LoginServiceInterface)
 

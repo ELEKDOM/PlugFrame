@@ -1,0 +1,7 @@
+add_subdirectory(framework)
+add_subdirectory(display)
+add_subdirectory(logger)
+add_subdirectory(console)
+add_subdirectory(guidisplay)
+add_subdirectory(guiconsole)
+add_subdirectory(users)
