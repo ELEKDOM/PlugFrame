@@ -76,13 +76,13 @@ PlugFrame installs a complete runtime layout into a binary directory.
 By default, the runtime is installed under:
 
 ```
-<install-prefix>/bin
+<install-prefix>
 ```
 
 You can override the destination using:
 
 ```bash
-cmake -S . -B build -DPF_BIN_DIR=/path/to/runtime/bin
+cmake -S . -B build -DPF_RUNTIME_ROOT=/path/to/runtime
 cmake --build build
 ```
 
@@ -97,7 +97,9 @@ The following variables **must be defined at configuration time**:
 - `PF_SELECTED_PROFILE_NAME`
 
 ```bash
-cmake -S . -B build   -DPF_PROFILES_ROOT_DIR="/path/to/profiles"   -DPF_SELECTED_PROFILE_NAME="profileDir"
+cmake -S . -B build   
+    -DPF_PROFILES_ROOT_DIR="/path/to/profiles"   
+    -DPF_SELECTED_PROFILE_NAME="profileDir"
 
 cmake --build build --target plugframe_runtime_install
 ```
@@ -119,7 +121,7 @@ This step generates a complete binary runtime tree based on the selected profile
 ## License
 
 This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.  
-See the [LICENSE](./LICENSE) file for more details.
+See the [LICENSE](./LICENSE.txt) file for more details.
 
 All source files include appropriate GPLv3 headers.
 
