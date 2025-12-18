@@ -21,85 +21,98 @@ This repository contains the core framework developed by [ELEKDOM](https://elekd
 ```bash
 PlugFrame/
 │
-├── plugframe/           # Main framework modules (core-lib, framework, logger, etc.)
-│   ├── core-lib/        # Base types and interfaces for all bundles
-│   ├── framework/       # The runtime core and bundle manager
-│   ├── logger/          # Logging mechanism based on Qt
-│   ├── console/         # Text-based interactive shell
-│   ├── display/         # Console output renderer
-│   ├── guidisplay/      # GUI version of the display component
-│   ├── guiconsole/      # GUI shell for command execution
-│   └── users/           # Optional bundle for authentication logic
-│
-├── applications/        # Placeholder directory for applications using PlugFrame
-│   └── OpLink/          # [NOT included in this repository] See the OpLink repo
-│
-└── PlugFrame.pro        # Qt project file for IDE setup
+├── plugframe/                            # Main framework modules (core-lib, framework, logger, etc.)
+│   ├── core-lib/                         # Base types and interfaces for all bundles
+│   ├── framework/                        # The runtime core and bundle manager
+│   ├── logger/                           # Logging mechanism based on Qt
+│   ├── console/                          # Text-based interactive shell
+│   ├── display/                          # Console output renderer
+│   ├── guidisplay/                       # GUI version of the display component
+│   ├── guiconsole/                       # GUI shell for command execution
+│   └── users/                            # Optional bundle for authentication logic
+├── cmake/plugframe_runtime_install.cmake # Script for binaries and conf files post-build install
+└── CMakeLists.txt                        # Main CMake configuration file
 ```
 
 ---
 
 ## Requirements
 
-- **Qt 6.9.3** (with qmake)
+- **Qt 6.9.3**
+- **CMake ≥ 3.19**
 - C++17 compatible compiler (tested with `g++` on **Kubuntu 25.10**)
 - Recommended: [QtCreator](https://www.qt.io/product/development-tools) for development
 
 ---
 
-## Build Instructions (with Shadow Build)
+## Build Instructions
 
-### Recommended: QtCreator
-
-PlugFrame is designed to be developed using **QtCreator**, leveraging its **shadow build** feature to cleanly separate build artifacts from source code.
-
-**Steps:**
-
-1. Open `PlugFrame.pro` in **QtCreator**
-2. In the menu: *Projects → Build & Run → Build Settings*
-3. Enable **"Shadow build"**
-4. Choose a build directory outside the source tree (e.g., `../build-PlugFrame`)
-5. Add a **"Custom Step"**
-6. Select the script `install_plugframe.py`
-7. Check the `PYTHONPATH` value
-8. Click **Build**
-
-> This is the recommended method for all development work.
-
-### Optional: Command-line Build (for compilation only)
-
-You may also compile PlugFrame from the terminal using `qmake`:
+### Clone the repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/elekdom/PlugFrame.git
 cd PlugFrame
-
-# Create and move to a build directory (shadow build style)
-mkdir ../build-PlugFrame
-cd ../build-PlugFrame
-
-# Run qmake and make
-qmake ../PlugFrame/PlugFrame.pro
-make -j$(nproc)
+git checkout qt6_cmake
 ```
 
-> This approach is suitable for compiling the project, but **not recommended for active development**.
+### Configure
 
-### Using the `install_plugframe` script
-Once the PlugFrame build is complete, you can obtain a binary package by invoking this script.
-Warning: 
-- Python must be installed
-- The script references two variables: `build_dir` and `conf_dir`.
-- These two variables are to be defined in a file named `projects_dirs.py`
-- Add the path to the file `projects_dirs.py` in PYTHONPATH
+```bash
+cmake -S . -B build
+```
+
+### Build
+
+```bash
+cmake --build build
+```
+
+---
+
+## Runtime installation
+
+PlugFrame installs a complete runtime layout into a binary directory.
+
+By default, the runtime is installed under:
+
+```
+<install-prefix>/bin
+```
+
+You can override the destination using:
+
+```bash
+cmake -S . -B build -DPF_BIN_DIR=/path/to/runtime/bin
+cmake --build build
+```
+
+---
+
+## Post-build runtime generation  
+*(CMake target: `plugframe_runtime_install`)*
+
+The following variables **must be defined at configuration time**:
+
+- `PF_PROFILES_ROOT_DIR`
+- `PF_SELECTED_PROFILE_NAME`
+
+```bash
+cmake -S . -B build   -DPF_PROFILES_ROOT_DIR="/path/to/profiles"   -DPF_SELECTED_PROFILE_NAME="profileDir"
+
+cmake --build build --target plugframe_runtime_install
+```
+
+This step generates a complete binary runtime tree based on the selected profile.
+
 ---
 
 ## Preview
 
-![PlugFrame Console Overview](.img/screenshot_plugframe.png) The PlugFrame's Console Overview
+![PlugFrame Console Overview](.img/screenshot_plugframe.png)  
+*PlugFrame console overview*
 
-![PlugFrame GuiConsole Overview](.img/screenshot_guiplugframe.png) The PlugFrame's GuiConsole Overview
+![PlugFrame GuiConsole Overview](.img/screenshot_guiplugframe.png)  
+*PlugFrame GUI console overview*
 
 ---
 
@@ -116,29 +129,26 @@ All source files include appropriate GPLv3 headers.
 
 > Work in progress — this repository currently serves as a **technical demonstrator**.
 
-### Next milestones:
+### Next milestones
 
-- Replacing qmake with cmake
-- Raspy cross compiation
-- Windows and MacOs compilation
+- Raspberry Pi cross-compilation
+- Windows and macOS compilation
 - Unit tests and CI integration
 - GitHub wiki with technical documentation
 - First packaged release (v0.1.0)
 - Managing bundle dependencies (RESOLVED state)
 - Dynamic service binding (currently static)
-- ***and more according to future needs expressed***
+- *and more according to future needs expressed*
 
 ---
 
 ## Contributions & Services
 
-PlugFrame is actively maintained by **ELEKDOM**.  
-If you're interested in:
+PlugFrame is actively maintained by **ELEKDOM**.
 
+If you're interested in:
 - Using PlugFrame in your project
 - Custom adaptations or training
 - Commercial partnerships or technical contributions
 
-**Contact us via LinkedIn or https://elekdom.fr or contact@elekdom.fr**.
-
----
+**Contact us via LinkedIn, https://elekdom.fr, or contact@elekdom.fr**
