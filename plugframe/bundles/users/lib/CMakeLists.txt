@@ -30,6 +30,6 @@ target_link_libraries(${BUNDLE_IMPL_NAME} PUBLIC
 )
 
 target_compile_definitions(${BUNDLE_IMPL_NAME}
-    PUBLIC
+    PRIVATE
     $<$<CONFIG:Release>:QT_NO_DEBUG_OUTPUT>
 )

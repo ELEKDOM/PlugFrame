@@ -43,6 +43,17 @@ set(GUIPF_BUNDLES_DIR "${PF_BIN_DIR}/guiplugframe/bundles")
 set(GUIPF_CONF_DIR "${PF_BIN_DIR}/guiplugframe/conf")
 set(GUIPF_LOGS_DIR "${PF_BIN_DIR}/guiplugframe/logs")
 
+# create all directories
+########################
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_BIN_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_LIBS_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_BUNDLES_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_CONF_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_LOGS_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_BUNDLES_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_CONF_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_LOGS_DIR}")
+
 # bundles install tools
 #######################
 function(pf_copy_bundle dest bundle_name plugin_file)
@@ -77,22 +88,8 @@ function(pf_copy_conf_file src_file dst_dir)
                   "${src_file}" "${dst_dir}")
 endfunction()
 
-
-# create all directories
-########################
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_BIN_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_LIBS_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_BUNDLES_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_CONF_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_LOGS_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_BUNDLES_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_CONF_DIR}")
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${GUIPF_LOGS_DIR}")
-
 # core-lib install
 ##################
-
-execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${PF_LIBS_DIR}")
 
 if(NOT EXISTS "${PF_CORE_LIB_FILE}")
   message(FATAL_ERROR "Missing core lib real file: ${PF_CORE_LIB_FILE}")
@@ -163,4 +160,5 @@ pf_copy_conf_file(
 )
 
 # finished!
-message(STATUS "PlugFrame runtime installed at: ${PF_RUNTIME_ROOT}")
+###########
+message(STATUS "PlugFrame runtime installed at: ${PF_BIN_DIR}")
