@@ -13,6 +13,7 @@ Makefile
 *.pro.user.*
 *.qbs.user
 *.qmlproject.user
+.qtcreator/
 
 # Logs / Runtime
 *.log

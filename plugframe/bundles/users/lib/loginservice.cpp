@@ -60,7 +60,7 @@ void LoginService::logout(quint32 sessionId)
 QString LoginService::absoluteUserConfFileName(const QString &profil)
 {
     QString ret;
-    QString fileName{profil + QStringLiteral("-remotemonitoring.xml")};
+    QString fileName{profil + QStringLiteral("_remote_monitoring.xml")};
     QFile file{implementation()->getConfDir() + fileName};
 
     if (file.exists())

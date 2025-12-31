@@ -17,6 +17,7 @@
 //
 
 #include <QApplication>
+#include <QIcon>
 #include <QFile>
 #include "guiapplication.h"
 #include "launcher/launchingproperties.h"
@@ -34,6 +35,12 @@ plugframe::GuiApplication::~GuiApplication()
 void plugframe::GuiApplication::createApp(int& argc, char *argv[])
 {
     m_spApp.reset(new QApplication(argc, argv));
+    QIcon icon;
+    icon.addFile(":/img/app_icon16.png", QSize(16,16));
+    icon.addFile(":/img/app_icon32.png", QSize(32,32));
+    icon.addFile(":/img/app_icon48.png", QSize(48,48));
+    icon.addFile(":/img/app_icon128.png", QSize(128,128));
+    QApplication::setWindowIcon(icon);
 }
 
 void plugframe::GuiApplication::setStyleSheet()
