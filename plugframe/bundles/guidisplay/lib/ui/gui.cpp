@@ -28,7 +28,7 @@
 Gui::Gui(QWidget *parent):
     QMainWindow{parent},
     ui(new Ui::MainWindow),
-    m_elekdomIcon{":/img/Elekdom-Noir-Logo.png"},
+    m_elekdomIcon{":/img/elekdom_logo.png"},
     m_iconLbl{new QLabel},
     m_currentCtrl{nullptr},
     m_logsView{nullptr}

@@ -24,7 +24,7 @@ target_link_libraries(${LAUNCHER_NAME}
 
 # Resources:
 set(guilauncher_resources_resource_files
-    "img/Elekdom-Noir-Logo.png"
+    "img/elekdom_logo.png"
 )
 
 qt6_add_resources(${LAUNCHER_NAME} "guilauncher_resources"
