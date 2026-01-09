@@ -22,11 +22,11 @@
 #include <QWidget>
 #include <QString>
 #include <QList>
-#include "pfcore-lib_export.h"
+#include "pfgui-lib_export.h"
 
 namespace plugframe
 {
-class PFCORELIB_EXPORT GuiPageView : public QWidget
+class PFGUILIB_EXPORT GuiPageView : public QWidget
 {
     Q_OBJECT
 

@@ -34,6 +34,8 @@ namespace plugframe
     //
     class ServiceImplementationInterface;
     //
+    class GuiPageController;
+    //
     class WorkerOuts;
     class WorkerSignal;
     class WorkerWatcher;

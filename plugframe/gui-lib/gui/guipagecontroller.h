@@ -25,11 +25,11 @@
 #include <QAction>
 #include <QSharedPointer>
 #include "gui/guipageview.h"
-#include "pfcore-lib_export.h"
+#include "pfgui-lib_export.h"
 
 namespace plugframe
 {
-class PFCORELIB_EXPORT GuiPageController : public QObject
+class PFGUILIB_EXPORT GuiPageController : public QObject
 {
     Q_OBJECT
 
