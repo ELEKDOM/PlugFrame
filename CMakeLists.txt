@@ -18,6 +18,7 @@ cmake_minimum_required(VERSION 3.19)
 
 option(PF_BUILD_TEXT "Build text-based implementations (console/display)" ON)
 option(PF_BUILD_GUI  "Build GUI-based implementations (Qt Widgets)" ON)
+option(PF_BUILD_LAUNCHERS "Build PlugFrame launchers" OFF)
 
 # PlugFrame Project version
 set(PF_PROJ_VERSION "1.0.0")

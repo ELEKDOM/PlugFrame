@@ -40,4 +40,6 @@ if(PF_BUILD_GUI)
 endif()
 
 # PlugFrame Launchers
-add_subdirectory(launchers)
+if (PF_BUILD_LAUNCHERS)
+    add_subdirectory(launchers)
+endif()

@@ -14,7 +14,7 @@ This repository contains the core framework developed by [ELEKDOM](https://elekd
 - **Clear separation between core, text (CLI), and GUI components**
 - **Optional GUI build** for headless/server deployments (e.g. Raspberry Pi)
 - **Configurable build profiles** via CMake options (`PF_BUILD_TEXT`, `PF_BUILD_GUI`)
-- Core components: lifecycle manager, logging system, headless or GUI-based shells
+- Core components: lifecycle manager, logging system, headless or GUI-based shells (optional launchers)
 - Designed with clean separation between plugin loading and logic implementation
 
 ---
@@ -37,7 +37,7 @@ PlugFrame/
 │   ├── bundles-gui/
 │   ├────── guidisplay/                   # GUI version of the display component
 │   └────── guiconsole/                   # GUI shell for command execution          
-├── launchers/                            # Application launchers (CLI / GUI)
+├── launchers/                            # Optional application launchers (CLI / GUI)
 ├── cmake/plugframe_runtime_install.cmake # Script for binaries and conf files post-build install
 └── CMakeLists.txt                        # Main CMake configuration file
 ```
@@ -46,7 +46,7 @@ PlugFrame/
 
 ## Requirements
 
-- **Qt 6.9.3**
+- **Qt 6.x (tested with 6.9.3)**
 - **CMake ≥ 3.19**
 - C++17 compatible compiler (tested with `g++` on **Kubuntu 25.10**)
 - Recommended: [QtCreator](https://www.qt.io/product/development-tools) for development
@@ -69,10 +69,12 @@ PlugFrame provides configurable build options to enable or disable specific comp
 
 #### Available CMake options
 
-| Option          | Default | Description                                      |
-|-----------------|---------|--------------------------------------------------|
-| `PF_BUILD_TEXT` | ON      | Build text/console components (CLI, server usage)|
-| `PF_BUILD_GUI`  | ON      | Build GUI components (Qt Widgets / QML)          |
+| Option               | Default | Description                                              |
+|----------------------|---------|----------------------------------------------------------|
+| `PF_BUILD_TEXT`      | ON      | Build text-based components (console/display bundles)    |
+| `PF_BUILD_GUI`       | ON      | Build GUI-based components (Qt Widgets / GUI bundles)    |
+| `PF_BUILD_LAUNCHERS` | OFF     | Build PlugFrame application launchers (CLI / GUI)        |
+
 
 #### Full desktop build (CLI + GUI)
 ```bash
@@ -81,6 +83,13 @@ cmake -S . -B build \
   -DPF_BUILD_GUI=ON
 ```
 
+#### Framework-only build (no launchers)
+```bash
+cmake -S . -B build \
+  -DPF_BUILD_TEXT=ON \
+  -DPF_BUILD_GUI=ON \
+  -DPF_BUILD_LAUNCHERS=OFF
+```
 ---
 
 ## Runtime installation
