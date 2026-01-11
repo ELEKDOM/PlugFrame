@@ -35,12 +35,12 @@ target_include_directories(${BUNDLE_IMPL_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
     PRIVATE
-        ${PF_LIB_INC_DIR}
+        ${PF_CORE_LIB_INC_DIR}
 )
 
 target_link_libraries(${BUNDLE_IMPL_NAME} PUBLIC
     Qt6::Core
-    ${PF_LIB_NAME}
+    ${PF_CORE_LIB_NAME}
 )
 
 target_compile_definitions(${BUNDLE_IMPL_NAME}

@@ -11,12 +11,14 @@ target_include_directories(${LAUNCHER_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
     PRIVATE
-        ${PF_LIB_INC_DIR}
+        ${PF_CORE_LIB_INC_DIR}
+        ${PF_GUI_LIB_INC_DIR}
 )
 
 target_link_libraries(${LAUNCHER_NAME}
   PRIVATE
-    ${PF_LIB_NAME}
+    ${PF_CORE_LIB_NAME}
+    ${PF_GUI_LIB_NAME}
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
@@ -37,7 +39,6 @@ qt6_add_resources(${LAUNCHER_NAME} "guilauncher_resources"
 target_compile_definitions(${LAUNCHER_NAME}
     PRIVATE
         QT_DEPRECATED_WARNINGS
-    PUBLIC
         $<$<CONFIG:Release>:QT_NO_DEBUG_OUTPUT>
 )
 
