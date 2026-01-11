@@ -60,7 +60,7 @@ PlugFrame/
 ```bash
 git clone https://github.com/elekdom/PlugFrame.git
 cd PlugFrame
-git checkout qt6_cmake
+git checkout <version_tag>
 ```
 
 ### Build
