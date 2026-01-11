@@ -48,11 +48,8 @@ set(SOURCES
     factory/bundlefactory.cpp
     factory/corefactory.cpp
     factory/defaultbundlefactory.cpp
-    gui/guipagecontroller.cpp
-    gui/guipageview.cpp
     launcher/bundlesstore.cpp
     launcher/consoleapplication.cpp
-    launcher/guiapplication.cpp
     launcher/launcher.cpp
     launcher/launchingproperties.cpp
     launcher/location.cpp
@@ -127,11 +124,8 @@ set(HEADERS
     factory/bundlefactory.h
     factory/corefactory.h
     factory/defaultbundlefactory.h
-    gui/guipagecontroller.h
-    gui/guipageview.h
     launcher/bundlesstore.h
     launcher/consoleapplication.h
-    launcher/guiapplication.h
     launcher/launcher.h
     launcher/launchingproperties.h
     launcher/location.h
@@ -171,35 +165,33 @@ set(HEADERS
     xmldom/xmldocument.h
     )
 
-qt_add_library(${PF_LIB_NAME} SHARED ${SOURCES} ${HEADERS})
+qt_add_library(${PF_CORE_LIB_NAME} SHARED ${SOURCES} ${HEADERS})
 
-set_target_properties(${PF_LIB_NAME}
+set_target_properties(${PF_CORE_LIB_NAME}
                       PROPERTIES
-                      VERSION ${PF_LIB_VERSION}
-                      SOVERSION ${PF_LIB_VERSION_MAJOR}
+                      VERSION ${PF_CORE_LIB_VERSION}
+                      SOVERSION ${PF_CORE_LIB_VERSION_MAJOR}
                       )
 
-target_include_directories(${PF_LIB_NAME}
+target_include_directories(${PF_CORE_LIB_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(${PF_LIB_NAME} PRIVATE
+target_link_libraries(${PF_CORE_LIB_NAME} PRIVATE
     Qt6::Core
-    Qt6::Gui
     Qt6::Network
-    Qt6::Widgets
     Qt6::Xml
 )
 
 # For Export Declaration
-target_compile_definitions(${PF_LIB_NAME} PUBLIC
+target_compile_definitions(${PF_CORE_LIB_NAME} PUBLIC
     PFCORE_LIBRARY
 )
 
 # Disable Debug Log for Release
-target_compile_definitions(${PF_LIB_NAME}
-    PUBLIC
+target_compile_definitions(${PF_CORE_LIB_NAME}
+    PRIVATE
     $<$<CONFIG:Release>:QT_NO_DEBUG_OUTPUT>
 )
 

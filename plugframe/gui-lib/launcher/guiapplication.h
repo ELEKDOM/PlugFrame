@@ -20,12 +20,12 @@
 #define GUIAPPLICATION_H
 
 #include <QScopedPointer>
-#include "pfcore-lib_export.h"
-#include "launcher.h"
+#include "launcher/launcher.h"
+#include "pfgui-lib_export.h"
 
 namespace plugframe
 {
-class PFCORELIB_EXPORT GuiApplication : public Launcher
+class PFGUILIB_EXPORT GuiApplication : public Launcher
 {
 public:
     GuiApplication();
