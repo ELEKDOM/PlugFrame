@@ -25,6 +25,11 @@ set(PF_PROJ_VERSION "1.0.0")
 project(PlugFrame VERSION ${PF_PROJ_VERSION} LANGUAGES CXX)
 message(STATUS "PF_PROJ_VERSION = " ${PF_PROJ_VERSION})
 
+# Disable RPATH generation to avoid embedding build-time or host-specific paths
+# into binaries. Runtime library resolution is handled explicitly (LD_LIBRARY_PATH),
+# ensuring predictable and portable execution across environments.
+set(CMAKE_SKIP_RPATH TRUE)
+
 # Core Lib version
 set(PF_CORE_LIB_VERSION_MAJOR "1")
 string(CONCAT PF_CORE_LIB_VERSION ${PF_CORE_LIB_VERSION_MAJOR} ".0.0")
