@@ -90,6 +90,11 @@ cmake -S . -B build \
   -DPF_BUILD_GUI=ON \
   -DPF_BUILD_LAUNCHERS=OFF
 ```
+
+#### Cross-Compilation
+PlugFrame supports cross-compilation for embedded Linux targets.
+See `docs/qt-install-and-crosscompile.md` for the full, tested workflow.
+
 ---
 
 ## Runtime installation
@@ -156,13 +161,12 @@ All source files include appropriate GPLv3 headers.
 
 ### Next milestones
 
-- Raspberry Pi cross-compilation (in progress / validated headless build)
-- Windows and macOS compilation
 - Unit tests and CI integration
 - GitHub wiki with technical documentation
 - First packaged release (v0.1.0)
 - Managing bundle dependencies (RESOLVED state)
 - Dynamic service binding (currently static)
+- Windows and macOS compilation
 - *and more according to future needs expressed*
 
 ---

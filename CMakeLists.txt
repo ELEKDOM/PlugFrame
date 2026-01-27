@@ -70,6 +70,8 @@ add_custom_target(PlugFrame_other_files
         README.md
         LICENSE.txt
         cmake/plugframe_runtime_install.cmake
+        cmake/toolchains/rpi3-aarch64.cmake
+        docs/qt-install-and-crosscompile.md
 )
 
 # PlugFrame runtime install (CMake-only)

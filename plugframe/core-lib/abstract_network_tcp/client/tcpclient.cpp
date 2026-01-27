@@ -21,6 +21,7 @@
 #include "tcpclientslots.h"
 #include "tcpclientchannelmanager.h"
 #include "service-int/frontendcontrolserviceinterface.h"
+#include "logger/pflog.h"
 
 plugframe::TcpClient::TcpClient(QString logBundleName):
     plugframe::BundleImplementation{logBundleName},
@@ -48,6 +49,8 @@ void plugframe::TcpClient::connectToHost(plugframe::FrontendClientSide *clientSi
                                          quint16 serverPort)
 {
     m_clientSide = clientSide;
+
+    pfInfo1(logChannel()) << QObject::tr("Connect to backend %1:%2").arg(serverIpv4).arg(serverPort);
 
     if (m_clientChannelManager)
     {

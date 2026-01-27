@@ -49,6 +49,9 @@ void plugframe::TcpServer::startListen()
     quint16 ServerPort;
 
     readListenAddr(serverIpAddr,ServerPort);
+
+    pfInfo1(logChannel()) << QObject::tr("The server listen on socket %1:%2").arg(serverIpAddr.toString()).arg(ServerPort);
+
     if(!m_serverComManager->open(serverIpAddr,ServerPort))
     {
         pfErr(logChannel()) << QObject::tr("The server didn't open socket %1:%2").arg(serverIpAddr.toString()).arg(ServerPort);
