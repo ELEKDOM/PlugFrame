@@ -33,6 +33,7 @@ public:
 
 public:
     const QString& logChannel() {return m_logChannel;}
+    const QString& logChannel() const {return m_logChannel;}
 
 private:
     QString m_logChannel;
