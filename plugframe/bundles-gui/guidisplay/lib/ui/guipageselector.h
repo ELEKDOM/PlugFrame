@@ -20,7 +20,7 @@
 #define GUIPAGESELECTOR_H
 
 #include <QAction>
-#include "pfcore-lib_forward.h"
+#include "pfgui-lib_forward.h"
 
 class GuiPageSelector : public QAction
 {
