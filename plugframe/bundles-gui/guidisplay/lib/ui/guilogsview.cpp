@@ -35,7 +35,7 @@ GuiLogsView::~GuiLogsView()
 
 void GuiLogsView::log(QString msg)
 {
-    ui->logsText->appendPlainText(msg);
+    ui->logsText->insertPlainText (msg);
 }
 
 void GuiLogsView::onClear()
