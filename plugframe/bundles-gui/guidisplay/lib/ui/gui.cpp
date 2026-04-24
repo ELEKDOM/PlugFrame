@@ -113,6 +113,7 @@ void Gui::onRemoveAllPages(plugframe::QspGuiPageController controller)
 
         if (selec)
         {
+            ui->toolBar->removeAction(selec);
             m_actionSet.removeOne(selec);
         }
     }

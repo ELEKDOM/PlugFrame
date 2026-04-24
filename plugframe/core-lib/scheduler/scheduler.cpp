@@ -32,16 +32,23 @@ plugframe::Scheduler::Scheduler(const QString &logChannel,const QString& id,QObj
     m_id{id},
     m_sequenceOfWeek{54}, // 0 is never used !
     m_curDailyScheduler{nullptr},
-    m_curScheduledEvent{nullptr},
+    m_nextEventToSchedule{nullptr},
     m_nextDayTimerId{0},
     m_nextScheduledEvtTimerId{0}
 {
+    // move this object to the main thread
     moveToThread(QCoreApplication::instance()->thread());
 
+    // annual sequencing initialization
     for (int i = 0; i < 54; i++)
     {
         m_sequenceOfWeek[i] = nullptr;
     }
+
+    // To start and stop timers
+    connect(this,SIGNAL(startNextDayTimer(int)),SLOT(onStartNextDayTimer(int)),Qt::QueuedConnection);
+    connect(this,SIGNAL(startNextEventTimer(int)),SLOT(onStartNextEventTimer(int)),Qt::QueuedConnection);
+    connect(this,SIGNAL(stopTimer(int)),SLOT(onStopTimer(int)),Qt::QueuedConnection);
 }
 
 plugframe::Scheduler::~Scheduler()
@@ -65,17 +72,26 @@ plugframe::QspDailyScheduler plugframe::Scheduler::dailyScheduler(QString dailyS
     return m_dsHash.value(dailySchedulerName);
 }
 
-void plugframe::Scheduler::init()
+void plugframe::Scheduler::start(QString& currentEvt)
 {
-    /*
-    To consider:
-    It may be necessary, at software startup, to relaunch the last event emitted?
-    So perhaps consider saving the "dynamic" parameters.
-    */
-    // TODO ...
-
     // Initialize the timers event
     newDay();
+
+    // Searching for previous event
+    previousEvt(currentEvt);
+}
+
+void plugframe::Scheduler::stop()
+{
+    if (m_nextDayTimerId > 0)
+    {
+        emit stopTimer(m_nextDayTimerId);
+    }
+
+    if (m_nextScheduledEvtTimerId > 0)
+    {
+        emit stopTimer(m_nextScheduledEvtTimerId);
+    }
 }
 
 void plugframe::Scheduler::timerEvent(QTimerEvent *event)
@@ -108,7 +124,7 @@ void plugframe::Scheduler::assignWeeklyScheduler(QspWeeklyScheduler ws)
 }
 
 ///
-/// \brief Scheduler::newDay, Looks up for the dailyScheduler for this new day !
+/// \brief Scheduler::newDay, Looks up for the dailyScheduler for this new day and arms the timers!
 ///
 void plugframe::Scheduler::newDay()
 {
@@ -116,19 +132,21 @@ void plugframe::Scheduler::newDay()
     int dow{QDate::currentDate().dayOfWeek()};
     int wn{QDate::currentDate().weekNumber()};
 
-    pfInfo1(logChannel()) << m_id << " New day: day of week = " << dow <<" , week number = " << wn;
+    pfInfo1(logChannel()) << tr("%1 journée sélectionnée : ").arg(m_id) << dow << tr(" , semaine :") << wn;
 
     // Select a new daily scheduler
     //-----------------------------
     m_curDailyScheduler = nullptr;
-    m_curScheduledEvent = nullptr;
+    m_nextEventToSchedule = nullptr;
     ws = m_sequenceOfWeek[wn];
     if(ws)
     {
+        emit weeklySequencer(ws->name());
         m_curDailyScheduler = ws->dailySched(dow);
         if (m_curDailyScheduler)
         {
             m_curDailyScheduler->initDay();
+            emit dailySequencer(m_curDailyScheduler->name());
         }
     }
 
@@ -141,31 +159,88 @@ void plugframe::Scheduler::newDay()
     initNextScheduledEvtTimer();
 }
 
+void plugframe::Scheduler::previousEvt(QString &currentEvt)
+{
+    currentEvt = ""; // By default, no previous programming for this day
+
+    if (m_curDailyScheduler)
+    {
+        // search for the latest applicable event
+
+        ScheduledEvent *latestApplicableEvent{m_curDailyScheduler->previousEvt()};
+
+        if (latestApplicableEvent)
+        {
+            currentEvt = latestApplicableEvent->evt();
+        }
+        else
+        {
+            // search on the day before !
+
+            int yesterday{QDate::currentDate().dayOfWeek() - 1};
+            DailyScheduler *previousScheduler{nullptr};
+            int wn{QDate::currentDate().weekNumber()};
+            WeeklyScheduler *ws;
+
+            if (yesterday > 0)
+            {
+                ws = m_sequenceOfWeek[wn]; // same week !
+                previousScheduler = ws->dailySched(yesterday);
+                if (previousScheduler)
+                {
+                    latestApplicableEvent = previousScheduler->lastEvt();
+                    if (latestApplicableEvent)
+                    {
+                        currentEvt = latestApplicableEvent->evt();
+                    }
+                }
+            }
+            else
+            {
+                // search on the week before  !
+                wn -= 1;
+                if (wn > 0)
+                {
+                    ws = m_sequenceOfWeek[wn]; // previous week !
+                    previousScheduler = ws->dailySched(7); // last day of a week !
+                    if (previousScheduler)
+                    {
+                        latestApplicableEvent = previousScheduler->lastEvt();
+                        if (latestApplicableEvent)
+                        {
+                            currentEvt = latestApplicableEvent->evt();
+                        }
+                    }
+                }
+            } // if (yesterday > 0)
+        } // if (latestApplicableEvent)
+    } // if (m_curDailyScheduler)
+}
+
 void plugframe::Scheduler::initNextDayTimer()
 {
     QTime ct{QTime::currentTime()};
     QTime midnight(23,59,59);
     int msToMidnight;
 
-    msToMidnight = ct.msecsTo(midnight) + 2000;// next day at midnight + 1s !
-    m_nextDayTimerId = startTimer(msToMidnight);
+    msToMidnight = ct.msecsTo(midnight);
+    emit startNextDayTimer(msToMidnight + 1000);// next day at midnight !
 }
 
 void plugframe::Scheduler::initNextScheduledEvtTimer()
 {
-    if (m_curDailyScheduler)
+    if (m_curDailyScheduler) // if null, no programming this day !
     {
-        m_curScheduledEvent = m_curDailyScheduler->nextEvt();
-        if (m_curScheduledEvent)
+        m_nextEventToSchedule = m_curDailyScheduler->nextEvt();
+        if (m_nextEventToSchedule)
         {
             QTime ct{QTime::currentTime()};
             int msToNextEvt;
 
-            msToNextEvt = ct.msecsTo(m_curScheduledEvent->time());
+            msToNextEvt = ct.msecsTo(m_nextEventToSchedule->time());
             if (msToNextEvt > 0)
             {
-                m_nextScheduledEvtTimerId = startTimer(msToNextEvt);
-                pfInfo1(logChannel()) << m_id << " Next event : " << m_curScheduledEvent->evt() << " at : " << m_curScheduledEvent->time().toString("hh:mm");
+                emit startNextEventTimer(msToNextEvt);
             }
         }
     }
@@ -173,10 +248,27 @@ void plugframe::Scheduler::initNextScheduledEvtTimer()
 
 void plugframe::Scheduler::sendEvt()
 {
-    if (m_curScheduledEvent)
+    if (m_nextEventToSchedule)
     {
-        pfInfo1(logChannel()) << m_id << " event order :  " << m_curScheduledEvent->evt();
+        pfInfo1(logChannel()) << tr("%1 évènement déclenché :  ").arg(m_id) << m_nextEventToSchedule->evt();
 
-        emit trigger(m_curScheduledEvent->evt());
+        emit trigger(m_nextEventToSchedule->evt());
+        emit dailySequencerIndex(m_curDailyScheduler->idx() -1);
     }
+}
+
+void plugframe::Scheduler::onStartNextDayTimer(int msToMidnight)
+{
+    m_nextDayTimerId = startTimer(msToMidnight);
+}
+
+void plugframe::Scheduler::onStartNextEventTimer(int msToNextEvt)
+{
+    m_nextScheduledEvtTimerId = startTimer(msToNextEvt);
+    pfInfo1(logChannel()) << tr("%1 prochain évènement déclenché : ").arg(m_id) << m_nextEventToSchedule->evt() << tr(" à : %1").arg(m_nextEventToSchedule->time().toString("hh:mm"));
+}
+
+void plugframe::Scheduler::onStopTimer(int timerId)
+{
+    killTimer(timerId);
 }

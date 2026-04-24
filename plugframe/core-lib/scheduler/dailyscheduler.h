@@ -34,16 +34,19 @@ public:
 
 public:
     const QString& name() {return m_name;}
+    int idx() {return m_idx;}
 
 public:
     void addScheduledEvent(ScheduledEvent *sEvt);
     void initDay();
     ScheduledEvent *nextEvt();
+    ScheduledEvent* previousEvt();
+    ScheduledEvent *lastEvt();
 
 private:
     QString                  m_name;
-    QList<QspScheduledEvent> m_scheduledEvtList;
-    int                      m_idx;
+    QList<QspScheduledEvent> m_scheduledEvtList; // ordered list of events of the day by time
+    int                      m_idx;              // index of the next event to test into the list
 };
 using QspDailyScheduler = QSharedPointer<DailyScheduler>;
 }//namespace plugframe

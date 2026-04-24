@@ -24,6 +24,11 @@ plugframe::DailyScheduler::DailyScheduler(const QString& name):
     m_name{name}
 {}
 
+///
+/// \brief plugframe::DailyScheduler::addScheduledEvent
+/// It is the caller's responsibility to ensure the chronological order of events!
+/// \param sEvt
+///
 void plugframe::DailyScheduler::addScheduledEvent(ScheduledEvent *sEvt)
 {
     QspScheduledEvent newly{sEvt};
@@ -36,11 +41,42 @@ void plugframe::DailyScheduler::initDay()
     m_idx = 0;
 }
 
+plugframe::ScheduledEvent *plugframe::DailyScheduler::previousEvt()
+{
+    int previousIdx{m_idx - 2}; // Note that m_idx is two indexes ahead of the current time slot !
+    ScheduledEvent *ret;
+    QspScheduledEvent se;
+
+    if (previousIdx < 0)
+    {
+        // search on the day before
+        ret = nullptr;
+    }
+    else
+    {
+        se = m_scheduledEvtList.at(previousIdx);
+        ret = se.data();
+    }
+
+    return ret;
+}
+
+plugframe::ScheduledEvent *plugframe::DailyScheduler::lastEvt()
+{
+    ScheduledEvent *ret{nullptr};
+
+    if (!m_scheduledEvtList.isEmpty())
+    {
+        ret = m_scheduledEvtList.last().data();
+    }
+    return ret;
+}
+
 ///
 /// \brief DailyScheduler::nextEvt
 /// \details returns a pointer to the next event to fire.
 ///          The next event is selected based on the current time.
-/// \return next event or nullptr if there no event to fire before midnight.
+/// \return next event or nullptr if there is no event to fire before midnight.
 ///
 plugframe::ScheduledEvent *plugframe::DailyScheduler::nextEvt()
 {
@@ -52,7 +88,7 @@ plugframe::ScheduledEvent *plugframe::DailyScheduler::nextEvt()
         plugframe::QspScheduledEvent se{m_scheduledEvtList.at(m_idx++)};
         QTime nextTime{se->time()};
 
-        if (nextTime > ct)
+        if (nextTime >= ct)
         {
             ret =se.data();
         }
