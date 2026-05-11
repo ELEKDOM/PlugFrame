@@ -202,39 +202,53 @@ endif()
 #################################
 
 set(PF_PROFILE_DIR "${PF_PROFILES_ROOT_DIR}/${PF_SELECTED_PROFILE_NAME}")
+if(EXISTS "${PF_PROFILE_DIR}" AND IS_DIRECTORY "${PF_PROFILE_DIR}")
 
-# PlugFrame console
-###################
+  message(STATUS "Using PlugFrame configuration profile: ${PF_PROFILE_DIR}")
 
-if(PF_BUILD_TEXT)
-# Logger bundle conf
-  pf_copy_conf_file(
-    "${PF_PROFILE_DIR}/plugframe/console/log.ini"
-    "${PF_BIN_DIR}/plugframe/bundles/logger/conf"
-  )
-endif()
+  ####################################
+  # install/copy configuration files #
+  ####################################
 
-# PlugFrame gui
-###############
+  #####################
+  # PlugFrame console #
+  #####################
 
-if(PF_BUILD_GUI)
-# Launcher conf properties.ini
-  pf_copy_conf_file(
-    "${PF_PROFILE_DIR}/plugframe/guiconsole/properties.ini"
-    "${PF_BIN_DIR}/guiplugframe/conf"
-  )
+  if(PF_BUILD_TEXT)
+  # Logger bundle conf
+    pf_copy_conf_file(
+      "${PF_PROFILE_DIR}/plugframe/console/log.ini"
+      "${PF_BIN_DIR}/plugframe/bundles/logger/conf"
+    )
+  endif()
 
-# Launcher conf elekdom.qss
-  pf_copy_conf_file(
-    "${PF_PROFILE_DIR}/plugframe/guiconsole/elekdom.qss"
-    "${PF_BIN_DIR}/guiplugframe/conf"
-  )
+  #################
+  # PlugFrame gui #
+  #################
 
-# Logger bundle conf
-  pf_copy_conf_file(
-    "${PF_PROFILE_DIR}/plugframe/guiconsole/log.ini"
-    "${PF_BIN_DIR}/guiplugframe/bundles/logger/conf"
-  )
+  if(PF_BUILD_GUI)
+  # Launcher conf properties.ini
+    pf_copy_conf_file(
+      "${PF_PROFILE_DIR}/plugframe/guiconsole/properties.ini"
+      "${PF_BIN_DIR}/guiplugframe/conf"
+    )
+
+  # Launcher conf elekdom.qss
+    pf_copy_conf_file(
+      "${PF_PROFILE_DIR}/plugframe/guiconsole/elekdom.qss"
+      "${PF_BIN_DIR}/guiplugframe/conf"
+    )
+
+  # Logger bundle conf
+    pf_copy_conf_file(
+      "${PF_PROFILE_DIR}/plugframe/guiconsole/log.ini"
+      "${PF_BIN_DIR}/guiplugframe/bundles/logger/conf"
+    )
+  endif()
+
+else()
+  message(STATUS "PlugFrame configuration profile does not exist yet: ${PF_PROFILE_DIR}")
+  message(STATUS "Skipping configuration files installation.")
 endif()
 
 # finished!
