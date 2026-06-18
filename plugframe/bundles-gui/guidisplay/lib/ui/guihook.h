@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include "gui/guipagecontroller.h"
+#include "gui/guimainmenunames.h"
 #include "guidisplay_forward.h"
 
 class GuiHook : public QObject
@@ -37,7 +38,7 @@ public:
     void log(const QString &msg);
     void statusMessage(const QString& msg);
     void clearStatusMessages();
-    void addGuiController(const plugframe::QspGuiPageController &controller);
+    void addGuiController(const plugframe::QspGuiPageController &controller,const plugframe::GuiMainMenuNames& menuNames);
     void removeAllPages(plugframe::QspGuiPageController controller);
     void setMainWindowTitle(const QString& title);
 
@@ -45,7 +46,7 @@ signals:
     void sigLog(QString msg);
     void sigStatusMessage(QString msg);
     void sigClearStatusMessages();
-    void sigAddGuiController(plugframe::QspGuiPageController controller);
+    void sigAddGuiController(plugframe::QspGuiPageController controller,const plugframe::GuiMainMenuNames& menuNames);
     void sigRemoveAllPages(plugframe::QspGuiPageController controller);
     void sigSetWindowTitle(const QString& title);
 

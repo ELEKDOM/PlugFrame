@@ -7,10 +7,13 @@ message(STATUS "LAUNCHER_NAME = " ${LAUNCHER_NAME})
 add_custom_target(PlugFrame_guilauncher_other_files
     SOURCES
       run-guiplugframe.sh
+      conf/properties.ini
+      conf/elekdom.qss
 )
 
 qt6_add_executable(${LAUNCHER_NAME}
     main.cpp
+    img/app_icon128.png img/app_icon48.png img/app_icon32.png img/app_icon16.png
 )
 
 add_custom_command(TARGET ${LAUNCHER_NAME} POST_BUILD
@@ -40,6 +43,10 @@ target_link_libraries(${LAUNCHER_NAME}
 # Resources:
 set(guilauncher_resources_resource_files
     "img/elekdom_logo.png"
+    "img/app_icon16.png"
+    "img/app_icon32.png"
+    "img/app_icon48.png"
+    "img/app_icon128.png"
 )
 
 qt6_add_resources(${LAUNCHER_NAME} "guilauncher_resources"

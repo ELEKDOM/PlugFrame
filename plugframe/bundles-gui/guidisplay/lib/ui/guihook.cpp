@@ -45,7 +45,7 @@ void GuiHook::initGui()
     connect(this,SIGNAL(sigClearStatusMessages()),m_mainWindow,SLOT(onClearStatusMessages()),Qt::QueuedConnection);
 
     // GuiBuilder's services
-    connect(this,SIGNAL(sigAddGuiController(plugframe::QspGuiPageController)),m_mainWindow,SLOT(onAddGuiController(plugframe::QspGuiPageController)));
+    connect(this,SIGNAL(sigAddGuiController(plugframe::QspGuiPageController,const plugframe::GuiMainMenuNames&)),m_mainWindow,SLOT(onAddGuiController(plugframe::QspGuiPageController,const plugframe::GuiMainMenuNames&)));
     connect(this,SIGNAL(sigRemoveAllPages(plugframe::QspGuiPageController)),m_mainWindow,SLOT(onRemoveAllPages(plugframe::QspGuiPageController)));
     connect(this,SIGNAL(sigSetWindowTitle(QString)),m_mainWindow,SLOT(onSetMainWindowTitle(QString)));
 
@@ -73,9 +73,9 @@ void GuiHook::clearStatusMessages()
     emit sigClearStatusMessages();
 }
 
-void GuiHook::addGuiController(const plugframe::QspGuiPageController &controller)
+void GuiHook::addGuiController(const plugframe::QspGuiPageController &controller,const plugframe::GuiMainMenuNames& menuNames)
 {
-    emit sigAddGuiController(controller);
+    emit sigAddGuiController(controller,menuNames);
 }
 
 void GuiHook::removeAllPages(plugframe::QspGuiPageController controller)

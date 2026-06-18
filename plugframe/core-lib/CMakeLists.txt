@@ -148,7 +148,6 @@ set(HEADERS
     service-int/displayserviceinterface.h
     service-int/frontendclientside.h
     service-int/frontendcontrolserviceinterface.h
-    service-int/guibuilderserviceinterface.h
     service-int/loginserviceinterface.h
     service-int/serviceinterface.h
     service-int/systemserviceinterface.h

@@ -24,6 +24,7 @@
 #include <QStringList>
 #include <QAction>
 #include <QSharedPointer>
+#include "gui/guicontrollertype.h"
 #include "gui/guipageview.h"
 #include "pfgui-lib_export.h"
 
@@ -33,28 +34,29 @@ class PFGUILIB_EXPORT GuiPageController : public QObject
 {
     Q_OBJECT
 
-protected:
-    static inline QString systemMenuName() {return tr("&PlugFrame");}
-
 public:
-    explicit GuiPageController(const QString& ctrlName,
-                               QStringList menusNames = QStringList(),
+    explicit GuiPageController(GuiControllerType ctrlType,
                                QObject *parent = nullptr);
-
     ~GuiPageController() override;
 
 public:
     virtual void buildViews() = 0;
     void updateViewsIdx();
     const GuiPageViewList& viewList() {return m_viewList;}
-    const QStringList& menusNames() {return m_menusNames;}
-    const QString& ctrlName() {return m_ctrlName;}
+    GuiControllerType ctrlType() {return m_ctrlType;}
     void currentCtrl();
     void ctrlSelectionMenu(QAction *a) {m_ctrlSelectionMenu = a;}
     QAction *ctrlSelectionMenu() {return m_ctrlSelectionMenu;}
 
 public slots:
     virtual void onTriggeredActionMenu(bool checked);
+
+signals:
+    void showPage(int idx);
+    void updatePageIdx(plugframe::GuiPageController* ctrl);
+    void curCtrl(plugframe::GuiPageController* ctrl);
+    void statusMessage(QString msg);
+    void clearStatusMessage();
 
 protected:
     void addView(GuiPageView *view);
@@ -65,24 +67,16 @@ protected:
     void clearStatusMsg();
     void clear();
 
-signals:
-    void showPage(int idx);
-    void updatePageIdx(plugframe::GuiPageController* ctrl);
-    void curCtrl(plugframe::GuiPageController* ctrl);
-    void statusMessage(QString msg);
-    void clearStatusMessage();
-
 private:
     void notifyCurCtrl();
     void deleteAllViews();
 
 private:
-    QString         m_ctrlName;
-    GuiPageView    *m_curView;
-    QAction        *m_ctrlSelectionMenu; // only if m_menusNames[0] is not null
-    GuiPageViewList m_viewList;
-    QStringList     m_menusNames; // To manage controller selection into menubar. m_menusNames[0] is the main menu name. If not empty, m_menusNames[1] is the controller selection name if not empty
-    QString         m_statusMsg;
+    GuiControllerType m_ctrlType;
+    GuiPageView      *m_curView;
+    QAction          *m_ctrlSelectionMenu; // not null only if the controller has an input in the main menu
+    GuiPageViewList   m_viewList;
+    QString           m_statusMsg;
 };
 using QspGuiPageController = QSharedPointer<GuiPageController>;
 }//namespace plugframe

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,18 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
-#include "bundle/bundle.h"
 #include "TBUNDLEfactory.h"
-#include "TBUNDLEbuilder.h"
-#include "TBUNDLEservice.h"
-#include "TBUNDLE.h"
-
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::tbundle::factory;
-using namespace elekdom::plugframe::tbundle::builder;
-using namespace elekdom::plugframe::tbundle::bundle;
-using namespace elekdom::plugframe::tbundle::service;
 
 TBUNDLEFactory::TBUNDLEFactory()
 {
@@ -39,12 +28,3 @@ TBUNDLEFactory::~TBUNDLEFactory()
 
 }
 
-BundleBuilder *TBUNDLEFactory::createBuilder(Bundle &myBundle)
-{
-    return new TBUNDLEBuilder{myBundle};
-}
-
-TBUNDLEService *TBUNDLEFactory::createTBUNDLEService(TBUNDLE *implementation)
-{
-    return new TBUNDLEService{implementation};
-}

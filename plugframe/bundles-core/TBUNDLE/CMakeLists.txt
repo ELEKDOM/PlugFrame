@@ -1,5 +1,6 @@
+# Replace 'TBUNDLE'
 set (BUNDLE_NAME
-     "define bundle name"
+     "TBUNDLE"
 )
 message(STATUS "BUNDLE_NAME = " ${BUNDLE_NAME})
 

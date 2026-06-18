@@ -22,6 +22,7 @@
 #include <QSharedPointer>
 #include "service/serviceimplementation.h"
 #include "gui/guipagecontroller.h"
+#include "gui/guimainmenunames.h"
 
 class GuiBuilderService : public plugframe::ServiceImplementation
 {
@@ -30,7 +31,7 @@ public:
     ~GuiBuilderService() override;
 
 public:
-    void addGuiController(const plugframe::QspGuiPageController& controller);
+    void addGuiController(const plugframe::QspGuiPageController& controller,const plugframe::GuiMainMenuNames& menuNames);
     void removeAllPages(const plugframe::QspGuiPageController& controller);
     void setMainWindowTitle(const QString& title);
 

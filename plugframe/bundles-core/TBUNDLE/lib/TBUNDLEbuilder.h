@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,35 +16,19 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TBUNDLEBUILDER_H
 #define TBUNDLEBUILDER_H
 
 #include "bundle/bundlebuilder.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace tbundle
-{
-namespace builder
-{
-
-class TBUNDLEBuilder : public core::bundle::BundleBuilder
+class TBUNDLEBuilder : public plugframe::BundleBuilder
 {
 public:
-    TBUNDLEBuilder(core::bundle::Bundle4BuilderInterface& myBundle);
-    virtual ~TBUNDLEBuilder();
+    TBUNDLEBuilder(plugframe::Bundle4BuilderInterface& myBundle);
+    ~TBUNDLEBuilder() override;
 
 protected:
-    virtual void buildExportedServices();
-
+    void specificBuild() override;
 };
-
-} //namespace builder
-} //namespace tbundle
-} //namespace plugframe
-} //namespace elekdom
 
 #endif // TBUNDLEBUILDER_H

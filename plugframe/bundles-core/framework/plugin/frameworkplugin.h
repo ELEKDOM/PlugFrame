@@ -16,8 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SMFFRAMEWORKPLUGIN_H
-#define SMFFRAMEWORKPLUGIN_H
+#ifndef FRAMEWORKPLUGIN_H
+#define FRAMEWORKPLUGIN_H
 
 #include "plugin/plugin.h"
 #include "plugin/frameworkinterface.h"
@@ -28,7 +28,7 @@
 #include "systemservice.h"
 #include "serviceregistry.h"
 
-class SmfFrameworkPlugin : public plugframe::Plugin,
+class FrameworkPlugin : public plugframe::Plugin,
                            public plugframe::FrameworkInterface,
                            public plugframe::SystemServiceInterface,
                            public plugframe::SystemServiceRegistryInterface
@@ -40,8 +40,8 @@ class SmfFrameworkPlugin : public plugframe::Plugin,
                  plugframe::SystemServiceInterface
                  plugframe::SystemServiceRegistryInterface)
 public:
-    SmfFrameworkPlugin();
-    ~SmfFrameworkPlugin() override;
+    FrameworkPlugin();
+    ~FrameworkPlugin() override;
 
 protected: // BundleInterface
     void init() override;
@@ -69,7 +69,7 @@ protected: // SmfSystemServiceRegistryInterface
 private:
     plugframe::QspBundlesStore        m_bundlesStore;
     plugframe::QspLaunchingProperties m_launchingProperties;
-    QSpSystemService                  m_systemServiceImpl;
+    QspSystemService                  m_systemServiceImpl;
     QspServiceRegistry                m_serviceRegistryImpl;
 };
-#endif // SMFFRAMEWORKPLUGIN_H
+#endif // FRAMEWORKPLUGIN_H

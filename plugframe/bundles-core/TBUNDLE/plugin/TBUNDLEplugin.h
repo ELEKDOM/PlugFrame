@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,7 +16,6 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TBUNDLEPLUGIN_H
 #define TBUNDLEPLUGIN_H
 
@@ -24,37 +23,23 @@
 #include "TBUNDLEserviceinterface.h"
 #include "TBUNDLEservice.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace tbundle
-{
-namespace plugin
-{
-
-class TBUNDLEPlugin : public core::plugin::Plugin,
-                      public service::TBUNDLEServiceInterface
+class TBUNDLEPlugin : public plugframe::Plugin,
+                      public plugframe::TBUNDLEServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "elekdom.plugframe.tbundle.plugin" FILE "../TBUNDLEbundle.json")
-    Q_INTERFACES(elekdom::plugframe::core::plugin::BundleInterface)
-
-private:
-    //  m_serviceImpl;
+    Q_PLUGIN_METADATA(IID "plugframe.tbundle.plugin" FILE "../TBUNDLEbundle.json")
+    Q_INTERFACES(plugframe::BundleInterface)
 
 public:
     TBUNDLEPlugin();
     ~TBUNDLEPlugin() override;
 
-protected: // PLugin
-    virtual core::bundle::Bundle4PluginInterface *createImplementation();
+protected: // Plugin
+    plugframe::Bundle4PluginInterface *createImplementation() override;
     PF_bindServicesImplementations_DECL
-};
 
-} //namespace plugin
-} //namespace tbundle
-} //namespace plugframe
-} //namespace elekdom
+private:
+    QspTBUNDLEService m_TBUNDLEServiceImpl;
+};
 
 #endif // TBUNDLEPLUGIN_H

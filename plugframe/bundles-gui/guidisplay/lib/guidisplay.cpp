@@ -25,7 +25,7 @@
 #include "bundle/bundlecontext.h"
 
 GuiDisplay::GuiDisplay():
-    BundleImplementation{"Display"},
+    BundleImplementation{"GuiDisplay"},
     m_guiHook{nullptr}
 {
 }
@@ -49,9 +49,9 @@ void GuiDisplay::clearStatusMessages()
     m_guiHook->clearStatusMessages();
 }
 
-void GuiDisplay::addGuiController(const plugframe::QspGuiPageController &controller)
+void GuiDisplay::addGuiController(const plugframe::QspGuiPageController &controller,const plugframe::GuiMainMenuNames& menuNames)
 {
-    m_guiHook->addGuiController(controller);
+    m_guiHook->addGuiController(controller,menuNames);
 }
 
 void GuiDisplay::removeAllPages(const plugframe::QspGuiPageController &controller)
@@ -109,14 +109,10 @@ void GuiDisplay::_start(plugframe::QspBundleContext bundleContext)
 void GuiDisplay::buildGui()
 {
     GuiDisplayFactory &factory{dynamic_cast<GuiDisplayFactory&>(getFactory())};
-    plugframe::QspGuiPageController pageCtrl{factory.createLogsPageController()};
 
     // Gui build & init
     m_guiHook = factory.createGuiHook(factory.createGui(),*this);
     m_guiHook->initGui();
-    pageCtrl->buildViews();
-    addGuiController(pageCtrl);
-    pageCtrl->currentCtrl();
 
     // Gui on screen
     m_guiHook->showGui();

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,32 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TBUNDLE_H
 #define TBUNDLE_H
 
 #include "bundle/bundleimplementation.h"
 
-namespace elekdom
+class TBUNDLE : public plugframe::BundleImplementation
 {
-namespace plugframe
-{
-namespace tbundle
-{
-namespace bundle
-{
-
-class TBUNDLE : public core::bundle::BundleImplementation
-{
-
 public:
     TBUNDLE();
-    virtual ~TBUNDLE();
-};
+    ~TBUNDLE() override;
 
-} //namespace bundle
-} //namespace tbundle
-} //namespace plugframe
-} //namespace elekdom
+protected:
+    plugframe::BundleFactory* createFactory() override;
+    PF_qtServiceInterface_DECL
+};
 
 #endif // TBUNDLE_H

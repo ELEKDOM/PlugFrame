@@ -20,7 +20,6 @@
 #define GUIDISPLAYFACTORY_H
 
 #include "factory/bundlefactory.h"
-#include "ui/guilogscontroller.h"
 #include "guidisplay_forward.h"
 
 class GuiDisplayFactory : public plugframe::BundleFactory
@@ -32,7 +31,6 @@ public:
 public:
     virtual Gui *createGui();
     virtual GuiHook *createGuiHook(Gui* parent, GuiDisplay& bundle);
-    virtual GuiLogsController *createLogsPageController();
 
 protected:
     virtual GuiDisplayService *createDisplayService(plugframe::BundleImplementation *implementation);
@@ -40,6 +38,5 @@ protected:
     plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
                                                                            const QString& sName,
                                                                            const QString& serviceVersion) override;
-
 };
 #endif // GUIDISPLAYFACTORY_H

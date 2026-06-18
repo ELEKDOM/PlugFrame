@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,12 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "TBUNDLEplugin.h"
 #include "TBUNDLE.h"
-
-using namespace elekdom::plugframe;
-using namespace elekdom::plugframe::tbundle::plugin;
 
 TBUNDLEPlugin::TBUNDLEPlugin()
 {
@@ -33,7 +29,7 @@ TBUNDLEPlugin::~TBUNDLEPlugin()
 
 }
 
-core::bundle::Bundle4PluginInterface *TBUNDLEPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *TBUNDLEPlugin::createImplementation()
 {
-    return new tbundle::bundle::TBUNDLE;
+    return new TBUNDLE;
 }

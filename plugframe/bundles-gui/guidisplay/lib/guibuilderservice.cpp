@@ -29,11 +29,11 @@ GuiBuilderService::~GuiBuilderService()
 
 }
 
-void GuiBuilderService::addGuiController(const plugframe::QspGuiPageController &controller)
+void GuiBuilderService::addGuiController(const plugframe::QspGuiPageController &controller,const plugframe::GuiMainMenuNames& menuNames)
 {
     GuiDisplay *console{dynamic_cast<GuiDisplay*>(implementation())};
 
-    console->addGuiController(controller);
+    console->addGuiController(controller,menuNames);
 }
 
 void GuiBuilderService::removeAllPages(const plugframe::QspGuiPageController &controller)

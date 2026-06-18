@@ -21,27 +21,27 @@
 #include "launcher/launchingproperties.h"
 #include "launcher/bundlesstore.h"
 
-SmfFrameworkPlugin::SmfFrameworkPlugin()
+FrameworkPlugin::FrameworkPlugin()
 {
 
 }
 
-SmfFrameworkPlugin::~SmfFrameworkPlugin()
+FrameworkPlugin::~FrameworkPlugin()
 {
 
 }
 
-void SmfFrameworkPlugin::init()
+void FrameworkPlugin::init()
 {
     // Framework initialization is doing by initFwk !
 }
 
-plugframe::Bundle4PluginInterface *SmfFrameworkPlugin::createImplementation()
+plugframe::Bundle4PluginInterface *FrameworkPlugin::createImplementation()
 {
     return new Framework{m_bundlesStore,m_launchingProperties};
 }
 
-void SmfFrameworkPlugin::bindServicesImplementations()
+void FrameworkPlugin::bindServicesImplementations()
 {
     plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
@@ -52,7 +52,7 @@ void SmfFrameworkPlugin::bindServicesImplementations()
     m_serviceRegistryImpl = serviceImplementationItf.dynamicCast<ServiceRegistry>();
 }
 
-void SmfFrameworkPlugin::initFwk(plugframe::QspBundlesStore bundlesStore,
+void FrameworkPlugin::initFwk(plugframe::QspBundlesStore bundlesStore,
                                  plugframe::QspLaunchingProperties launchingProperties)
 {
     m_bundlesStore = bundlesStore;
@@ -60,52 +60,52 @@ void SmfFrameworkPlugin::initFwk(plugframe::QspBundlesStore bundlesStore,
     _init();
 }
 
-plugframe::BundleInterface *SmfFrameworkPlugin::getBundleInterface()
+plugframe::BundleInterface *FrameworkPlugin::getBundleInterface()
 {
     return qobject_cast<plugframe::BundleInterface*>(this);
 }
 
-QString SmfFrameworkPlugin::applicationName()
+QString FrameworkPlugin::applicationName()
 {
     return m_systemServiceImpl->applicationName();
 }
 
-bool SmfFrameworkPlugin::registerListener(plugframe::BundleListener *observer)
+bool FrameworkPlugin::registerListener(plugframe::BundleListener *observer)
 {
     return m_systemServiceImpl->registerListener(observer);
 }
 
-bool SmfFrameworkPlugin::unregisterListener(plugframe::BundleListener *observer)
+bool FrameworkPlugin::unregisterListener(plugframe::BundleListener *observer)
 {
     return m_systemServiceImpl->registerListener(observer);
 }
 
-plugframe::BundleList SmfFrameworkPlugin::bundleList()
+plugframe::BundleList FrameworkPlugin::bundleList()
 {
     return m_systemServiceImpl->bundleList();
 }
 
-int SmfFrameworkPlugin::runningLevel()
+int FrameworkPlugin::runningLevel()
 {
     return m_systemServiceImpl->runningLevel();
 }
 
-void SmfFrameworkPlugin::quit()
+void FrameworkPlugin::quit()
 {
     m_systemServiceImpl->quit();
 }
 
-bool SmfFrameworkPlugin::registerService(const QString &serviceInterfaceName,plugframe::ServiceInterface *service)
+bool FrameworkPlugin::registerService(const QString &serviceInterfaceName,plugframe::ServiceInterface *service)
 {
     return m_serviceRegistryImpl->registerService(serviceInterfaceName, service);
 }
 
-plugframe::ServiceInterface *SmfFrameworkPlugin::getService(const QString &serviceInterfaceName)
+plugframe::ServiceInterface *FrameworkPlugin::getService(const QString &serviceInterfaceName)
 {
     return m_serviceRegistryImpl->getService(serviceInterfaceName);
 }
 
-plugframe::ServiceInterfaceList SmfFrameworkPlugin::getServices(const QString &serviceInterfaceName)
+plugframe::ServiceInterfaceList FrameworkPlugin::getServices(const QString &serviceInterfaceName)
 {
     return m_serviceRegistryImpl->getServices(serviceInterfaceName);
 }

@@ -67,9 +67,9 @@ void GuiDisplayPlugin::clearStatusMessages()
     m_displayServiceImpl->clearStatusMessages();
 }
 
-void GuiDisplayPlugin::addGuiController(const plugframe::QspGuiPageController &controller)
+void GuiDisplayPlugin::addGuiController(const plugframe::QspGuiPageController &controller,const plugframe::GuiMainMenuNames& menuNames)
 {
-    m_guiBuilderServiceImpl->addGuiController(controller);
+    m_guiBuilderServiceImpl->addGuiController(controller,menuNames);
 }
 
 void GuiDisplayPlugin::removeAllPages(const plugframe::QspGuiPageController &controller)

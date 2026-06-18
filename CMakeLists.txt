@@ -109,7 +109,9 @@ if(PF_BUILD_GUI)
     "-DPF_GUI_LIB_SONAME=$<$<PLATFORM_ID:Linux>:$<TARGET_SONAME_FILE:plugframe-gui-qt6>>"
     "-DPF_GUI_LIB_LINKER=$<$<PLATFORM_ID:Linux>:$<TARGET_LINKER_FILE:plugframe-gui-qt6>>"
     "-DPF_PLUGIN_GUIDISPLAY_FILE=$<TARGET_FILE:guidisplay-qt6>"
-    "-DPF_PLUGIN_GUICONSOLE_FILE=$<TARGET_FILE:guiconsole-qt6>"
+    "-DPF_PLUGIN_GUIENGINE_FILE=$<TARGET_FILE:guiengine-qt6>"
+    "-DPF_PLUGIN_GUILOGSCTRL_FILE=$<TARGET_FILE:guilogsctrl-qt6>"
+    "-DPF_PLUGIN_GUICONSOLECTRL_FILE=$<TARGET_FILE:guiconsolectrl-qt6>"
   )
 endif()
 
@@ -137,6 +139,8 @@ if(PF_BUILD_GUI)
   add_dependencies(plugframe_runtime_install
     plugframe-gui-qt6
     guidisplay-qt6
-    guiconsole-qt6
+    guiengine-qt6
+    guilogsctrl-qt6
+    guiconsolectrl-qt6
   )
 endif()

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -15,32 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
-
 #ifndef TBUNDLE_FORWARD_H
 #define TBUNDLE_FORWARD_H
-
-#include <QSharedPointer>
-
-namespace elekdom
-{
-namespace plugframe
-{
-namespace tbundle
-{
-    namespace bundle
-    {
-        class TBUNDLE;
-
-    }
-    namespace service
-    {
-        class TBUNDLEService;
-
-        using QspTBUNDLEService = QSharedPointer<TBUNDLEService>;
-    }
-}//namespace tbundle
-}//namespace plugframe
-}//namespace elekdom
 
 #endif // TBUNDLE_FORWARD_H

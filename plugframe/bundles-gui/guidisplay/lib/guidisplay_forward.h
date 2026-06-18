@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
 #ifndef GUIDISPLAY_FORWARD_H
 #define GUIDISPLAY_FORWARD_H
 
 class Gui;
 class GuiPageSelector;
 class GuiHook;
-class GuiLogsView;
 class GuiDisplay;
 class GuiDisplayService;
 class GuiBuilderService;

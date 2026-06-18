@@ -1,7 +1,11 @@
 # PlugFrame Gui Lib Sources
 set(SOURCES
+    abstract_controllerviews_loader/guicontrollerviewsfactory.cpp
+    abstract_controllerviews_loader/guicontrollerviewsloader.cpp
+    gui/guimainmenunames.cpp
     gui/guipagecontroller.cpp
     gui/guipageview.cpp
+    gui/guilogsview.cpp
     launcher/guiapplication.cpp
     )
 
@@ -9,12 +13,26 @@ set(SOURCES
 set(HEADERS
     pfgui-lib_forward.h
     pfgui-lib_export.h
+    abstract_controllerviews_loader/guicontrollerviewsfactory.h
+    abstract_controllerviews_loader/guicontrollerviewsloader.h
+    gui/guicontrollertype.h
+    gui/guilogscontrollertype.h
+    gui/guiconsolecontrollertype.h
+    gui/guimainmenunames.h
     gui/guipagecontroller.h
     gui/guipageview.h
+    gui/guilogsview.h
     launcher/guiapplication.h
+    service-int/guibuilderserviceinterface.h
+    service-int/guiregistercontrollerserviceinterface.h
     )
 
-qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS})
+# Bundle implementation Forms
+set(FORMS
+    gui/logsview.ui
+)
+
+qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS})
 
 set_target_properties(${PF_GUI_LIB_NAME}
                       PROPERTIES

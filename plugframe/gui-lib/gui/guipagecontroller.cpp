@@ -19,14 +19,12 @@
 #include "guipagecontroller.h"
 #include "guipageview.h"
 
-plugframe::GuiPageController::GuiPageController(const QString& ctrlName,
-                                                QStringList menusNames,
+plugframe::GuiPageController::GuiPageController(GuiControllerType ctrlType,
                                                 QObject *parent)
     : QObject{parent}
-    , m_ctrlName{ctrlName}
+    , m_ctrlType{ctrlType}
     , m_curView{nullptr}
     , m_ctrlSelectionMenu{nullptr}
-    , m_menusNames{menusNames}
 {}
 
 plugframe::GuiPageController::~GuiPageController()

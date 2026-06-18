@@ -22,6 +22,7 @@
 #include <QString>
 #include "bundle/bundleimplementation.h"
 #include "gui/guipagecontroller.h"
+#include "gui/guimainmenunames.h"
 #include "guidisplay_forward.h"
 
 class GuiDisplay : public plugframe::BundleImplementation
@@ -35,7 +36,7 @@ public:
     void log(const QString& msg);
     void statusMessage(const QString& msg);
     void clearStatusMessages();
-    void addGuiController(const plugframe::QspGuiPageController& controller);
+    void addGuiController(const plugframe::QspGuiPageController& controller,const plugframe::GuiMainMenuNames& menuNames);
     void removeAllPages(const plugframe::QspGuiPageController& controller);
     void setMainWindowTitle(const QString& title);
     void closeApp();

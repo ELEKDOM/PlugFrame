@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,18 +16,10 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "TBUNDLEbuilder.h"
-#include "TBUNDLEfactory.h"
-#include "TBUNDLE.h"
 
-using namespace elekdom::plugframe::tbundle::builder;
-using namespace elekdom::plugframe::tbundle::factory;
-using namespace elekdom::plugframe::tbundle::bundle;
-using namespace elekdom::plugframe::core::service;
-
-TBUNDLEBuilder::TBUNDLEBuilder(core::bundle::Bundle4BuilderInterface& myBundle):
-    core::bundle::BundleBuilder{myBundle}
+TBUNDLEBuilder::TBUNDLEBuilder(plugframe::Bundle4BuilderInterface& myBundle):
+    plugframe::BundleBuilder{myBundle}
 {
 }
 
@@ -36,11 +28,7 @@ TBUNDLEBuilder::~TBUNDLEBuilder()
 
 }
 
-TBUNDLEBuilder::buildExportedServices()
+void TBUNDLEBuilder::specificBuild()
 {
-    TBUNDLEFactory& tbundleFactory{dynamic_cast<TBUNDLEFactory&>(getFactory())};
-    TBUNDLE *tbundle{dynamic_cast<TBUNDLE*>(getImplementation())};
-
-    QspServiceImplementationInterface tbundleService{tbundleFactory.createTBUNDLEService(tbundle)};
-    addExportedService(tbundleService);
+    // TODO ...
 }

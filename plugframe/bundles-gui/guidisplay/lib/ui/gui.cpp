@@ -21,7 +21,8 @@
 #include "gui.h"
 #include "ui_mainwindow.h"
 #include "guipageselector.h"
-#include "guilogsview.h"
+#include "gui/guilogsview.h"
+#include "gui/guilogscontrollertype.h"
 #include "gui/guipagecontroller.h"
 #include "gui/guipageview.h"
 
@@ -44,9 +45,6 @@ Gui::~Gui()
 void Gui::initGui()
 {
     setAppliIcon();
-
-    // MenuBar
-    buildMenuBar();
 }
 
 void Gui::onLog(QString msg)
@@ -67,11 +65,12 @@ void Gui::onClearStatusMessages()
     statusBar()->clearMessage();
 }
 
-void Gui::onAddGuiController(plugframe::QspGuiPageController controller)
+void Gui::onAddGuiController(plugframe::QspGuiPageController controller,const plugframe::GuiMainMenuNames& mainMenus)
 {
     // Add a controller to manage
-    m_ctrlSet.insert(controller->ctrlName(),controller);
-    checkForMenu(controller);
+    m_ctrlSet.insert(controller->ctrlType(),controller);
+    // Add a new input in the main menu for this controller
+    checkForMenu(controller,mainMenus);
 
     // Add all views into the central widget
     addViews(controller);
@@ -173,24 +172,6 @@ void Gui::setAppliIcon()
     statusBar()->addPermanentWidget(m_iconLbl);
 }
 
-void Gui::buildMenuBar()
-{
-    // By default, no early construction of the main menu !
-}
-
-QMenu *Gui::createMainMenuItem(const QString &menuName)
-{
-    QMenu *ret{nullptr};
-
-    ret = ui->menubar->addMenu(menuName);
-    if (ret)
-    {
-        addMenu(menuName,ret);
-    }
-
-    return ret;
-}
-
 void Gui::closeEvent(QCloseEvent *event)
 {
     event->ignore();
@@ -210,46 +191,97 @@ void Gui::onCurrentCtrl(plugframe::GuiPageController *controller)
     }
     m_currentCtrl = controller;
     disableCtrlSelectionMenu();
-
-    // Mainwindow title
-    setWindowTitle(m_windowTitle + " - " + m_currentCtrl->ctrlName());
 }
 
-void Gui::addMenu(const QString &menuName, QMenu *menu)
+void Gui::checkForMenu(plugframe::QspGuiPageController controller,const plugframe::GuiMainMenuNames& mainMenus)
 {
-    m_ctrlSelectionMenu.insert(menuName,menu);
-}
+    QString mainMenuName{mainMenus.functionalDomainName()};
+    QString ctrlMenuName{mainMenus.controllerName()};
 
-QMenu *Gui::menu(const QString &menuName)
-{
-    return m_ctrlSelectionMenu.value(menuName);
-}
-
-void Gui::checkForMenu(plugframe::QspGuiPageController controller)
-{
-    const QStringList& ctrlMenusNames{controller->menusNames()};
-    const QString& mainMenuName{ctrlMenusNames[0]}, ctrlMenuName{ctrlMenusNames[1]};
-
-    if (!mainMenuName.isEmpty() && !ctrlMenuName.isEmpty())
+    // The menu is updated only if mandatory names are specified.
+    //-----------------------------------------------------------
+    if (!ctrlMenuName.isEmpty() && !mainMenuName.isEmpty())
     {
-        // A controller menu selection must be added
-        //------------------------------------------
-        QMenu *m{menu(mainMenuName)};
+        // A controller menu selection must be added in the menubar
+        //---------------------------------------------------------
+        QAction *a{addActionInMenuBar(mainMenus)};
 
-        if (m == nullptr)
+        if (a)
         {
-            m = createMainMenuItem(mainMenuName);
-        }
-
-        if (m)
-        {
-            QAction *a;
-
-            a = m->addAction(ctrlMenuName);
             connect(a,SIGNAL(triggered(bool)),controller.get(),SLOT(onTriggeredActionMenu(bool)));
             controller->ctrlSelectionMenu(a);
         }
     }
+}
+
+QAction *Gui::addActionInMenuBar(const plugframe::GuiMainMenuNames &mainMenus)
+{
+    QAction *ret{nullptr};
+    QMenu *domainMenu{retrieveDomainMenu(mainMenus.functionalDomainName())};
+
+    if (domainMenu)
+    {
+        domainMenu = retrieveOptionalCategoryMenu(domainMenu,mainMenus.categoryName());
+        ret = domainMenu->addAction(mainMenus.controllerName());
+    }
+
+    return ret;
+}
+
+QMenu *Gui::retrieveDomainMenu(const QString &domainMenuName)
+{
+    QMenu *ret{nullptr};
+
+    if (!domainMenuName.isEmpty())
+    {
+        QList<QAction *> actionList{ui->menubar->actions()};
+
+        // search domain menu in menubar
+        for (auto i=0;i<actionList.size() && !ret; i++)
+        {
+            if (actionList[i]->text() == domainMenuName)
+            {
+                ret = QMenu::menuInAction(actionList[i]);
+            }
+        }
+
+        if(!ret)
+        {
+            // add a new menu in menubar
+            ret = ui->menubar->addMenu(domainMenuName);
+        }
+    }
+
+    return ret;
+}
+
+QMenu *Gui::retrieveOptionalCategoryMenu(QMenu *domainMenu, const QString &categoryMenuName)
+{
+    QMenu *ret{domainMenu};  // if no category, returns the domainMenu !
+
+    if (!categoryMenuName.isEmpty())
+    {
+        QList<QAction *> actionList{domainMenu->actions()};
+        bool found{false};
+
+        // search submenu in DomainMenu
+        for (auto i=0;i<actionList.size() && !found; i++)
+        {
+            if (actionList[i]->text() == categoryMenuName)
+            {
+                found = true;
+                ret = QMenu::menuInAction(actionList[i]);
+            }
+        }
+
+        if(!found)
+        {
+            // add a new submenu in menu
+            ret = domainMenu->addMenu(categoryMenuName);
+        }
+    }
+
+    return ret;
 }
 
 void Gui::addViews(plugframe::QspGuiPageController controller)
@@ -278,10 +310,10 @@ void Gui::addViews(plugframe::QspGuiPageController controller)
             connect(action, SIGNAL(selectedPage(int)), SLOT(onPageSelected(int)));
         }
 
-        // Hold logsview. The logs controller must be inserted first !
-        if (!m_logsView)
+        // Hold the logsview for the logs controller !
+        if (!m_logsView && (controller->ctrlType() == plugframe::GuiLogsControllerType::s_ctrlType))
         {
-            m_logsView = dynamic_cast<GuiLogsView*>(pv);
+            m_logsView = dynamic_cast<plugframe::GuiLogsView*>(pv);
         }
     }
 }

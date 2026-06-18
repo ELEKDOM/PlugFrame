@@ -23,32 +23,21 @@
 #include <QString>
 #include "service-int/serviceinterface.h"
 
-namespace elekdom
-{
 namespace plugframe
 {
-namespace tbundle
-{
-namespace service
-{
-
-class TBUNDLEServiceInterface : public core::plugin::ServiceInterface
+class TBUNDLEServiceInterface : public ServiceInterface
 {
 public:
     static QString serviceName() {return QStringLiteral("TBUNDLEServiceInterface");}
 
 public:
-    virtual ~TBUNDLEServiceInterface() {}
+    ~TBUNDLEServiceInterface() override {}
 
 public:
 };
-
-}//namespace service
-}//namespace tbundle
 }//namespace plugframe
-}//namespace elekdom
 
-#define PfTBUNDLEService_iid "elekdom.plugframe.tbundle.service.TBUNDLEServiceInterface"
-Q_DECLARE_INTERFACE(elekdom::plugframe::tbundle::service::TBUNDLEServiceInterface, PfTBUNDLEService_iid)
+#define PfTBUNDLEService_iid "plugframe.tbundle.service.TBUNDLEServiceInterface"
+Q_DECLARE_INTERFACE(plugframe::TBUNDLEServiceInterface, PfTBUNDLEService_iid)
 
 #endif // TBUNDLESERVICEINTERFACE_H

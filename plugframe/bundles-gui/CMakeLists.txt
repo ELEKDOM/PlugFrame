@@ -1,2 +1,5 @@
+#add_subdirectory(guiXXXctrl)
 add_subdirectory(guidisplay)
-add_subdirectory(guiconsole)
+add_subdirectory(guiengine)
+add_subdirectory(guilogsctrl)
+add_subdirectory(guiconsolectrl)

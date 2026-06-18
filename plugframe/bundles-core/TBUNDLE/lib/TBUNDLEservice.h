@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,36 +16,24 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TBUNDLESERVICE_H
 #define TBUNDLESERVICE_H
 
+#include <QSharedPointer>
 #include "service/serviceimplementation.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace tbundle
-{
-namespace service
-{
-
-class TBUNDLEService : public core::service::ServiceImplementation
+class TBUNDLEService : public plugframe::ServiceImplementation
 {
 public:
-    TBUNDLEService(core::bundle::BundleImplementation *implementation);
+    TBUNDLEService(plugframe::BundleImplementation *implementation);
     virtual ~TBUNDLEService();
 
 public:
 
 protected:
-    virtual QString serviceName();
+    QString serviceName() override;
 };
 
-} //namespace service
-} //namespace tbundle
-} //namespace plugframe
-} //namespace elekdom
+using QspTBUNDLEService = QSharedPointer<TBUNDLEService>;
 
 #endif // TBUNDLESERVICE_H

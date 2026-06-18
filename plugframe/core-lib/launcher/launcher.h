@@ -45,7 +45,7 @@ public:
 protected:
     virtual void createApp(int& argc, char *argv[]) = 0;
     virtual void setStyleSheet();
-    const QspLaunchingProperties& launchingProperties() {return m_spSmfLaunchingProperties;}
+    const QspLaunchingProperties& launchingProperties() {return m_spLaunchingProperties;}
 
 protected:
     virtual CoreFactory *createFactory();
@@ -63,9 +63,9 @@ protected:
     QScopedPointer<QCoreApplication> m_spApp;
 
 private:
-    QspCoreFactory         m_spSmfCoreFactory;
-    QspLaunchingProperties m_spSmfLaunchingProperties;
-    QspLocation            m_spSmfLocation;
+    QspCoreFactory         m_spCoreFactory;
+    QspLaunchingProperties m_spLaunchingProperties;
+    QspLocation            m_spLocation;
     QspBundlesStore        m_spBundlesStore;
     FrameworkInterface    *m_newFwk;
 };

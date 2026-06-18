@@ -1,0 +1,7 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "GuiConsoleCtrl",
+    "startlevel-beging" : "3",
+    "service-required" : "GuiRegisterControllerServiceInterface,1.0.0"
+}

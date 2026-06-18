@@ -6,8 +6,6 @@ set(SOURCES
     guibuilderservice.cpp
     ui/gui.cpp
     ui/guihook.cpp
-    ui/guilogscontroller.cpp
-    ui/guilogsview.cpp
     ui/guipageselector.cpp
 )
 
@@ -20,14 +18,11 @@ set(HEADERS
     guibuilderservice.h
     ui/gui.h
     ui/guihook.h
-    ui/guilogscontroller.h
-    ui/guilogsview.h
     ui/guipageselector.h
    )
 
 # Bundle implementation Forms
 set(FORMS
-    ui/logsview.ui
     ui/mainwindow.ui
 )
 

@@ -7,6 +7,7 @@ message(STATUS "LAUNCHER_NAME = " ${LAUNCHER_NAME})
 add_custom_target(PlugFrame_launcher_other_files
     SOURCES
       run-plugframe.sh
+      conf/properties.ini
 )
 
 qt6_add_executable(${LAUNCHER_NAME}

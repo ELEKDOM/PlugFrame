@@ -36,7 +36,7 @@ public:
     QList<plugframe::ServiceInterface*> getServices(const QString& serviceInterfaceName);
 
 protected:
-    virtual QString serviceName();
+    QString serviceName() override;
 
 private:
     QMultiHash<QString,plugframe::ServiceInterface*> m_registry;

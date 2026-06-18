@@ -22,7 +22,6 @@
 #include "guibuilderservice.h"
 #include "ui/guihook.h"
 #include "ui/gui.h"
-#include "ui/guilogscontroller.h"
 #include "service-int/displayserviceinterface.h"
 #include "service-int/guibuilderserviceinterface.h"
 
@@ -79,9 +78,3 @@ GuiHook *GuiDisplayFactory::createGuiHook(Gui* parent,GuiDisplay& bundle)
 {
     return new GuiHook{parent, bundle};
 }
-
-GuiLogsController *GuiDisplayFactory::createLogsPageController()
-{
-    return new GuiLogsController;
-}
-

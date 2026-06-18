@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,36 +16,16 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #ifndef TBUNDLEFACTORY_H
 #define TBUNDLEFACTORY_H
 
-#include "factory/bundlefactory.h"
-#include "TBUNDLE_forward.h"
+#include "factory/defaultbundlefactory.h"
 
-namespace elekdom
-{
-namespace plugframe
-{
-namespace tbundle
-{
-namespace factory
-{
-
-class TBUNDLEFactory : public core::bundle::BundleFactory
+class TBUNDLEFactory : public plugframe::DefaultBundleFactory
 {
 public:
     TBUNDLEFactory();
-    virtual ~TBUNDLEFactory();
-
-public:
-    virtual core::bundle::BundleBuilder *createBuilder(core::bundle::Bundle& myBundle);
-    virtual service::TBUNDLEService *createTBUNDLEService(bundle::TBUNDLE *implementation);
+    ~TBUNDLEFactory() override;
 };
-
-} //namespace factory
-} //namespace tbundle
-} //namespace plugframe
-} //namespace elekdom
 
 #endif // TBUNDLEFACTORY_H

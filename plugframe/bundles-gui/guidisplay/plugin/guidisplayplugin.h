@@ -38,18 +38,18 @@ public:
     GuiDisplayPlugin();
     virtual ~GuiDisplayPlugin();
 
-protected: // SmfPLugin
+protected: // Plugin
     plugframe::Bundle4PluginInterface *createImplementation() override;
-    void bindServicesImplementations() override;
+    PF_bindServicesImplementations_DECL
 
-protected: // SmfDisplayServiceInterface
+protected: // DisplayServiceInterface
     void print(const QString& msg) override;
     void log(const QString& msg) override;
     void statusMessage(const QString& msg) override;
     void clearStatusMessages() override;
 
-protected: // SmfGuiBuilderServiceInterface
-    void addGuiController(const plugframe::QspGuiPageController& controller) override;
+protected: // GuiBuilderServiceInterface
+    void addGuiController(const plugframe::QspGuiPageController& controller,const plugframe::GuiMainMenuNames& menuNames) override;
     void removeAllPages(const plugframe::QspGuiPageController& controller) override;
     void setMainWindowTitle(const QString& title) override;
 

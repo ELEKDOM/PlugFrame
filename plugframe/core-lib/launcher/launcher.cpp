@@ -32,14 +32,8 @@ plugframe::Launcher::Launcher()
 
 plugframe::Launcher::~Launcher()
 {
-     //pfDebug2("Launcher") << "->SmfLauncher::~SmfLauncher";
-
-     // ...
-
      // the framework is a Qt plugin, so it has not be allocated with new operator !
      m_newFwk = nullptr;
-
-     //pfDebug2("Launcher") << "<-SmfLauncher::~SmfLauncher";
 }
 
 int plugframe::Launcher::exec(int argc, char *argv[])
@@ -54,10 +48,10 @@ int plugframe::Launcher::exec(int argc, char *argv[])
 
     // creates the platform location manager
     //pfInfo8(QString("Launcher")) << tr("Répertoire de la plateforme [ %1 ]").arg(QCoreApplication::applicationDirPath());
-    m_spSmfLocation = m_spSmfCoreFactory->createLocation(QCoreApplication::applicationDirPath());
+    m_spLocation = m_spCoreFactory->createLocation(QCoreApplication::applicationDirPath());
 
     // creates the bundle stores
-    m_spBundlesStore = m_spSmfCoreFactory->createBundlesStore(m_spSmfLocation);
+    m_spBundlesStore = m_spCoreFactory->createBundlesStore(m_spLocation);
 
     // creates and load properties
     setLaunchingProperties();
@@ -89,17 +83,17 @@ plugframe::CoreFactory * plugframe::Launcher::createFactory()
 
 void plugframe::Launcher::setFactory(plugframe::CoreFactory *theFactory)
 {
-    m_spSmfCoreFactory.reset(theFactory);
+    m_spCoreFactory.reset(theFactory);
 }
 
 plugframe::QspCoreFactory plugframe::Launcher::getFactory()
 {
-    return m_spSmfCoreFactory;
+    return m_spCoreFactory;
 }
 
 void plugframe::Launcher::setLaunchingProperties()
 {
-    m_spSmfLaunchingProperties = m_spSmfCoreFactory->createLaunchingProperties("conf/properties.ini");
+    m_spLaunchingProperties = m_spCoreFactory->createLaunchingProperties("conf/properties.ini");
 }
 
 void plugframe::Launcher::startPlatform()
@@ -115,7 +109,7 @@ void plugframe::Launcher::startPlatform()
     else
     {
         // initialize the framework
-        m_newFwk->initFwk(m_spBundlesStore, m_spSmfLaunchingProperties);
+        m_newFwk->initFwk(m_spBundlesStore, m_spLaunchingProperties);
 
         // start the framework
         plugframe::BundleInterface* bundleItf{m_newFwk->getBundleInterface()};

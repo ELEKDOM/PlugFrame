@@ -43,7 +43,7 @@ public:
 };
 }//namespace plugframe
 
-#define PfSystemService_iid "elekdom.plugframe.framework.service.SystemServiceInterface"
+#define PfSystemService_iid "plugframe.framework.service.SystemServiceInterface"
 Q_DECLARE_INTERFACE(plugframe::SystemServiceInterface, PfSystemService_iid)
 
 #endif // SYSTEMSERVICEINTERFACE_H

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,14 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "TBUNDLE.h"
-
-using namespace elekdom::plugframe::core::bundle;
-using namespace elekdom::plugframe::tbundle::bundle;
+#include "TBUNDLEfactory.h"
 
 TBUNDLE::TBUNDLE():
-    BundleImplementation{"TBUNDLE"}
+    plugframe::BundleImplementation{"TBUNDLE"}
 {
 
 }
@@ -33,3 +30,9 @@ TBUNDLE::~TBUNDLE()
 
 }
 
+plugframe::BundleFactory *TBUNDLE::createFactory()
+{
+    return new TBUNDLEFactory;
+}
+
+PF_qtServiceInterface_DEF(TBUNDLE)

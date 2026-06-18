@@ -40,5 +40,5 @@ public:
 protected:
     QString serviceName() override;
 };
-using QSpSystemService = QSharedPointer<SystemService>;
+using QspSystemService = QSharedPointer<SystemService>;
 #endif // SYSTEMSERVICE_H

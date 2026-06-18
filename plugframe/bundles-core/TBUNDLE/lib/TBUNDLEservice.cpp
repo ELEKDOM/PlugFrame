@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ELEKDOM Christophe Mars c.mars@elekdom.fr
+// Copyright (C) 2026 ELEKDOM Christophe Mars c.mars@elekdom.fr
 // 
 // This file is part of PlugFrame.
 // 
@@ -16,15 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-
 #include "TBUNDLEservice.h"
-#include "TBUNDLE.h"
-#include "TBUNDLEserviceinterface.h"
+#include "service-int/TBUNDLEserviceinterface.h"
 
-using namespace elekdom::plugframe::tbundle::service;
-
-TBUNDLEService::TBUNDLEService(core::bundle::BundleImplementation *implementation):
-    core::service::ServiceImplementation{implementation}
+TBUNDLEService::TBUNDLEService(plugframe::BundleImplementation *implementation):
+    plugframe::ServiceImplementation{implementation}
 {
 
 }
@@ -36,6 +32,6 @@ TBUNDLEService::~TBUNDLEService()
 
 QString TBUNDLEService::serviceName()
 {
-    return guidisplay::service::GuiBuilderServiceInterface::serviceName();
+    return plugframe::TBUNDLEServiceInterface::serviceName();
 }
 
