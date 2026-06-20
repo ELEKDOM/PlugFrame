@@ -19,7 +19,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 #include <QTimer>
-#include "logger/pflog.h"
+#include <QLibraryInfo>
 #include "launcher.h"
 #include "bundlesstore.h"
 #include "factory/corefactory.h"
@@ -47,7 +47,6 @@ int plugframe::Launcher::exec(int argc, char *argv[])
     setFactory(createFactory());
 
     // creates the platform location manager
-    //pfInfo8(QString("Launcher")) << tr("Répertoire de la plateforme [ %1 ]").arg(QCoreApplication::applicationDirPath());
     m_spLocation = m_spCoreFactory->createLocation(QCoreApplication::applicationDirPath());
 
     // creates the bundle stores
@@ -55,6 +54,9 @@ int plugframe::Launcher::exec(int argc, char *argv[])
 
     // creates and load properties
     setLaunchingProperties();
+
+    // set translations if any
+    setTranslations();
 
     // set stylesheet for gui app only
     setStyleSheet();
@@ -69,6 +71,36 @@ int plugframe::Launcher::exec(int argc, char *argv[])
     ret = m_spApp.get()->exec();
 
     return ret;
+}
+
+void plugframe::Launcher::setTranslations()
+{
+    const plugframe::QspLaunchingProperties& properties{launchingProperties()};
+
+    if (!properties.isNull() && properties->hasLocale())
+    {
+        QString locale{properties->getLocale().left(2)};
+        QString fileName(QString("plugframe_%1.qm").arg(locale));
+        QString filePath{QDir("conf").filePath(fileName)};
+        QFile file{filePath};
+
+        if(file.exists())
+        {
+            if (m_translator.load(filePath))
+            {
+                qApp->installTranslator(&m_translator);
+            }
+
+            // Qt's standard translations
+            QString qtFileName{QString("qtbase_%1.qm").arg(locale)};
+            QString qtFilePath{QDir(QLibraryInfo::path(QLibraryInfo::TranslationsPath)).filePath(qtFileName)};
+
+            if (m_qtTranslator.load(qtFilePath))
+            {
+                qApp->installTranslator(&m_qtTranslator);
+            }
+        }
+    }
 }
 
 void plugframe::Launcher::setStyleSheet()
@@ -103,7 +135,6 @@ void plugframe::Launcher::startPlatform()
 
     if (m_newFwk == nullptr)
     {
-        pfWarning8(QString("Launcher")) << tr("framework null!");
         m_spApp.get()->exit(1);
     }
     else

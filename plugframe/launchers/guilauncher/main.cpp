@@ -17,11 +17,11 @@
 //
 
 #include <QScopedPointer>
-#include "launcher/guiapplication.h"
+#include "launcher/guilauncher.h"
 
 int main(int argc, char *argv[])
 {
-    plugframe::GuiApplication a;
+    plugframe::GuiLauncher a;
 
     return a.exec(argc, argv);
 }

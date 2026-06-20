@@ -6,7 +6,7 @@ set(SOURCES
     gui/guipagecontroller.cpp
     gui/guipageview.cpp
     gui/guilogsview.cpp
-    launcher/guiapplication.cpp
+    launcher/guilauncher.cpp
     )
 
 # PlugFrame Core Lib Headers
@@ -22,7 +22,7 @@ set(HEADERS
     gui/guipagecontroller.h
     gui/guipageview.h
     gui/guilogsview.h
-    launcher/guiapplication.h
+    launcher/guilauncher.h
     service-int/guibuilderserviceinterface.h
     service-int/guiregistercontrollerserviceinterface.h
     )

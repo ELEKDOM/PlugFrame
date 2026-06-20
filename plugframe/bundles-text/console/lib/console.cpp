@@ -27,7 +27,8 @@
 #include "service-int/systemserviceinterface.h"
 #include "service-int/displayserviceinterface.h"
 
-Console::Console(int descriptionTab):
+Console::Console(int descriptionTab,QObject *parent):
+    plugframe::Worker{parent},
     plugframe::BundleImplementation{"Console"},
     m_exit{new ConsoleExit{*this}},
     m_terminal{nullptr},
@@ -63,7 +64,7 @@ plugframe::BundleList Console::loadedBundleList()
 
     for (it = bundleL.begin(); it != bundleL.end(); ++it)
     {
-        pfDebug4(getLogBundleName()) << tr("%1 state %2").arg((*it)->getName(), (*it)->stateStr());
+        pfDebug4(getLogBundleName()) << (*it)->getName() << " state: " << (*it)->stateStr();
         if ((*it)->getState() == plugframe::BundleInterface::BundleState::Initialized)
         {
             ret.append(*it);

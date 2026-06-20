@@ -16,11 +16,11 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "launcher/consoleapplication.h"
+#include "launcher/consolelauncher.h"
 
 int main(int argc, char *argv[])
 {
-    plugframe::ConsoleApplication a;
+    plugframe::ConsoleLauncher a;
 
     return a.exec(argc, argv);
 }

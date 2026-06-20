@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
 #include "cmd/cmdprocessor.h"
 #include "terminal.h"
 #include "console.h"

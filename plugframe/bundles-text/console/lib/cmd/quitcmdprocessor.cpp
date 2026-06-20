@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
+#include <QCoreApplication>
 #include <QObject>
 #include "cmd/quitcmdprocessor.h"
 #include "console.h"
@@ -25,7 +25,8 @@ QuitCmdProcessor::QuitCmdProcessor(const QString& logChannel,
     CmdProcessor{logChannel,
                  console,
                  "quit",
-                 QObject::tr("Quitte l'application après confirmation")}
+                 QCoreApplication::translate("QuitCmdProcessor",
+                                             "Exit the application after confirmation")}
 {
 
 }
@@ -39,14 +40,15 @@ bool QuitCmdProcessor::exec(const RawCmd &cmd)
 {
     Q_UNUSED(cmd)
 
-    console().print(QObject::tr("Etes-vous sûr de vouloir quitter l'application (oui/non)?"));
+    console().print( QCoreApplication::translate("QuitCmdProcessor",
+                                                 "Are you sure you want to leave the application (yes/no)?"));
 
     QTextStream stream(stdin);
     QString line;
 
     stream.readLineInto(&line);
     line = line.toLower();
-    if (line == QObject::tr("oui"))
+    if (line == QCoreApplication::translate("QuitCmdProcessor","yes"))
     {
         console().quit();
     }

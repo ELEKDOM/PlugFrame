@@ -92,7 +92,7 @@ void GuiHook::onGuiCloseEvt()
 {
     QMessageBox msgBox;
 
-    msgBox.setText(tr("Voulez-vous quitter l'application ?"));
+    msgBox.setText(tr("Do you want to exit the application?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
 

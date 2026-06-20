@@ -15,24 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
 #include <QApplication>
 #include <QIcon>
 #include <QFile>
-#include "guiapplication.h"
+#include "guilauncher.h"
 #include "launcher/launchingproperties.h"
 
-plugframe::GuiApplication::GuiApplication()
+plugframe::GuiLauncher::GuiLauncher()
 {
 
 }
 
-plugframe::GuiApplication::~GuiApplication()
+plugframe::GuiLauncher::~GuiLauncher()
 {
 
 }
 
-void plugframe::GuiApplication::createApp(int& argc, char *argv[])
+void plugframe::GuiLauncher::createApp(int& argc, char *argv[])
 {
     m_spApp.reset(new QApplication(argc, argv));
     QIcon icon;
@@ -43,7 +42,7 @@ void plugframe::GuiApplication::createApp(int& argc, char *argv[])
     QApplication::setWindowIcon(icon);
 }
 
-void plugframe::GuiApplication::setStyleSheet()
+void plugframe::GuiLauncher::setStyleSheet()
 {
     const plugframe::QspLaunchingProperties& properties{launchingProperties()};
 

@@ -52,6 +52,6 @@
 #define pfWarning7(n) PFWARNING(n,7)
 #define pfWarning8(n) PFWARNING(n,8)
 
-#define pfErr(n) pfWarning8(n) << QObject::tr("[ fichier : ") << __FILE__ << QObject::tr(", ligne : ") << __LINE__ << " ]"
+#define pfErr(n) pfWarning8(n) << QObject::tr("[ file: ") << __FILE__ << QObject::tr(", line: ") << __LINE__ << " ]"
 
 #endif // PF_LOG_H

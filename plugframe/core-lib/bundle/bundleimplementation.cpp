@@ -73,7 +73,7 @@ void plugframe::BundleImplementation::registerExportedServices()
         }
         else
         {
-            pfErr(getLogBundleName()) << QObject::tr("service %1 interface Qt Null !").arg(serviceName);
+            pfErr(getLogBundleName()) << QObject::tr("service %1 interface Qt Null!").arg(serviceName);
         }
         ++i;
     }

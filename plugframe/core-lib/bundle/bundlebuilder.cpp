@@ -16,6 +16,7 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include <QCoreApplication>
 #include "logger/pflog.h"
 #include "bundle/bundlebuilder.h"
 #include "bundle/bundle.h"
@@ -136,7 +137,8 @@ void plugframe::BundleBuilder::buildExportedServices(const QList<QString>& provi
         servImpl.reset(factory.createServiceImplementation(getImplementation(),serviceName,serviceVersion));
         if (servImpl.isNull())
         {
-            pfErr(getLogBundleName()) << QObject::tr("service %1 version %2 non créé").arg(serviceName,serviceVersion);
+            pfErr(getLogBundleName()) << QCoreApplication::translate("plugframe::BundlesStore",
+                                                                     "service %1 version %2 not created").arg(serviceName,serviceVersion);
         }
         else
         {

@@ -21,6 +21,7 @@
 
 #include <QScopedPointer>
 #include <QCoreApplication>
+#include <QTranslator>
 #include "launcher/launchingproperties.h"
 #include "launcher/bundlesstore.h"
 #include "launcher/location.h"
@@ -44,6 +45,7 @@ public:
 
 protected:
     virtual void createApp(int& argc, char *argv[]) = 0;
+    virtual void setTranslations();
     virtual void setStyleSheet();
     const QspLaunchingProperties& launchingProperties() {return m_spLaunchingProperties;}
 
@@ -68,6 +70,8 @@ private:
     QspLocation            m_spLocation;
     QspBundlesStore        m_spBundlesStore;
     FrameworkInterface    *m_newFwk;
+    QTranslator            m_translator; //plugframe's translator
+    QTranslator            m_qtTranslator; // qtbase's translator
 };
 } // namespace plugframe
 

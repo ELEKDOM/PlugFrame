@@ -33,8 +33,10 @@
 
 class FrameworkStarterListener : public plugframe::BundleListener
 {
+    Q_OBJECT
+
 public:
-    FrameworkStarterListener(plugframe::Bundle& fwk);
+    FrameworkStarterListener(plugframe::Bundle& fwk, QObject *parent = nullptr);
     ~FrameworkStarterListener() override;
 
 public:

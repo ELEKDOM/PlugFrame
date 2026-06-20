@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
+#include <QCoreApplication>
 #include <QObject>
 #include "cmd/helpcmdprocessor.h"
 #include "console.h"
@@ -26,7 +26,8 @@ HelpCmdProcessor::HelpCmdProcessor(const QString& logChannel,
     CmdProcessor{logChannel,
                  console,
                  "?",
-                 QObject::tr("Affiche la liste des commandes de la console") },
+                 QCoreApplication::translate("HelpCmdProcessor",
+                                             "Displays the list of console commands") },
     m_firstProc{firstProc}
 {
 

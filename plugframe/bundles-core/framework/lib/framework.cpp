@@ -110,7 +110,7 @@ void Framework::fwkStarted()
 void Framework::fwkStopped()
 {
     setState(plugframe::BundleInterface::BundleState::Stopped);
-    pfInfo1(getLogBundleName()) << QObject::tr("Framework, Arrêté" );
+    pfInfo1(getLogBundleName()) << QObject::tr("Framework Stopped");
 
     // All bundles have been stopped
     QCoreApplication::quit();
@@ -134,7 +134,7 @@ void Framework::init()
     }
 
     // Step 1: load all bundles. After loading, the bundles are in LOADED state
-    pfDebug5(getLogBundleName()) << QObject::tr("Chargement des bundles...");
+    pfDebug5(getLogBundleName()) << "Loading bundles...";
     m_bundlesStore->loadPlugins(getLogBundleName(), m_ListBundles);
 }
 

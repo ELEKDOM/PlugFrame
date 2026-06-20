@@ -22,8 +22,8 @@
 #include "frameworkfactory.h"
 #include "logger/pflog.h"
 
-FrameworkStarterListener::FrameworkStarterListener(plugframe::Bundle& fwk):
-    plugframe::BundleListener{fwk}
+FrameworkStarterListener::FrameworkStarterListener(plugframe::Bundle& fwk, QObject *parent):
+    plugframe::BundleListener{fwk,parent}
 {
 
 }
@@ -76,7 +76,7 @@ void FrameworkStarterListener::onEvent(plugframe::QspEvent ev)
     }
     else
     {
-        //pfWarning8(getLogBundleName()) << tr("Framework Listener évènement non géré : ") << evtTypeId;
+        pfWarning8(getLogBundleName()) << tr("Framework Listener, unhandled event: ") << evtTypeId;
     }
 }
 
@@ -91,7 +91,7 @@ void FrameworkStarterListener::onBundlesStartingEvent(plugframe::BundlesStarting
 
     if (evt == nullptr)
     {
-        pfWarning1(getLogBundleName()) << tr("l'adresse de l'évènement est (nullptr) !");
+        pfWarning1(getLogBundleName()) << tr("The event address is (nullptr)!");
     }
     else
     {
@@ -105,7 +105,7 @@ void FrameworkStarterListener::onBundlesStartingEvent(plugframe::BundlesStarting
 
             if (currentLevelToStart <= levelToReach)
             {
-                pfDebug5(getLogBundleName()) << tr("Démarrage du Framework en cours au niveau [ %1 ]").arg(currentLevelToStart);
+                pfDebug5(getLogBundleName()) << "Starting the framework at level [" << currentLevelToStart<< "]";
 
                 // Looking for the next bundle to start for the current level
                 //-----------------------------------------------------------
@@ -130,7 +130,7 @@ void FrameworkStarterListener::onBundlesStartingEvent(plugframe::BundlesStarting
                 if (found)
                 {
                     // The selected bundle must be started
-                    pfDebug5(getLogBundleName()) << tr("Bundle [ %1 ] à démarrer pour le niveau [ %2 ]").arg((*curIt)->getName()).arg(currentLevelToStart);
+                    pfDebug5(getLogBundleName()) << "Bundle [" << (*curIt)->getName() << "] to start for level [" << currentLevelToStart << "]";
 
                     //fwk.postStartBundleEvt(*curIt);
                     startBundle(*curIt);
@@ -160,7 +160,7 @@ void FrameworkStarterListener::onStartBundleEvent(plugframe::StartBundleEvent *e
 {
     if (evt == nullptr)
     {
-        pfWarning1(getLogBundleName()) << tr("l'adresse de l'évènement est (nullptr) !");
+        pfWarning1(getLogBundleName()) << tr("The event address is (nullptr)!");
     }
     else
     {
@@ -175,7 +175,7 @@ void FrameworkStarterListener::onFrameworkStartedEvent(plugframe::FrameworkStart
     Q_UNUSED(evt)
     Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
-    pfDebug5(getLogBundleName()) << tr("Plateforme démarrée au niveau [ %1 ]").arg(fwk.runningLevel());
+    pfDebug5(getLogBundleName()) << "Platform started at level [" << fwk.runningLevel() << "]";
 
     // No evt to receive !
     fwk.fwkStarted();
@@ -183,7 +183,7 @@ void FrameworkStarterListener::onFrameworkStartedEvent(plugframe::FrameworkStart
     plugframe::BundleList_Iterator it;
     plugframe::BundleList bundlesList {fwk.bundleList()};
 
-    pfDebug5(getLogBundleName()) << tr("== Liste des bundles démarrés ==");
+    pfDebug5(getLogBundleName()) << "== List of started bundles ==";
     for (it = bundlesList.begin(); it != bundlesList.end(); ++it)
     {
         if ( plugframe::BundleInterface::BundleState::Started == (*it)->getState() )
@@ -210,14 +210,14 @@ void FrameworkStarterListener::onBundlesStoppingEvent(plugframe::BundlesStopping
 
     if (evt == nullptr)
     {
-        pfWarning1(getLogBundleName()) << tr("l'adresse de l'évènement est (nullptr) !");
+        pfWarning1(getLogBundleName()) << "The event address is (nullptr)!";
     }
     else
     {
         int currentLevelToStop {evt->getCurrentStopLevel()};
         if (currentLevelToStop > 0)
         {
-            pfDebug5(getLogBundleName()) << tr("Arrêt du Framework en cours au niveau [ %1 ]").arg(currentLevelToStop);
+            pfDebug5(getLogBundleName()) << "Framework shutdown currently at level [" << currentLevelToStop << "]";
 
             // Looking for the next bundle to stop for the current level
             //-----------------------------------------------------------
@@ -242,7 +242,7 @@ void FrameworkStarterListener::onBundlesStoppingEvent(plugframe::BundlesStopping
             if (found)
             {
                 // The selected bundle must be stopped
-                pfDebug5(getLogBundleName()) << tr("Bundle [ %1 ] à stopper pour le niveau [ %2 ]").arg((*curIt)->getName()).arg(currentLevelToStop);
+                pfDebug5(getLogBundleName()) << "Bundle [" << (*curIt)->getName() << "] to stop for level [" << currentLevelToStop << "]";
 
                 //fwk.postStopBundleEvt(*curIt);
                 (*curIt)->stop();
@@ -272,7 +272,7 @@ void FrameworkStarterListener::onStopBundleEvent(plugframe::StopBundleEvent *evt
 
     if (evt == nullptr)
     {
-        pfWarning1(getLogBundleName()) << tr("l'adresse de l'évènement est (nullptr) !");
+        pfWarning1(getLogBundleName()) << "The event address is (nullptr)!";
     }
     else
     {
@@ -288,12 +288,12 @@ void FrameworkStarterListener::onStopBundleEvent(plugframe::StopBundleEvent *evt
 
 void FrameworkStarterListener::onBundleStartingEvent(plugframe::BundleStartingEvent *evt)
 {
-    pfDebug5(getLogBundleName()) << tr("Démarrage du bundle [ %1 ]").arg(evt->getBundle()->getName());
+    pfDebug5(getLogBundleName()) << "Starting bundle [" << evt->getBundle()->getName() << "]";
 }
 
 void FrameworkStarterListener::onBundleStartedEvent(plugframe::BundleStartedEvent *evt)
 {
-    pfDebug5(getLogBundleName()) << tr("Bundle [ %1 ], démarré").arg(evt->getBundle()->getName());
+    pfDebug5(getLogBundleName()) << "Bundle [" << evt->getBundle()->getName() << "], started";
     Framework& fwk{dynamic_cast<Framework&>(getBundle())};
     int nbOfBundlesToStart{fwk.getNumberOfBundlesToStart()};
 
@@ -306,12 +306,12 @@ void FrameworkStarterListener::onBundleStartedEvent(plugframe::BundleStartedEven
 
 void FrameworkStarterListener::onBundleStoppingEvent(plugframe::BundleStoppingEvent *evt)
 {
-    pfInfo4(getLogBundleName()) << tr("Arrêt du bundle [ %1 ]").arg(evt->getBundle()->getName());
+    pfInfo4(getLogBundleName()) << "Stopping the bundle [" << evt->getBundle()->getName() << "]";
 }
 
 void FrameworkStarterListener::onBundleStoppedEvent(plugframe::BundleStoppedEvent *evt)
 {
-    pfInfo4(getLogBundleName()) << tr("Bundle [ %1 ], Arrêté" ).arg(evt->getBundle()->getName());
+    pfInfo4(getLogBundleName()) << "Bundle [" << evt->getBundle()->getName() << "], stopped";
     Framework& fwk{dynamic_cast<Framework&>(getBundle())};
 
     if (++m_started_bundles_cpt >= fwk.getNumberOfBundlesToStart())
@@ -326,7 +326,7 @@ void FrameworkStarterListener::startBundle(plugframe::BundleInterface *bundleItf
 
     if (bundleItf == nullptr)
     {
-        pfWarning1(getLogBundleName()) << tr("l'adresse du bundle (plugin) est (nullptr) !");
+        pfWarning1(getLogBundleName()) << tr("The address of the Bundle to start is (nullptr)!");
     }
     else
     {

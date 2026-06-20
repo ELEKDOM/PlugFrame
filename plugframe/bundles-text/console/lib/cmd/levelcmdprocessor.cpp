@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
+#include <QCoreApplication>
 #include <QObject>
 #include "cmd/levelcmdprocessor.h"
 #include "console.h"
@@ -25,7 +25,8 @@ LevelCmdProcessor::LevelCmdProcessor(const QString& logChannel,
     CmdProcessor{logChannel,
                  console,
                  "level",
-                 QObject::tr("Affiche le niveau d'exécution de la plateforme")}
+                 QCoreApplication::translate("LevelCmdProcessor",
+                                             "Displays the platform's execution level")}
 {
 
 }
@@ -39,7 +40,8 @@ bool LevelCmdProcessor::exec(const RawCmd &cmd)
 {
     Q_UNUSED(cmd)
 
-    QString msg{QObject::tr("\tniveau d'exécution de la plateforme\t%1\n").arg(console().runningLevel())};
+    QString msg{QCoreApplication::translate("LevelCmdProcessor",
+                                            "\tPlatform execution level\t%1\n").arg(console().runningLevel())};
 
     console().print(msg);
     return true;

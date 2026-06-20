@@ -25,6 +25,7 @@ plugframe::GuiLogsView::GuiLogsView(QWidget *parent):
 {
     ui->setupUi(this);
 
+
     connect(ui->clearButton,SIGNAL(clicked(bool)),SLOT(onClear()));
 }
 

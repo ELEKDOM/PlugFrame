@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
+#include <QCoreApplication>
 #include <QObject>
 #include "cmd/startedlistcmdprocessor.h"
 #include "plugin/bundleinterface.h"
@@ -26,7 +26,8 @@ StartedListCmdProcessor::StartedListCmdProcessor(const QString& logChannel,
     CmdProcessor{logChannel,
                  console,
                  "started",
-                 QObject::tr("Affiche la liste des bundles démarrés avec leur start level")}
+                 QCoreApplication::translate("StartedListCmdProcessor",
+                                             "Displays the list of started bundles with their start level")}
 {
 
 }
@@ -55,7 +56,8 @@ bool StartedListCmdProcessor::exec(const RawCmd &cmd)
     maxWidthSize +=2;
 
     padding.fill(' ', maxWidthSize - 6);
-    console().print(QObject::tr("Bundle%1rang de démarrage\n").arg(padding));
+    console().print(QCoreApplication::translate("StartedListCmdProcessor",
+                                                "Bundle%1 starting rank\n").arg(padding));
 
     for (it = list.begin(); it != list.end(); ++it)
     {

@@ -132,7 +132,7 @@ void plugframe::Scheduler::newDay()
     int dow{QDate::currentDate().dayOfWeek()};
     int wn{QDate::currentDate().weekNumber()};
 
-    pfInfo1(logChannel()) << tr("%1 journée sélectionnée : ").arg(m_id) << dow << tr(" , semaine :") << wn;
+    pfInfo1(logChannel()) << tr("%1 selected day: ").arg(m_id) << dow << tr(" , week:") << wn;
 
     // Select a new daily scheduler
     //-----------------------------
@@ -250,7 +250,7 @@ void plugframe::Scheduler::sendEvt()
 {
     if (m_nextEventToSchedule)
     {
-        pfInfo1(logChannel()) << tr("%1 évènement déclenché :  ").arg(m_id) << m_nextEventToSchedule->evt();
+        pfInfo1(logChannel()) << tr("%1 event triggered:  ").arg(m_id) << m_nextEventToSchedule->evt();
 
         emit trigger(m_nextEventToSchedule->evt());
         emit dailySequencerIndex(m_curDailyScheduler->idx() -1);
@@ -265,7 +265,7 @@ void plugframe::Scheduler::onStartNextDayTimer(int msToMidnight)
 void plugframe::Scheduler::onStartNextEventTimer(int msToNextEvt)
 {
     m_nextScheduledEvtTimerId = startTimer(msToNextEvt);
-    pfInfo1(logChannel()) << tr("%1 prochain évènement déclenché : ").arg(m_id) << m_nextEventToSchedule->evt() << tr(" à : %1").arg(m_nextEventToSchedule->time().toString("hh:mm"));
+    pfInfo1(logChannel()) << tr("%1 Next event triggered: ").arg(m_id) << m_nextEventToSchedule->evt() << tr(" at: %1").arg(m_nextEventToSchedule->time().toString("hh:mm"));
 }
 
 void plugframe::Scheduler::onStopTimer(int timerId)

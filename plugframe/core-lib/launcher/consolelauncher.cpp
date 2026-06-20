@@ -16,23 +16,20 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef CONSOLE_APPLICATION_H
-#define CONSOLE_APPLICATION_H
+#include "consolelauncher.h"
 
-#include "pfcore-lib_export.h"
-#include "launcher.h"
-
-namespace plugframe
+plugframe::ConsoleLauncher::ConsoleLauncher()
 {
-class PFCORELIB_EXPORT ConsoleApplication : public Launcher
+
+}
+
+plugframe::ConsoleLauncher::~ConsoleLauncher()
 {
-public:
-    ConsoleApplication();
-    ~ConsoleApplication() override;
 
-protected:
-    void createApp(int& argc, char *argv[]) override;
-};
-} // namespace plugframe
+}
 
-#endif // CONSOLE_APPLICATION_H
+void plugframe::ConsoleLauncher::createApp(int& argc, char *argv[])
+{
+    m_spApp.reset(new QCoreApplication(argc, argv));
+}
+

@@ -70,10 +70,10 @@ bool GuiEngine::menuNames(const plugframe::QspGuiPageController &controller, plu
         controller->ctrlType() == plugframe::GuiConsoleControllerType::s_ctrlType)
     {
         ret = true;
-        menuNames.functionalDomainName(QObject::tr("Plateforme"));
+        menuNames.functionalDomainName(QObject::tr("Platform"));
         if (controller->ctrlType() == plugframe::GuiLogsControllerType::s_ctrlType)
         {
-            menuNames.controllerName(QObject::tr("&Journal"));
+            menuNames.controllerName(QObject::tr("&Logs"));
         }
         else if (controller->ctrlType() == plugframe::GuiConsoleControllerType::s_ctrlType)
         {

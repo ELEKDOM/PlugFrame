@@ -22,8 +22,8 @@
 #include "framework.h"
 #include "event/event.h"
 
-FrameworkStarter::FrameworkStarter(plugframe::Bundle& fwk):
-    BundleEmitter{fwk}
+FrameworkStarter::FrameworkStarter(plugframe::Bundle& fwk, QObject *parent):
+    BundleEmitter{fwk,parent}
 {
 
 }
@@ -131,7 +131,7 @@ void FrameworkStarter::startAllBundles()
 
     frameworkStartLevelToReach = fwk.startLevelToReach();
 
-    pfDebug5(getLogBundleName()) << tr("Niveau de fonctionnement de la plateforme : ") << frameworkStartLevelToReach;
+    pfDebug5(getLogBundleName()) << "Platform operating level: " << frameworkStartLevelToReach;
 
     // bundles with startlevel <= frameworkStartLevelToReach must be started
     for (iter = listBundles.begin(); iter != listBundles.end(); ++iter)
@@ -142,8 +142,7 @@ void FrameworkStarter::startAllBundles()
 
         if (curBundle->getStartLevel() > 0 && curBundle->getStartLevel() <= frameworkStartLevelToReach)
         {
-            pfDebug5(getLogBundleName()) << tr("Le Bundle %1 est à démarrer").arg(curBundle->getName());
-
+            pfDebug5(getLogBundleName()) << "Bundle " << curBundle->getName() << " is ready to start";
             bundlesToStart.append(curBundle);
         }
     }

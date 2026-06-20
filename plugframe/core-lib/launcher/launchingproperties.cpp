@@ -21,6 +21,7 @@
 // Framework launching properties
 const QString plugframe::LaunchingProperties::PF_GROUP = "plugframe properties";
 const QString plugframe::LaunchingProperties::PF_FRAMEWORK_STARTLEVEL = "plugframe.framework.startlevel";
+const QString plugframe::LaunchingProperties::PF_LOCALE = "plugframe.locale";
 
 // Qt StyleSheet for gui
 const QString plugframe::LaunchingProperties::QT_GROUP = "qt properties";
@@ -48,6 +49,27 @@ QString plugframe::LaunchingProperties::getStartlevel()
 
     beginGroup(PF_GROUP);
     ret = value(PF_FRAMEWORK_STARTLEVEL).toString();
+    endGroup();
+
+    return ret;
+}
+
+bool plugframe::LaunchingProperties::hasLocale()
+{
+    bool ret{false};
+
+    beginGroup(PF_GROUP);
+    ret = contains(PF_LOCALE);
+    endGroup();
+    return ret;
+}
+
+QString plugframe::LaunchingProperties::getLocale()
+{
+    QString ret;
+
+    beginGroup(PF_GROUP);
+    ret = value(PF_LOCALE).toString();
     endGroup();
 
     return ret;

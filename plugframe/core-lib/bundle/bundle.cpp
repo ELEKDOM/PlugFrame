@@ -245,7 +245,7 @@ plugframe::BundleHeaders& plugframe::Bundle::getHeaders()
 {
     if (m_headers.isNull())
     {
-        pfWarning8(logChannel()) << QObject::tr("Le bundle n'a pas de header !");
+        pfWarning8(logChannel()) << QObject::tr("The bundle has no header!");
     }
 
     return *m_headers;

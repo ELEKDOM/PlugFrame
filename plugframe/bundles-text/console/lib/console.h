@@ -26,11 +26,13 @@
 #include "cmd/cmdprocessor.h"
 #include "consoleexit.h"
 
-class Console : public plugframe::BundleImplementation,
-                public plugframe::Worker
+class Console : public plugframe::Worker,
+                public plugframe::BundleImplementation
 {
+    Q_OBJECT
+
 public:
-    Console(int descriptionTab = 20);
+    Console(int descriptionTab = 20,QObject *parent = nullptr);
     ~Console() override;
 
 public:

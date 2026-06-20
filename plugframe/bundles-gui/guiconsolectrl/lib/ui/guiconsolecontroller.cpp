@@ -52,7 +52,7 @@ void GuiConsoleController::onLevelCmd()
     if (m_systemServiceItf)
     {
         int rl{m_systemServiceItf->runningLevel()};
-        QString msg{QObject::tr("Niveau d'exécution de la plateforme\t%1").arg(rl)};
+        QString msg{QObject::tr("Platform execution level: %1").arg(rl)};
 
         emit sigPrint(msg);
     }
@@ -76,7 +76,7 @@ void GuiConsoleController::displayBundlesList(plugframe::BundleInterface::Bundle
     QString spaces;
 
     spaces.fill(' ', firstColSize - 6);
-    emit sigPrint(QObject::tr("Bundle%1rang de démarrage").arg(spaces));
+    emit sigPrint(QObject::tr("Bundle%1 starting rank").arg(spaces));
 
     for (it = list.begin(); it != list.end(); ++it)
     {

@@ -104,11 +104,5 @@ void plugframe::GuiPageController::notifyCurCtrl()
 
 void plugframe::GuiPageController::deleteAllViews()
 {
-    /*
-    for (int i = 0; i < m_viewList.size(); i++)
-    {
-        delete m_viewList.at(i);
-    }
-    */
     m_viewList.clear();
 }

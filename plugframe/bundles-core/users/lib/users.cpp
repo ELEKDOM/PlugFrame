@@ -62,7 +62,7 @@ void Users::login(QString                             frontendItf,
 {
     QMutexLocker lock(&m_mutex);
 
-    pfInfo1(logChannel()) << QObject::tr("Demande de connexion. Utilisateur : ") << identifier << QObject::tr(" interface : ") << frontendItf << QObject::tr(" adresse : ") << frontendIp;
+    pfInfo1(logChannel()) << QObject::tr("User login request: ") << identifier << QObject::tr(" ,from interface: ") << frontendItf << QObject::tr(" ,IP address: ") << frontendIp;
 
     loginStatus = checkLogin(identifier,
                              password,
@@ -74,11 +74,11 @@ void Users::login(QString                             frontendItf,
         sessionId = generateSessionId();
         addLoggedUser(sessionId, frontendItf, identifier);
 
-        pfInfo1(logChannel()) << QObject::tr("Utilisateur : ") << identifier << QObject::tr(" connecté, sessionId : ") << sessionId << QObject::tr(" profil : ") << profil;
+        pfInfo1(logChannel()) << QObject::tr("User: ") << identifier << QObject::tr(" connected, sessionId: ") << sessionId << QObject::tr(" profile: ") << profil;
     }
     else
     {
-        pfInfo1(logChannel()) << QObject::tr("Utilisateur : ") << identifier << QObject::tr(" . Connexion refusée");
+        pfInfo1(logChannel()) << QObject::tr("User: ") << identifier << QObject::tr(" .Connection refused");
     }
 }
 
@@ -86,7 +86,7 @@ void Users::logout(quint32 sessionId)
 {
     QMutexLocker lock(&m_mutex);
 
-    pfInfo1(logChannel()) << QObject::tr("Déconnexion de la sessionId : ") << sessionId;
+    pfInfo1(logChannel()) << QObject::tr("Disconnect from sessionId: ") << sessionId;
 
     m_loggedUsers.remove(sessionId);
 }

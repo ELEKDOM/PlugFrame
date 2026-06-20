@@ -32,6 +32,9 @@ class PFCORELIB_EXPORT LaunchingProperties : public QSettings
     static const QString PF_GROUP;
     static const QString PF_FRAMEWORK_STARTLEVEL;
 
+    // Locale for translations
+    static const QString PF_LOCALE;
+
     // Qt StyleSheet for gui
     static const QString QT_GROUP;
     static const QString GUI_STYLESHEET_FILE;
@@ -42,6 +45,8 @@ public:
 public:
     bool hasStartlevel();
     QString getStartlevel();
+    bool hasLocale();
+    QString getLocale();
     bool hasStyleSheet();
     QString getStyleSheetFile();
 };

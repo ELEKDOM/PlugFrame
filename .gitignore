@@ -19,7 +19,6 @@ Makefile
 *.log
 *.tmp
 *.swp
-*.bak
 *.dSYM/
 *.DS_Store
 
@@ -39,6 +38,7 @@ Makefile
 # Backup files
 *~
 \#*\#
+*.bak
 
 # Compilation intermediates
 *.o
@@ -58,3 +58,4 @@ __pycache__
 
 # Divers
 ._cp_meta_inf_unix
+sources.lst

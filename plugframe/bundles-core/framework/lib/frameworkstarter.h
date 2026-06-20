@@ -25,8 +25,10 @@
 
 class FrameworkStarter : public plugframe::BundleEmitter
 {
+    Q_OBJECT
+
 public:
-    FrameworkStarter(plugframe::Bundle& fwk);
+    FrameworkStarter(plugframe::Bundle& fwk, QObject *parent = nullptr);
     ~FrameworkStarter() override;
 
 public:

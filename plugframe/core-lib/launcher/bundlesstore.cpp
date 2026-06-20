@@ -34,32 +34,33 @@ plugframe::FrameworkInterface* plugframe::BundlesStore::loadFrameworkPlugin(QStr
     plugframe::FrameworkInterface* ret = nullptr;
     plugframe::BundleInterface* bundleItf;
 
-    QDir smfFrameworkDir;
+    QDir frameworkDir;
     QStringList files;
     QString fileName;
 
     //pfDebug3(caller) << "->BundlesStore::loadFrameworkPlugin";
 
-    if (m_location->cdFrameworkBundleDir(smfFrameworkDir))
+    if (m_location->cdFrameworkBundleDir(frameworkDir))
     {
-        //pfInfo8(caller) << QCoreApplication::tr("Répertoire du bundle système [ %1 ]").arg(smfFrameworkDir.absolutePath());
+        pfInfo8(caller) << QCoreApplication::translate("plugframe::BundlesStore",
+                                                       "System bundle directory: ") << frameworkDir.absolutePath();
 
-        files = smfFrameworkDir.entryList(QDir::Files);
+        files = frameworkDir.entryList(QDir::Files);
         if (files.size() > 0)
         {
             fileName = files[0];
             //pfDebug4(caller) << "Bundle framework filename: " << fileName;
             //pfDebug4(caller) << "Bundle framework full filename: " << smfFrameworkDir.absoluteFilePath(fileName);
 
-            QPluginLoader pluginLoader(smfFrameworkDir.absoluteFilePath(fileName));
+            QPluginLoader pluginLoader(frameworkDir.absoluteFilePath(fileName));
             QObject *plugin = pluginLoader.instance();
             if (plugin)
             {
-                pfDebug5(caller) << QCoreApplication::tr("Framwork loaded %1").arg(files[0]);
+                pfDebug5(caller) << "Framwork loaded: " << files[0];
                 ret = qobject_cast<plugframe::FrameworkInterface*>(plugin);
                 bundleItf = ret->getBundleInterface();
                 bundleItf->setFileName(fileName);
-                bundleItf->setAbsolutePath(smfFrameworkDir.absolutePath());
+                bundleItf->setAbsolutePath(frameworkDir.absolutePath());
                 bundleItf->setMetaData(pluginLoader.metaData());
                 bundleItf->setQplugin(plugin);
             }
@@ -108,7 +109,7 @@ void plugframe::BundlesStore::loadPlugins(QString caller,plugframe::BundleList& 
                 if (files.size() == 1)
                 {
                     QString fileName{BundleDir.absoluteFilePath(files[0])};
-                    //pfDebug4(caller) << QCoreApplication::tr("Plugin à charger [ %1 ]").arg(files[0]);
+                    pfDebug4(caller) << "Plugin to load: " << files[0];
                     pluginLoader.setFileName(fileName);
                     plugin = pluginLoader.instance();
                 }
@@ -118,7 +119,7 @@ void plugframe::BundlesStore::loadPlugins(QString caller,plugframe::BundleList& 
                     plugframe::BundleInterface* bundle = qobject_cast<plugframe::BundleInterface*>(plugin);
                     if (bundle)
                     {
-                        pfDebug5(caller) << QCoreApplication::tr("Plugin [ %1 ] chargé").arg(files[0]);
+                        pfDebug5(caller) << "Plugin loaded: " << files[0];
 
                         // hold bundle lib name and location
                         bundle->setFileName(files[0]);
@@ -139,7 +140,8 @@ void plugframe::BundlesStore::loadPlugins(QString caller,plugframe::BundleList& 
                 }
                 else
                 {
-                    pfWarning8(caller) << QCoreApplication::tr("%1, Err : ").arg(files[0]) << pluginLoader.errorString();
+                    pfWarning8(caller) << QCoreApplication::translate("plugframe::BundlesStore",
+                                                                      "%1, Error: ").arg(files[0]) << pluginLoader.errorString();
                 }
             } // if (m_location->isBundleSubDir(subdirName))
         } // for (auto&& subdirName : BundlesDir.entryList(QDir::Dirs|QDir::NoDotAndDotDot))

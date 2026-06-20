@@ -16,8 +16,8 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef GUIAPPLICATION_H
-#define GUIAPPLICATION_H
+#ifndef GUILAUNCHER_H
+#define GUILAUNCHER_H
 
 #include <QScopedPointer>
 #include "launcher/launcher.h"
@@ -25,11 +25,11 @@
 
 namespace plugframe
 {
-class PFGUILIB_EXPORT GuiApplication : public Launcher
+class PFGUILIB_EXPORT GuiLauncher : public Launcher
 {
 public:
-    GuiApplication();
-    ~GuiApplication() override;
+    GuiLauncher();
+    ~GuiLauncher() override;
 
 protected:
     void createApp(int& argc, char *argv[]) override;
@@ -37,4 +37,4 @@ protected:
 };
 } // namespace plugframe
 
-#endif // GUIAPPLICATION_H
+#endif // GUILAUNCHER_H

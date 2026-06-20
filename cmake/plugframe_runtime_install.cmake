@@ -244,6 +244,12 @@ if(EXISTS "${PF_PROFILE_DIR}" AND IS_DIRECTORY "${PF_PROFILE_DIR}")
       "${PF_BIN_DIR}/guiplugframe/conf"
     )
 
+  # Launcher conf plugframe_fr.qm
+    pf_copy_conf_file(
+      "${PF_PROFILE_DIR}/plugframe/guiconsole/plugframe_fr.qm"
+      "${PF_BIN_DIR}/guiplugframe/conf"
+    )
+
   # Logger bundle conf
     pf_copy_conf_file(
       "${PF_PROFILE_DIR}/plugframe/guiconsole/log.ini"

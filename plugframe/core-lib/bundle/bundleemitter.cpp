@@ -46,7 +46,7 @@ bool plugframe::BundleEmitter::registerListener(plugframe::BundleListener *obser
         bool valid = connect(this, SIGNAL(pfEvent(plugframe::QspEvent)),observer,SLOT(onEvent(plugframe::QspEvent)),Qt::QueuedConnection);
         if (!valid)
         {
-            pfWarning8(getLogBundleName()) << tr("Echec de connexion entre Emitter et Listener !");
+            pfWarning8(getLogBundleName()) << tr("Qt connection failed between Emitter and Listener!");
         }
         m_listenersRegister.append(observer);
     }

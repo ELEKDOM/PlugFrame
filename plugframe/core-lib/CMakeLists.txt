@@ -49,7 +49,7 @@ set(SOURCES
     factory/corefactory.cpp
     factory/defaultbundlefactory.cpp
     launcher/bundlesstore.cpp
-    launcher/consoleapplication.cpp
+    launcher/consolelauncher.cpp
     launcher/launcher.cpp
     launcher/launchingproperties.cpp
     launcher/location.cpp
@@ -125,7 +125,7 @@ set(HEADERS
     factory/corefactory.h
     factory/defaultbundlefactory.h
     launcher/bundlesstore.h
-    launcher/consoleapplication.h
+    launcher/consolelauncher.h
     launcher/launcher.h
     launcher/launchingproperties.h
     launcher/location.h
