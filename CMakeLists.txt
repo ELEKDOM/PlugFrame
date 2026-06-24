@@ -16,9 +16,19 @@ cmake_minimum_required(VERSION 3.19)
 #  plugframe-gui library
 #  a set of "gui" bundles
 
-option(PF_BUILD_TEXT "Build text-based implementations (console/display)" ON)
+option(PF_BUILD_TEXT "Build TEXT-based implementations (console/display)" ON)
 option(PF_BUILD_GUI  "Build GUI-based implementations (Qt Widgets)" ON)
+option(PF_DEFAULT_INSTALL  "Build default configurator implementation (Qt Widgets)" ON)
 option(PF_BUILD_LAUNCHERS "Build PlugFrame launchers" OFF)
+
+if(PF_DEFAULT_INSTALL)
+  set(PF_BUILD_TEXT ON CACHE BOOL "Build TEXT-based components" FORCE)
+  set(PF_BUILD_GUI ON CACHE BOOL "Build GUI-based components" FORCE)
+endif()
+
+message(STATUS "PF_DEFAULT_INSTALL = " ${PF_DEFAULT_INSTALL})
+message(STATUS "PF_BUILD_TEXT = " ${PF_BUILD_TEXT})
+message(STATUS "PF_BUILD_GUI = " ${PF_BUILD_GUI})
 
 # PlugFrame Project version
 set(PF_PROJ_VERSION "1.0.0")
@@ -39,12 +49,6 @@ message(STATUS "PF_CORE_LIB_VERSION = " ${PF_CORE_LIB_VERSION})
 set(PF_GUI_LIB_VERSION_MAJOR "1")
 string(CONCAT PF_GUI_LIB_VERSION ${PF_GUI_LIB_VERSION_MAJOR} ".0.0")
 message(STATUS "PF_GUI_LIB_VERSION = " ${PF_GUI_LIB_VERSION})
-
-# Profil Configuration is used by binary install stage
-set(PF_PROFILES_ROOT_DIR "" CACHE PATH "External conf root")
-set(PF_SELECTED_PROFILE_NAME "" CACHE STRING "Profile subdir")
-message(STATUS "PF_PROFILES_ROOT_DIR = " ${PF_PROFILES_ROOT_DIR})
-message(STATUS "PF_SELECTED_PROFILE_NAME = " ${PF_SELECTED_PROFILE_NAME})
 
 # Required Qt Modules for core and "text" parts
 find_package(Qt6 REQUIRED COMPONENTS Core Xml Network)
@@ -70,6 +74,9 @@ add_custom_target(PlugFrame_other_files
         README.md
         LICENSE.txt
         cmake/plugframe_runtime_install.cmake
+        cmake/plugframe_default_runtime_install.cmake
+        cmake/plugframe_configurator_runtime_install.cmake
+        cmake/plugframe_install_tools.cmake
         cmake/toolchains/rpi3-aarch64.cmake
         docs/qt-install-and-crosscompile.md
 )
@@ -78,47 +85,26 @@ add_custom_target(PlugFrame_other_files
 ########################################
 
 set(PF_RUNTIME_ROOT "${CMAKE_BINARY_DIR}" CACHE PATH "PlugFrame runtime root directory")
+set(PF_PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}" CACHE PATH "PlugFrame source directory")
 
 set(_pf_install_args
   "-DPF_RUNTIME_ROOT=${PF_RUNTIME_ROOT}"
-  "-DPF_PROFILES_ROOT_DIR=${PF_PROFILES_ROOT_DIR}"
-  "-DPF_SELECTED_PROFILE_NAME=${PF_SELECTED_PROFILE_NAME}"
-
-  # Forward build options to the script so it applies the same TEXT/GUI conditional logic
-  "-DPF_BUILD_TEXT=${PF_BUILD_TEXT}"
-  "-DPF_BUILD_GUI=${PF_BUILD_GUI}"
-
-  "-DPF_CORE_LIB_FILE=$<TARGET_FILE:plugframe-core-qt6>"
-  "-DPF_CORE_LIB_SONAME=$<$<PLATFORM_ID:Linux>:$<TARGET_SONAME_FILE:plugframe-core-qt6>>"
-  "-DPF_CORE_LIB_LINKER=$<$<PLATFORM_ID:Linux>:$<TARGET_LINKER_FILE:plugframe-core-qt6>>"
-  "-DPF_PLUGIN_FRAMEWORK_FILE=$<TARGET_FILE:framework-qt6>"
-  "-DPF_PLUGIN_LOGGER_FILE=$<TARGET_FILE:logger-qt6>"
-  "-DPF_PLUGIN_USERS_FILE=$<TARGET_FILE:users-qt6>"
+  "-DPF_PROJECT_SOURCE_DIR=${PF_PROJECT_SOURCE_DIR}"
+  "-DPF_DEFAULT_INSTALL=${PF_DEFAULT_INSTALL}"
 )
 
-if(PF_BUILD_TEXT)
-  list(APPEND _pf_install_args
-    "-DPF_PLUGIN_DISPLAY_FILE=$<TARGET_FILE:display-qt6>"
-    "-DPF_PLUGIN_CONSOLE_FILE=$<TARGET_FILE:console-qt6>"
-  )
-endif()
-
-if(PF_BUILD_GUI)
-  list(APPEND _pf_install_args
-    "-DPF_GUI_LIB_FILE=$<TARGET_FILE:plugframe-gui-qt6>"
-    "-DPF_GUI_LIB_SONAME=$<$<PLATFORM_ID:Linux>:$<TARGET_SONAME_FILE:plugframe-gui-qt6>>"
-    "-DPF_GUI_LIB_LINKER=$<$<PLATFORM_ID:Linux>:$<TARGET_LINKER_FILE:plugframe-gui-qt6>>"
-    "-DPF_PLUGIN_GUIDISPLAY_FILE=$<TARGET_FILE:guidisplay-qt6>"
-    "-DPF_PLUGIN_GUIENGINE_FILE=$<TARGET_FILE:guiengine-qt6>"
-    "-DPF_PLUGIN_GUILOGSCTRL_FILE=$<TARGET_FILE:guilogsctrl-qt6>"
-    "-DPF_PLUGIN_GUICONSOLECTRL_FILE=$<TARGET_FILE:guiconsolectrl-qt6>"
-  )
+if(DPF_DEFAULT_INSTALL)
+# default configurator files
+#  list(APPEND _pf_install_args
+#    "-D=$<TARGET_FILE:-qt6>"
+#    "-D=$<TARGET_FILE:-qt6>"
+#  )
 endif()
 
 add_custom_target(plugframe_runtime_install
   COMMAND ${CMAKE_COMMAND} ${_pf_install_args}
           -P "${PROJECT_SOURCE_DIR}/cmake/plugframe_runtime_install.cmake"
-  COMMENT "PlugFrame runtime install (conditional: text/gui)"
+  COMMENT "PlugFrame platform runtime install (conditional: default_install)"
 )
 
 add_dependencies(plugframe_runtime_install
