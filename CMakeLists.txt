@@ -130,3 +130,7 @@ if(PF_BUILD_GUI)
     guiconsolectrl-qt6
   )
 endif()
+
+# PlugFrame Configurator part for platform installation
+#######################################################
+add_subdirectory(configurator)
