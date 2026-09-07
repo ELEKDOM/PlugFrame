@@ -36,6 +36,7 @@ private:
     static const QString BUNDLE_NAME;
     static const QString STARTLEVEL_BEGING;
     static const QString BUNDLE_CONFIG_FILE_NAME;
+    static const QString BUNDLE_DATA_FILE_NAME;
     static const QString BUNDLE_PROVIDED_SERVICE; // Declares the name and version of the provided(exported) service. Can be declared zero or more times in the header.
     static const QString BUNDLE_REQUIRED_SERVICE; // Declares the name and version of the required service. Can be declared zero or more times in the header.
 
@@ -56,6 +57,7 @@ public:
     int getStartLevel();
     void setStartLevel(const QString value);
     QString getConfFile();
+    QString getDataFile();
     QList<QString> getProvidedServices();
     QList<QString> getRequiredServices();
 };

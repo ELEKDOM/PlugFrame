@@ -21,19 +21,23 @@
 
 #include "plugin/plugin.h"
 #include "service-int/guiregistercontrollerserviceinterface.h"
+#include "service-int/guiconfiguratorengineserviceinterface.h"
 #include "guiengine/lib/guiregistercontrollerservice.h"
+#include "guiconfiguratorengineservice.h"
 
 class GuiConfiguratorEnginePlugin : public plugframe::Plugin,
-                                    public plugframe::GuiRegisterControllerServiceInterface
+                                    public plugframe::GuiRegisterControllerServiceInterface,
+                                    public configurator::GuiConfiguratorEngineServiceInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "plugframe.guiconfiguratorengine.plugin" FILE "../guiconfiguratorenginebundle.json")
+    Q_PLUGIN_METADATA(IID "configurator.guiconfiguratorengine.plugin" FILE "../guiconfiguratorenginebundle.json")
     Q_INTERFACES(plugframe::BundleInterface
-                 plugframe::GuiRegisterControllerServiceInterface)
+                 plugframe::GuiRegisterControllerServiceInterface
+                 configurator::GuiConfiguratorEngineServiceInterface)
 
 public:
     GuiConfiguratorEnginePlugin();
-    virtual ~GuiConfiguratorEnginePlugin();
+    ~GuiConfiguratorEnginePlugin() override;
 
 protected: // Plugin
     plugframe::Bundle4PluginInterface *createImplementation() override;
@@ -42,8 +46,12 @@ protected: // Plugin
 protected: // GuiRegisterControllerInterface
     void registerController(const plugframe::QspGuiPageController& controller) override;
 
+protected: // GuiConfiguratorEngineServiceInterface
+    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName) override;
+    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName) override;
+
 private:
     QspGuiRegisterControllerService m_registerControllerServiceImpl;
-
+    QspGuiConfiguratorEngineService m_configuratorEngineServiceImpl;
 };
 #endif // GUICONFIGURATORENGINEPLUGIN_H

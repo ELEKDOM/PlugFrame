@@ -17,8 +17,12 @@
 //
 
 #include "guiconfiguratorengine.h"
+#include "guiconfiguratorenginefactory.h"
+#include "gui/guidevelopermodecontrollertype.h"
+#include "service-int/guiconfiguratorengineserviceinterface.h"
 
-GuiConfiguratorEngine::GuiConfiguratorEngine()
+GuiConfiguratorEngine::GuiConfiguratorEngine():
+    m_hasDeveloperMode{false}
 {
 
 }
@@ -28,9 +32,49 @@ GuiConfiguratorEngine::~GuiConfiguratorEngine()
 
 }
 
+QStringList GuiConfiguratorEngine::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+{
+    QStringList ret;
+
+    //...
+
+    return ret;
+}
+
+QStringList GuiConfiguratorEngine::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+{
+    QStringList ret;
+
+    //...
+
+    return ret;
+}
+
+plugframe::BundleFactory *GuiConfiguratorEngine::createFactory()
+{
+    return new GuiConfiguratorEngineFactory;
+}
+
+plugframe::ServiceInterface *GuiConfiguratorEngine::qtServiceInterface(const QString &sName)
+{
+    plugframe::ServiceInterface *ret{GuiEngine::qtServiceInterface(sName)};
+
+    if (!ret && configurator::GuiConfiguratorEngineServiceInterface::serviceName() == sName)
+    {
+        ret = qobject_cast<configurator::GuiConfiguratorEngineServiceInterface*>(getQplugin());
+    }
+
+    return ret;
+}
+
 void GuiConfiguratorEngine::postRegister(const plugframe::QspGuiPageController &controller)
 {
-    //...
+    if (controller->ctrlType() == configurator::GuiDeveloperModeControllerType::s_ctrlType)
+    {
+        controller->currentCtrl();
+        m_hasDeveloperMode = true;
+    }
+
 }
 
 bool GuiConfiguratorEngine::menuNames(const plugframe::QspGuiPageController &controller, plugframe::GuiMainMenuNames &menuNames)
@@ -39,7 +83,25 @@ bool GuiConfiguratorEngine::menuNames(const plugframe::QspGuiPageController &con
 
     if(!ret)
     {
-        // ...
+        if (controller->ctrlType() == configurator::GuiDeveloperModeControllerType::s_ctrlType)
+        {
+            ret = true;
+            menuNames.functionalDomainName(QObject::tr("Mode Selector"));
+            if (controller->ctrlType() == configurator::GuiDeveloperModeControllerType::s_ctrlType)
+            {
+                menuNames.controllerName(QObject::tr("&Developer"));
+            }
+            /*
+            else if (controller->ctrlType() == ::s_ctrlType)
+            {
+                menuNames.controllerName(QObject::tr("&Release Manager"));
+            }
+            else if (controller->ctrlType() == ::s_ctrlType)
+            {
+                menuNames.controllerName(QObject::tr("&End User"));
+            }
+            */
+        }
     }
 
     return ret;

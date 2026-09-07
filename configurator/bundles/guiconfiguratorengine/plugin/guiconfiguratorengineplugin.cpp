@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
 #include "guiconfiguratorengineplugin.h"
 #include "guiconfiguratorengine.h"
 
@@ -39,11 +38,24 @@ void GuiConfiguratorEnginePlugin::registerController(const plugframe::QspGuiPage
     m_registerControllerServiceImpl->registerController(controller);
 }
 
+QStringList GuiConfiguratorEnginePlugin::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+{
+    return m_configuratorEngineServiceImpl->getLauncherConfFileList(projectName,applicationName);
+}
+
+QStringList GuiConfiguratorEnginePlugin::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+{
+    return m_configuratorEngineServiceImpl->getBundleConfFileList(projectName,applicationName,bundleName);
+}
+
 void GuiConfiguratorEnginePlugin::bindServicesImplementations()
 {
     plugframe::QspServiceImplementationInterface serviceImplementationItf;
 
     serviceImplementationItf = implementation()->getServiceImplementation(plugframe::GuiRegisterControllerServiceInterface::serviceName());
     m_registerControllerServiceImpl = serviceImplementationItf.dynamicCast<GuiRegisterControllerService>();
+
+    serviceImplementationItf = implementation()->getServiceImplementation(configurator::GuiConfiguratorEngineServiceInterface::serviceName());
+    m_configuratorEngineServiceImpl = serviceImplementationItf.dynamicCast<GuiConfiguratorEngineService>();
 }
 

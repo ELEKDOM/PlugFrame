@@ -29,6 +29,7 @@ target_link_libraries(${LAUNCHER_NAME}
     Qt6::Widgets
     plugframe-core-qt6
     plugframe-gui-qt6
+    ${CONFIGURATOR_GUI_LIB_NAME}
 )
 
 target_compile_definitions(${LAUNCHER_NAME}

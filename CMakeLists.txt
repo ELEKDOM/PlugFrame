@@ -50,6 +50,26 @@ set(PF_GUI_LIB_VERSION_MAJOR "1")
 string(CONCAT PF_GUI_LIB_VERSION ${PF_GUI_LIB_VERSION_MAJOR} ".0.0")
 message(STATUS "PF_GUI_LIB_VERSION = " ${PF_GUI_LIB_VERSION})
 
+# PlugFrame Core Lib Target Name
+set(PF_CORE_LIB_NAME
+    "plugframe-core-qt6"
+    )
+message(STATUS "PF_CORE_LIB_NAME = " ${PF_CORE_LIB_NAME})
+
+# PlugFrame Gui Lib Target Name
+set(PF_GUI_LIB_NAME
+    "plugframe-gui-qt6"
+    )
+message(STATUS "PF_GUI_LIB_NAME = " ${PF_GUI_LIB_NAME})
+
+# PlugFrame Core Lib include dir
+set(PF_CORE_LIB_INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/plugframe/core-lib")
+message(STATUS "PF_CORE_LIB_INC_DIR = " ${PF_CORE_LIB_INC_DIR})
+
+# PlugFrame Gui Lib include dir
+set(PF_GUI_LIB_INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/plugframe/gui-lib")
+message(STATUS "PF_GUI_LIB_INC_DIR = " ${PF_GUI_LIB_INC_DIR})
+
 # Required Qt Modules for core and "text" parts
 find_package(Qt6 REQUIRED COMPONENTS Core Xml Network)
 

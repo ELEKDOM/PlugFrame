@@ -24,7 +24,7 @@
 #include "guiregistercontrollerservice.h"
 
 class GuiEnginePlugin : public plugframe::Plugin,
-                         public plugframe::GuiRegisterControllerServiceInterface
+                        public plugframe::GuiRegisterControllerServiceInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "plugframe.guiconsole.plugin" FILE "../guienginebundle.json")

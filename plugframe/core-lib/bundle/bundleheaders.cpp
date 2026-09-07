@@ -26,6 +26,7 @@ const QString plugframe::BundleHeaders::BUNDLE_VERSION{"bundle-version"};
 const QString plugframe::BundleHeaders::BUNDLE_NAME{"bundle-name"};
 const QString plugframe::BundleHeaders::STARTLEVEL_BEGING{"startlevel-beging"};
 const QString plugframe::BundleHeaders::BUNDLE_CONFIG_FILE_NAME{"bundle-config-file-name"};
+const QString plugframe::BundleHeaders::BUNDLE_DATA_FILE_NAME{"bundle-data-file-name"};
 const QString plugframe::BundleHeaders::BUNDLE_PROVIDED_SERVICE{"service-provided"};
 const QString plugframe::BundleHeaders::BUNDLE_REQUIRED_SERVICE{"service-required"};
 
@@ -98,6 +99,11 @@ QString plugframe::BundleHeaders::getConfFile()
 {
     return value(plugframe::BundleHeaders::BUNDLE_CONFIG_FILE_NAME,
                  plugframe::BundleHeaders::BUNDLE_DEFAULT_CONFIG_FILE_NAME);
+}
+
+QString plugframe::BundleHeaders::getDataFile()
+{
+    return value(plugframe::BundleHeaders::BUNDLE_DATA_FILE_NAME);
 }
 
 QList<QString> plugframe::BundleHeaders::getProvidedServices()

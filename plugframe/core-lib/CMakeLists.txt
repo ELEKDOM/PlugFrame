@@ -70,6 +70,7 @@ set(SOURCES
     worker/workerthread.cpp
     worker/workerwatcher.cpp
     xmldom/xmldocument.cpp
+    xmldom/xmleditabledocument.cpp
     )
 
 # PlugFrame Core Lib Headers
@@ -162,6 +163,7 @@ set(HEADERS
     worker/workerwatcher.h
     xmldom/xmlbrowserhook.h
     xmldom/xmldocument.h
+    xmldom/xmleditabledocument.h
     )
 
 qt_add_library(${PF_CORE_LIB_NAME} SHARED ${SOURCES} ${HEADERS})

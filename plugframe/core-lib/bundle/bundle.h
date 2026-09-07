@@ -44,6 +44,8 @@ public:
    BundleFactory& getFactory() override;
    QString getConfPath();
    QString getConfDir();
+   QString getDataPath();
+   QString getDataDir();
    bool registerListener(BundleListener* observer);
    bool unregisterListener(BundleListener* observer);
    QObject* getQplugin();

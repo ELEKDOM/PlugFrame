@@ -17,7 +17,7 @@
 //
 
 #include <QCoreApplication>
-#include <QFile>
+#include <QDir>
 #include <QJsonArray>
 #include "logger/pflog.h"
 #include "bundle.h"
@@ -66,6 +66,25 @@ QString plugframe::Bundle::getConfPath()
 QString plugframe::Bundle::getConfDir()
 {
     QString ret{m_absolutePath + "/" + "conf" + "/"};
+    return ret;
+}
+
+QString plugframe::Bundle::getDataPath()
+{
+    QString ret;
+    QString dataFile = getHeaders().getDataFile();
+    QDir dataPath;
+
+    dataPath.mkpath(getDataDir());
+
+    ret = getDataDir() + dataFile;
+
+    return ret;
+}
+
+QString plugframe::Bundle::getDataDir()
+{
+    QString ret{m_absolutePath + "/" + "data" + "/"};
     return ret;
 }
 

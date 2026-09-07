@@ -6,6 +6,9 @@ set(SOURCES
     gui/guipagecontroller.cpp
     gui/guipageview.cpp
     gui/guilogsview.cpp
+    gui/widgets/widgetitemcontents.cpp
+    gui/widgets/guiwidgetlistitem.cpp
+    gui/widgets/guiwidgetlist.cpp
     launcher/guilauncher.cpp
     )
 
@@ -22,6 +25,9 @@ set(HEADERS
     gui/guipagecontroller.h
     gui/guipageview.h
     gui/guilogsview.h
+    gui/widgets/widgetitemcontents.h
+    gui/widgets/guiwidgetlistitem.h
+    gui/widgets/guiwidgetlist.h
     launcher/guilauncher.h
     service-int/guibuilderserviceinterface.h
     service-int/guiregistercontrollerserviceinterface.h
@@ -30,6 +36,8 @@ set(HEADERS
 # Bundle implementation Forms
 set(FORMS
     gui/logsview.ui
+    gui/widgets/widgetitemcontents.ui
+    gui/widgets/guiwidgetlist.ui
 )
 
 qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS})

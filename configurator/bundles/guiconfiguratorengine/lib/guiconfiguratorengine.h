@@ -27,9 +27,18 @@ public:
     GuiConfiguratorEngine();
     ~GuiConfiguratorEngine() override;
 
+public:
+    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName);
+    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName);
+
 protected:
+    plugframe::BundleFactory* createFactory() override;
+    plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
     void postRegister(const plugframe::QspGuiPageController& controller) override;
     bool menuNames(const plugframe::QspGuiPageController& controller,plugframe::GuiMainMenuNames& menuNames) override;
     QString guiTitle() override;
+
+private:
+    bool m_hasDeveloperMode;
 };
 #endif // GUICONFIGURATORENGINE_H

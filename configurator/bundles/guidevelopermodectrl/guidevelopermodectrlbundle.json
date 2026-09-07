@@ -1,0 +1,9 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "GuiDeveloperModeCtrl",
+    "bundle-data-file-name" : "developer_mode_settings.xml",
+    "startlevel-beging" : "5",
+    "service-required" : "GuiRegisterControllerServiceInterface,1.0.0",
+    "service-required2" : "GuiConfiguratorEngineServiceInterface,1.0.0"
+}

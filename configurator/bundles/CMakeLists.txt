@@ -1,1 +1,2 @@
 add_subdirectory(guiconfiguratorengine)
+add_subdirectory(guidevelopermodectrl)
