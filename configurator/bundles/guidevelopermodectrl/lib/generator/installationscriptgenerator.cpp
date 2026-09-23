@@ -76,8 +76,6 @@ QString InstallationScriptGenerator::s_runtimeInstall_in =
 "# installation of application bundles (plugins) #\n"
 "#################################################\n"
 "\n"
-"set(PF_BUNDLES_BACKUP_DIR \"${PF_BIN_DIR}/.bundles_backup\")\n"
-"\n"
 "{TAG6}"
 "\n"
 "######################################\n"

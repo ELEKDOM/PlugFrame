@@ -58,7 +58,7 @@ void configurator::GuiFileConfiguratorController::buildViews()
 void configurator::GuiFileConfiguratorController::onSelectedConfFileToImport(QString filePath, QString repositoryPath, QString artefactName, QWidget *view)
 {
     QDir artefactRepository{repositoryPath + QDir::separator() + artefactName};
-    QString fileName{QDir(filePath).dirName()};
+    QString fileName{QFileInfo(filePath).fileName()};
 
     // Check for artefact repository first
     //------------------------------------
@@ -103,9 +103,9 @@ void configurator::GuiFileConfiguratorController::onSelectedConfFileToImport(QSt
 
 void configurator::GuiFileConfiguratorController::onSelectedConfFileFromRepository(QString filePath)
 {
-    QString ext{filePath.sliced(filePath.lastIndexOf("."))};
+    QString ext{QFileInfo(filePath).suffix()};
 
-    if (ext != ".qm")
+    if (ext != "qm")
     {
         emit editFile(filePath);
     }

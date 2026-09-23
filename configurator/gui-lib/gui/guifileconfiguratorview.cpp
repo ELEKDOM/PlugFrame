@@ -35,7 +35,7 @@ configurator::GuiFileConfiguratorView::GuiFileConfiguratorView(QWidget *parent):
 
 configurator::GuiFileConfiguratorView::~GuiFileConfiguratorView()
 {
-
+    delete ui;
 }
 
 void configurator::GuiFileConfiguratorView::setArtefactSourcePath(const QString& label, const QString& text)
