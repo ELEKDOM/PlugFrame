@@ -39,7 +39,7 @@ public:
 
              GuiApplicationSettingsItem(qsizetype dIndex,
                                         const QString& appliName,
-                                        const QList<BundleArtefact>& bundleArtefactList,
+                                        const QList<BundleArtefact>& bundleArtefactLis,
                                         GuiDeveloperModeView *developerView);
     ~GuiApplicationSettingsItem() override;
 

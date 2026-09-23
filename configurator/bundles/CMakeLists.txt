@@ -1,2 +1,4 @@
 add_subdirectory(guiconfiguratorengine)
 add_subdirectory(guidevelopermodectrl)
+add_subdirectory(guilaunchersconfiguratorctrl)
+add_subdirectory(guiloggerconfiguratorctrl)

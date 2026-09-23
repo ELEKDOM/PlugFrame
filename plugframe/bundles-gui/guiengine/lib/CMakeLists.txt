@@ -8,6 +8,7 @@ set(SOURCES
 # Bundle implementation Headers
 set(HEADERS
     guiengine_forward.h
+    guiengine_logchannel.h
     guiengine.h
     guienginefactory.h
     guiregistercontrollerservice.h

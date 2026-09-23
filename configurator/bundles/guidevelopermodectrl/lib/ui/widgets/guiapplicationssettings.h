@@ -18,10 +18,10 @@
 #ifndef GUIAPPLICATIONSSETTINGS_H
 #define GUIAPPLICATIONSSETTINGS_H
 
-#include "gui/widgets/guiwidgetlist.h"
+#include "gui/widgets/guieditablewidgetlist.h"
 #include "ui/guidevelopermodeview.h"
 
-class GuiApplicationsSettings : public plugframe::GuiWidgetList
+class GuiApplicationsSettings : public plugframe::GuiEditableWidgetList
 {
     Q_OBJECT
 

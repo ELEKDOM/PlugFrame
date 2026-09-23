@@ -21,7 +21,7 @@
 #include "guibundlesettingsitem.h"
 
 GuiBundlesSettings::GuiBundlesSettings(qsizetype applicationItemDataIndex,GuiDeveloperModeView *parent):
-    plugframe::GuiWidgetList(parent),
+    plugframe::GuiEditableWidgetList(parent),
     m_applicationItemDataIndex(applicationItemDataIndex),
     m_view(parent)
 {
@@ -49,7 +49,11 @@ void GuiBundlesSettings::display(qsizetype applicationDataIndex,const QList<Bund
         QString bundleName{bundleArtefactList[i].m_bundleName};
         QString bundlePlugin{bundleArtefactList[i].m_bundlePlugin};
 
-        item = new GuiBundleSettingsItem{i,applicationDataIndex,bundleName,bundlePlugin,m_view};
+        item = new GuiBundleSettingsItem{i,
+                                         applicationDataIndex,
+                                         bundleName,
+                                         bundlePlugin,
+                                         m_view};
         displayItem(item);
     }
 }

@@ -29,6 +29,7 @@ QT_END_NAMESPACE
 
 class GuiLibsInstallationsSettings;
 class GuiApplicationsSettings;
+class GuiApplicationsConfFilesSelector;
 class GuiDeveloperModeView : public plugframe::GuiPageView
 {
     Q_OBJECT
@@ -62,6 +63,10 @@ public:
     void updateBundleArtefact(qsizetype applicationItemDataIndex,qsizetype dataIndex,const QString& bundleName,const QString& bundlePlugin);
     void deleteBundleArtefact(qsizetype applicationItemDataIndex,qsizetype dataIndex);
 
+    // For m_applicationsConfFilesSelector
+    void editAppConfFile(QString appName);
+    void editBundleConfFile(QString appName,QString bundleName);
+
 signals:
     // Tab : Global settings
     void globalProjectSourcePathChanged(const QString& text);
@@ -75,7 +80,11 @@ signals:
     void cloneConfiguration();
     void installationSelectionChanged(QString installationIdentifier);
     void generateInstallationScript(QWidget *view);
-    void removeInstallation(QWidget *view);
+    void backupDatabase(QWidget *view);
+
+    // Tab : Configuration files selector
+    void applicationConfFileEdit(QString appName);
+    void bundleConfFileEdit(QString appName,QString bundleName);
 
 private slots:
     // Tab : Global settings
@@ -118,11 +127,13 @@ private:
     void displayCurInstallationSettings(bool editable = true);
     void setSettingsFormEditable(bool editable = true);
     void showTopInstallationSettings();
+    void updateConfFilesSelector();
 
 private:
-    Ui::developerModeView        *ui;
-    GuiLibsInstallationsSettings *m_libsInstallationsSettings; // Area3
-    GuiApplicationsSettings      *m_applicationsSettings; // Area4
-    InstallationSettings         *m_curInstallationSettings;
+    Ui::developerModeView            *ui;
+    GuiLibsInstallationsSettings     *m_libsInstallationsSettings;     // tab2 Area3
+    GuiApplicationsSettings          *m_applicationsSettings;          // tab2 Area4
+    GuiApplicationsConfFilesSelector *m_applicationsConfFilesSelector; // tab3
+    InstallationSettings             *m_curInstallationSettings;
 };
 #endif // GUIDEVELOPERMODEVIEW_H

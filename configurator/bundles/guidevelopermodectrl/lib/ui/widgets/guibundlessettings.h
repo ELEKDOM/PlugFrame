@@ -18,10 +18,10 @@
 #ifndef GUIBUNDLESSETTINGS_H
 #define GUIBUNDLESSETTINGS_H
 
-#include "gui/widgets/guiwidgetlist.h"
+#include "gui/widgets/guieditablewidgetlist.h"
 #include "ui/guidevelopermodeview.h"
 
-class GuiBundlesSettings : public plugframe::GuiWidgetList
+class GuiBundlesSettings : public plugframe::GuiEditableWidgetList
 {
     Q_OBJECT
 

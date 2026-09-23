@@ -66,6 +66,7 @@ private:
 private:
     Ui::widgetItemContents *ui;
     GuiWidgetListItem      *m_item;
+    bool                    m_controlPanelActivated;
 };
 }//namespace plugframe
 #endif // WIDGETITEMCONTENTS_H

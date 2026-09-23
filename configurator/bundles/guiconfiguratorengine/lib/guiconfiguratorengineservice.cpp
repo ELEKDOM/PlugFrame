@@ -30,18 +30,47 @@ GuiConfiguratorEngineService::~GuiConfiguratorEngineService()
 
 }
 
-QStringList GuiConfiguratorEngineService::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+QStringList GuiConfiguratorEngineService::getLauncherConfFileList(const QString& confFilesRepository, const QString &applicationName)
 {
     GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
 
-    return engine->getLauncherConfFileList(projectName,applicationName);
+    return engine->getLauncherConfFileList(confFilesRepository,applicationName);
 }
 
-QStringList GuiConfiguratorEngineService::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+QStringList GuiConfiguratorEngineService::getBundleConfFileList(const QString &confFilesRepository,
+                                                                const QString &bundleName)
 {
     GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
 
-    return engine->getBundleConfFileList(projectName,applicationName,bundleName);
+    return engine->getBundleConfFileList(confFilesRepository,bundleName);
+}
+
+bool GuiConfiguratorEngineService::hasLauncherConfFiles(const QString &applicationName)
+{
+    GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
+
+    return engine->hasLauncherConfFiles(applicationName);
+}
+
+bool GuiConfiguratorEngineService::hasBundleConfFiles(const QString &bundleName)
+{
+    GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
+
+    return engine->hasBundleConfFiles(bundleName);
+}
+
+void GuiConfiguratorEngineService::editLauncherConfFiles(const QString &projectSourcePath,const QString &projectName, const QString &applicationName, const QString &confFilesRepository)
+{
+    GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
+
+    engine->editLauncherConfFiles(projectSourcePath,projectName,applicationName,confFilesRepository);
+}
+
+void GuiConfiguratorEngineService::editBundleConfFiles(const QString &projectSourcePath, const QString &projectName, const QString &applicationName, const QString &bundleName, const QString &confFilesRepository)
+{
+    GuiConfiguratorEngine *engine{dynamic_cast<GuiConfiguratorEngine*>(implementation())};
+
+    engine->editBundleConfFiles(projectSourcePath,projectName,applicationName,bundleName,confFilesRepository);
 }
 
 QString GuiConfiguratorEngineService::serviceName()

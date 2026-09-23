@@ -18,8 +18,11 @@
 #ifndef GUICONFIGURATORENGINE_H
 #define GUICONFIGURATORENGINE_H
 
+#include <QList>
 #include "guiengine/lib/guiengine.h"
 #include "gui/guipagecontroller.h"
+#include "gui/guilaunchersconfiguratorcontroller.h"
+#include "gui/guibundleconfiguratorcontroller.h"
 
 class GuiConfiguratorEngine : public GuiEngine
 {
@@ -28,9 +31,19 @@ public:
     ~GuiConfiguratorEngine() override;
 
 public:
-    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName);
-    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName);
-
+    QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName);
+    QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName);
+    bool hasLauncherConfFiles(const QString& applicationName);
+    bool hasBundleConfFiles(const QString& bundleName);
+    void editLauncherConfFiles(const QString &projectSourcePath,
+                               const QString &projectName,
+                               const QString &applicationName,
+                               const QString &confFilesRepository);
+    void editBundleConfFiles(const QString &projectSourcePath,
+                             const QString& projectName,
+                             const QString& applicationName,
+                             const QString& bundleName,
+                             const QString& confFilesRepository);
 protected:
     plugframe::BundleFactory* createFactory() override;
     plugframe::ServiceInterface *qtServiceInterface(const QString& sName) override;
@@ -39,6 +52,12 @@ protected:
     QString guiTitle() override;
 
 private:
+    void appendLaunchersConfigurator(configurator::QspGuiLaunchersConfiguratorController controller);
+    void appendBundleConfigurator(configurator::QspGuiBundleConfiguratorController controller);
+
+private:
     bool m_hasDeveloperMode;
+    QList<configurator::QspGuiLaunchersConfiguratorController> m_registeredLaunchersConfiguratorControllers;
+    QList<configurator::QspGuiBundleConfiguratorController> m_registeredBundleConfiguratorControllers;
 };
 #endif // GUICONFIGURATORENGINE_H

@@ -20,6 +20,7 @@
 #include <QStringList>
 #include <QTimer>
 #include <QLibraryInfo>
+#include <QTranslator>
 #include "launcher.h"
 #include "bundlesstore.h"
 #include "factory/corefactory.h"
@@ -80,24 +81,40 @@ void plugframe::Launcher::setTranslations()
     if (!properties.isNull() && properties->hasLocale())
     {
         QString locale{properties->getLocale().left(2)};
-        QString fileName(QString("plugframe_%1.qm").arg(locale));
-        QString filePath{QDir("conf").filePath(fileName)};
-        QFile file{filePath};
+        QStringList fileFilterName(QString("*_%1.qm").arg(locale));
+        QString filePath;
+        QString qtFileName{QString("qtbase_%1.qm").arg(locale)};
+        QString qtFilePath{QDir(QLibraryInfo::path(QLibraryInfo::TranslationsPath)).filePath(qtFileName)};
+        QStringList qmFiles;
+        QDir confDir{"conf"};
+        QTranslator *translator;
 
-        if(file.exists())
+        // Qt's standard translations
+        //---------------------------
+        translator = new QTranslator{this};
+        if (translator->load(qtFilePath))
         {
-            if (m_translator.load(filePath))
+            qApp->installTranslator(translator);
+        }
+        else
+        {
+            translator->deleteLater();
+        }
+
+        // Specifics translations
+        //-----------------------
+        qmFiles = confDir.entryList(fileFilterName,QDir::Files);
+        for (auto i=0;i<qmFiles.size();i++)
+        {
+            translator = new QTranslator{this};
+            filePath = confDir.filePath(qmFiles[i]);
+            if (translator->load(filePath))
             {
-                qApp->installTranslator(&m_translator);
+                qApp->installTranslator(translator);
             }
-
-            // Qt's standard translations
-            QString qtFileName{QString("qtbase_%1.qm").arg(locale)};
-            QString qtFilePath{QDir(QLibraryInfo::path(QLibraryInfo::TranslationsPath)).filePath(qtFileName)};
-
-            if (m_qtTranslator.load(qtFilePath))
+            else
             {
-                qApp->installTranslator(&m_qtTranslator);
+                translator->deleteLater();
             }
         }
     }

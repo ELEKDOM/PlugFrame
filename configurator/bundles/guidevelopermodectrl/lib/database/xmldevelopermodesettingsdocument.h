@@ -64,7 +64,7 @@ public:
 public:
     bool getGlobalSettings(QString& defaultScriptName,
                            QString& defaultProjectSourcePath);
-    QString dbGetSelectedPlatformInstallationIdentifier();
+    QString getSelectedPlatformInstallationIdentifier();
     QStringList getInstallationIdentifierList();
     InstallationSettings *getInstallationSettings(const QString &installationIdentifier);
     void setDefaultProjectSourcePath(const QString& defaultProjectSourcePath);

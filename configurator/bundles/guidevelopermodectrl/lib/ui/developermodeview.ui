@@ -13,13 +13,37 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
     <widget class="QTabWidget" name="developerModeViewTabs">
      <property name="font">
       <font>
        <bold>false</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="tabPosition">
       <enum>QTabWidget::TabPosition::North</enum>
@@ -30,6 +54,9 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
      <widget class="QWidget" name="globalSettingsTab">
       <property name="font">
        <font>
@@ -39,22 +66,56 @@
       <attribute name="title">
        <string>Global settings</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_13">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
-        <widget class="QScrollArea" name="scrollArea_2">
+        <widget class="QScrollArea" name="globalSettingsScrollArea">
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <widget class="QWidget" name="globalSettingsScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1072</width>
-            <height>1484</height>
+            <width>1102</width>
+            <height>1514</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="developerModeTitle_2">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Developer mode</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QWidget" name="tab1Area1" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -92,13 +153,13 @@
                  <widget class="QPushButton" name="tab1Area1BrowseButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -174,23 +235,53 @@
        <string>Platform installation settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_10">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QScrollArea" name="platformInstallationScrollArea">
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="platformInstallationScrollAreaScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1072</width>
-            <height>1484</height>
+            <width>1102</width>
+            <height>1514</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>
             <widget class="QLabel" name="developerModeTitle">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>40</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>12</pointsize>
@@ -217,13 +308,13 @@
                  <widget class="QLabel" name="tab2Area3Label">
                   <property name="minimumSize">
                    <size>
-                    <width>125</width>
-                    <height>0</height>
+                    <width>0</width>
+                    <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>125</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -257,13 +348,13 @@
                  <widget class="QPushButton" name="tab2Area1AddButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -276,13 +367,13 @@
                  <widget class="QPushButton" name="tab2Area1UpdateButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -295,13 +386,13 @@
                  <widget class="QPushButton" name="tab2Area1DeleteButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -320,7 +411,7 @@
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -333,13 +424,13 @@
                  <widget class="QPushButton" name="tab2Area1CancelButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -352,13 +443,13 @@
                  <widget class="QPushButton" name="tab2Area1SaveButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -396,13 +487,13 @@
                  <widget class="QLabel" name="tab2Area2Label_2">
                   <property name="minimumSize">
                    <size>
-                    <width>180</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>180</width>
+                    <width>16777215</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -435,13 +526,13 @@
                  <widget class="QLabel" name="tab2Area2Label_8">
                   <property name="minimumSize">
                    <size>
-                    <width>85</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>85</width>
+                    <width>16777215</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -474,13 +565,13 @@
                  <widget class="QLabel" name="tab2Area2Label_3">
                   <property name="minimumSize">
                    <size>
-                    <width>115</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>115</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -509,13 +600,13 @@
                  <widget class="QPushButton" name="tab2Area2BrowseButton">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -532,13 +623,13 @@
                  <widget class="QLabel" name="tab2Area2Label_4">
                   <property name="minimumSize">
                    <size>
-                    <width>115</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>115</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -567,13 +658,13 @@
                  <widget class="QPushButton" name="tab2Area2BrowseButton_2">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -590,7 +681,7 @@
                  <widget class="QLabel" name="tab2Area2Label_5">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -635,7 +726,7 @@
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>170</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -664,13 +755,13 @@
                  <widget class="QPushButton" name="tab2Area2BrowseButton_3">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -687,13 +778,13 @@
                  <widget class="QLabel" name="tab2Area2Label_7">
                   <property name="minimumSize">
                    <size>
-                    <width>125</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>125</width>
+                    <width>16777215</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -722,13 +813,13 @@
                  <widget class="QPushButton" name="tab2Area2BrowseButton_4">
                   <property name="minimumSize">
                    <size>
-                    <width>80</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>80</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -834,13 +925,13 @@
                  <widget class="QPushButton" name="tab2Area5GenerateButton">
                   <property name="minimumSize">
                    <size>
-                    <width>150</width>
+                    <width>600</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>150</width>
+                    <width>600</width>
                     <height>40</height>
                    </size>
                   </property>
@@ -863,21 +954,21 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="tab2Area5RemoveButton">
+                 <widget class="QPushButton" name="tab2Area5BackupButton">
                   <property name="minimumSize">
                    <size>
-                    <width>260</width>
+                    <width>0</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>260</width>
+                    <width>16777215</width>
                     <height>40</height>
                    </size>
                   </property>
                   <property name="text">
-                   <string>Remove current installation from hard drive</string>
+                   <string>Back up the database</string>
                   </property>
                  </widget>
                 </item>
@@ -911,6 +1002,220 @@
               </item>
              </layout>
             </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="configurationFilesSelectorTab">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <attribute name="title">
+       <string>Configuration files selector</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="configurationFilesSelectorScrollArea">
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="configurationFilesSelectorScrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1102</width>
+            <height>1514</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="developerModeTitle_3">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Developer mode</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <widget class="QLabel" name="tab3Area1Label">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Installation settings identifier :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="tab3Area1LineEditInstallationIdentifier">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <item>
+              <widget class="QLabel" name="tab3Area1Label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Project Name :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="tab3Area1LineEditProjectName">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <item>
+              <widget class="QLabel" name="tab3Area1Label_3">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Configuration files directory :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="tab3Area1LineEditConfDirectory">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="confFilesSelectorLocationLayout"/>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

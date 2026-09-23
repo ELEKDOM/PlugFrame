@@ -10,6 +10,10 @@ set(SOURCES
     ui/widgets/guiapplicationsettingsitem.cpp
     ui/widgets/guibundlessettings.cpp
     ui/widgets/guibundlesettingsitem.cpp
+    ui/widgets/guiapplicationsconffilesselector.cpp
+    ui/widgets/guiapplicationsconffilesselectoritem.cpp
+    ui/widgets/guibundlesconffilesselector.cpp
+    ui/widgets/guibundleconffilesselectoritem.cpp
     database/xmldevelopermodesettingsdocument.cpp
     database/installationsettings.cpp
     generator/installationscriptgenerator.cpp
@@ -19,7 +23,7 @@ set(SOURCES
 set(HEADERS
     guidevelopermodectrl.h
     guidevelopermodectrlfactory.h
-    guidevelopermodectrllogchannel.h
+    guidevelopermodectrl_logchannel.h
     ui/guidevelopermodeview.h
     ui/guidevelopermodecontroller.h
     ui/guidevelopermodectrlhook.h
@@ -29,6 +33,10 @@ set(HEADERS
     ui/widgets/guiapplicationsettingsitem.h
     ui/widgets/guibundlessettings.h
     ui/widgets/guibundlesettingsitem.h
+    ui/widgets/guiapplicationsconffilesselector.h
+    ui/widgets/guiapplicationsconffilesselectoritem.h
+    ui/widgets/guibundlesconffilesselector.h
+    ui/widgets/guibundleconffilesselectoritem.h
     database/xmldevelopermodesettingsdocument.h
     database/installationsettings.h
     generator/installationscriptgenerator.h
@@ -38,9 +46,11 @@ set(HEADERS
 # Bundle implementation Forms
 set(FORMS
     ui/developermodeview.ui
-    ui/widgets/guilibssettingsitem.ui
+    ui/widgets/guilibssettings.ui
     ui/widgets/guiapplicationsettings.ui
     ui/widgets/guibundlesettings.ui
+    ui/widgets/guiapplicationconffilesselector.ui
+    ui/widgets/guibundleconffilesselector.ui
 )
 
 qt_add_library(${BUNDLE_IMPL_NAME} STATIC ${SOURCES} ${HEADERS} ${FORMS})
@@ -60,8 +70,6 @@ target_link_libraries(${BUNDLE_IMPL_NAME} PUBLIC
     Qt6::Gui
     Qt6::Widgets 
     Qt6::Xml
-#    ${PF_CORE_LIB_NAME}
-#    ${PF_GUI_LIB_NAME}
     ${CONFIGURATOR_GUI_LIB_NAME}
 )
 

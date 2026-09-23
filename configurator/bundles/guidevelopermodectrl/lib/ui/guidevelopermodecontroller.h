@@ -52,13 +52,16 @@ private slots:
     void onCloneConfiguration();
     void onInstallationSelectionChanged(QString installationIdentifier);
     void onGenerateScript(QWidget *view);
-    void onRemoveInstallation(QWidget *view);
+    void onBackupDatabase(QWidget *view);
+    void onApplicationConfFileEdit(QString appName);
+    void onBundleConfFileEdit(QString appName,QString bundleName);
 
 private:
     GuiDeveloperModeCtrlHook *bundleHook() {return m_bundleHook;}
     void initDeveloperModeView(GuiDeveloperModeView *view);
     void dataLoading();
     void initConfigurationFromDb();
+    void initConfFilesFlag();
 
 private:
     GuiDeveloperModeCtrlHook *m_bundleHook;

@@ -28,9 +28,19 @@ public:
     ~GuiConfiguratorEngineService() override;
 
 public:
-    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName);
-    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName);
-
+    QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName);
+    QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName);
+    bool hasLauncherConfFiles(const QString& applicationName);
+    bool hasBundleConfFiles(const QString& bundleName);
+    void editLauncherConfFiles(const QString &projectSourcePath,
+                               const QString &projectName,
+                               const QString &applicationName,
+                               const QString &confFilesRepository);
+    void editBundleConfFiles(const QString &projectSourcePath,
+                             const QString& projectName,
+                             const QString& applicationName,
+                             const QString& bundleName,
+                             const QString& confFilesRepository);
 protected:
     QString serviceName() override;
 };

@@ -19,7 +19,7 @@
 #include "guiapplicationsettingsitem.h"
 
 GuiApplicationsSettings::GuiApplicationsSettings(GuiDeveloperModeView *parent) :
-    plugframe::GuiWidgetList(parent),
+    plugframe::GuiEditableWidgetList(parent),
     m_view(parent)
 {
     setScrollListMinimumSize(QSize(0,600));
@@ -46,7 +46,10 @@ void GuiApplicationsSettings::display(const QList<ApplicationArtefact> &applicat
         QString appliName{applicationArtefactList[i].m_applicationName};
         QList<BundleArtefact> bundleArtefactList{applicationArtefactList[i].m_bundleArtefactList};
 
-        item = new GuiApplicationSettingsItem{i,appliName,bundleArtefactList,m_view};
+        item = new GuiApplicationSettingsItem{i,
+                                              appliName,
+                                              bundleArtefactList,
+                                              m_view};
         displayItem(item);
     }
 }

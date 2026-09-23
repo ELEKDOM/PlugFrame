@@ -47,14 +47,15 @@ public:
 class BundleArtefact
 {
 public:
-    BundleArtefact():m_deletedFlag{false},m_newlyFlag{true}{}
+    BundleArtefact():m_deletedFlag{false},m_newlyFlag{true},m_confFilesFlag{false}{}
     BundleArtefact(const QString& bundleName,const QString& bundlePlugin):BundleArtefact(){m_newlyFlag=false;m_bundleName=bundleName;m_bundlePlugin=bundlePlugin;}
-    BundleArtefact(const BundleArtefact& b){m_deletedFlag=b.m_deletedFlag;m_newlyFlag=b.m_newlyFlag;m_bundleName=b.m_bundleName;m_bundlePlugin=b.m_bundlePlugin;}
+    BundleArtefact(const BundleArtefact& b){m_deletedFlag=b.m_deletedFlag;m_newlyFlag=b.m_newlyFlag;m_bundleName=b.m_bundleName;m_confFilesFlag=b.m_confFilesFlag;m_bundlePlugin=b.m_bundlePlugin;}
 
 public:
     bool m_deletedFlag;
     bool m_newlyFlag;
     QString m_bundleName;
+    bool m_confFilesFlag; // set at run time for view !
     QString m_bundlePlugin;
 };
 
@@ -64,7 +65,7 @@ public:
 class ApplicationArtefact
 {
 public:
-    ApplicationArtefact():m_deletedFlag{false},m_newlyFlag{true} {}
+    ApplicationArtefact():m_deletedFlag{false},m_newlyFlag{true},m_confFilesFlag{false} {}
     ApplicationArtefact(const QString& appliName,const QList<BundleArtefact>& bundleArtefactList):ApplicationArtefact(){m_newlyFlag=false;m_applicationName=appliName;m_bundleArtefactList=bundleArtefactList;}
 
 public:
@@ -76,6 +77,7 @@ public:
     bool m_deletedFlag;
     bool m_newlyFlag;
     QString m_applicationName;
+    bool m_confFilesFlag; // set at run time for view !
     QList<BundleArtefact> m_bundleArtefactList;
 };
 

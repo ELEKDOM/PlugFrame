@@ -45,7 +45,7 @@ bool XmlDeveloperModeSettingsDocument::getGlobalSettings(QString& defaultScriptN
     return m_globalSettingsElemOk;
 }
 
-QString XmlDeveloperModeSettingsDocument::dbGetSelectedPlatformInstallationIdentifier()
+QString XmlDeveloperModeSettingsDocument::getSelectedPlatformInstallationIdentifier()
 {
     return m_globalSettingsElem.attribute(selectedPlatformInstallationAttr());
 }

@@ -43,6 +43,19 @@ public:
 
     // Installation managment
     virtual void generateInstallationScript(InstallationSettings installationSettings,QWidget *view) = 0;
-    virtual void removeInstallation(QString projectBuildRoot,QWidget *view) = 0;
+    virtual void backupDatabase(QWidget *view) = 0;
+
+    // Configuration files managment
+    virtual bool hasLauncherConfFiles(const QString& applicationName) = 0;
+    virtual bool hasBundleConfFiles(const QString& bundleName) = 0;
+    virtual void editLauncherConfFiles(const QString &projectSourcePath,
+                                       const QString& projectName,
+                                       const QString& applicationName,
+                                       const QString& confFilesRepository) = 0;
+    virtual void editBundleConfFiles(const QString &projectSourcePath,
+                                       const QString& projectName,
+                                       const QString& applicationName,
+                                       const QString& bundleName,
+                                       const QString& confFilesRepository) = 0;
 };
 #endif // GUIDEVELOPERMODECTRLHOOK_H

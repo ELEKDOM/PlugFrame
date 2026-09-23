@@ -19,7 +19,10 @@
 #include "guiconfiguratorengine.h"
 #include "guiconfiguratorenginefactory.h"
 #include "gui/guidevelopermodecontrollertype.h"
+#include "gui/guilaunchersconfiguratorcontrollertype.h"
+#include "gui/guibundleconfiguratorcontrollertype.h"
 #include "service-int/guiconfiguratorengineserviceinterface.h"
+#include "logger/pflog.h"
 
 GuiConfiguratorEngine::GuiConfiguratorEngine():
     m_hasDeveloperMode{false}
@@ -32,22 +35,95 @@ GuiConfiguratorEngine::~GuiConfiguratorEngine()
 
 }
 
-QStringList GuiConfiguratorEngine::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+QStringList GuiConfiguratorEngine::getLauncherConfFileList(const QString& confFilesRepository,const QString &applicationName)
 {
     QStringList ret;
+    bool found{false};
 
-    //...
+    for (auto i=0;i<m_registeredLaunchersConfiguratorControllers.size() && !found; i++)
+    {
+        ret = m_registeredLaunchersConfiguratorControllers[i]->getLauncherConfFileList(confFilesRepository,applicationName);
+        found = !ret.isEmpty();
+    }
+
+    pfInfo5(getLogBundleName()) << QObject::tr("Configuration files for launcher [") << applicationName << "] :" << ret;
 
     return ret;
 }
 
-QStringList GuiConfiguratorEngine::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+QStringList GuiConfiguratorEngine::getBundleConfFileList(const QString& confFilesRepository,const QString &bundleName)
 {
     QStringList ret;
 
-    //...
+    bool found{false};
+
+    for (auto i=0;i<m_registeredBundleConfiguratorControllers.size() && !found; i++)
+    {
+        ret = m_registeredBundleConfiguratorControllers[i]->getBundleConfFileList(confFilesRepository,bundleName);
+        found = !ret.isEmpty();
+    }
+
+    pfInfo5(getLogBundleName()) << QObject::tr("Configuration files for bundle [") << bundleName << "] :" << ret;
 
     return ret;
+}
+
+bool GuiConfiguratorEngine::hasLauncherConfFiles(const QString &applicationName)
+{
+    bool ret{false};
+
+    for (auto i=0;i<m_registeredLaunchersConfiguratorControllers.size() && !ret; i++)
+    {
+        ret = m_registeredLaunchersConfiguratorControllers[i]->hasLauncherConfFiles(applicationName);
+    }
+
+    return ret;
+}
+
+bool GuiConfiguratorEngine::hasBundleConfFiles(const QString &bundleName)
+{
+    bool ret{false};
+
+    for (auto i=0;i<m_registeredBundleConfiguratorControllers.size() && !ret; i++)
+    {
+        ret = m_registeredBundleConfiguratorControllers[i]->hasBundleConfFiles(bundleName);
+    }
+
+    return ret;
+}
+
+void GuiConfiguratorEngine::editLauncherConfFiles(const QString &projectSourcePath,
+                                                  const QString &projectName,
+                                                  const QString &applicationName,
+                                                  const QString &confFilesRepository)
+{
+    bool editing{false};
+
+    for (auto i=0;i<m_registeredLaunchersConfiguratorControllers.size() && !editing; i++)
+    {
+        editing = m_registeredLaunchersConfiguratorControllers[i]->editLauncherConfFiles(projectSourcePath,
+                                                                                         projectName,
+                                                                                         applicationName,
+                                                                                         confFilesRepository);
+    }
+}
+
+void GuiConfiguratorEngine::editBundleConfFiles(const QString &projectSourcePath,
+                                                const QString &projectName,
+                                                const QString &applicationName,
+                                                const QString &bundleName,
+                                                const QString &confFilesRepository)
+{
+    bool editing{false};
+
+    for (auto i=0;i<m_registeredBundleConfiguratorControllers.size() && !editing; i++)
+    {
+        editing = m_registeredBundleConfiguratorControllers[i]->editBundleConfFiles(projectSourcePath,
+                                                                                    projectName,
+                                                                                    applicationName,
+                                                                                    bundleName,
+                                                                                    confFilesRepository);
+    }
 }
 
 plugframe::BundleFactory *GuiConfiguratorEngine::createFactory()
@@ -69,12 +145,23 @@ plugframe::ServiceInterface *GuiConfiguratorEngine::qtServiceInterface(const QSt
 
 void GuiConfiguratorEngine::postRegister(const plugframe::QspGuiPageController &controller)
 {
-    if (controller->ctrlType() == configurator::GuiDeveloperModeControllerType::s_ctrlType)
+    plugframe::GuiControllerType ctrlT{controller->ctrlType()};
+
+    if (ctrlT == configurator::GuiDeveloperModeControllerType::s_ctrlType)
     {
         controller->currentCtrl();
         m_hasDeveloperMode = true;
     }
-
+    else if (ctrlT == configurator::GuiLaunchersConfiguratorControllerType::s_ctrlType)
+    {
+        appendLaunchersConfigurator(controller.dynamicCast<configurator::GuiLaunchersConfiguratorController>());
+        pfDebug5(getLogBundleName()) << "Append a launcher configurator";
+    }
+    else if (ctrlT == configurator::GuiBundleConfiguratorControllerType::s_ctrlType)
+    {
+        appendBundleConfigurator(controller.dynamicCast<configurator::GuiBundleConfiguratorController>());
+        pfDebug5(getLogBundleName()) << "Append a bundle configurator";
+    }
 }
 
 bool GuiConfiguratorEngine::menuNames(const plugframe::QspGuiPageController &controller, plugframe::GuiMainMenuNames &menuNames)
@@ -110,6 +197,16 @@ bool GuiConfiguratorEngine::menuNames(const plugframe::QspGuiPageController &con
 QString GuiConfiguratorEngine::guiTitle()
 {
     return QStringLiteral("PlugFrame Configurator");
+}
+
+void GuiConfiguratorEngine::appendLaunchersConfigurator(configurator::QspGuiLaunchersConfiguratorController controller)
+{
+    m_registeredLaunchersConfiguratorControllers.append(controller);
+}
+
+void GuiConfiguratorEngine::appendBundleConfigurator(configurator::QspGuiBundleConfiguratorController controller)
+{
+    m_registeredBundleConfiguratorControllers.append(controller);
 }
 
 

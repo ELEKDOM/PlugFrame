@@ -8,7 +8,7 @@ set(SOURCES
     gui/guilogsview.cpp
     gui/widgets/widgetitemcontents.cpp
     gui/widgets/guiwidgetlistitem.cpp
-    gui/widgets/guiwidgetlist.cpp
+    gui/widgets/guieditablewidgetlist.cpp
     launcher/guilauncher.cpp
     )
 
@@ -27,7 +27,7 @@ set(HEADERS
     gui/guilogsview.h
     gui/widgets/widgetitemcontents.h
     gui/widgets/guiwidgetlistitem.h
-    gui/widgets/guiwidgetlist.h
+    gui/widgets/guieditablewidgetlist.h
     launcher/guilauncher.h
     service-int/guibuilderserviceinterface.h
     service-int/guiregistercontrollerserviceinterface.h
@@ -40,7 +40,8 @@ set(FORMS
     gui/widgets/guiwidgetlist.ui
 )
 
-qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS})
+qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS}
+    gui/widgets/guiwidgetlist.h gui/widgets/guiwidgetlist.cpp)
 
 set_target_properties(${PF_GUI_LIB_NAME}
                       PROPERTIES

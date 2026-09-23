@@ -43,9 +43,11 @@ set_target_properties(${LAUNCHER_NAME} PROPERTIES
 )
 
 # Others File only for IDE
-add_custom_target(configurator_launcher_other_files
-    SOURCES
-      run-configurator.sh
+target_sources(${LAUNCHER_NAME}
+    PRIVATE
+        run-configurator.sh
+        conf/log.ini
+        conf/properties.ini
 )
 
 # Resources:

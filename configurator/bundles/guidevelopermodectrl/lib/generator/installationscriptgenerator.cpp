@@ -20,6 +20,8 @@
 #include <QMessageBox>
 #include <QDir>
 #include "installationscriptgenerator.h"
+#include "guidevelopermodectrl_logchannel.h"
+#include "logger/pflog.h"
 
 int InstallationScriptGenerator::s_lastStep = 11;
 
@@ -55,8 +57,11 @@ QString InstallationScriptGenerator::s_runtimeInstall_in =
 "################################\n"
 "\n"
 "set(PF_BIN_DIR    \"${PF_CONF_BUILD_ROOT}/bin\")\n"
+"set(PF_BIN_BACKUP_DIR \"${PF_CONF_BUILD_ROOT}/.bin_backup\")\n"
 "set(PF_LIBS_DIR   \"${PF_BIN_DIR}/libs\")\n"
-"execute_process(COMMAND \"${CMAKE_COMMAND}\" -E make_directory \"${PF_BIN_DIR}\")\n"
+"\n"
+"pf_prepare_runtime_install(\"${PF_BIN_DIR}\" \"${PF_BIN_BACKUP_DIR}\")\n"
+"\n"
 "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E make_directory \"${PF_LIBS_DIR}\")\n"
 "\n"
 "{TAG4}"
@@ -70,6 +75,8 @@ QString InstallationScriptGenerator::s_runtimeInstall_in =
 "#################################################\n"
 "# installation of application bundles (plugins) #\n"
 "#################################################\n"
+"\n"
+"set(PF_BUNDLES_BACKUP_DIR \"${PF_BIN_DIR}/.bundles_backup\")\n"
 "\n"
 "{TAG6}"
 "\n"
@@ -100,7 +107,17 @@ QString InstallationScriptGenerator::s_runtimeInstall_in =
 "else()\n"
 "  message(STATUS \"Configuration profile directory does not exist: ${PF_CONF_PROFILE_DIR}\")\n"
 "  message(STATUS \"Skipping configuration files installation!\")\n"
-"endif()\n";
+"endif()\n"
+"\n"
+"# restoring persistent runtime data\n"
+"###################################\n"
+"\n"
+"pf_restore_runtime_data(\"${PF_BIN_DIR}\" \"${PF_BIN_BACKUP_DIR}\")\n"
+"\n"
+"# finalizing runtime installation\n"
+"#################################\n"
+"\n"
+"pf_finalize_runtime_install(\"${PF_BIN_BACKUP_DIR}\")\n";
 
 InstallationScriptGenerator::InstallationScriptGenerator(GeneratorDeveloperModeHook *bundleHook, QObject *parent) :
     QObject{parent},
@@ -133,31 +150,11 @@ void InstallationScriptGenerator::generateInstallationScript(InstallationSetting
     m_processingProgressDisplay->setAutoReset(false);
     m_processingProgressDisplay->show();
     m_processingProgressDisplay->setValue(0);
+
+    pfInfo5(s_GuiDeveloperModeCtrl_LogChannel) << QObject::tr("Generating the script [") << m_scriptGenerationSettings.m_scriptName <<"] in source tree ["
+                                               << m_scriptGenerationSettings.m_projectSourcePath << "]";
+
     emit startStep(1);
-}
-
-void InstallationScriptGenerator::removeInstallation(QString projectBuildRoot, QWidget *view)
-{
-    QDir binDir{projectBuildRoot};
-
-    if (binDir.cd("bin"))
-    {
-        QString msg{tr("Removing: ") + binDir.absolutePath()};
-
-        m_processingProgressDisplay = new QProgressDialog(msg,
-                                                          QString(),   // no Cancel button
-                                                          0,
-                                                          1,
-                                                          view);
-        m_processingProgressDisplay->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-        m_processingProgressDisplay->setWindowModality(Qt::WindowModal);
-        m_processingProgressDisplay->setAutoClose(false);
-        m_processingProgressDisplay->setAutoReset(false);
-        m_processingProgressDisplay->show();
-        m_processingProgressDisplay->setValue(0);
-
-        emit startRemoving(binDir.absolutePath(),view);
-    }
 }
 
 void InstallationScriptGenerator::onStartStep(int step)
@@ -285,15 +282,18 @@ void InstallationScriptGenerator::fillinTagAppsDir()
             QString istr{QVariant(i + 1).toString()};
             QString fieldAppDirLine1{"set(APP%1_NAME \"%2\")\n"};
             QString fieldAppDirLine2{"set(PF_CONF_APP%1_DIR \"${PF_BIN_DIR}/${APP%2_NAME}\")\n"};
-            QString fieldAppDirLine3{"pf_create_app_subdirs(PF_CONF_APP%1_DIR)\n"};
+            QString fieldAppDirLine3{"pf_create_app_subdirs(\"${PF_CONF_APP%1_DIR}\")\n"};
+            QString fieldAppDirLine4{"pf_restore_app_build_artifacts(\"${PF_CONF_APP%1_DIR}\" \"${PF_BIN_BACKUP_DIR}/${APP%2_NAME}\")\n"};
 
             fieldAppDirLine1 = fieldAppDirLine1.arg(istr,cur.m_applicationName);
             fieldAppDirLine2 = fieldAppDirLine2.arg(istr,istr);
             fieldAppDirLine3 = fieldAppDirLine3.arg(istr);
+            fieldAppDirLine4 = fieldAppDirLine4.arg(istr,istr);
 
             fieldValue.append(fieldAppDirLine1);
             fieldValue.append(fieldAppDirLine2);
             fieldValue.append(fieldAppDirLine3);
+            fieldValue.append(fieldAppDirLine4);
         }
     }
 
@@ -395,8 +395,9 @@ void InstallationScriptGenerator::fillinTagAppsConfFiles()
         {
             QStringList fileList;
             QString istr{QVariant(i + 1).toString()};
+            QString confFilesRepository{m_scriptGenerationSettings.m_configurationFilesRepository + QDir::separator() + m_scriptGenerationSettings.m_configurationProfile};
 
-            fileList = m_bundleHook->getLauncherConfFileList(m_scriptGenerationSettings.m_projectName,cur.m_applicationName);
+            fileList = m_bundleHook->getLauncherConfFileList(confFilesRepository,cur.m_applicationName);
             for (auto j=0;j<fileList.size();j++)
             {
                 QString fieldAppConfFileLine1{"pf_copy_conf_file(\n\"${PF_CONF_PROFILE_DIR}/${APP%1_NAME}/%2\"\n"};
@@ -432,8 +433,9 @@ void InstallationScriptGenerator::fillinTagBundlesConfFiles()
                 if (!curB.m_deletedFlag && !curB.m_newlyFlag)
                 {
                     QStringList fileList;
+                    QString confFilesRepository{m_scriptGenerationSettings.m_configurationFilesRepository + QDir::separator() + m_scriptGenerationSettings.m_configurationProfile + QDir::separator() + cur.m_applicationName};
 
-                    fileList = m_bundleHook->getBundleConfFileList(m_scriptGenerationSettings.m_projectName,cur.m_applicationName,curB.m_bundleName);
+                    fileList = m_bundleHook->getBundleConfFileList(confFilesRepository,curB.m_bundleName);
                     for (auto k=0;k<fileList.size();k++)
                     {
                         QString fieldBundleConfFileLine1{"pf_copy_conf_file(\n\"${PF_CONF_PROFILE_DIR}/${APP%1_NAME}/%2/%3\"\n"};

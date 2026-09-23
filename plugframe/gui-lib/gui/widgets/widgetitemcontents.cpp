@@ -20,23 +20,26 @@
 #include "ui_widgetitemcontents.h"
 
 plugframe::WidgetItemContents::WidgetItemContents(bool controlPanelActivated,
-                                       QWidget *parent):
+                                                  QWidget *parent):
     QFrame{parent},
     ui(new Ui::widgetItemContents),
-    m_item{nullptr}
+    m_item{nullptr},
+    m_controlPanelActivated{controlPanelActivated}
 {
     ui->setupUi(this);
 
     // Should the control panel be displayed?
-    if (!controlPanelActivated)
+    if (!m_controlPanelActivated)
     {
         ui->itemControlPanel->hide();
+    }
+    else
+    {
+        connect(ui->saveItemButton,SIGNAL(clicked(bool)),this,SLOT(onSaveButton()));
     }
 
     //initial state
     edit(false);
-
-    connect(ui->saveItemButton,SIGNAL(clicked(bool)),this,SLOT(onSaveButton()));
 }
 
 plugframe::WidgetItemContents::~WidgetItemContents()
@@ -52,13 +55,17 @@ void plugframe::WidgetItemContents::edit(bool state)
     {
         itemLayout->widget()->setEnabled(state);
     }
-    if (state)
+
+    if(m_controlPanelActivated)
     {
-        ui->itemControlPanel->show();
-    }
-    else
-    {
-        ui->itemControlPanel->hide();
+        if (state)
+        {
+            ui->itemControlPanel->show();
+        }
+        else
+        {
+            ui->itemControlPanel->hide();
+        }
     }
 }
 

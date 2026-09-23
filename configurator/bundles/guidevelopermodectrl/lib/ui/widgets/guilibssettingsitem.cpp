@@ -19,13 +19,13 @@
 #include <QMessageBox>
 #include "guilibssettingsitem.h"
 #include "ui/guidevelopermodeview.h"
-#include "ui_guilibssettingsitem.h"
+#include "ui_guilibssettings.h"
 
 GuiLibsSettingsItem::GuiLibsSettingsItem(qsizetype dataIndex,
                                          GuiDeveloperModeView *developerView,
                                          QWidget *parent):
     plugframe::GuiWidgetListItem{dataIndex,parent},
-    ui(new Ui::guiLibsSettingsItem),
+    ui(new Ui::guiLibsSettings),
     m_view(developerView)
 {
     ui->setupUi(this);

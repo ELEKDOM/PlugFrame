@@ -54,15 +54,29 @@ protected:
 
     // Script generating
     void generateInstallationScript(InstallationSettings installationSettings,QWidget *view) override;
-    void removeInstallation(QString projectBuildRoot,QWidget *view) override;
+    void backupDatabase(QWidget *view) override;
+
+    // Configuration files managment
+    bool hasLauncherConfFiles(const QString& applicationName) override;
+    bool hasBundleConfFiles(const QString& bundleName) override;
 
     // GeneratorDeveloperModeHook
     //---------------------------
-    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName) override;
-    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName) override;
+    QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName) override;
+    QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName) override;
+    void editLauncherConfFiles(const QString &projectSourcePath,
+                               const QString& projectName,
+                               const QString& applicationName,
+                               const QString& confFilesRepository) override;
+    void editBundleConfFiles(const QString &projectSourcePath,
+                             const QString& projectName,
+                             const QString& applicationName,
+                             const QString& bundleName,
+                             const QString& confFilesRepository) override;
 
 private:
     configurator::GuiConfiguratorEngineServiceInterface *configuratorService();
+    void backupDatabase();
 
 private:
     QspXmlDeveloperModeSettingsDocument m_dataBase;

@@ -47,8 +47,19 @@ protected: // GuiRegisterControllerInterface
     void registerController(const plugframe::QspGuiPageController& controller) override;
 
 protected: // GuiConfiguratorEngineServiceInterface
-    QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName) override;
-    QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName) override;
+    QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName) override;
+    QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName) override;
+    bool hasLauncherConfFiles(const QString& applicationName) override;
+    bool hasBundleConfFiles(const QString& bundleName) override;
+    void editLauncherConfFiles(const QString &projectSourcePath,
+                               const QString &projectName,
+                               const QString &applicationName,
+                               const QString &confFilesRepository) override;
+    void editBundleConfFiles(const QString &projectSourcePath,
+                             const QString& projectName,
+                             const QString& applicationName,
+                             const QString& bundleName,
+                             const QString& confFilesRepository) override;
 
 private:
     QspGuiRegisterControllerService m_registerControllerServiceImpl;

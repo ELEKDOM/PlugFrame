@@ -17,7 +17,7 @@
     <message>
         <location filename="../bundles-core/framework/lib/frameworkstarterlistener.cpp" line="194"/>
         <source>================</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">================</translation>
     </message>
     <message>
         <location filename="../bundles-core/framework/lib/frameworkstarterlistener.cpp" line="329"/>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../bundles-gui/guidisplay/lib/ui/mainwindow.ui" line="20"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fenêtre principale</translation>
     </message>
     <message>
         <location filename="../bundles-gui/guidisplay/lib/ui/mainwindow.ui" line="74"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barre d&apos;outils</translation>
     </message>
 </context>
 <context>
@@ -99,17 +99,27 @@
         <translation type="unfinished">Bundle%1 niveau de démarrage</translation>
     </message>
     <message>
-        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="73"/>
+        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="45"/>
+        <source>Register a controller of type : </source>
+        <translation type="unfinished">Enregistre un controleur de type :</translation>
+    </message>
+    <message>
+        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="52"/>
+        <source>Controller menu names :</source>
+        <translation type="unfinished">Nom des menus du contrôleur</translation>
+    </message>
+    <message>
+        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="78"/>
         <source>Platform</source>
         <translation type="unfinished">Plate-forme</translation>
     </message>
     <message>
-        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="76"/>
+        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="81"/>
         <source>&amp;Logs</source>
         <translation type="unfinished">&amp;Journal</translation>
     </message>
     <message>
-        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="80"/>
+        <location filename="../bundles-gui/guiengine/lib/guiengine.cpp" line="85"/>
         <source>&amp;Console</source>
         <translation type="unfinished">&amp;Console</translation>
     </message>
@@ -124,7 +134,7 @@
         <translation type="unfinished">, ligne: </translation>
     </message>
     <message>
-        <location filename="../core-lib/bundle/bundle.cpp" line="248"/>
+        <location filename="../core-lib/bundle/bundle.cpp" line="267"/>
         <source>The bundle has no header!</source>
         <translation type="unfinished">Le bundle n&apos;a pas d&apos;en-tête!</translation>
     </message>
@@ -232,7 +242,7 @@
     <message>
         <location filename="../bundles-gui/guiconsolectrl/lib/ui/consoleview.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulaire</translation>
     </message>
     <message>
         <location filename="../bundles-gui/guiconsolectrl/lib/ui/consoleview.ui" line="74"/>
@@ -256,11 +266,39 @@
     </message>
 </context>
 <context>
+    <name>guiWidgetList</name>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guiwidgetlist.ui" line="26"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guiwidgetlist.ui" line="96"/>
+        <source>Unlock</source>
+        <translation type="unfinished">Déverouillé</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guiwidgetlist.ui" line="115"/>
+        <source>Add</source>
+        <translation type="unfinished">Ajouter</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guiwidgetlist.ui" line="134"/>
+        <source>Update</source>
+        <translation type="unfinished">Mettre à jour</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guiwidgetlist.ui" line="153"/>
+        <source>Delete</source>
+        <translation type="unfinished">Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>logsView</name>
     <message>
         <location filename="../gui-lib/gui/logsview.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulaire</translation>
     </message>
     <message>
         <location filename="../gui-lib/gui/logsview.ui" line="97"/>
@@ -292,6 +330,19 @@
         <location filename="../core-lib/bundle/bundlebuilder.cpp" line="140"/>
         <source>service %1 version %2 not created</source>
         <translation type="unfinished">service %1 version %2 non créé</translation>
+    </message>
+</context>
+<context>
+    <name>plugframe::GuiEditableWidgetList</name>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guieditablewidgetlist.cpp" line="255"/>
+        <source>Unlock</source>
+        <translation type="unfinished">Déverouiller</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/guieditablewidgetlist.cpp" line="263"/>
+        <source>Lock</source>
+        <translation type="unfinished">Vérouiller</translation>
     </message>
 </context>
 <context>
@@ -328,6 +379,19 @@
         <location filename="../core-lib/scheduler/scheduler.cpp" line="268"/>
         <source> at: %1</source>
         <translation type="unfinished">à: %1</translation>
+    </message>
+</context>
+<context>
+    <name>widgetItemContents</name>
+    <message>
+        <location filename="../gui-lib/gui/widgets/widgetitemcontents.ui" line="29"/>
+        <source>Frame</source>
+        <translation type="unfinished">Cadre</translation>
+    </message>
+    <message>
+        <location filename="../gui-lib/gui/widgets/widgetitemcontents.ui" line="109"/>
+        <source>Save</source>
+        <translation type="unfinished">Sauvegarder</translation>
     </message>
 </context>
 </TS>

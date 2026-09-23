@@ -38,7 +38,6 @@ public:
 
 public:
     void generateInstallationScript(InstallationSettings installationSettings,QWidget *view);
-    void removeInstallation(QString projectBuildRoot,QWidget *view);
 
 signals:
     void startStep(int step);

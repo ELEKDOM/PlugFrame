@@ -16,13 +16,14 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 #include <QFile>
+#include <QFileDialog>
 #include "guidevelopermodectrl.h"
 #include "guidevelopermodectrlfactory.h"
-#include "guidevelopermodectrllogchannel.h"
+#include "guidevelopermodectrl_logchannel.h"
 #include "ui/guidevelopermodecontroller.h"
 
 GuiDeveloperModeCtrl::GuiDeveloperModeCtrl():
-    plugframe::GuiControllerViewsLoader{s_GuiDeveloperModeCtrlLogChannel},
+    plugframe::GuiControllerViewsLoader{s_GuiDeveloperModeCtrl_LogChannel},
     m_generator{new InstallationScriptGenerator(this)}
 {
 
@@ -71,7 +72,7 @@ bool GuiDeveloperModeCtrl::dbGetGlobalSettings(QString& defaultScriptName,
 
 QString GuiDeveloperModeCtrl::dbGetSelectedPlatformInstallationIdentifier()
 {
-    return m_dataBase->dbGetSelectedPlatformInstallationIdentifier();
+    return m_dataBase->getSelectedPlatformInstallationIdentifier();
 }
 
 QStringList GuiDeveloperModeCtrl::dbGetInstallationIdentifierList()
@@ -120,35 +121,97 @@ void GuiDeveloperModeCtrl::generateInstallationScript(InstallationSettings insta
     m_generator->generateInstallationScript(installationSettings,view);
 }
 
-void GuiDeveloperModeCtrl::removeInstallation(QString projectBuildRoot,QWidget *view)
+void GuiDeveloperModeCtrl::backupDatabase(QWidget *view)
 {
-    m_generator->removeInstallation(projectBuildRoot,view);
+    QFileDialog dialog{view};
+    QStringList files;
+    QDir        dataToBackup{getDataPath()};
+    QString     fileName{dataToBackup.dirName()};
+    QFile       srcFile{getDataPath()};
+
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setViewMode(QFileDialog::List);
+    dialog.selectFile(fileName);
+    dialog.setWindowTitle(QObject::tr("Select a backup directory"));
+    if (dialog.exec())
+    {
+        files = dialog.selectedFiles();
+        srcFile.copy(files[0]);
+    }
 }
 
-QStringList GuiDeveloperModeCtrl::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+bool GuiDeveloperModeCtrl::hasLauncherConfFiles(const QString &applicationName)
+{
+    bool ret{false};
+    configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
+
+    if (configuratorServiceItf)
+    {
+        ret = configuratorServiceItf->hasLauncherConfFiles(applicationName);
+    }
+
+    return ret;
+}
+
+bool GuiDeveloperModeCtrl::hasBundleConfFiles(const QString &bundleName)
+{
+    bool ret{false};
+    configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
+
+    if (configuratorServiceItf)
+    {
+        ret = configuratorServiceItf->hasBundleConfFiles(bundleName);
+    }
+    return ret;
+}
+
+QStringList GuiDeveloperModeCtrl::getLauncherConfFileList(const QString& confFilesRepository, const QString &applicationName)
 {
     QStringList ret;
     configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
 
     if (configuratorServiceItf)
     {
-        ret = configuratorServiceItf->getLauncherConfFileList(projectName,applicationName);
+        ret = configuratorServiceItf->getLauncherConfFileList(confFilesRepository,applicationName);
     }
 
     return ret;
 }
 
-QStringList GuiDeveloperModeCtrl::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+QStringList GuiDeveloperModeCtrl::getBundleConfFileList(const QString &confFilesRepository, const QString &bundleName)
 {
     QStringList ret;
     configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
 
     if (configuratorServiceItf)
     {
-        ret = configuratorServiceItf->getBundleConfFileList(projectName,applicationName,bundleName);
+        ret = configuratorServiceItf->getBundleConfFileList(confFilesRepository,bundleName);
     }
 
     return ret;
+}
+
+void GuiDeveloperModeCtrl::editLauncherConfFiles(const QString &projectSourcePath,
+                                                 const QString &projectName,
+                                                 const QString &applicationName,
+                                                 const QString &confFilesRepository)
+{
+    configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
+
+    if (configuratorServiceItf)
+    {
+        configuratorServiceItf->editLauncherConfFiles(projectSourcePath,projectName,applicationName,confFilesRepository);
+    }
+}
+
+void GuiDeveloperModeCtrl::editBundleConfFiles(const QString &projectSourcePath, const QString &projectName, const QString &applicationName, const QString &bundleName, const QString &confFilesRepository)
+{
+    configurator::GuiConfiguratorEngineServiceInterface *configuratorServiceItf{configuratorService()};
+
+    if (configuratorServiceItf)
+    {
+        configuratorServiceItf->editBundleConfFiles(projectSourcePath,projectName,applicationName,bundleName,confFilesRepository);
+    }
 }
 
 configurator::GuiConfiguratorEngineServiceInterface *GuiDeveloperModeCtrl::configuratorService()
@@ -157,6 +220,11 @@ configurator::GuiConfiguratorEngineServiceInterface *GuiDeveloperModeCtrl::confi
     configuratorServiceItf = bundleContext()->getService<configurator::GuiConfiguratorEngineServiceInterface>(configurator::GuiConfiguratorEngineServiceInterface::serviceName());
 
     return configuratorServiceItf;
+}
+
+void GuiDeveloperModeCtrl::backupDatabase()
+{
+
 }
 
 PF_qtServiceInterface_DEF(GuiDeveloperModeCtrl)

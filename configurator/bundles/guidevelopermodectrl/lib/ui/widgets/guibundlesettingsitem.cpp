@@ -33,6 +33,8 @@ GuiBundleSettingsItem::GuiBundleSettingsItem(qsizetype dIndex,
 {
     ui->setupUi(this);
 
+    ui->confFileEditButton->hide();
+
     connect(ui->bundlePluginBrowseButton,SIGNAL(clicked(bool)),this,SLOT(onBundlePluginBrowse()));
 }
 

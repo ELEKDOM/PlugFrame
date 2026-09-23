@@ -31,9 +31,19 @@ public:
     virtual ~GuiConfiguratorEngineServiceInterface() override {}
 
 public:
-    virtual QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName) =0;
-    virtual QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName) = 0;
-    //...
+    virtual QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName) =0;
+    virtual QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName) = 0;
+    virtual bool hasLauncherConfFiles(const QString& applicationName) = 0;
+    virtual bool hasBundleConfFiles(const QString& bundleName) = 0;
+    virtual void editLauncherConfFiles(const QString &projectSourcePath,
+                                       const QString &projectName,
+                                       const QString &applicationName,
+                                       const QString &confFilesRepository) =0;
+    virtual void editBundleConfFiles(const QString &projectSourcePath,
+                                     const QString& projectName,
+                                     const QString& applicationName,
+                                     const QString& bundleName,
+                                     const QString& confFilesRepository)  =0;
 };
 }//namespace configurator
 

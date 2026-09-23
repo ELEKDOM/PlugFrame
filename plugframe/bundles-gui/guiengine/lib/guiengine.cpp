@@ -17,15 +17,17 @@
 //
 
 #include "guiengine.h"
+#include "guiengine_logchannel.h"
 #include "guienginefactory.h"
 #include "bundle/bundlecontext.h"
 #include "service-int/guibuilderserviceinterface.h"
 #include "service-int/guiregistercontrollerserviceinterface.h"
 #include "gui/guilogscontrollertype.h"
 #include "gui/guiconsolecontrollertype.h"
+#include "logger/pflog.h"
 
 GuiEngine::GuiEngine():
-    BundleImplementation{"GuiEngine"}
+    BundleImplementation{s_GuiEngine_LogChannel}
 {
 
 }
@@ -40,11 +42,14 @@ void GuiEngine::registerController(const plugframe::QspGuiPageController &contro
     plugframe::GuiMainMenuNames names;
     plugframe::GuiBuilderServiceInterface *guiServiceItf{builderGuiServiceItf()};
 
+    pfInfo5(getLogBundleName()) << QObject::tr("Register a controller of type : ") << controller->ctrlType();
+
     preRegister(controller);
 
     if (guiServiceItf)
     {
         menuNames(controller,names);
+        pfInfo5(getLogBundleName()) << QObject::tr("Controller menu names :") << names.functionalDomainName() <<"," << names.controllerName();
         guiServiceItf->addGuiController(controller,names);
     }
 
@@ -73,7 +78,7 @@ bool GuiEngine::menuNames(const plugframe::QspGuiPageController &controller, plu
         menuNames.functionalDomainName(QObject::tr("Platform"));
         if (controller->ctrlType() == plugframe::GuiLogsControllerType::s_ctrlType)
         {
-            menuNames.controllerName(QObject::tr("&Logs"));
+            menuNames.controllerName(QObject::tr("&Logs"));     
         }
         else if (controller->ctrlType() == plugframe::GuiConsoleControllerType::s_ctrlType)
         {

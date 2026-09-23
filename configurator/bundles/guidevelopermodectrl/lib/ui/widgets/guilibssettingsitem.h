@@ -22,7 +22,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class guiLibsSettingsItem;
+class guiLibsSettings;
 }
 QT_END_NAMESPACE
 
@@ -58,7 +58,7 @@ private:
     bool getSymbolicName(QString& name);
 
 private:
-    Ui::guiLibsSettingsItem *ui;
+    Ui::guiLibsSettings  *ui;
     GuiDeveloperModeView *m_view;
 };
 

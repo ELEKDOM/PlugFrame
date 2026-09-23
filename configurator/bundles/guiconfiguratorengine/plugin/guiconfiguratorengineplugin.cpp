@@ -38,14 +38,48 @@ void GuiConfiguratorEnginePlugin::registerController(const plugframe::QspGuiPage
     m_registerControllerServiceImpl->registerController(controller);
 }
 
-QStringList GuiConfiguratorEnginePlugin::getLauncherConfFileList(const QString &projectName, const QString &applicationName)
+QStringList GuiConfiguratorEnginePlugin::getLauncherConfFileList(const QString& confFilesRepository, const QString &applicationName)
 {
-    return m_configuratorEngineServiceImpl->getLauncherConfFileList(projectName,applicationName);
+    return m_configuratorEngineServiceImpl->getLauncherConfFileList(confFilesRepository,applicationName);
 }
 
-QStringList GuiConfiguratorEnginePlugin::getBundleConfFileList(const QString &projectName, const QString &applicationName, const QString &bundleName)
+QStringList GuiConfiguratorEnginePlugin::getBundleConfFileList(const QString &confFilesRepository, const QString &bundleName)
 {
-    return m_configuratorEngineServiceImpl->getBundleConfFileList(projectName,applicationName,bundleName);
+    return m_configuratorEngineServiceImpl->getBundleConfFileList(confFilesRepository,bundleName);
+}
+
+bool GuiConfiguratorEnginePlugin::hasLauncherConfFiles(const QString &applicationName)
+{
+    return m_configuratorEngineServiceImpl->hasLauncherConfFiles(applicationName);
+}
+
+bool GuiConfiguratorEnginePlugin::hasBundleConfFiles(const QString &bundleName)
+{
+    return m_configuratorEngineServiceImpl->hasBundleConfFiles(bundleName);
+}
+
+void GuiConfiguratorEnginePlugin::editLauncherConfFiles(const QString &projectSourcePath,
+                                                        const QString &projectName,
+                                                        const QString &applicationName,
+                                                        const QString &confFilesRepository)
+{
+    m_configuratorEngineServiceImpl->editLauncherConfFiles(projectSourcePath,
+                                                           projectName,
+                                                           applicationName,
+                                                           confFilesRepository);
+}
+
+void GuiConfiguratorEnginePlugin::editBundleConfFiles(const QString &projectSourcePath,
+                                                      const QString &projectName,
+                                                      const QString &applicationName,
+                                                      const QString &bundleName,
+                                                      const QString &confFilesRepository)
+{
+    m_configuratorEngineServiceImpl->editBundleConfFiles(projectSourcePath,
+                                                         projectName,
+                                                         applicationName,
+                                                         bundleName,
+                                                         confFilesRepository);
 }
 
 void GuiConfiguratorEnginePlugin::bindServicesImplementations()

@@ -15,11 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-#ifndef GUIDEVELOPERMODECTRLLOGCHANNEL_H
-#define GUIDEVELOPERMODECTRLLOGCHANNEL_H
+#ifndef GUILAUNCHERSCONFIGURATORCTRL_LOGCHANNEL_H
+#define GUILAUNCHERSCONFIGURATORCTRL_LOGCHANNEL_H
 
 #include <QString>
 
-static const QString& s_GuiDeveloperModeCtrlLogChannel{"GuiDeveloperModeCtrl"};
+static const QString& s_GuiLaunchersConfiguratorCtrl_LogChannel{"GuiLaunchersConfiguratorCtrl"};
 
-#endif // GUIDEVELOPERMODECTRLLOGCHANNEL_H
+#endif // GUILAUNCHERSCONFIGURATORCTRL_LOGCHANNEL_H

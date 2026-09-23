@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
+#include <QDir>
 #include "guidevelopermodecontroller.h"
 #include "gui/guidevelopermodecontrollertype.h"
 
@@ -128,6 +129,7 @@ void GuiDeveloperModeController::onInstallationSelectionChanged(QString installa
         if (tmp)
         {
             m_displayedInstalationSettings.reset(tmp);
+            initConfFilesFlag();
             emit newConfiguration(m_displayedInstalationSettings.data());
         }
     }
@@ -141,12 +143,32 @@ void GuiDeveloperModeController::onGenerateScript(QWidget *view)
     }
 }
 
-void GuiDeveloperModeController::onRemoveInstallation(QWidget *view)
+void GuiDeveloperModeController::onBackupDatabase(QWidget *view)
 {
-    if (!m_displayedInstalationSettings.isNull())
-    {
-        m_bundleHook->removeInstallation(m_displayedInstalationSettings->m_projectBuildRoot,view);
-    }
+    m_bundleHook->backupDatabase(view);
+}
+
+void GuiDeveloperModeController::onApplicationConfFileEdit(QString appName)
+{
+    QString repository{m_displayedInstalationSettings->m_configurationFilesRepository + QDir::separator() + m_displayedInstalationSettings->m_configurationProfile};
+
+    // Display app conf file editor for current installation settings
+    m_bundleHook->editLauncherConfFiles(m_displayedInstalationSettings->m_projectSourcePath,
+                                        m_displayedInstalationSettings->m_projectName,
+                                        appName,
+                                        repository);
+}
+
+void GuiDeveloperModeController::onBundleConfFileEdit(QString appName, QString bundleName)
+{
+    QString repository{m_displayedInstalationSettings->m_configurationFilesRepository + QDir::separator() + m_displayedInstalationSettings->m_configurationProfile};
+
+    // Display bundle conf file editor for current installation settings
+    m_bundleHook->editBundleConfFiles(m_displayedInstalationSettings->m_projectSourcePath,
+                                        m_displayedInstalationSettings->m_projectName,
+                                        appName,
+                                        bundleName,
+                                        repository);
 }
 
 void GuiDeveloperModeController::initDeveloperModeView(GuiDeveloperModeView *view)
@@ -168,7 +190,9 @@ void GuiDeveloperModeController::initDeveloperModeView(GuiDeveloperModeView *vie
     connect(view,SIGNAL(cloneConfiguration()),this,SLOT(onCloneConfiguration()));
     connect(view,SIGNAL(installationSelectionChanged(QString)),this,SLOT(onInstallationSelectionChanged(QString)));
     connect(view,SIGNAL(generateInstallationScript(QWidget*)),this,SLOT(onGenerateScript(QWidget*)));
-    connect(view,SIGNAL(removeInstallation(QWidget*)),this,SLOT(onRemoveInstallation(QWidget*)));
+    connect(view,SIGNAL(backupDatabase(QWidget*)),this,SLOT(onBackupDatabase(QWidget*)));
+    connect(view,SIGNAL(applicationConfFileEdit(QString)),this,SLOT(onApplicationConfFileEdit(QString)));
+    connect(view,SIGNAL(bundleConfFileEdit(QString,QString)),this,SLOT(onBundleConfFileEdit(QString,QString)));
 
     // Data loading
     //-------------
@@ -197,17 +221,44 @@ void GuiDeveloperModeController::dataLoading()
 ///
 void GuiDeveloperModeController::initConfigurationFromDb()
 {
-     QString selectedPlatformInstallation;
+    QString selectedPlatformInstallation;
 
-     selectedPlatformInstallation = bundleHook()->dbGetSelectedPlatformInstallationIdentifier();
-     if (!selectedPlatformInstallation.isEmpty())
-     {
-         // retrieve the installation settings to display
-         InstallationSettings *tmp{bundleHook()->dbGetInstallationSettings(selectedPlatformInstallation)};
-         if (tmp)
-         {
-             m_displayedInstalationSettings.reset(tmp);
-             emit newConfiguration(m_displayedInstalationSettings.data());
-         }
-     }
+    selectedPlatformInstallation = bundleHook()->dbGetSelectedPlatformInstallationIdentifier();
+    if (!selectedPlatformInstallation.isEmpty())
+    {
+        // retrieve the installation settings to display
+        InstallationSettings *tmp{bundleHook()->dbGetInstallationSettings(selectedPlatformInstallation)};
+        if (tmp)
+        {
+            m_displayedInstalationSettings.reset(tmp);
+            initConfFilesFlag();
+            emit newConfiguration(m_displayedInstalationSettings.data());
+        }
+    }
  }
+
+///
+/// \brief GuiDeveloperModeController::initConfFilesFlag
+/// Sets the flag for all artifacts containing files to be configured
+void GuiDeveloperModeController::initConfFilesFlag()
+{
+    if(!m_displayedInstalationSettings.isNull())
+    {
+        for (auto i=0;i<m_displayedInstalationSettings->m_applicationArtefactList.size();i++)
+        {
+            ApplicationArtefact& cur{m_displayedInstalationSettings->m_applicationArtefactList[i]};
+            if(!cur.m_applicationName.isEmpty())
+            {
+                cur.m_confFilesFlag = m_bundleHook->hasLauncherConfFiles(cur.m_applicationName);
+                for (auto j=0;j<cur.m_bundleArtefactList.size();j++)
+                {
+                    BundleArtefact& bCur{cur.m_bundleArtefactList[j]};
+                    if (!bCur.m_bundleName.isEmpty())
+                    {
+                        bCur.m_confFilesFlag = m_bundleHook->hasBundleConfFiles(bCur.m_bundleName);
+                    }
+                }
+            }
+        }
+    }
+}

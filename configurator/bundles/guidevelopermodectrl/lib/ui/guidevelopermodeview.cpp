@@ -18,9 +18,11 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QDir>
 #include "guidevelopermodeview.h"
 #include "ui/widgets/guilibsinstallationssettings.h"
 #include "ui/widgets/guiapplicationssettings.h"
+#include "ui/widgets/guiapplicationsconffilesselector.h"
 #include "ui_developermodeview.h"
 
 GuiDeveloperModeView::GuiDeveloperModeView(QWidget *parent):
@@ -62,7 +64,7 @@ GuiDeveloperModeView::GuiDeveloperModeView(QWidget *parent):
 
     // Generating buttons
     connect(ui->tab2Area5GenerateButton,SIGNAL(clicked(bool)),this,SLOT(onGenerateScript()));
-    connect(ui->tab2Area5RemoveButton,SIGNAL(clicked(bool)),this,SLOT(onRemoveInstallation()));
+    connect(ui->tab2Area5BackupButton,SIGNAL(clicked(bool)),this,SLOT(onRemoveInstallation()));
 
     // Libs settings
     m_libsInstallationsSettings = new GuiLibsInstallationsSettings{this};
@@ -72,8 +74,15 @@ GuiDeveloperModeView::GuiDeveloperModeView(QWidget *parent):
     m_applicationsSettings = new GuiApplicationsSettings{this};
     ui->applicationsArtefactsSettingsLocationLayout->addWidget(m_applicationsSettings);
 
+    // Tab 3 Conf files selector
+    m_applicationsConfFilesSelector = new GuiApplicationsConfFilesSelector{this};
+    ui->confFilesSelectorLocationLayout->addWidget(m_applicationsConfFilesSelector);
+
     // Initial form
     hideInstallationSettingsArea();
+
+    // Initial tab view
+    ui->developerModeViewTabs->setCurrentIndex(1);
 }
 
 GuiDeveloperModeView::~GuiDeveloperModeView()
@@ -202,6 +211,16 @@ void GuiDeveloperModeView::deleteBundleArtefact(qsizetype applicationItemDataInd
 {
     m_curInstallationSettings->deleteBundleArtefact(applicationItemDataIndex,dataIndex);
 
+}
+
+void GuiDeveloperModeView::editAppConfFile(QString appName)
+{
+    emit applicationConfFileEdit(appName);
+}
+
+void GuiDeveloperModeView::editBundleConfFile(QString appName, QString bundleName)
+{
+    emit bundleConfFileEdit(appName,bundleName);
 }
 
 void GuiDeveloperModeView::onGlobalBrowseProjectSourcePath()
@@ -447,7 +466,7 @@ void GuiDeveloperModeView::onGenerateScript()
 
 void GuiDeveloperModeView::onRemoveInstallation()
 {
-    emit removeInstallation(this);
+    emit backupDatabase(this);
 }
 
 void GuiDeveloperModeView::hideInstallationSettingsArea()
@@ -528,6 +547,8 @@ void GuiDeveloperModeView::displayCurInstallationSettings(bool editable)
     m_applicationsSettings->reset();
     m_applicationsSettings->display(m_curInstallationSettings->m_applicationArtefactList);
 
+    // Update tab 3
+    updateConfFilesSelector();
 }
 
 void GuiDeveloperModeView::setSettingsFormEditable(bool editable)
@@ -570,4 +591,18 @@ void GuiDeveloperModeView::setSettingsFormEditable(bool editable)
 void GuiDeveloperModeView::showTopInstallationSettings()
 {
     ui->platformInstallationScrollArea->verticalScrollBar()->setValue(0);
+}
+
+void GuiDeveloperModeView::updateConfFilesSelector()
+{
+    QString confDir;
+
+    confDir = m_curInstallationSettings->m_configurationFilesRepository + QDir::separator() + m_curInstallationSettings->m_configurationProfile;
+    ui->tab3Area1LineEditInstallationIdentifier->setText(m_curInstallationSettings->m_installationSettingsIdentifier);
+    ui->tab3Area1LineEditProjectName->setText(m_curInstallationSettings->m_projectName);
+    ui->tab3Area1LineEditConfDirectory->setText(confDir);
+
+    // FileSelectorList
+    m_applicationsConfFilesSelector->reset();
+    m_applicationsConfFilesSelector->display(m_curInstallationSettings->m_applicationArtefactList);
 }

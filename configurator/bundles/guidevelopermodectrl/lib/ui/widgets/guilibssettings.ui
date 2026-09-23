@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>guiLibsSettingsItem</class>
- <widget class="QFrame" name="guiLibsSettingsItem">
+ <class>guiLibsSettings</class>
+ <widget class="QFrame" name="guiLibsSettings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -79,13 +79,13 @@
       <widget class="QPushButton" name="libNameBrowseButton">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>0</width>
          <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>16777215</width>
          <height>40</height>
         </size>
        </property>
@@ -131,13 +131,13 @@
       <widget class="QPushButton" name="libSoNameBrowseButton">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>0</width>
          <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>16777215</width>
          <height>40</height>
         </size>
        </property>
@@ -183,13 +183,13 @@
       <widget class="QPushButton" name="libLinkerNameBrowseButton">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>0</width>
          <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>16777215</width>
          <height>40</height>
         </size>
        </property>

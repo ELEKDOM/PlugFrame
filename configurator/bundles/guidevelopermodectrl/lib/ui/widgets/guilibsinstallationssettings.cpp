@@ -20,7 +20,7 @@
 #include "guilibssettingsitem.h"
 
 GuiLibsInstallationsSettings::GuiLibsInstallationsSettings(GuiDeveloperModeView  *parent):
-    plugframe::GuiWidgetList(parent),
+    plugframe::GuiEditableWidgetList(parent),
     m_view(parent)
 {
     setScrollListMinimumSize(QSize(0,300));

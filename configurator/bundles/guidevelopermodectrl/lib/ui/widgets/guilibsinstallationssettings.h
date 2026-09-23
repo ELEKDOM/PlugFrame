@@ -18,10 +18,10 @@
 #ifndef GUILIBSINSTALLATIONSSETTINGS_H
 #define GUILIBSINSTALLATIONSSETTINGS_H
 
-#include "gui/widgets/guiwidgetlist.h"
+#include "gui/widgets/guieditablewidgetlist.h"
 #include "ui/guidevelopermodeview.h"
 
-class GuiLibsInstallationsSettings : public plugframe::GuiWidgetList
+class GuiLibsInstallationsSettings : public plugframe::GuiEditableWidgetList
 {
     Q_OBJECT
 

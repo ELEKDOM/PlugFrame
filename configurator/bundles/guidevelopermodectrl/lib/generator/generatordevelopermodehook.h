@@ -24,10 +24,8 @@
 class GeneratorDeveloperModeHook
 {
 public:
-    virtual QStringList getLauncherConfFileList(const QString& projectName,const QString& applicationName) = 0;
-    virtual QStringList getBundleConfFileList(const QString& projectName,const QString& applicationName,const QString& bundleName) = 0;
-
-
+    virtual QStringList getLauncherConfFileList(const QString& confFilesRepository,const QString& applicationName) = 0;
+    virtual QStringList getBundleConfFileList(const QString& confFilesRepository,const QString& bundleName) = 0;
 };
 
 #endif // GENERATORDEVELOPERMODEHOOK_H

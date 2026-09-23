@@ -362,11 +362,17 @@ void Gui::updateToolBar(int idx)
 void Gui::enableCtrlSelectionMenu()
 {
     QAction *a{m_currentCtrl->ctrlSelectionMenu()};
-    a->setVisible(true);
+    if(a)
+    {
+        a->setVisible(true);
+    }
 }
 
 void Gui::disableCtrlSelectionMenu()
 {
     QAction *a{m_currentCtrl->ctrlSelectionMenu()};
-    a->setVisible(false);
+    if (a)
+    {
+        a->setVisible(false);
+    }
 }
