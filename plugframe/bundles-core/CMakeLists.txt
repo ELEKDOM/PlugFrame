@@ -2,3 +2,5 @@
 add_subdirectory(framework)
 add_subdirectory(logger)
 add_subdirectory(users)
+add_subdirectory(tcpclient)
+add_subdirectory(tcpserver)

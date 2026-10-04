@@ -24,3 +24,12 @@ add_custom_target(${BUNDLE_META_FILE_TARGET}
     SOURCES
     ${BUNDLE_META_FILE}
 )
+
+# Non-compiled files associated with the bundle target (IDE)
+string(CONCAT BUNDLE_META_FILE ${BUNDLE_NAME} "bundle.json")
+target_sources(${BUNDLE_INT_NAME}
+    PRIVATE
+        ${BUNDLE_META_FILE}
+        conf/users.ini
+        conf/users_example.ini
+)

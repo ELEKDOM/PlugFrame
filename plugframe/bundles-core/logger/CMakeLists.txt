@@ -17,10 +17,11 @@ add_subdirectory(lib)
 # Bundle interface
 add_subdirectory(plugin)
 
-# Others File only for IDE
-string(CONCAT BUNDLE_META_FILE_TARGET ${BUNDLE_NAME} "-meta-file-bundle")
+# Non-compiled files associated with the bundle target (IDE)
 string(CONCAT BUNDLE_META_FILE ${BUNDLE_NAME} "bundle.json")
-add_custom_target(${BUNDLE_META_FILE_TARGET}
-    SOURCES
-    ${BUNDLE_META_FILE}
+target_sources(${BUNDLE_INT_NAME}
+    PRIVATE
+        ${BUNDLE_META_FILE}
+        conf/log.ini
+        conf/log_example.ini
 )

@@ -4,9 +4,12 @@ set(SOURCES
     abstract_controllerviews_loader/guicontrollerviewsloader.cpp
     gui/guimainmenunames.cpp
     gui/guipagecontroller.cpp
+    gui/guilogincontroller.cpp
     gui/guipageview.cpp
     gui/guilogsview.cpp
+    gui/guiloginview.cpp
     gui/widgets/widgetitemcontents.cpp
+    gui/widgets/guiwidgetlist.cpp
     gui/widgets/guiwidgetlistitem.cpp
     gui/widgets/guieditablewidgetlist.cpp
     launcher/guilauncher.cpp
@@ -21,11 +24,15 @@ set(HEADERS
     gui/guicontrollertype.h
     gui/guilogscontrollertype.h
     gui/guiconsolecontrollertype.h
+    gui/guilogincontrollertype.h
     gui/guimainmenunames.h
     gui/guipagecontroller.h
+    gui/guilogincontroller.h
     gui/guipageview.h
     gui/guilogsview.h
+    gui/guiloginview.h
     gui/widgets/widgetitemcontents.h
+    gui/widgets/guiwidgetlist.h
     gui/widgets/guiwidgetlistitem.h
     gui/widgets/guieditablewidgetlist.h
     launcher/guilauncher.h
@@ -36,12 +43,12 @@ set(HEADERS
 # Bundle implementation Forms
 set(FORMS
     gui/logsview.ui
+    gui/loginview.ui
     gui/widgets/widgetitemcontents.ui
     gui/widgets/guiwidgetlist.ui
 )
 
-qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS}
-    gui/widgets/guiwidgetlist.h gui/widgets/guiwidgetlist.cpp)
+qt_add_library(${PF_GUI_LIB_NAME} SHARED ${SOURCES} ${HEADERS} ${FORMS})
 
 set_target_properties(${PF_GUI_LIB_NAME}
                       PROPERTIES

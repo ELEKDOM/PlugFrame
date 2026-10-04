@@ -20,6 +20,7 @@
 #define BACKENDCONTROLSERVICEINTERFACE_H
 
 #include "service-int/serviceinterface.h"
+#include "pfcore-lib_forward.h"
 
 namespace plugframe
 {
@@ -32,7 +33,7 @@ public:
     virtual ~BackendControlServiceInterface() {}
 
 public: // service interface definition = 0
-    virtual void startListen() = 0;
+    virtual void startListen(ServerConnectionsNotifier *serverSide) = 0;
     virtual void stopListen() = 0;
 };
 }//namespace plugframe

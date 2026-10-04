@@ -20,10 +20,10 @@
 #define FRONTENDCONTROLSERVICEINTERFACE_H
 
 #include "service-int/serviceinterface.h"
-#include "service-int/frontendclientside.h"
 
 namespace plugframe
 {
+class ClientConnectionStateNotifier;
 class FrontendControlServiceInterface : public ServiceInterface
 {
 public:
@@ -33,9 +33,8 @@ public:
     virtual ~FrontendControlServiceInterface() {}
 
 public: // service interface definition = 0
-    virtual void connectToHost(plugframe::FrontendClientSide *clientSide,QString serverIpv4,quint16 serverPort) = 0;
+    virtual void connectToHost(plugframe::ClientConnectionStateNotifier *clientSide) = 0;
     virtual void closeConnection() = 0;
-    virtual void sendMessageToServer(plugframe::TcpChannelMessage& msg) = 0;
 };
 }//namespace plugframe
 

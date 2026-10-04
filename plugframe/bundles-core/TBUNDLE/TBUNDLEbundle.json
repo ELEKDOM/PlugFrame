@@ -4,5 +4,5 @@
     "bundle-name" : "TBUNDLE",
     "startlevel-beging" : "?",
     "service-required" : "xxxServiceInterface,1.0.0",
-    "service-provided" : "xxxServiceInterface,1.0.0",
+    "service-provided" : "xxxServiceInterface,1.0.0"
 }

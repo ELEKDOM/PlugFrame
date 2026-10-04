@@ -1,24 +1,5 @@
 # PlugFrame Core Lib Sources
 set(SOURCES
-    abstract_network_tcp/client/plugin/tcpclientplugin.cpp
-    abstract_network_tcp/client/service/tcpclientservice.cpp
-    abstract_network_tcp/client/tcpclient.cpp
-    abstract_network_tcp/client/tcpclientbuilder.cpp
-    abstract_network_tcp/client/tcpclientchannel.cpp
-    abstract_network_tcp/client/tcpclientchannelmanager.cpp
-    abstract_network_tcp/client/tcpclientfactory.cpp
-    abstract_network_tcp/client/tcpclientslots.cpp
-    abstract_network_tcp/common/tcpchannel.cpp
-    abstract_network_tcp/common/tcpchanneldeserializer.cpp
-    abstract_network_tcp/common/tcpchannelmanager.cpp
-    abstract_network_tcp/common/tcpchannelmessage.cpp
-    abstract_network_tcp/server/plugin/tcpserverplugin.cpp
-    abstract_network_tcp/server/service/tcpserverservice.cpp
-    abstract_network_tcp/server/tcpserver.cpp
-    abstract_network_tcp/server/tcpserverbuilder.cpp
-    abstract_network_tcp/server/tcpserverchannelmanager.cpp
-    abstract_network_tcp/server/tcpserverconnmanager.cpp
-    abstract_network_tcp/server/tcpserverfactory.cpp
     bundle/bundle.cpp
     bundle/bundlebuilder.cpp
     bundle/bundlecontext.cpp
@@ -54,6 +35,14 @@ set(SOURCES
     launcher/launchingproperties.cpp
     launcher/location.cpp
     logger/loggable.cpp
+    network/tcp/tcpchannelmanager.cpp
+    network/tcp/tcpserverconnectionstatenotifier.cpp
+    network/tcp/tcpoutputstream.cpp
+    network/channel/outputstream.cpp
+    network/channel/messagescodec.cpp
+    network/channel/channelmanager.cpp
+    network/frontend/clientconnectionstatenotifier.cpp
+    network/backend/serverconnectionsnotifier.cpp
     plugin/plugin.cpp
     scheduler/dailyscheduler.cpp
     scheduler/digitalsuite.cpp
@@ -75,25 +64,6 @@ set(SOURCES
 
 # PlugFrame Core Lib Headers
 set(HEADERS
-    abstract_network_tcp/client/plugin/tcpclientplugin.h
-    abstract_network_tcp/client/service/tcpclientservice.h
-    abstract_network_tcp/client/tcpclient.h
-    abstract_network_tcp/client/tcpclientbuilder.h
-    abstract_network_tcp/client/tcpclientchannel.h
-    abstract_network_tcp/client/tcpclientchannelmanager.h
-    abstract_network_tcp/client/tcpclientfactory.h
-    abstract_network_tcp/client/tcpclientslots.h
-    abstract_network_tcp/common/tcpchannel.h
-    abstract_network_tcp/common/tcpchanneldeserializer.h
-    abstract_network_tcp/common/tcpchannelmanager.h
-    abstract_network_tcp/common/tcpchannelmessage.h
-    abstract_network_tcp/server/plugin/tcpserverplugin.h
-    abstract_network_tcp/server/service/tcpserverservice.h
-    abstract_network_tcp/server/tcpserver.h
-    abstract_network_tcp/server/tcpserverbuilder.h
-    abstract_network_tcp/server/tcpserverchannelmanager.h
-    abstract_network_tcp/server/tcpserverconnmanager.h
-    abstract_network_tcp/server/tcpserverfactory.h
     bundle/bundle.h
     bundle/bundle4builderinterface.h
     bundle/bundle4plugininterface.h
@@ -132,6 +102,14 @@ set(HEADERS
     launcher/location.h
     logger/loggable.h
     logger/pflog.h
+    network/tcp/tcpchannelmanager.h
+    network/tcp/tcpserverconnectionstatenotifier.h
+    network/tcp/tcpoutputstream.h
+    network/channel/outputstream.h
+    network/channel/messagescodec.h
+    network/channel/channelmanager.h
+    network/frontend/clientconnectionstatenotifier.h
+    network/backend/serverconnectionsnotifier.h
     pfcore-lib_export.h
     pfcore-lib_forward.h
     plugin/bundleinterface.h
@@ -147,8 +125,8 @@ set(HEADERS
     scheduler/weeklyscheduler.h
     service-int/backendcontrolserviceinterface.h
     service-int/displayserviceinterface.h
-    service-int/frontendclientside.h
     service-int/frontendcontrolserviceinterface.h
+    service-int/frontendmessagescodecregisterserviceinterface.h
     service-int/loginserviceinterface.h
     service-int/serviceinterface.h
     service-int/systemserviceinterface.h

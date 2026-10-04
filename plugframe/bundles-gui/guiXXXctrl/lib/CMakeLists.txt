@@ -10,6 +10,7 @@ set(SOURCES
 set(HEADERS
     guixxxctrl.h
     guixxxctrlfactory.h
+    guixxxctrl_logchannel.h
     ui/guixxxview.h
     ui/guixxxcontroller.h
    )

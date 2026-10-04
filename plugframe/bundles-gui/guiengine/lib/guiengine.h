@@ -20,6 +20,7 @@
 
 #include "bundle/bundleimplementation.h"
 #include "gui/guipagecontroller.h"
+#include "guicontrollersorchestration.h"
 #include "service-int/guibuilderserviceinterface.h"
 
 class GuiEngine : public plugframe::BundleImplementation
@@ -45,5 +46,7 @@ protected:
 private:
     plugframe::GuiBuilderServiceInterface *builderGuiServiceItf();
 
+private:
+    QspGuiControllersOrchestration m_orchestrator;
 };
 #endif // GUIENGINE_H

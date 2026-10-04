@@ -19,5 +19,7 @@
 #define GUIENGINE_FORWARD_H
 
 class GuiRegisterControllerService;
+class GuiControllersOrchestration;
+class GuiEngine;
 
 #endif // GUIENGINE_FORWARD_H

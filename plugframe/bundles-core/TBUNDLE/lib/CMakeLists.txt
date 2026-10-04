@@ -9,6 +9,7 @@ set(SOURCES
 # Bundle implementation Headers
 set(HEADERS
     TBUNDLE_forward.h
+    TBUNDLE_logchannel.h
     TBUNDLE.h
     TBUNDLEfactory.h
     TBUNDLEbuilder.h

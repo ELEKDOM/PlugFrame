@@ -63,7 +63,7 @@ void GuiEngine::preRegister(const plugframe::QspGuiPageController &controller)
 
 void GuiEngine::postRegister(const plugframe::QspGuiPageController &controller)
 {
-    controller->currentCtrl();
+    m_orchestrator->registeredController(controller);
 }
 
 bool GuiEngine::menuNames(const plugframe::QspGuiPageController &controller, plugframe::GuiMainMenuNames &menuNames)
@@ -111,6 +111,10 @@ void GuiEngine::_start(plugframe::QspBundleContext bundleContext)
     BundleImplementation::_start(bundleContext);
 
     plugframe::GuiBuilderServiceInterface *guiServiceItf{builderGuiServiceItf()};
+    GuiEngineFactory& factory{dynamic_cast<GuiEngineFactory&>(getFactory())};
+
+    // Contollers orchestrator
+    m_orchestrator.reset(factory.createGuiControllersOrchestration(*this));
 
     // MainWindow's  title
     if (guiServiceItf)

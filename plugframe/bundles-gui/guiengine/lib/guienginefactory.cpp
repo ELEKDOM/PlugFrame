@@ -18,6 +18,7 @@
 #include "guienginefactory.h"
 #include "service-int/guiregistercontrollerserviceinterface.h"
 #include "guiregistercontrollerservice.h"
+#include "guicontrollersorchestration.h"
 
 GuiEngineFactory::GuiEngineFactory()
 {
@@ -27,6 +28,11 @@ GuiEngineFactory::GuiEngineFactory()
 GuiEngineFactory::~GuiEngineFactory()
 {
 
+}
+
+GuiControllersOrchestration *GuiEngineFactory::createGuiControllersOrchestration(GuiEngine &engine)
+{
+    return new GuiControllersOrchestration{engine};
 }
 
 GuiRegisterControllerService *GuiEngineFactory::createGuiRegisterControllerService(plugframe::BundleImplementation *implementation)
@@ -50,3 +56,4 @@ plugframe::ServiceImplementationInterface *GuiEngineFactory::createServiceImplem
 
     return ret;
 }
+

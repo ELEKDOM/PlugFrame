@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-
 #include "guixxxctrl.h"
 #include "guixxxctrlfactory.h"
+#include "guixxxctrl_logchannel.h"
 
 GuiXXXCtrl::GuiXXXCtrl():
-    plugframe::GuiControllerViewsLoader{"GuiXXXCtrl"}
+    plugframe::GuiControllerViewsLoader{s_GuiXxxctrl_LogChannel}
 {
 
 }

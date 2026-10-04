@@ -14,7 +14,8 @@ set(HEADERS
     guiregistercontrollerservice.h
 )
 
-qt_add_library(${BUNDLE_IMPL_NAME} STATIC ${SOURCES} ${HEADERS})
+qt_add_library(${BUNDLE_IMPL_NAME} STATIC ${SOURCES} ${HEADERS}
+    guicontrollersorchestration.h guicontrollersorchestration.cpp)
 
 target_include_directories(${BUNDLE_IMPL_NAME}
     PUBLIC

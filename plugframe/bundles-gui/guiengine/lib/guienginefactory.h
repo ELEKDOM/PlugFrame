@@ -27,6 +27,9 @@ public:
     GuiEngineFactory();
     ~GuiEngineFactory() override;
 
+public:
+    virtual GuiControllersOrchestration *createGuiControllersOrchestration(GuiEngine& engine);
+
 protected:
     virtual GuiRegisterControllerService *createGuiRegisterControllerService(plugframe::BundleImplementation *implementation);
     plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,

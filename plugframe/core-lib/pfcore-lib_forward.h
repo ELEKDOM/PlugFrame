@@ -40,17 +40,10 @@ namespace plugframe
     //
     class Scheduler;
     //
-    class TcpChannelDeserializer;
-    class TcpChannelMessage;
-    class TcpChannel;
-    class TcpServer;
-    class TcpServerConnManager;
-    class TcpServerChannelManager;
-    class TcpServerService;
-    class TcpClient;
-    class TcpClientSlots;
-    class TcpClientChannelManager;
-    class TcpClientService;
+    class MessagesCodec;
+    class ChannelManager;
+    class ServerConnectionsNotifier;
+
 } //namespace plugframe
 
 #endif // PFCORELIB_FORWARD_H

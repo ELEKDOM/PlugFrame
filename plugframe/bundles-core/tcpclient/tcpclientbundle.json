@@ -1,0 +1,9 @@
+{
+    "bundle-manifest-version" : "0.0.0",
+    "bundle-version" : "1.0.0",
+    "bundle-name" : "TcpClient",
+    "startlevel-beging" : "4",
+    "bundle-config-file-name" : "server-addr.ini",
+    "service-provided" : "FrontendControlServiceInterface,1.0.0",
+    "service-provided2" : "FrontendMessagesCodecRegisterServiceInterface,1.0.0"
+}
