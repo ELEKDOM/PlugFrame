@@ -36,20 +36,22 @@ void plugframe::ChannelManager::registerMessagesCodec(MessagesCodec *codec)
         m_registeredCodecs.insert(codec->codecId(),codec);
 
         // connect codec
-        connect(codec,SIGNAL(messageToSend(plugframe::TcpOutputStream)),SLOT(onMessageToSend(plugframe::TcpOutputStream)));
-        connect(codec,SIGNAL(unregister(quint16)),SLOT(onUnregisterCodec(quint16)));
+        connect(codec,SIGNAL(messageToSend(QByteArray)),SLOT(onMessageToSend(plugframe::TcpOutputStream)));
 
         pfInfo4(logChannel()) << tr("Register Message codec : ") << codec->codecId();
     }
 }
 
-void plugframe::ChannelManager::onUnregisterCodec(quint16 codecId)
+void plugframe::ChannelManager::unregisterMessagesCodec(MessagesCodec *codec)
 {
-    pfInfo4(logChannel()) << tr("Unregister Message codec : ") << codecId;
+    if (codec)
+    {
+        quint16 codecId{codec->codecId()};
 
-    m_registeredCodecs.remove(codecId);
+        pfInfo4(logChannel()) << tr("Unregister Message codec : ") << codecId;
+        m_registeredCodecs.remove(codecId);
+    }
 }
-
 
 plugframe::MessagesCodec *plugframe::ChannelManager::selectCodec(quint16 codecId)
 {

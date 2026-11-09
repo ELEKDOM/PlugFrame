@@ -15,17 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-#ifndef TCPOUTPUTSTREAM_H
-#define TCPOUTPUTSTREAM_H
+#include "clientconnection.h"
 
-#include "network/channel/outputstream.h"
+plugframe::ClientConnection::ClientConnection(Publisher *bundle, MessagesCodec *codec,QObject *parent):
+    QObject{parent},
+    m_bundle{bundle},
+    m_messagesCodec{codec}
+{
+}
 
-namespace plugframe
+plugframe::ClientConnection::~ClientConnection()
 {
-class TcpOutputStream : public OutputStream
+
+}
+
+plugframe::OutputStreamBuilder *plugframe::ClientConnection::createOutputStream(quint16 msgId)
 {
-public:
-    TcpOutputStream(quint16 codecId,quint16 msgId);
-};
-} //namespace plugframe
-#endif // TCPOUTPUTSTREAM_H
+    return m_messagesCodec->createOutputStream(msgId);
+}
+
+void plugframe::ClientConnection::sendMessage(QspOutputStream& outputStream)
+{
+    m_messagesCodec->sendMessage(outputStream);
+}

@@ -36,6 +36,7 @@ public:
 
 public:
     void registerMessagesCodec(MessagesCodec* codec);
+    void unregisterMessagesCodec(MessagesCodec* codec);
 
 signals:
     void sigConnected();
@@ -46,9 +47,6 @@ protected slots:
 
 protected:
     MessagesCodec* selectCodec(quint16 codecId);
-
-private slots:
-    void onUnregisterCodec(quint16 codecId);
 
 private:
     QHash<quint16,MessagesCodec*> m_registeredCodecs;

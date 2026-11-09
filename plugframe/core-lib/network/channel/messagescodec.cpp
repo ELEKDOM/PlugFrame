@@ -16,11 +16,13 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 #include "messagescodec.h"
+#include "outputstreambuilder.h"
 
 plugframe::MessagesCodec::MessagesCodec(quint16 codecId, const QString &logChannel, QObject *parent):
     QObject{parent},
     Loggable{logChannel},
-    m_codecId{codecId}
+    m_codecId{codecId},
+    m_clientConnection{nullptr}
 {
 
 }
@@ -33,5 +35,15 @@ bool plugframe::MessagesCodec::extractMessage(QDataStream &input)
     input >> msgId;
     ret = extractArgsFromStream(msgId,input);
     return ret;
+}
+
+plugframe::OutputStreamBuilder *plugframe::MessagesCodec::createOutputStream(quint16 msgId)
+{
+    return new OutputStreamBuilder{m_codecId,msgId};
+}
+
+void plugframe::MessagesCodec::sendMessage(QspOutputStream& outputStream)
+{
+    emit messageToSend(outputStream->bytes());
 }
 

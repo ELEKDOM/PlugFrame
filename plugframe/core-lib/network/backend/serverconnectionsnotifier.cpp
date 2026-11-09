@@ -16,7 +16,25 @@
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
 #include "serverconnectionsnotifier.h"
+#include "abstract_publisher/publisher.h"
 
-plugframe::ServerConnectionsNotifier::ServerConnectionsNotifier(QObject *parent)
-    : QObject{parent}
+plugframe::ServerConnectionsNotifier::ServerConnectionsNotifier(Publisher *bundle, QObject *parent) :
+    QObject{parent},
+    m_bundle{bundle}
 {}
+
+void plugframe::ServerConnectionsNotifier::onNewClientConnection(ChannelManager *channel)
+{
+    if(m_bundle)
+    {
+        m_bundle->newClientConnection(channel);
+    }
+}
+
+void plugframe::ServerConnectionsNotifier::onDisconnectedFromClient(ChannelManager *channel)
+{
+    if(m_bundle)
+    {
+        m_bundle->disconnectedFromClient(channel);
+    }
+}

@@ -20,5 +20,6 @@
 
 class TcpServerConnManager;
 class TcpServerService;
+class TcpServerNotifierRegisterService;
 
 #endif // TCPSERVER_FORWARD_H

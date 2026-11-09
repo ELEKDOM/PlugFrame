@@ -33,6 +33,7 @@ public:
 protected:
     plugframe::BundleBuilder *createBuilder(plugframe::Bundle& myBundle) override;
     virtual TcpServerService *createBackendControlService(plugframe::BundleImplementation *implementation);
+    virtual TcpServerNotifierRegisterService *createBackendServerNotifierRegisterService(plugframe::BundleImplementation *implementation);
     plugframe::ServiceImplementationInterface *createServiceImplementation(plugframe::BundleImplementation *implementation,
                                                                            const QString& sName,
                                                                            const QString& serviceVersion) override;

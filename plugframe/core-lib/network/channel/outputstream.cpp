@@ -15,11 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PlugFrame. If not, see <https://www.gnu.org/licenses/>.
 //
-#include <QIODevice>
 #include "outputstream.h"
 
-plugframe::OutputStream::OutputStream():
-    m_stream{&m_bytes, QIODevice::WriteOnly}
+plugframe::OutputStream::OutputStream()
 {
-    m_stream.setVersion(QDataStream::Qt_DefaultCompiledVersion);
 }

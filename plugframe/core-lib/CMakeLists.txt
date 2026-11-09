@@ -1,5 +1,7 @@
 # PlugFrame Core Lib Sources
 set(SOURCES
+    abstract_publisher/publisher.cpp
+    abstract_publisher/publisherfactory.cpp
     bundle/bundle.cpp
     bundle/bundlebuilder.cpp
     bundle/bundlecontext.cpp
@@ -37,12 +39,13 @@ set(SOURCES
     logger/loggable.cpp
     network/tcp/tcpchannelmanager.cpp
     network/tcp/tcpserverconnectionstatenotifier.cpp
-    network/tcp/tcpoutputstream.cpp
     network/channel/outputstream.cpp
+    network/channel/outputstreambuilder.cpp
     network/channel/messagescodec.cpp
     network/channel/channelmanager.cpp
     network/frontend/clientconnectionstatenotifier.cpp
     network/backend/serverconnectionsnotifier.cpp
+    network/backend/clientconnection.cpp
     plugin/plugin.cpp
     scheduler/dailyscheduler.cpp
     scheduler/digitalsuite.cpp
@@ -64,6 +67,8 @@ set(SOURCES
 
 # PlugFrame Core Lib Headers
 set(HEADERS
+    abstract_publisher/publisher.h
+    abstract_publisher/publisherfactory.h
     bundle/bundle.h
     bundle/bundle4builderinterface.h
     bundle/bundle4plugininterface.h
@@ -104,12 +109,13 @@ set(HEADERS
     logger/pflog.h
     network/tcp/tcpchannelmanager.h
     network/tcp/tcpserverconnectionstatenotifier.h
-    network/tcp/tcpoutputstream.h
     network/channel/outputstream.h
+    network/channel/outputstreambuilder.h
     network/channel/messagescodec.h
     network/channel/channelmanager.h
     network/frontend/clientconnectionstatenotifier.h
     network/backend/serverconnectionsnotifier.h
+    network/backend/clientconnection.h
     pfcore-lib_export.h
     pfcore-lib_forward.h
     plugin/bundleinterface.h
@@ -124,6 +130,7 @@ set(HEADERS
     scheduler/schedulerelementhook.h
     scheduler/weeklyscheduler.h
     service-int/backendcontrolserviceinterface.h
+    service-int/backendservernotifierregisterserviceinterface.h
     service-int/displayserviceinterface.h
     service-int/frontendcontrolserviceinterface.h
     service-int/frontendmessagescodecregisterserviceinterface.h

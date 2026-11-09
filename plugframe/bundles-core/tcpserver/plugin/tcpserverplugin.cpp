@@ -33,6 +33,9 @@ void TcpServerPlugin::bindServicesImplementations()
 
     serviceImplementationItf = implementation()->getServiceImplementation(plugframe::BackendControlServiceInterface::serviceName());
     m_serverServiceImpl = serviceImplementationItf.dynamicCast<TcpServerService>();
+
+    serviceImplementationItf = implementation()->getServiceImplementation(plugframe::BackendServerNotifierRegisterServiceInterface::serviceName());
+    m_serverNotifierRegisterService = serviceImplementationItf.dynamicCast<TcpServerNotifierRegisterService>();
 }
 
 plugframe::Bundle4PluginInterface *TcpServerPlugin::createImplementation()
@@ -40,12 +43,17 @@ plugframe::Bundle4PluginInterface *TcpServerPlugin::createImplementation()
     return new TcpServer;
 }
 
-void TcpServerPlugin::startListen(plugframe::ServerConnectionsNotifier *serverSide)
+void TcpServerPlugin::startListen()
 {
-    m_serverServiceImpl->startListen(serverSide);
+    m_serverServiceImpl->startListen();
 }
 
 void TcpServerPlugin::stopListen()
 {
     m_serverServiceImpl->stopListen();
+}
+
+void TcpServerPlugin::registerConnectionNotifier(plugframe::ServerConnectionsNotifier *serverSide)
+{
+    m_serverNotifierRegisterService->registerConnectionNotifier(serverSide);
 }

@@ -29,7 +29,7 @@ public:
     ~TcpServerService() override;
 
 public:
-    void startListen(plugframe::ServerConnectionsNotifier *serverSide);
+    void startListen();
     void stopListen();
 
 protected:

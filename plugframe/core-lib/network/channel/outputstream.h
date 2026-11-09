@@ -19,8 +19,7 @@
 #define OUTPUTSTREAM_H
 
 #include <QByteArray>
-#include <QDataStream>
-#include <QMetaType>
+#include <QSharedPointer>
 
 namespace plugframe
 {
@@ -30,13 +29,13 @@ public:
     OutputStream();
 
 public:
-    QByteArray& bytes() {return m_bytes;}
-    QDataStream& stream() {return m_stream;}
+    QByteArray bytes() {return m_bytes;}
 
-private:
-    QByteArray  m_bytes;
-    QDataStream m_stream;
+protected:
+    QByteArray m_bytes;
+
 };
+using QspOutputStream = QSharedPointer<OutputStream>;
 } //namespace plugframe
 
 #endif // OUTPUTSTREAM_H

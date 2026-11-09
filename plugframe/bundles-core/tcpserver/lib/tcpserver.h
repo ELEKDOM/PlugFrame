@@ -31,8 +31,9 @@ public:
 
 public:
     void tcpServerConnManager(TcpServerConnManager *serverComManager);
-    void startListen(plugframe::ServerConnectionsNotifier *serverSide);
+    void startListen();
     void stopListen();
+    void registerConnectionNotifier(plugframe::ServerConnectionsNotifier *serverSide);
 
 public:
     plugframe::TcpChannelManager *newChannelManager(QTcpSocket *newConn);

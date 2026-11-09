@@ -20,8 +20,10 @@
 #include "tcpserverfactory.h"
 #include "tcpserverbuilder.h"
 #include "tcpserverservice.h"
+#include "tcpservernotifierregisterservice.h"
 #include "tcpserverconnmanager.h"
 #include "service-int/backendcontrolserviceinterface.h"
+#include "service-int/backendservernotifierregisterserviceinterface.h"
 
 TcpServerFactory::TcpServerFactory() {}
 
@@ -44,6 +46,11 @@ TcpServerService *TcpServerFactory::createBackendControlService(plugframe::Bundl
     return new TcpServerService{implementation};
 }
 
+TcpServerNotifierRegisterService *TcpServerFactory::createBackendServerNotifierRegisterService(plugframe::BundleImplementation *implementation)
+{
+    return new TcpServerNotifierRegisterService{implementation};
+}
+
 plugframe::ServiceImplementationInterface *TcpServerFactory::createServiceImplementation(plugframe::BundleImplementation *implementation,
                                                                                          const QString &sName,
                                                                                          const QString &serviceVersion)
@@ -55,6 +62,13 @@ plugframe::ServiceImplementationInterface *TcpServerFactory::createServiceImplem
         if (plugframe::ServiceInterface::V_100() == serviceVersion)
         {
             ret = createBackendControlService(implementation);
+        }
+    }
+    else if (plugframe::BackendServerNotifierRegisterServiceInterface::serviceName() == sName)
+    {
+        if (plugframe::ServiceInterface::V_100() == serviceVersion)
+        {
+            ret = createBackendServerNotifierRegisterService(implementation);
         }
     }
 

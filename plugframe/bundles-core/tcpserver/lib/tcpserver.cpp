@@ -21,6 +21,7 @@
 #include "tcpserver_logchannel.h"
 #include "network/backend/serverconnectionsnotifier.h"
 #include "service-int/backendcontrolserviceinterface.h"
+#include "service-int/backendservernotifierregisterserviceinterface.h"
 #include "logger/pflog.h"
 
 TcpServer::TcpServer():
@@ -38,25 +39,30 @@ void TcpServer::tcpServerConnManager(TcpServerConnManager *serverComManager)
     m_serverComManager.reset(serverComManager);
 }
 
-void TcpServer::startListen(plugframe::ServerConnectionsNotifier *serverSide)
+void TcpServer::startListen()
 {
     QHostAddress serverIpAddr;
     quint16 ServerPort;
 
     readListenAddr(serverIpAddr,ServerPort);
-
-    pfInfo1(logChannel()) << QObject::tr("The server listen on socket %1:%2").arg(serverIpAddr.toString()).arg(ServerPort);
-
-    QObject::connect(m_serverComManager.get(),SIGNAL(newClientConnection(plugframe::ChannelManager*)),serverSide,SLOT(onNewClientConnection(plugframe::ChannelManager*)));
     if(!m_serverComManager->open(serverIpAddr,ServerPort))
     {
         pfErr(logChannel()) << QObject::tr("The server didn't open socket %1:%2").arg(serverIpAddr.toString()).arg(ServerPort);
+    }
+    else
+    {
+        pfInfo1(logChannel()) << QObject::tr("The server listen on socket %1:%2").arg(serverIpAddr.toString()).arg(ServerPort);
     }
 }
 
 void TcpServer::stopListen()
 {
     m_serverComManager->close();
+}
+
+void TcpServer::registerConnectionNotifier(plugframe::ServerConnectionsNotifier *serverSide)
+{
+    QObject::connect(m_serverComManager.get(),SIGNAL(newClientConnection(plugframe::ChannelManager*)),serverSide,SLOT(onNewClientConnection(plugframe::ChannelManager*)));
 }
 
 plugframe::BundleFactory *TcpServer::createFactory()
@@ -71,6 +77,10 @@ plugframe::ServiceInterface *TcpServer::qtServiceInterface(const QString &sName)
     if (plugframe::BackendControlServiceInterface::serviceName() == sName)
     {
         ret = qobject_cast<plugframe::BackendControlServiceInterface*>(getQplugin());
+    }
+    else if (plugframe::BackendServerNotifierRegisterServiceInterface::serviceName() == sName)
+    {
+        ret = qobject_cast<plugframe::BackendServerNotifierRegisterServiceInterface*>(getQplugin());
     }
 
     return ret;

@@ -19,8 +19,11 @@
 #define MESSAGESCODEC_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
+#include "pfcore-lib_forward.h"
 #include "logger/loggable.h"
+#include "outputstream.h"
 
 namespace plugframe
 {
@@ -34,16 +37,19 @@ public:
 public:
     quint16 codecId() {return m_codecId;}
     bool extractMessage(QDataStream& input);
+    OutputStreamBuilder *createOutputStream(quint16 msgId);
+    void sendMessage(QspOutputStream& outputStream);
 
 signals:
-    void unregister(quint16 codecId);
     void messageToSend(QByteArray outputStream);
 
 protected:
     virtual bool extractArgsFromStream(quint16 msgId,QDataStream& input) = 0;
 
 private:
-    quint16 m_codecId;
+    quint16           m_codecId;
+    ClientConnection *m_clientConnection;
 };
+using QspMessagesCodec = QSharedPointer<MessagesCodec>;
 } //namespace plugframe
 #endif // MESSAGESCODEC_H

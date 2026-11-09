@@ -20,11 +20,20 @@
 
 #include "plugin/plugin.h"
 #include "service-int/backendcontrolserviceinterface.h"
+#include "service-int/backendservernotifierregisterserviceinterface.h"
 #include "tcpserverservice.h"
+#include "tcpservernotifierregisterservice.h"
 
 class TcpServerPlugin : public plugframe::Plugin,
-                        public plugframe::BackendControlServiceInterface
+                        public plugframe::BackendControlServiceInterface,
+                        public plugframe::BackendServerNotifierRegisterServiceInterface
 {
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "plugframe.tcpserver.plugin" FILE "../tcpserverbundle.json")
+    Q_INTERFACES(plugframe::BundleInterface
+                 plugframe::BackendControlServiceInterface
+                 plugframe::BackendServerNotifierRegisterServiceInterface)
+
 public:
     TcpServerPlugin();
     ~TcpServerPlugin() override;
@@ -34,10 +43,13 @@ protected: // Plugin
     plugframe::Bundle4PluginInterface *createImplementation() override;
 
 protected: // BackendControlServiceInterface
-    void startListen(plugframe::ServerConnectionsNotifier *serverSide) override;
+    void startListen() override;
     void stopListen() override;
+protected: // BackendServerNotifierRegisterServiceInterface
+    void registerConnectionNotifier(plugframe::ServerConnectionsNotifier *serverSide) override;
 
 private:
-    QspTcpServerService m_serverServiceImpl;
+    QspTcpServerService                 m_serverServiceImpl;
+    QspTcpServerNotifierRegisterService m_serverNotifierRegisterService;
 };
 #endif // TCPSERVERPLUGIN_H

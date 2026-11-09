@@ -58,11 +58,6 @@ qt_add_library(${BUNDLE_IMPL_NAME} STATIC ${SOURCES} ${HEADERS} ${FORMS})
 target_include_directories(${BUNDLE_IMPL_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-    PUBLIC
-        ${PF_CORE_LIB_INC_DIR}
-        ${PF_GUI_LIB_INC_DIR}
-        ${CONFIGURATOR_GUI_LIB_INC_DIR}
-
 )
 
 target_link_libraries(${BUNDLE_IMPL_NAME} PUBLIC
@@ -70,7 +65,9 @@ target_link_libraries(${BUNDLE_IMPL_NAME} PUBLIC
     Qt6::Gui
     Qt6::Widgets 
     Qt6::Xml
-    ${CONFIGURATOR_GUI_LIB_NAME}
+    plugframe-core-qt6
+    plugframe-gui-qt6
+    configurator-gui-qt6
 )
 
 target_compile_definitions(${BUNDLE_IMPL_NAME}

@@ -41,8 +41,12 @@ namespace plugframe
     class Scheduler;
     //
     class MessagesCodec;
+    class OutputStreamBuilder;
+    class ClientConnection;
     class ChannelManager;
     class ServerConnectionsNotifier;
+    //
+    class Publisher;
 
 } //namespace plugframe
 

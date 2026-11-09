@@ -28,11 +28,11 @@ TcpServerService::~TcpServerService()
 
 }
 
-void TcpServerService::startListen(plugframe::ServerConnectionsNotifier *serverSide)
+void TcpServerService::startListen()
 {
     TcpServer *bundle{dynamic_cast<TcpServer*>(implementation())};
 
-    bundle->startListen(serverSide);
+    bundle->startListen();
 }
 
 void TcpServerService::stopListen()

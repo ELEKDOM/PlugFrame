@@ -19,6 +19,7 @@
 #define SERVERCONNECTIONSNOTIFIER_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include "pfcore-lib_export.h"
 #include "pfcore-lib_forward.h"
 
@@ -28,10 +29,15 @@ class PFCORELIB_EXPORT ServerConnectionsNotifier : public QObject
 {
     Q_OBJECT
 public:
-    explicit ServerConnectionsNotifier(QObject *parent = nullptr);
+    explicit ServerConnectionsNotifier(Publisher *bundle,QObject *parent = nullptr);
 
 public slots:
-    virtual void onNewClientConnection(plugframe::ChannelManager *channel) =0;
+    void onNewClientConnection(plugframe::ChannelManager *channel);
+    void onDisconnectedFromClient(plugframe::ChannelManager *channel);
+
+private:
+    Publisher *m_bundle;
 };
+using QspServerConnectionsNotifier = QSharedPointer<ServerConnectionsNotifier>;
 } //namespace plugframe
 #endif // SERVERCONNECTIONSNOTIFIER_H
